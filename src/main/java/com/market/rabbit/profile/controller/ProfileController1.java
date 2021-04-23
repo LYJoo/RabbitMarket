@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-public class ProfileController {
+public class ProfileController1 {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	@RequestMapping(value = "/profile1", method = RequestMethod.GET)
 	public String home(Model model) {
 
 		
