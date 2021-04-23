@@ -42,6 +42,7 @@ public class MemberDTO {
 	private int manner_cnt;
 	private boolean isblack;
 	private boolean withdraw;
+	
 	public String getMember_id() {
 		return member_id;
 	}
