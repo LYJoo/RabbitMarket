@@ -1,4 +1,4 @@
-package com.market.rabbit;
+package com.market.rabbit.member.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

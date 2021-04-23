@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    
+    <!-- DTO 경로를 축약 시켜주는 설정 -->
+    <!-- alias에 사용할이름 type에 클래스경로 --><!-- alias="사용할 이름" type="클래스 경로" -->
+	<configuration>
+		<typeAliases>
+			<package name="com.market.rabbit.dto"/>
+	 	</typeAliases>
+	</configuration>
+    

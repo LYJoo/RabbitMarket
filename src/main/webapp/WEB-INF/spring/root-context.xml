@@ -1,8 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- DataSource 작성(접속 정보) -->
+	<!-- log4jdbc 사용을 위해서 driverClassName 을 변경해줘야한다. -->
+	<!-- url 내용도 변경해줄것 -->
+	<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${Globals.DriverClassName}"/>
+		<property name="url" value="${Globals.Url}"/>
+		<property name="username" value="${Globals.Username}"/>
+		<property name="password" value="${Globals.Password}"/>
+	</bean>
+		
+	<!-- DataSource 를 이용해서 DB 접속 설정 마이바티스 사용설정 -->
+	<!-- id="네이밍에 자율성이 있다." name="이름이 정해져 있음" -->
+	<!-- 1. 접속 정보를 어디서 가져오나? -->
+	<!-- **2. 쿼리문 xml이 있는 장소는? --><!-- 쿼리가 들어가는 xml만들어줘야함 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:/com/market/rabbit/**/*.xml" />
+	</bean>
+	
+	<!-- MyBatis를 자동으로 감지하여 사용할 수 있도록 설정 -->
+	<!-- 범위를 넓게 잡아줘도 되지만 웬만해서는 특정위치 딱 잡아줄것 -->
+	<mybatis-spring:scan base-package="com.market.rabbit.admin.dao"/>
+	<mybatis-spring:scan base-package="com.market.rabbit.alarm.dao"/>
+	<mybatis-spring:scan base-package="com.market.rabbit.member.dao"/>
+	<mybatis-spring:scan base-package="com.market.rabbit.message.dao"/>
+	<mybatis-spring:scan base-package="com.market.rabbit.profile.dao"/>
+	<mybatis-spring:scan base-package="com.market.rabbit.sale.dao"/>
+	<mybatis-spring:scan base-package="com.market.rabbit.help.dao"/>
+	
+	
+	<!-- properties 파일을 사용하기위한 위치 설정 -->
+	<bean id="propertyConfiguer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/props/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- properties를 java 소스 안에서 활용 할 수 있도록 하는 설정 -->
+	<util:properties id="config" location="classpath:/props/globals.properties"/>
+	
+	<!-- @Transaction 어노테이션 사용 설정 -->
+	<tx:annotation-driven proxy-target-class="false"/>
+	
+	<!-- 파일 첨부 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="maxUploadSize" value="20000000"/><!-- upload size -->
+		<property name="maxInMemorySize" value="20000000"/><!-- 버퍼역할을 할 용량 -->
+	</bean>
 		
 </beans>
