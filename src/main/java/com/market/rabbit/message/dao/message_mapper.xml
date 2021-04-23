@@ -5,7 +5,7 @@
  >
  
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
- <mapper namespace="com.market.rabbit.member.dao.MemberDAO">
+ <mapper namespace="com.market.rabbit.member.dao.MessageDAO">
  
 
  	
