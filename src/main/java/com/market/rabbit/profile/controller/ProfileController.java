@@ -18,7 +18,7 @@ public class ProfileController {
 	public String home(Model model) {
 
 		
-		return "profile";
+		return "myPage/memberInfo";
 	}
 	
 }
