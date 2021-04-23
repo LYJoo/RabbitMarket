@@ -18,7 +18,7 @@ public class ProfileController2 {
 	public String home(Model model) {
 
 		
-		return "myPage/memberInfo";
+		return "myPage/juso_test";
 	}
 	
 }
