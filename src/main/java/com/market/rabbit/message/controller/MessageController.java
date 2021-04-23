@@ -14,7 +14,7 @@ public class MessageController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/message", method = RequestMethod.GET)
 	public String home(Model model) {
 
 		

@@ -14,7 +14,7 @@ public class ProfileController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String home(Model model) {
 
 		

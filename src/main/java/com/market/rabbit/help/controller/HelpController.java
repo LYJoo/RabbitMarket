@@ -14,7 +14,7 @@ public class HelpController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/help", method = RequestMethod.GET)
 	public String home(Model model) {
 
 		

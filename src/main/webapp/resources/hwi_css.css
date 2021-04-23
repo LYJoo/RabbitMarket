@@ -1,0 +1,45 @@
+#container{
+    min-width: 1920px;
+    background-color: #FBF7F2;
+}
+table, th, td{
+    border: 0px solid black;
+    padding: 10px;
+    border-collapse: collapse;
+    font-size: 20px;
+}
+th, td{
+    width: 50%;
+}
+#main_content{
+    margin-top: 100px;
+}
+table{
+    margin: 10px;
+    text-align: center;
+    margin-left:auto;
+    margin-right:auto;
+    width: 350px;
+}
+#profile{
+    text-align: right;
+    margin-right: 650px;
+}
+p{
+    text-align: center;
+}
+#btn{
+    text-align: center;
+    padding: 10px;
+}
+.info_btn{
+    margin: 30px;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: #F79646;
+    color: white;
+    font-weight: 600;
+    border: none;
+}
