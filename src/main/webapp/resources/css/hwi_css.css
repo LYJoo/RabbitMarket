@@ -8,8 +8,11 @@ table, th, td{
     border-collapse: collapse;
     font-size: 20px;
 }
-th, td{
-    width: 50%;
+th{
+    width: 35%;
+}
+td{
+    width: 65%;
 }
 #main_content{
     margin-top: 100px;
@@ -19,7 +22,7 @@ table{
     text-align: center;
     margin-left:auto;
     margin-right:auto;
-    width: 350px;
+    width: 400px;
 }
 #profile{
     text-align: right;
@@ -42,4 +45,127 @@ p{
     color: white;
     font-weight: 600;
     border: none;
+}
+
+.msg-btn{
+    float: right;
+    width: 100px;
+    height: 40px;
+    margin: 10px;
+}
+
+#profile-table{
+    margin-left:auto; 
+    margin-right:auto; 
+    width: 80px;
+    border: 1px solid #F79646;
+    border-collapse: collapse;
+}
+#profile-table td {
+    border: 1px solid #F79646;
+}
+
+.profile-btn{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color:#FBF7F2;
+    color: gray;
+    font-weight: 500;
+    border: none;
+}
+
+#confirmMsg{
+    display: inline-block;
+    color: palevioletred;
+    font-size: 16px;
+}
+
+.info_title{
+    font-weight: 600;
+    font-size: larger;
+}
+
+#changePw_table{
+    width: 480px;
+    padding: 20px;
+}
+
+#changePw_table th{
+    width: 35%;
+    padding: 20px;
+}
+#changePw_table td{
+    width: 65%;
+    padding: 20px;
+}
+
+#withdraw_table{
+    width: 440px;
+    
+}
+#withdraw_table th{
+    padding: 15px;
+    width: 40%;
+}
+
+#withdraw_table td{
+    padding: 15px;
+    width: 60%;
+}
+
+#withdraw_notice{
+    text-align: center;
+    color: red;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.main-logo{
+    text-align: center;
+    margin: 30px;
+}
+
+.msg-main_content{
+    margin: 40px;
+}
+.msg-title{
+    text-align: left;
+    font-weight: 600;
+    font-size: 22px;
+}
+.msg-detail-info{
+    margin: 20px 0;
+    width: 450px;
+}
+.msg-detail-info-span{
+    border: 1px solid #F79646;
+    padding: 10px;
+    width: 50%;
+    margin: 0;
+    
+}
+.msg-detail-content{
+    width: 420px;
+    height: 300px;
+    overflow: scroll;
+}
+.msg-btn{
+    margin: 5px 10px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: #F79646;
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+#msg-write{
+    text-align: left;
+}
+.msg-detail-btn{
+    float: right;
+    margin-right: 40px;
+    margin-top: 10px;
 }
