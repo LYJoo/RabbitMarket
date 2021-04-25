@@ -1,6 +1,5 @@
 #container{
     min-width: 1920px;
-    background-color: #FBF7F2;
 }
 table, th, td{
     border: 0px solid black;
@@ -168,4 +167,90 @@ p{
     float: right;
     margin-right: 40px;
     margin-top: 10px;
+}
+
+#alarm_list{
+    text-align: center;
+}
+
+#table-alarm{
+    width: 700px;
+}
+
+a:link{
+    color:black;
+    text-decoration: none;
+}
+a:visited{
+    color:black;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+#table-alarm td{
+    background-color: #F5F5F5;
+    border-bottom: 10px solid white;
+    font-size: 16px;
+}
+
+#table-alarm tr #paging{
+    background-color: white;
+    padding: 10px 0;
+}
+
+.btn-alarm-remove{
+    margin: 5px 10px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #F79646;
+    color: white;
+    border: none;
+}
+
+.block-img{
+    width: 30px;
+    height: 40px;
+}
+
+#table-block{
+    width: 600px;
+    border: 0px solid black;
+    border-collapse: collapse;
+    height: 80px;
+}
+
+#table-block td{
+    background-color: #F5F5F5;
+    border-bottom: 10px solid white;
+    font-size: 16px;
+}
+
+.td-block-img{
+    width: 20%;
+}
+.td-block-id{
+    width: 60%;
+}
+.td-block-btn{
+    width: 20%;
+}
+
+.td-block-btn>button{
+    margin: 5px 10px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #F79646;
+    color: white;
+    border: none;
+}
+
+#table-block tr #paging{
+    background-color: white;
+    padding: 10px 0;
 }
