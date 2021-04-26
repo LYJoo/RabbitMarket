@@ -25,9 +25,9 @@ public class SaleController {
 	
 	@RequestMapping(value = "/sale/writeForm", method = RequestMethod.GET)
 	public String writeForm(Model model) {
-		//해야할 것!! 로그인한 사람인지 확인하기
+		//해야할것!! 로그인한 사람인지 확인하기
 		
-		logger.info("게시글 작성 폼 요청");
+		logger.info("게시글 작성폼 요청");
 		
 		ArrayList<SaleCategoryDTO> saleCategory = service.getSaleCategory();
 		
