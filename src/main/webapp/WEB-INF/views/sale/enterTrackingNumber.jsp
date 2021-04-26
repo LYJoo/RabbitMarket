@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>운송장번호 입력</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/select2.css"/>
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="resources/js/select2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/resources/js/select2.js" charset="utf-8"></script>
     <style>
 
     .enter_tracking_number_title_cover{
@@ -76,7 +76,7 @@
 		<div class="outer_cover">
 		    <div class="enter_tracking_number_title_cover">
 		        <div class="enter_tracking_number_title">
-		            <img src="resources/img/rabbit.jpg"/>
+		            <img src="/resources/img/rabbit.jpg"/>
 		        </div>
 		        <div class="enter_tracking_number_title">
 		            <p>운송장번호 입력</p>

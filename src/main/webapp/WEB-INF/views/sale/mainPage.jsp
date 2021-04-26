@@ -128,7 +128,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -141,7 +141,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -154,7 +154,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -167,7 +167,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -180,7 +180,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -193,7 +193,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -206,7 +206,7 @@
                     판매중
                 </div>
              <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -219,7 +219,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -232,7 +232,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -245,7 +245,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -258,7 +258,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -271,7 +271,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -284,7 +284,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -297,7 +297,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -310,7 +310,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -323,7 +323,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -336,7 +336,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -349,7 +349,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>
@@ -362,7 +362,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>

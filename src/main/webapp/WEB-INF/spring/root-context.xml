@@ -28,6 +28,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mapperLocations" value="classpath:/com/market/rabbit/**/*.xml" />
+		<property name="configLocation" value="classpath:/config/aliase.xml"/>
 	</bean>
 	
 	<!-- MyBatis를 자동으로 감지하여 사용할 수 있도록 설정 -->
@@ -39,7 +40,6 @@
 	<mybatis-spring:scan base-package="com.market.rabbit.profile.dao"/>
 	<mybatis-spring:scan base-package="com.market.rabbit.sale.dao"/>
 	<mybatis-spring:scan base-package="com.market.rabbit.help.dao"/>
-	
 	
 	<!-- properties 파일을 사용하기위한 위치 설정 -->
 	<bean id="propertyConfiguer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

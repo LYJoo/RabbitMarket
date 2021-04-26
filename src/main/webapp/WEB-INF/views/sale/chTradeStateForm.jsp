@@ -107,7 +107,7 @@
             <h4>거래중으로 판매상태 변경</h4>
         </div>
         <div class="tarade_state_title">
-            <img src="resources/img/rabbit.jpg"/>
+            <img src="/resources/img/rabbit.jpg"/>
         </div>
     </div>
 

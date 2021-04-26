@@ -115,9 +115,9 @@
 <script>
     var point = 0;
     function check(elem) {
-        var background = elem.style.color;
+        var fontColor = elem.style.color;
     
-        if(background == 'rgb(247, 150, 70)'){
+        if(fontColor == 'rgb(247, 150, 70)'){
             point += 1;
             elem.style.color='white';
             elem.style.background='#F79646';

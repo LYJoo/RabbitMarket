@@ -57,7 +57,7 @@
 <div class="report_window_cover">
     <div class="report_title_cover">
         <div class="report_title">신고사유</div>
-        <div class="report_title"><img style="width: 100px;" src="resources/img/rabbit.jpg"/></div>
+        <div class="report_title"><img style="width: 100px;" src="/resources/img/rabbit.jpg"/></div>
     </div>
     <div class="report_new_window">
         <textarea></textarea>

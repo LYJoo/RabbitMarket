@@ -90,7 +90,7 @@
                 <p>구매자 평가 - 직거래</p>
             </div>
             <div class="title_img">
-                <img src="resources/img/rabbit.jpg"/>
+                <img src="/resources/img/rabbit.jpg"/>
             </div>
         </div>
         <hr/>
@@ -115,9 +115,9 @@
 <script>
     var point = 0;
     function check(elem) {
-        var background = elem.style.color;
+        var fontColor = elem.style.color;
     
-        if(background == 'rgb(247, 150, 70)'){
+        if(fontColor == 'rgb(247, 150, 70)'){
             point += 1;
             elem.style.color='white';
             elem.style.background='#F79646';
