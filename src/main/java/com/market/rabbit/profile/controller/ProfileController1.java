@@ -23,13 +23,6 @@ public class ProfileController1 {
 	
 	@Autowired ProfileService1 service;
 	
-	@RequestMapping(value = "/profile1", method = RequestMethod.GET)
-	public String home(Model model) {
-
-		
-		return "myPage/memberInfo";
-	}
-	
 	//위시리스트
 	//1. 리스트불러오기
 	//2. 리스트 삭제
@@ -41,7 +34,7 @@ public class ProfileController1 {
 		logger.info("위시리스트 요청");
 		service.wishlist(model);
 		
-		return "wishlist";
+		return "myPage/wishlist";
 	}
 	
 	//2. 리스트 삭제
@@ -71,4 +64,18 @@ public class ProfileController1 {
 		
 		return service.wishlist(page,pagePerCnt);
 	}
+
+	
+//	//프로필불러오기(프로필사진, id, 주소, 차단여부, 매너지수)
+//	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+//	public String profile(Model model) {
+//		logger.info("프로필 요청");
+//		service.profile(model);
+//		
+//		return "profile";
+//	}
+	
+	//프로필 - 해당사용자가 판매중인 판매게시글 불러오기
+	//프로필 - 해당 사용자에 대한 후기 불러오기
+	
 }

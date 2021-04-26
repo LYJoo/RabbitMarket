@@ -24,10 +24,6 @@
 		</style>
 	</head>
 	<body>
-	<!-- 네비 포함시켜야한다.
-	<jsp:include page="top.jsp"/>
-	<jsp:include page="navi.jsp"/>
-	 -->
 	 
 	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
    	<jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
@@ -36,7 +32,7 @@
 	
 	<!-- 리스트에 아무것도 없을때 -->
 		<div id="wish">
-			<c:if test="${salelist eq '[]'}">
+			<c:if test="${wishlist eq '[]'}">
 				<div class="nonelist">
 					<p>위시리스트에 등록된 상품이 없어요~</p>
 				</div>
@@ -47,13 +43,30 @@
 		<div class="list">
 			<table>
 				<tr>
+					<th>게시번호</th>
+					<th>아이디</th>
+					<th>판매번호</th>
+				</tr>
+				<!-- 임시 -->
+				<c:forEach items="${wishlist}" var="row">
+					<tr align="center">
+						<td>${row.wish_idx}</td>
+						<td>${row.member_id}</td>
+						<td>${row.product_idx}</td>
+						<td>
+							<input type="button" value="삭제" onclick="deletelist(${row.wish_idx})" class="del"/>
+						</td>
+					</tr>
+				</c:forEach>
+				
+				<!-- <tr>
 					<th>게시물</th>
 					<th>제목</th>
 					<th>작성일</th>
-				</tr>
+				</tr> -->
 				
 				<!-- 사진 경로(위치랑 컬럼명 파악) 수정해야함 리스트명도 다시 확인 -->
-				<c:forEach items="${wishlist}" var="row">
+<%-- 				<c:forEach items="${wishlist}" var="row">
 					<tr align="center">
 						<td><img src="${path}/images/${row.imgae}" width="100" height="100"></td>
 						<td>${row.sale_subject}</td>
@@ -62,7 +75,7 @@
 							<input type="button" value="삭제" onclick="deletelist(${row.wish_idx})" class="del"/>
 						</td>
 					</tr>
-				</c:forEach>
+				</c:forEach> --%>
 			</table>
 		</div>
 	</div>
@@ -73,11 +86,11 @@
 	      alert(msg);
 	   }
 	   
-	   //위시리스트 삭제
+ 	   //위시리스트 삭제
 	   function deletelist(wish_idx){
 		  console.log(wish_idx);
 		  if(confirm("삭제하시겠습니까?")){
-			  location.href="wishUpdate?wish_idx="+wish_idx+"&type="+type;
+			  location.href="wishdelete?wish_idx="+wish_idx+"&type="+type;
 		  }else{
 			  loaction.href="wishlist";
 		  }
