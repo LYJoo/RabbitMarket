@@ -71,7 +71,7 @@
 		<div class="outer_cover">
 		    <div class="enter_meet_date_title_cover">
 		        <div class="enter_meet_date_title">
-		            <img src="resources/img/rabbit.jpg"/>
+		            <img src="/resources/img/rabbit.jpg"/>
 		        </div>
 		        <div class="enter_meet_date_title">
 		            <p>직거래 시간 입력</p>

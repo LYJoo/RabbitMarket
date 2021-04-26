@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>토끼마켓 물건 올리기</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/select2.css"/>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="resources/js/select2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/resources/js/select2.js" charset="utf-8"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://kit.fontawesome.com/abf52b8f21.js"></script>
 	<style>
     table {
@@ -256,20 +257,20 @@
 	
 	         
 	    <div class="file_cover">
-	        <div>
-	        	<input type="file" id="product_file" multiple hidden/>
-	        </div>
-	        <label for="product_file">
-		        <div class="file_upload_btn">
-		            <div>
-		                <i class="fas fa-camera"></i>
-		            </div>
-		            <div>
-		                <span>0/5</span>
-		            </div>
-		        </div>
-	        </label>
-    	</div>
+        <div>
+        <input type="file" id="product_file" multiple hidden/>
+        </div>
+        <label for="product_file">
+        <div class="file_upload_btn">
+            <div>
+                <i class="fas fa-camera"></i>
+            </div>
+            <div>
+                <span>0/5</span>
+            </div>
+        </div>
+        </label>
+    </div>
 
     <table>
         <tr>
@@ -278,21 +279,10 @@
             </td>
             <td style="width: 30%;">
                 <select name="categoryBox" id="categoryBox" class="productSelectBox">
-                    <option value="디지털/가전">카테고리선택</option>
-                    <option value="디지털/가전">디지털/가전</option>
-                    <option value="가구/인테리어">가구/인테리어</option>
-                    <option value="유아동/유아도서">유아동/유아도서</option>
-                    <option value="생활/가공식품">생활/가공식품</option>
-                    <option value="스포츠/레저">스포츠/레저</option>
-                    <option value="여성잡화">여성잡화</option>
-                    <option value="여성의류">여성의류</option>
-                    <option value="남성패션/잡화">남성패션/잡화</option>
-                    <option value="게임/취미">게임/취미</option>
-                    <option value="뷰티/미용">뷰티/미용</option>
-                    <option value="반려동물용품">반려동물용품</option>
-                    <option value="도서/티켓/음반">도서/티켓/음반</option>
-                    <option value="식물">식물</option>
-                    <option value="기타중고물품">기타중고물품</option>
+                    <option value="default">카테고리선택</option>
+                    <c:forEach items="${saleCategory}" var="saleCategory">
+	                    <option value="${saleCategory.s_category_idx}">${saleCategory.s_category_name}</option>
+                    </c:forEach>
                 </select>
 
             </td>
@@ -315,7 +305,7 @@
                 <input id="seller_location" class="underline" type="text" placeholder="판매위치(선택한 위치의/시/군/구로 설정)" readonly/>
             </td>
             <td style="width: 40%;">
-                <div class="location_search_btn">
+                <div class="location_search_btn" onclick="getLocation()">
                     검색
                 </div>
             </td>
@@ -332,7 +322,7 @@
         <tr>
             <td>
                 <div class="product_check">
-                    <i class="far fa-check-circle"></i>
+                    <i class="far fa-check-circle" onclick="isNegotiationCheck(this)"></i>
                 </div>
                 <div class="check_mean">
                     가격제안불가
@@ -340,7 +330,7 @@
             </td>
             <td >
                 <div class="product_check">
-                    <i class="far fa-check-circle"></i>
+                    <i class="far fa-check-circle" onclick="isMinorCheck(this)"></i>
                 </div>
                 <div class="check_mean">
                     미성년자거래불가
@@ -397,6 +387,43 @@
         dots[slideIndex-1].className += " active";
     }
 
+    var isNegotiation = true;
+    var isMinor = true;
+    
+    function isNegotiationCheck(elem){
+    	var fontColor = elem.style.color;
+    	if(fontColor == ''){
+    		isNegotiation = false;
+    		elem.style.color='#F79646';
+    	}else{
+    		elem.style.color = '';
+    		isNegotiation = true;
+    	}
+    }
+    
+    function isMinorCheck(elem){
+    	var fontColor = elem.style.color;
+    	if(fontColor == ''){
+    		isMinor = false;
+    		elem.style.color='#F79646';
+    	}else{
+    		elem.style.color = '';
+    		isMinor = true;
+    	}
+    }
+    
+    
+    function getLocation(){
+    	 new daum.Postcode({
+    	        oncomplete: function(data) {
+    	        	var location = '';
+    	        	location += data.sido+' ';
+    	        	location += data.sigungu;
+					document.getElementById('seller_location').value = location;
+    	        }
+    	    }).open();
+    }
+   
 </script>
 
 </html>

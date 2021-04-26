@@ -55,7 +55,7 @@
     <div>
 <div class="review_window_cover">
     <div class="review_title_cover">
-        <div class="review_title"><img style="width: 100px;" src="resources/img/rabbit.jpg"/></div>
+        <div class="review_title"><img style="width: 100px;" src="/resources/img/rabbit.jpg"/></div>
         <div class="review_title">거래 후기 작성</div>
     </div>
 

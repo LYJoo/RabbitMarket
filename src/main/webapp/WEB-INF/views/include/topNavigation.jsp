@@ -122,9 +122,9 @@
 <c:if test="${sessionScope.loginId ne null}">
 <div id="login_bar">
     <span id="login_bar_list">
-        <a href="#"><img style="margin-right: 30px" src="resources/img/callcenter.png" alt="고객센터"></a>
-        <a href="#"><img style="margin-right: 30px" src="resources/img/message.png" alt="쪽지"></a> 
-        <a href="#"><img style="margin-right: 30px" src="resources/img/bell.png" alt="알림"></a>
+        <a href="#"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
+        <a href="#"><img style="margin-right: 30px" src="/resources/img/message.png" alt="쪽지"></a> 
+        <a href="#"><img style="margin-right: 30px" src="/resources/img/bell.png" alt="알림"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
             <img id="profile_img"src="resources/img/dog.jpg" alt="프로필사진"><!-- 나중에 프로필 사진 가져오기 -->
@@ -152,7 +152,7 @@
  <c:if test="${sessionScope.loginId eq null && sessionScope.adminId eq null}">
     <div id="login_bar_unmember">
         <span id="login_bar_unmember_list">
-            <a href="#"><img style="margin-right: 30px" src="resources/img/callcenter.png" alt="고객센터"></a>
+            <a href="#"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
             <a href="#">로그인</a>
         </span>
     </div>
@@ -163,10 +163,10 @@
 <c:if test="${sessionScope.loginId eq null && sessionScope.adminId ne null}">
 <div id="login_bar">
     <span id="login_bar_list">
-        <a href="#"><img style="margin-right: 30px" src="resources/img/callcenter.png" alt="고객센터"></a>
+        <a href="#"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
-            <img id="profile_img"src="resources/img/default_profile.png" alt="프로필사진"> <!-- 관리자는 기본 이미지 -->
+            <img id="profile_img"src="/resources/img/default_profile.png" alt="프로필사진"> <!-- 관리자는 기본 이미지 -->
         </div>
     </span>
 </div>
@@ -191,7 +191,7 @@
     <div class="logo_area">
         <a href="#">
             <div class="rabbit_logo">
-                <img src="resources/img/rabbit_logo.png" alt="토끼마켓 로고">
+                <img src="/resources/img/rabbit_logo.png" alt="토끼마켓 로고">
             </div>
         </a>  
     </div>

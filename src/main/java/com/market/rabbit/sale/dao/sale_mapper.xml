@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC 
+<!DOCTYPE mapper PUBLIC
 	"-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
- >
- 
- <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
- <mapper namespace="com.market.rabbit.member.dao.SaleDAO">
- 
+>
 
- 	
+<mapper namespace="com.market.rabbit.sale.dao.SaleDAO">
+ 	<select id="getSaleCategory" resultType="saleCategory">
+ 		SELECT * FROM sale_category
+ 	</select>
  </mapper>

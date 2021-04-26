@@ -133,6 +133,15 @@
 	          <version>4.2.17.RELEASE</version>
 	      </dependency>
 		
+		<!-- 동영상 파일 설정을 위한 ffmeg -->
+		<!-- https://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg -->
+		<dependency>
+		    <groupId>net.bramp.ffmpeg</groupId>
+		    <artifactId>ffmpeg</artifactId>
+		    <version>0.6.2</version>
+		</dependency>
+		
+		
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
