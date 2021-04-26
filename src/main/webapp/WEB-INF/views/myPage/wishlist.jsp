@@ -28,6 +28,11 @@
 	<jsp:include page="top.jsp"/>
 	<jsp:include page="navi.jsp"/>
 	 -->
+	 
+	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+   	<jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
+   
+   	<div class="our_content_area">
 	
 	<!-- 리스트에 아무것도 없을때 -->
 		<div id="wish">
