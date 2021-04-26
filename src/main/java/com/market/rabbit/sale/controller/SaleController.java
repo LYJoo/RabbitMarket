@@ -18,7 +18,7 @@ public class SaleController {
 	public String home(Model model) {
 
 		
-		return "sale/mainPage";
+		return "sale/reviewWriteForm";
 	}
 	
 }

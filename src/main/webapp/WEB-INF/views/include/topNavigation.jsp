@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>메인</title>
     <style>
         body { 
@@ -20,8 +20,8 @@
             text-align: right;
         }
         #login_bar_list img{
-            padding-right: 30px;
             width: 30px;
+            height: 30px;
         }
 
         #login_bar_unmember {
@@ -32,8 +32,8 @@
         }
 
         #login_bar_unmember_list img{
-            padding-right: 30px;
-            width: 30px;
+           	width: 30px;
+           	height: 30px;
             vertical-align: middle;
         }
 
@@ -47,10 +47,6 @@
         #login_bar_unmember a:active{
             color: black;
             text-decoration: none;
-        }
-
-        #login_bar_unmember img{
-            width: 30px;
         }
 
         .profile_circle_box {
@@ -126,9 +122,9 @@
 <c:if test="${sessionScope.loginId ne null}">
 <div id="login_bar">
     <span id="login_bar_list">
-        <a href="#"><img src="resources/img/callcenter.png" alt="고객센터"></a>
-        <a href="#"><img src="resources/img/message.png" alt="쪽지"></a> 
-        <a href="#"><img src="resources/img/bell.png" alt="알림"></a>
+        <a href="#"><img style="margin-right: 30px" src="resources/img/callcenter.png" alt="고객센터"></a>
+        <a href="#"><img style="margin-right: 30px" src="resources/img/message.png" alt="쪽지"></a> 
+        <a href="#"><img style="margin-right: 30px" src="resources/img/bell.png" alt="알림"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
             <img id="profile_img"src="resources/img/dog.jpg" alt="프로필사진"><!-- 나중에 프로필 사진 가져오기 -->
@@ -155,10 +151,10 @@
 
  <c:if test="${sessionScope.loginId eq null && sessionScope.adminId eq null}">
     <div id="login_bar_unmember">
-        <sapn id="login_bar_unmember_list">
-            <a href="#"><img src="resources/img/callcenter.png" alt="고객센터"></a>
+        <span id="login_bar_unmember_list">
+            <a href="#"><img style="margin-right: 30px" src="resources/img/callcenter.png" alt="고객센터"></a>
             <a href="#">로그인</a>
-        </sapn>
+        </span>
     </div>
     <div id="logout_div">
     </div>
@@ -167,7 +163,7 @@
 <c:if test="${sessionScope.loginId eq null && sessionScope.adminId ne null}">
 <div id="login_bar">
     <span id="login_bar_list">
-        <a href="#"><img src="resources/img/callcenter.png" alt="고객센터"></a>
+        <a href="#"><img style="margin-right: 30px" src="resources/img/callcenter.png" alt="고객센터"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
             <img id="profile_img"src="resources/img/default_profile.png" alt="프로필사진"> <!-- 관리자는 기본 이미지 -->

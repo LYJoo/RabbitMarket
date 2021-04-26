@@ -1,6 +1,5 @@
 #container{
     min-width: 1920px;
-    background-color: #FBF7F2;
 }
 table, th, td{
     border: 0px solid black;
@@ -8,8 +7,11 @@ table, th, td{
     border-collapse: collapse;
     font-size: 20px;
 }
-th, td{
-    width: 50%;
+th{
+    width: 35%;
+}
+td{
+    width: 65%;
 }
 #main_content{
     margin-top: 100px;
@@ -19,7 +21,7 @@ table{
     text-align: center;
     margin-left:auto;
     margin-right:auto;
-    width: 350px;
+    width: 400px;
 }
 #profile{
     text-align: right;
@@ -42,4 +44,213 @@ p{
     color: white;
     font-weight: 600;
     border: none;
+}
+
+.msg-btn{
+    float: right;
+    width: 100px;
+    height: 40px;
+    margin: 10px;
+}
+
+#profile-table{
+    margin-left:auto; 
+    margin-right:auto; 
+    width: 80px;
+    border: 1px solid #F79646;
+    border-collapse: collapse;
+}
+#profile-table td {
+    border: 1px solid #F79646;
+}
+
+.profile-btn{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color:#FBF7F2;
+    color: gray;
+    font-weight: 500;
+    border: none;
+}
+
+#confirmMsg{
+    display: inline-block;
+    color: palevioletred;
+    font-size: 16px;
+}
+
+.info_title{
+    font-weight: 600;
+    font-size: larger;
+}
+
+#changePw_table{
+    width: 480px;
+    padding: 20px;
+}
+
+#changePw_table th{
+    width: 35%;
+    padding: 20px;
+}
+#changePw_table td{
+    width: 65%;
+    padding: 20px;
+}
+
+#withdraw_table{
+    width: 440px;
+    
+}
+#withdraw_table th{
+    padding: 15px;
+    width: 40%;
+}
+
+#withdraw_table td{
+    padding: 15px;
+    width: 60%;
+}
+
+#withdraw_notice{
+    text-align: center;
+    color: red;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.main-logo{
+    text-align: center;
+    margin: 30px;
+}
+
+.msg-main_content{
+    margin: 40px;
+}
+.msg-title{
+    text-align: left;
+    font-weight: 600;
+    font-size: 22px;
+}
+.msg-detail-info{
+    margin: 20px 0;
+    width: 450px;
+}
+.msg-detail-info-span{
+    border: 1px solid #F79646;
+    padding: 10px;
+    width: 50%;
+    margin: 0;
+    
+}
+.msg-detail-content{
+    width: 420px;
+    height: 300px;
+    overflow: scroll;
+}
+.msg-btn{
+    margin: 5px 10px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: #F79646;
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+#msg-write{
+    text-align: left;
+}
+.msg-detail-btn{
+    float: right;
+    margin-right: 40px;
+    margin-top: 10px;
+}
+
+#alarm_list{
+    text-align: center;
+}
+
+#table-alarm{
+    width: 700px;
+}
+
+a:link{
+    color:black;
+    text-decoration: none;
+}
+a:visited{
+    color:black;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+#table-alarm td{
+    background-color: #F5F5F5;
+    border-bottom: 10px solid white;
+    font-size: 16px;
+}
+
+#table-alarm tr #paging{
+    background-color: white;
+    padding: 10px 0;
+}
+
+.btn-alarm-remove{
+    margin: 5px 10px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #F79646;
+    color: white;
+    border: none;
+}
+
+.block-img{
+    width: 30px;
+    height: 40px;
+}
+
+#table-block{
+    width: 600px;
+    border: 0px solid black;
+    border-collapse: collapse;
+    height: 80px;
+}
+
+#table-block td{
+    background-color: #F5F5F5;
+    border-bottom: 10px solid white;
+    font-size: 16px;
+}
+
+.td-block-img{
+    width: 20%;
+}
+.td-block-id{
+    width: 60%;
+}
+.td-block-btn{
+    width: 20%;
+}
+
+.td-block-btn>button{
+    margin: 5px 10px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #F79646;
+    color: white;
+    border: none;
+}
+
+#table-block tr #paging{
+    background-color: white;
+    padding: 10px 0;
 }

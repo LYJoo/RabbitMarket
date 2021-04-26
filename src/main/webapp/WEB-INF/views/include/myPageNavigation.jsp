@@ -5,7 +5,7 @@
 <head>
     <meta charset='utf-8'>
     <title>Page Title</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <style>
     .myPage_left_nav_group{
