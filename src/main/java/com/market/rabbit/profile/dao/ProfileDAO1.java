@@ -8,4 +8,10 @@ public interface ProfileDAO1 {
 
 	ArrayList<WishDTO> wishlist();
 
+	int wishdelete(String wish_idx);
+
+	int allCount();
+
+	ArrayList<WishDTO> wishlist(int start, int end);
+
 }

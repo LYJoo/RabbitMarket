@@ -7,6 +7,12 @@
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
  <mapper namespace="com.market.rabbit.member.dao.ProfileDAO1">
  
-
+	<select id="wishlist" resultType="wish">
+ 		SELECT * FROM WISH ORDER BY wish_idx DESC
+ 	</select>
+ 	
+ 	<delete id="delete">
+ 		DELETE FROM WISH WHERE wish_idx=#{param1}
+ 	</delete>
  	
  </mapper>

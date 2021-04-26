@@ -65,7 +65,7 @@
 				</c:forEach>
 			</table>
 		</div>
-	
+	</div>
 	</body>
 	<script>
 	   var msg = "${msg}";
