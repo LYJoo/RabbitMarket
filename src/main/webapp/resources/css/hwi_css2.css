@@ -2,7 +2,11 @@
     min-width: 1920px;
 }
 #main_content{
-    margin-top: 200px;
+	margin-top: 40px;
+}
+.info_title{
+    font-weight: 600;
+    font-size: larger;
 }
 .tab-content{
     display: none;
@@ -14,13 +18,12 @@
 
 table.type04 {
     width: 600px;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: 660px;
     border-collapse: collapse;
     border-spacing: 1px;
     text-align: center;
     line-height: 1.5;
-    border-top: 2px solid #ccc;
+    border-top: 0px solid #ccc;
 }
 table.type04 th {
     font-weight: bold;

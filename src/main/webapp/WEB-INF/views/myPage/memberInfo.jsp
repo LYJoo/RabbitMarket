@@ -10,16 +10,13 @@
         <style type="text/css"></style>
     </head>
     <body>
-        <div id="container">
-        <header>쪽지 알람 로그아웃</header>
-        <nav>판매리스트 마이페이지 고객센터</nav>
-        <div id="left_nav">회원정보 키워드 판매내역 구매내역 위시리스트 알림 차단목록 신고내역 1:1문의내역</div>
+        <jsp:include page="../include/topNavigation.jsp"></jsp:include>    
         <div id="main_content">
+        	<jsp:include page="../include/myPageNavigation.jsp"></jsp:include> 
             <div id="profile">
                 <a href="">내 프로필 보기</a>
             </div>
-            <div id="info">
-                <table>
+            <table id="table-mypage">
                     <tr>
                         <td colspan="2"><p><img src="1.png" alt="" style="width: 150px; height: 150px;"></p></td>
                     </tr>
@@ -47,15 +44,15 @@
                         <th>주소</th>
                         <td>서울 금천구 가산동 448 대륭테크노타운 3차 1109호</td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                        	<button class="btn-info">회원정보수정</button>
+                			<button class="btn-info">비밀번호변경</button>
+                			<button class="btn-info">회원탈퇴</button>
+                        </td>
+                    </tr>
                 </table>
-            </div>
-            <div id="btn">
-                <button class="info_btn">회원정보수정</button>
-                <button class="info_btn">비밀번호변경</button>
-                <button class="info_btn">회원탈퇴</button>
-            </div>
         </div>
-    </div>
     </body>
     <script type="text/javascript"></script>
 </html>
