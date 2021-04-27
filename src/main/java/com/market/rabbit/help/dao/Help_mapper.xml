@@ -5,8 +5,17 @@
  >
  
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
- <mapper namespace="com.market.rabbit.member.dao.HelpDAO">
- 
-
+ <mapper namespace="com.market.rabbit.help.dao.HelpDAO">
+ 	
+ 	<!-- 공지사항 리스트 : 전체수 / 페이징리스트-->
+	<select id="allCountNotice" resultType="int">
+		SELECT COUNT(*) AS cnt FROM notice
+	</select>
+	<select id="noticeList" resultType="notice">
+		SELECT notice_idx, admin_id, subject, content,reg_date, rnum 
+		    FROM (SELECT notice_idx, admin_id, subject, content,reg_date, ROW_NUMBER() 
+		                OVER(ORDER BY notice_idx DESC) AS rnum FROM notice)
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
  	
  </mapper>
