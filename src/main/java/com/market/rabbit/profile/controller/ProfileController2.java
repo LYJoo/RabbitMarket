@@ -1,23 +1,31 @@
 package com.market.rabbit.profile.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.market.rabbit.profile.service.ProfileService2;
 
 
 @Controller
 public class ProfileController2 {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	@Autowired ProfileService2 service;
 	
 	@RequestMapping(value = "/memberInfo", method = RequestMethod.GET)
-	public String callMemberInfo(Model model) {
+	public ModelAndView callMemberInfo(Model model, HttpSession session) {
 		logger.info("마이페이지-회원정보요청");
-		return "myPage/memberInfo";
+		//return "myPage/memberInfo";
+		
+		return service.callMemberInfo(session);
 	}
 	
 	@RequestMapping(value = "/memberInfoUpdateForm", method = RequestMethod.GET)

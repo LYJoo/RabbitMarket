@@ -5,8 +5,14 @@
  >
  
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
- <mapper namespace="com.market.rabbit.member.dao.ProfileDAO2">
- 
+ <mapper namespace="com.market.rabbit.profile.dao.ProfileDAO2">
+ 	<select id="callMemberInfo" resultType="member">
+ 		SELECT * FROM member WHERE member_id = #{param1}
+ 	</select>
+ 	
+ 	<select id="callMemberProfile" resultType="profileFile">
+ 		SELECT * FROM profilefile WHERE member_id = #{param1}
+ 	</select>
 
  	
  </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,27 +23,30 @@
                     </tr>
                     <tr>
                         <th>아이디</th>
-                        <td>test1</td>
+                        <td>${dto.member_id }</td>
                     </tr>
                     <tr>
                         <th>이름</th>
-                        <td>홍길동</td>
+                        <td>${dto.name }</td>
                     </tr>
                     <tr>
                         <th>생년월일</th>
-                        <td>1993.09.18</td>
+                        <td>
+                        	<fmt:formatDate var="resultRegDt" value="${dto.birth_date }" pattern="yyyy-MM-dd"/>
+                        	${resultRegDt}
+                        </td>
                     </tr>
                     <tr>
                         <th>핸드폰번호</th>
-                        <td>010-1111-2222</td>
+                        <td>${dto.phone }</td>
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td>email@naver.com</td>
+                        <td>${dto.email }</td>
                     </tr>
                     <tr>
                         <th>주소</th>
-                        <td>서울 금천구 가산동 448 대륭테크노타운 3차 1109호</td>
+                        <td>${dto.address }</td>
                     </tr>
                     <tr>
                         <td colspan="2">
