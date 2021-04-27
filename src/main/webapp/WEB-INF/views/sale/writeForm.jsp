@@ -33,7 +33,7 @@
     textarea{
         width: 100%;
         height: 300px;
-        font-size: 15px;
+        font-size: 13px;
         resize: none;
         border: none;
         outline: none;
@@ -176,8 +176,8 @@
 
     .dot {
         cursor: pointer;
-        height: 15px;
-        width: 15px;
+        height: 8px;
+        width: 8px;
         margin: 0 2px;
         background-color: #bbb;
         border-radius: 50%;
@@ -217,8 +217,10 @@
     <div class="slideshow-container">
 
 	    <div class="mySlides fade">
-	      <img src="/photo/16187543239120.jpg" style="width:100%">
-	      <div class="text">사진1</div>
+	      <video width="100%"controls>
+                <source src="/photo/video.mp4" type="video/mp4">
+            </video>
+	      <div class="text">동영상1</div>
 	    </div>
 	    
 	    <div class="mySlides fade">
@@ -232,8 +234,10 @@
 	    </div>
 	
 	    <div class="mySlides fade">
-	        <img src="/photo/dog2.jpg" style="width:100%">
-	        <div class="text">사진4</div>
+	        <video width="100%"controls>
+                <source src="/photo/video.mp4" type="video/mp4">
+            </video>
+	        <div class="text">동영상2</div>
 	      </div>
 	
 	      <div class="mySlides fade">
@@ -279,7 +283,7 @@
             </td>
             <td style="width: 30%;">
                 <select name="categoryBox" id="categoryBox" class="productSelectBox">
-                    <option value="default">카테고리선택</option>
+                    <option value="default">카테고리 선택</option>
                     <c:forEach items="${saleCategory}" var="saleCategory">
 	                    <option value="${saleCategory.s_category_idx}">${saleCategory.s_category_name}</option>
                     </c:forEach>
