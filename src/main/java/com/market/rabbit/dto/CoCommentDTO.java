@@ -10,8 +10,8 @@ public class CoCommentDTO {
 	private Number cocomment_idx;
 	private String comment_content;
 	private Date reg_date;
-	private String isblind;
-	private String isdelete;
+	private boolean isblind;
+	private boolean isdelete;
 	private Number comment_idx;
 	private String member_id;
 	
@@ -33,16 +33,16 @@ public class CoCommentDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	public String getIsblind() {
+	public boolean isIsblind() {
 		return isblind;
 	}
-	public void setIsblind(String isblind) {
+	public void setIsblind(boolean isblind) {
 		this.isblind = isblind;
 	}
-	public String getIsdelete() {
+	public boolean isIsdelete() {
 		return isdelete;
 	}
-	public void setIsdelete(String isdelete) {
+	public void setIsdelete(boolean isdelete) {
 		this.isdelete = isdelete;
 	}
 	public Number getComment_idx() {
@@ -58,5 +58,6 @@ public class CoCommentDTO {
 		this.member_id = member_id;
 	}
 	
+
 	
 }

@@ -2,11 +2,10 @@
     min-width: 1920px;
 }
 table, th, td{
-    border: 0px solid black;
-    padding: 10px;
     border-collapse: collapse;
     font-size: 20px;
 }
+
 th{
     width: 35%;
 }
@@ -14,14 +13,30 @@ td{
     width: 65%;
 }
 #main_content{
-    margin-top: 100px;
+	margin-top: 40px;
 }
-table{
-    margin: 10px;
+
+#table-mypage{
+	border:0px solid black;
     text-align: center;
-    margin-left:auto;
-    margin-right:auto;
-    width: 400px;
+    margin-left:645px;
+    width: 600px;
+}
+
+
+#table-mypage, #table-mypage th, #table-mypage td{
+	padding: 15px
+}
+
+#table-mypageUpdate{
+	border:0px solid black;
+    text-align: center;
+    margin-left:660px;
+    width: 600px;
+}
+
+#table-mypageUpdate, #table-mypageUpdate th, #table-mypageUpdate td{
+	padding: 8px;
 }
 #profile{
     text-align: right;
@@ -34,8 +49,25 @@ p{
     text-align: center;
     padding: 10px;
 }
-.info_btn{
-    margin: 30px;
+
+.btn-info{
+	text-align: center;
+    padding: 10px;
+    margin: 5px;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: #F79646;
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-info-update{
+	text-align: center;
+    padding: 10px;
+    margin: 10px;
     width: 150px;
     height: 50px;
     cursor: pointer;
@@ -88,7 +120,9 @@ p{
 #changePw_table{
     width: 480px;
     padding: 20px;
+    margin-left: 755px;
 }
+
 
 #changePw_table th{
     width: 35%;
@@ -99,8 +133,25 @@ p{
     padding: 20px;
 }
 
+.btn-pw-update{
+	text-align: center;
+    padding: 10px;
+    margin: 10px;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: #F79646;
+    color: white;
+    font-weight: 600;
+    border: none;
+    
+}
+
 #withdraw_table{
-    width: 440px;
+    width: 460px;
+    margin-left: 755px;
+    text-align: center;
     
 }
 #withdraw_table th{
@@ -116,7 +167,7 @@ p{
 #withdraw_notice{
     text-align: center;
     color: red;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -169,12 +220,12 @@ p{
     margin-top: 10px;
 }
 
-#alarm_list{
-    text-align: center;
-}
 
 #table-alarm{
     width: 700px;
+    text-align: center;
+    margin-left: 625px;
+    margin-top: 30px
 }
 
 a:link{
@@ -217,10 +268,12 @@ a:hover{
 }
 
 #table-block{
+	text-align:center;
     width: 600px;
     border: 0px solid black;
     border-collapse: collapse;
     height: 80px;
+    margin-left: 675px;
 }
 
 #table-block td{

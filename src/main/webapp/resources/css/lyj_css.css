@@ -1,0 +1,252 @@
+/*리스트 전체박스*/
+#list_content{
+    width: 99%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+#list_content h2{
+    font-weight: 600;
+}
+/*본문전체박스 : 상세, 등록, 수정*/
+#body_content{
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*상단 flex 박스*/
+.flex_box{
+    margin: 0px 10px;
+    display:flex;
+    flex-direction: row;
+    align-items: baseline;
+    white-space:nowrap;/*줄바꿈금지*/
+}
+.flex_box h2{
+    margin: 10px;
+}
+.btn_flex{
+    justify-content: space-between;
+    align-items: center;
+}
+.btn_flex h2{
+    font-size: 24px;
+    margin: 10px;
+}
+.btn_flex button{
+    margin-top: auto;
+    padding: 5px 10px;
+}
+/*매너테이블 flex*/
+.flex_box2{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+/*테이블 공통 스타일*/
+table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin : 10px 0px;
+}
+table th{
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+table td{
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+/*리스트 테이블 스타일*/
+#list_table {
+    table-layout: fixed;
+}
+#list_table th,#list_table td{
+    text-align: center;
+    text-overflow: ellipsis;/*..*/
+    overflow: hidden;
+    white-space: nowrap;
+}
+#list_subject{
+    width: 40%;
+    max-width: 350px;
+}
+/*페이징스타일*/
+#list_table #paging{
+    border: none;
+}
+#list_table #paging>div{
+	width:100%;
+}
+/**/
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: darksalmon;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: darksalmon;
+    border-color: darksalmon;
+}
+/**/
+
+#list_table>tbody>tr>td>a { /*링크스타일*/
+    text-decoration: none;
+}
+#list_table>tbody>tr>td>a:hover{
+    color: coral!important;
+    text-decoration: none;
+}
+#list_table>tbody>tr>td>a:visited{
+    color: black;
+}
+
+/*상세 수정 등록 테이블 스타일*/
+#other_table th{
+    border-right: 1px solid #ccc;
+    width: 8rem;
+}
+#other_table td{
+    text-align: left;
+}
+#other_table #btn_area{
+    border: none;
+}
+
+/*관리자 등록 수정 테이블 스타일*/
+#admin_table{
+    width: 60%;    
+    margin-left: auto;
+    margin-right: auto;
+}
+#admin_table td{
+    text-align: left;
+}
+#admin_table #notice_area{
+    color: darkgray;
+    font-size: 12px;
+}
+
+/*테이블 안 요소*/
+td input[type='text']
+,td input[type='password']
+,td textarea{
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    width: 98%;
+    height: 97%;
+    padding: 4px;
+    resize: none;/*사이즈임의변경불가*/
+}
+td input[type='text']
+,td input[type='password']{
+    background-color: rgb(243, 243, 243);
+}
+td input[type='text']:focus
+,td input[type='password']:focus{
+    background-color: white;
+}
+#content_td{/*내용,textarea가 있는 td*/
+    height: 400px;
+    white-space: pre-line;/*style="white-space: pre-line;"*/
+}
+
+/*매너질문 테이블 스타일*/
+.mannerq_table
+, .mannerq_table th
+, .mannerq_table td{
+    width: 50%;
+    min-width: 300px;
+    text-align: left;
+    border: none;
+    padding: 4px;
+}
+.mannerq_table td{
+    animation: fadein 2s;
+}
+@keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+.mannerq_type{
+    padding: 4px;
+    width: 180px;
+    text-align: center;
+    color: white;
+    background-color: rgb(211, 130, 24);
+    border-radius: 10px;
+}
+.mannerq_table>tbody>tr>td>a{
+    color: darkgray;
+    text-decoration: none;
+}
+.mannerq_table>tbody>tr>td>a:hover{
+    color: coral;
+}
+#mannerq_input_box{
+    border: 2px solid coral;
+    border-radius: 4px;
+    padding: 10px 20px;
+    vertical-align:middle;
+}
+#mannerq_input_box form{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 20px;
+}
+#mannerq_input_box select
+, #mannerq_input_box input[type='text']{
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 4px;
+    background-color: rgb(243, 243, 243);
+}
+#mannerq_input_box select:focus
+, #mannerq_input_box input[type='text']:focus{
+    background-color:white;
+}
+
+/*버튼 공통 스타일*/
+button,input[type='submit']{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(211, 130, 24);
+    color: rgb(211, 130, 24);
+    background-color: rgb(252, 239, 230);
+    transition: all 0.5s;
+}
+button:hover,input[type='submit']:hover{
+    color: white ;
+    background-color: rgb(211, 130, 24);     
+}
+/*리스트 버튼 스타일*/
+/*상세 수정 등록 버튼 스타일*/
+.btn{
+    width: 30%;
+    min-width: 200px;
+}
