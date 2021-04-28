@@ -41,11 +41,11 @@ public class ProfileService2 {
 		
 		MemberDTO dto = dao.callMemberInfo(loginId);
 		ProfileFileDTO profileDto = dao.callMemberProfile(loginId);
-		logger.info("profile : "+profileDto.getOrifilename());
+		logger.info("profile : "+profileDto.getOriFileName());
 		
 		mav.addObject("dto", dto);
 		//mav.addObject("profileDto", profileDto);
-		mav.addObject("path", "/myProfile/"+profileDto.getNewfilename());
+		mav.addObject("path", "/myProfile/"+profileDto.getNewFileName());
 		mav.setViewName(page);
 		return mav;
 	}
@@ -61,11 +61,11 @@ public class ProfileService2 {
 		
 		MemberDTO dto = dao.callMemberInfo(loginId);
 		ProfileFileDTO profileDto = dao.callMemberProfile(loginId);
-		profileName.put("oriFileName", profileDto.getOrifilename());
-		profileName.put("newFileName", profileDto.getNewfilename());
+		profileName.put("oriFileName", profileDto.getOriFileName());
+		profileName.put("newFileName", profileDto.getNewFileName());
 		
 		mav.addObject("dto", dto);
-		mav.addObject("path", "/myProfile/" + profileDto.getNewfilename());
+		mav.addObject("path", "/myProfile/" + profileDto.getNewFileName());
 		mav.addObject("profileName1", profileName);
 		mav.setViewName(page);
 
@@ -129,8 +129,8 @@ public class ProfileService2 {
 		
 		
 		profile.setMember_id((String) dto.get("member_id"));
-		profile.setOrifilename((String) dto.get("oriFileName"));
-		profile.setNewfilename((String) dto.get("newFileName"));
+		profile.setOriFileName((String) dto.get("oriFileName"));
+		profile.setNewFileName((String) dto.get("newFileName"));
 		
 		if(dao.updateProfile(profile) > 0) {
 			logger.info("프로필 수정 성공");
