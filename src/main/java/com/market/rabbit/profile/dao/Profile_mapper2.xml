@@ -36,5 +36,9 @@
 	<update id="updatePw">
 		UPDATE member SET pw=#{param2} WHERE member_id=#{param1}
 	</update>
+	
+	<delete id="delMemberWithdraw">
+		DELETE FROM member WHERE member_id=#{param1}
+	</delete>
  	
  </mapper>
