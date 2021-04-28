@@ -13,7 +13,7 @@
         }
 
         .main_list {
-            width: 100%;
+            width: 1400px;
             margin: 0 auto;
         }
 
@@ -115,7 +115,7 @@
                     판매중
                 </div>
                 <a href="#">
-                <img src="resources/img/food.jpg"/>
+                <img src="/resources/img/food.jpg"/>
                 <p>떡볶이 팔아요</p>
                 <p>30,000원</p>
                 <p>1시간전</p>

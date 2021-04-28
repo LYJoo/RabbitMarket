@@ -8,4 +8,48 @@
  	<select id="getSaleCategory" resultType="saleCategory">
  		SELECT * FROM sale_category
  	</select>
+ 	
+ 	<insert id="save" parameterType="sale" useGeneratedKeys="true" keyProperty="product_idx" keyColumn="product_idx">
+ 		INSERT INTO sale
+ 		(
+	 		product_idx, 
+	 		seller_id, 
+	 		sale_subject, 
+	 		sale_content, 
+	 		price, 
+	 		minor, 
+	 		negotiation, 
+	 		sale_location, 
+	 		s_category_idx, 
+	 		keyword
+ 		) VALUES(
+ 			seq_sale.NEXTVAL,
+ 			#{seller_id},
+ 			#{sale_subject}, 
+	 		#{sale_content}, 
+	 		#{price}, 
+	 		#{minor}, 
+	 		#{negotiation}, 
+	 		#{sale_location}, 
+	 		#{s_category_idx}, 
+	 		#{keyword}
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="saveFile" parameterType="sale">
+ 		INSERT INTO sale_file(file_idx, oriFileName,newFileName,product_idx) VALUES(seq_sale_file.NEXTVAL,#{param2},#{param1}, #{param3})
+ 	</insert>
+ 	
+ 	<delete id="transction" parameterType="int">
+ 		DELETE FROM sale WHERE product_idx=#{param}
+ 	</delete>
+ 	
+ 	<select id="selectKeywordAlarmMember" resultType="string">
+ 		SELECT member_id FROM keyword WHERE keyword=#{param1} AND member_id NOT LIKE #{param2} 
+ 	</select>
+ 	
+ 	<insert id="insertKeywordAlarm">
+ 		INSERT INTO alarm(alarm_idx, alarm_content, member_id, code_num) 
+			VALUES(seq_alarm.NEXTVAL, #{param2}, #{param1}, 2002)
+ 	</insert>
  </mapper>

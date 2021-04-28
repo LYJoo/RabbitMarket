@@ -18,7 +18,7 @@ public class SaleDTO {
 	private boolean negotiation;//가격제안가능여부
 	private boolean isBlind;//블라인드여부
 	private boolean isDelete;//삭제여부
-	private String location;//판매위치
+	private String sale_location;//판매위치
 	//
 	private int s_category_idx;//카테고리번호 -fk
 	private String s_category_name;//카테고리명
@@ -100,11 +100,11 @@ public class SaleDTO {
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-	public String getLocation() {
-		return location;
+	public String getSale_location() {
+		return sale_location;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+	public void setSale_location(String sale_location) {
+		this.sale_location = sale_location;
 	}
 	public int getS_category_idx() {
 		return s_category_idx;
@@ -142,6 +142,7 @@ public class SaleDTO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+
 	
 
 	
