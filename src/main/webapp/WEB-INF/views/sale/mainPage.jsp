@@ -30,6 +30,7 @@
 
         .list_detail img{
             width: 100%;
+            height: 70%
         }
 
         .list_detail div{
@@ -86,6 +87,12 @@
             font-size: small;
             margin-bottom: 3px;
         }
+        
+        .location{
+        	 margin-left: 8%;
+        	 color: #F79646;
+        	 font-weight: 500;
+        }
 
     </style>
 </head>
@@ -102,279 +109,45 @@
         </div>
 
         <div class="write_area_cover">
-            <div class="write_area">
-            글 올리기
+        <c:if test="${sessionScope.loginId ne null}">
+        	 <div class="write_area">
+            	글 올리기
             </div>
+        </c:if>
+           
         </div>
-
-        
+		
+		<div class="location">${location}</div>
+		
         <div class="list_start">
-
-            <div class="list_detail">
+			<c:forEach items="${list}" var="item" >
+				<div class="list_detail">
                 <div class="sale_state">
-                    판매중
+                   <c:if test="${item.code_num eq 3001}">
+                   	판매중
+                   </c:if>
+                    <c:if test="${item.code_num eq 3002}">
+                   	거래중
+                   </c:if>
                 </div>
                 <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
+                <img src="/saleFile/${item.saleFileDto.newFileName}"/>
+                <p> ${item.sale_subject}</p>
+                <p>${item.price}원</p>
+                <p>${item.reg_date}</p>
+                <p>관심 ${item.wishCnt} 조회수 ${item.bHit}</p>
                 </a>
             </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-             <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
-            <div class="list_detail">
-                <div class="sale_state">
-                    판매중
-                </div>
-                <a href="#">
-                <img src="/resources/img/food.jpg"/>
-                <p>떡볶이 팔아요</p>
-                <p>30,000원</p>
-                <p>1시간전</p>
-                <p>관심 8 조회수 10</p>
-            </a>
-            </div>
-
+			</c:forEach>
         </div>
 
     </div>
 </body>
 <script>
-	
+	var msg = '${msg}';
+	if(msg != ""){
+		alert(msg);
+	}
+
 </script>
 </html>

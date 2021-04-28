@@ -19,4 +19,6 @@ public interface ProfileDAO2 {
 
 	void updatePw(String loginId, String afterPw);
 
+	void delMemberWithdraw(String loginId);
+
 }

@@ -174,6 +174,22 @@ public class ProfileService2 {
 		mav.setViewName(page);
 		return mav;
 	}
+
+	public ModelAndView delMemberWithdraw(HttpSession session, String currPw, RedirectAttributes rAttr) {
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/myPage/memberInfo";
+		String msg = "회원탈퇴에 실패하였습니다.";
+		String loginId = "hwi";
+		if(dao.confirmPw(loginId, currPw) != null) {
+			logger.info("비밀번호가 일치합니다. 회원탈퇴합니다.");
+			dao.delMemberWithdraw(loginId);
+			page="redirect:/sale/main";
+			msg = "회원탈퇴에 성공하였습니다.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		mav.setViewName(page);
+		return mav;
+	}
 	
 
 	

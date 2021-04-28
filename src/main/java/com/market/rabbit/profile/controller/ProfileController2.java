@@ -81,6 +81,12 @@ public class ProfileController2 {
 		return "myPage/memberInfo_withdrawForm";
 	}
 	
+	@RequestMapping(value = "myPage/memberWithdraw", method = RequestMethod.POST)
+	public ModelAndView delMemberWithdraw(HttpSession session, @RequestParam String currPw, RedirectAttributes rAttr) {
+		logger.info("마이페이지-탈퇴요청");
+		return service.delMemberWithdraw(session, currPw, rAttr);
+	}
+	
 	@RequestMapping(value = "myPage/memberAlarmList", method = RequestMethod.GET)
 	public String callMemberAlarmList(Model model) {
 		logger.info("마이페이지-알림리스트페이지요청");
