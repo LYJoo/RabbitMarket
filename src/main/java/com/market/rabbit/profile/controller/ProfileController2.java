@@ -44,10 +44,10 @@ public class ProfileController2 {
 	
 	@RequestMapping(value = "myPage/memberInfoUpdate", method = RequestMethod.POST)
 	//public ModelAndView callInfoUpdate(@ModelAttribute MemberDTO dto, @RequestParam String oriFileName, @RequestParam String newFileName) {
-	public ModelAndView callInfoUpdate(@RequestParam HashMap<String, Object> dto) {
+	public ModelAndView updateMemberInfo(@RequestParam HashMap<String, Object> dto) {
 		logger.info("마이페이지-회원수정요청");
 		//return "myPage/memberInfo_updateForm";
-		return service.callInfoUpdate(dto);
+		return service.updateMemberInfo(dto);
 	}
 	
 	@RequestMapping(value = "myPage/profileUploadForm", method = RequestMethod.GET)
@@ -67,6 +67,12 @@ public class ProfileController2 {
 	public String callPwUpdateForm(Model model) {
 		logger.info("마이페이지-비밀번호변경폼요청");
 		return "myPage/memberInfo_pwUpdateForm";
+	}
+	
+	@RequestMapping(value = "myPage/memberPwUpdate", method = RequestMethod.POST)
+	public ModelAndView updateMemberPw(@RequestParam String currPw, @RequestParam String afterPw, RedirectAttributes rAttr) {
+		logger.info("마이페이지-비밀번호변경요청");
+		return service.updateMemberPw(currPw, afterPw, rAttr);
 	}
 	
 	@RequestMapping(value = "myPage/memberWithdrawForm", method = RequestMethod.GET)

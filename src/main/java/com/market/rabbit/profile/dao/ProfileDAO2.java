@@ -13,6 +13,10 @@ public interface ProfileDAO2 {
 
 	int updateMember(MemberDTO member);
 
-	String getOriFileName(String member_id);
+	String callOriFileName(String member_id);
+
+	String confirmPw(String loginId, String currPw);
+
+	void updatePw(String loginId, String afterPw);
 
 }

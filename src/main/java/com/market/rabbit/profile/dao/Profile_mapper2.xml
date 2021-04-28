@@ -28,5 +28,13 @@
 	<select id="getOriFileName" resultType="String" parameterType="String">
 		SELECT newFileName FROM profilefile WHERE member_id=#{param1}
 	</select>
+	
+	<select id="confirmPw" resultType="String">
+		SELECT member_id FROM member WHERE member_id=#{param1} AND pw=#{param2}
+	</select>
+	
+	<update id="updatePw">
+		UPDATE member SET pw=#{param2} WHERE member_id=#{param1}
+	</update>
  	
  </mapper>

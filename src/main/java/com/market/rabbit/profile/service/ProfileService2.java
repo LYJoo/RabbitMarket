@@ -108,12 +108,12 @@ public class ProfileService2 {
 	}
 
 	@Transactional
-	public ModelAndView callInfoUpdate(HashMap<String, Object> dto) {
+	public ModelAndView updateMemberInfo(HashMap<String, Object> dto) {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/myPage/memberInfo";
 		MemberDTO member = new MemberDTO();
 		ProfileFileDTO profile = new ProfileFileDTO();
-		String beforeUpdateOriFileName = dao.getOriFileName((String)dto.get("member_id"));
+		String beforeUpdateOriFileName = dao.callOriFileName((String)dto.get("member_id"));
 		
 		try {
 			member.setMember_id((String) dto.get("member_id"));
@@ -154,6 +154,23 @@ public class ProfileService2 {
 		}
 		
 		
+		mav.setViewName(page);
+		return mav;
+	}
+
+	@Transactional
+	public ModelAndView updateMemberPw(String currPw, String afterPw, RedirectAttributes rAttr) {
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/myPage/memberPwUpdateForm";
+		String msg = "비밀번호 변경에 실패하였습니다.";
+		String loginId = "hwi";
+		if(dao.confirmPw(loginId, currPw) != null) {
+			logger.info("비밀번호가 일치합니다. 비밀번호를 변경합니다.");
+			dao.updatePw(loginId, afterPw);
+			msg = "비밀번호 변경에 성공하였습니다.";
+		}
+		
+		rAttr.addFlashAttribute("msg", msg);
 		mav.setViewName(page);
 		return mav;
 	}
