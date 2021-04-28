@@ -87,6 +87,12 @@
             font-size: small;
             margin-bottom: 3px;
         }
+        
+        .location{
+        	 margin-left: 8%;
+        	 color: #F79646;
+        	 font-weight: 500;
+        }
 
     </style>
 </head>
@@ -103,13 +109,17 @@
         </div>
 
         <div class="write_area_cover">
-            <div class="write_area">
-            글 올리기
+        <c:if test="${sessionScope.loginId ne null}">
+        	 <div class="write_area">
+            	글 올리기
             </div>
+        </c:if>
+           
         </div>
-
+		
+		<div class="location">${location}</div>
+		
         <div class="list_start">
-			
 			<c:forEach items="${list}" var="item" >
 				<div class="list_detail">
                 <div class="sale_state">
@@ -129,8 +139,6 @@
                 </a>
             </div>
 			</c:forEach>
-            
-           
         </div>
 
     </div>

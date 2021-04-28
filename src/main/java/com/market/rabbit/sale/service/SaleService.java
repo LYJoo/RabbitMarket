@@ -46,7 +46,6 @@ public class SaleService {
 	static final int MONTH = 12;
 	
 	public ArrayList<SaleDTO> callProductList_unmember() {
-
 		ArrayList<SaleDTO> list = dao.callProductList_unmember();
 
 		String reg_date;
@@ -81,9 +80,86 @@ public class SaleService {
 		return list;
 	}
 
-	public ArrayList<SaleDTO> callProductList_member() {
+	public int getAge(String loginId) {
 		
-		return dao.callProductList_member();
+		return dao.getAge(loginId);
+	}
+
+	public String getLocation(String loginId) {
+		
+		return dao.getLocation(loginId);
+	}
+
+	public ArrayList<SaleDTO> callProductListMinorMember(String loginId) {
+		ArrayList<SaleDTO> list = dao.callProductListMinorMember(loginId);
+		
+		String reg_date;
+		for (int i = 0; i < list.size(); i++) {
+			try {
+				reg_date = list.get(i).getReg_date();
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = transFormat.parse(reg_date);
+	
+				long curTime = System.currentTimeMillis();
+				long regTime = date.getTime();
+				long diffTime = (curTime - regTime) / 1000;
+				
+				String diff_msg = "";
+
+				if (diffTime < SEC) {
+					diff_msg = "방금 전";
+				} else if ((diffTime /= SEC) < MIN) {
+					diff_msg = diffTime + "분 전";
+				} else if ((diffTime /= MIN) < HOUR) {
+					diff_msg = (diffTime) + "시간 전";
+				} else if ((diffTime /= HOUR) < DAY) {
+					diff_msg = (diffTime) + "일 전";
+				} else {
+					diff_msg = reg_date.substring(0, 10);
+				}
+				list.get(i).setReg_date(diff_msg);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+
+	public ArrayList<SaleDTO> callProductListMember(String loginId) {
+		ArrayList<SaleDTO> list = dao.callProductListMember(loginId);
+		
+		String reg_date;
+		for (int i = 0; i < list.size(); i++) {
+			try {
+				reg_date = list.get(i).getReg_date();
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = transFormat.parse(reg_date);
+	
+				long curTime = System.currentTimeMillis();
+				long regTime = date.getTime();
+				long diffTime = (curTime - regTime) / 1000;
+				
+				String diff_msg = "";
+
+				if (diffTime < SEC) {
+					diff_msg = "방금 전";
+				} else if ((diffTime /= SEC) < MIN) {
+					diff_msg = diffTime + "분 전";
+				} else if ((diffTime /= MIN) < HOUR) {
+					diff_msg = (diffTime) + "시간 전";
+				} else if ((diffTime /= HOUR) < DAY) {
+					diff_msg = (diffTime) + "일 전";
+				} else {
+					diff_msg = reg_date.substring(0, 10);
+				}
+				list.get(i).setReg_date(diff_msg);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
 	}
 	
 	public ArrayList<SaleCategoryDTO> getSaleCategory() {
@@ -251,6 +327,8 @@ public class SaleService {
 	public void insertKeywordAlarm(String member_id, String msg) {
 		dao.insertKeywordAlarm(member_id, msg);
 	}
+
+	
 
 	
 

@@ -32,6 +32,8 @@ public class SaleController {
 	@RequestMapping(value = "/sale/main", method = RequestMethod.GET)
 	public String main(Model model, HttpSession session) {
 		ArrayList<SaleDTO> list = null;
+		int memberAge = 0;
+		String location = "";
 		
 		//해야할것!! 로그인한 사람인지 확인하기
 		String loginId = (String) session.getAttribute("loginId");
@@ -41,8 +43,15 @@ public class SaleController {
 		if(loginId == null) {
 			list = service.callProductList_unmember();
 		}else {
-			list = service.callProductList_member();
+			memberAge = service.getAge(loginId);
+			location = service.getLocation(loginId);
+			if(memberAge <20) {
+				list = service.callProductListMinorMember(loginId);
+			}else {
+				list = service.callProductListMember(loginId);
+			}
 		}
+		model.addAttribute("location",location);
 		model.addAttribute("list",list);
 		return "sale/mainPage";
 	}
