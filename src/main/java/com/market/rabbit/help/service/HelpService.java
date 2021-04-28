@@ -1,6 +1,9 @@
 package com.market.rabbit.help.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -18,7 +21,8 @@ public class HelpService {
 	
 	@Autowired HelpDAO dao;
 	
-	/*공지사항 리스트*/
+	/* 공지 사항 */
+	//공지사항 리스트
 	public HashMap<String, Object> noticeList(int page, int pagePerCnt) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//pagePerCnt 의 기준으로 몇페이지나 만들수 있는가?
@@ -37,5 +41,34 @@ public class HelpService {
 		map.put("currPage", page);
 		return map;
 	}
+	
+	//공지사항 상세보기
+	public NoticeDTO detailNotice(int notice_idx) {
+		return dao.detailNotice(notice_idx);
+	}
+	
+	//공지사항 등록
+	public int writeNotice(NoticeDTO dto) {
+		return dao.writeNotice(dto);
+	}
+	
+	//공지사항 수정
+	public int updateNotice(NoticeDTO dto) {
+		return dao.updateNotice(dto);
+	}	
+	
+	//공지사항 삭제
+	public int delNotice(int notice_idx) {
+		return dao.delNotice(notice_idx);
+	}
 
+	/* 자주묻는질문 */
+
+	
+	
+	
+	
+	
+	
+	
 }

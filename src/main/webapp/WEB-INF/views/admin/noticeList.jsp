@@ -18,7 +18,7 @@
     <div id="list_content">
         <div class="flex_box btn_flex">
             <h2>공지사항</h2>
-            <button onclick="" class="list_btn">공지등록</button>
+            <button onclick="location.href='./writeFormNotice'" class="list_btn">공지등록</button>
         </div>
         <table id="list_table">
             <thead>
@@ -33,10 +33,10 @@
             <tbody id="list">
                 <!-- 불러온 데이터 뿌리는 영역 -->
                 <tr>
-                    <td>10</td>
-                    <td><a href="">제목입니다제목입니다제목입니다제목입니다</a></td>
-                    <td>admin001</td>
-                    <td>2021-04-22</td>
+                    <td>00</td>
+                    <td><a href="">로드중...</a></td>
+                    <td>토끼마켓</td>
+                    <td>0000-00-00</td>
                     <td><a href="">X</a></td>
                 </tr>
             </tbody>
@@ -94,14 +94,14 @@
         for(var i=0;i<list.length;i++){
             content +="<tr>";
             content +="<td>"+list[i].notice_idx+"</td>";
-            content +="<td><a href="+">"+list[i].subject+"</a></td>";
+            content +="<td><a href='./detailNotice/"+list[i].notice_idx+"'>"+list[i].subject+"</a></td>";
             content +="<td>"+list[i].admin_id+"</td>";
             
             //java 에서 가끔 날짜가 milliseconds 로 나올 경우...
             var date = new Date(list[i].reg_date);
             content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
             
-            content +="<td><a href="+">X</a></td>";
+            content +="<td><a href='./delNotice/"+list[i].notice_idx+"'>X</a></td>";
             content +="</tr>";
         }
         $('#list').empty();//원래 있던 리스트들을 비워준다.
