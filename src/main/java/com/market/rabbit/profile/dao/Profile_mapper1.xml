@@ -15,4 +15,12 @@
  		DELETE FROM WISH WHERE wish_idx=#{param1}
  	</delete>
  	
+ 	<select id="profile" resultType="member">
+ 		SELECT member_id, address, manner_percent FROM MEMBER WHERE member_id=#{param1}
+ 	</select>
+ 	
+ 	<select id="fileList" resultType="profileFile">
+ 		SELECT * FROM PROFILEFILE WHRER member_id=#{param1}
+ 	</select>
+ 	
  </mapper>

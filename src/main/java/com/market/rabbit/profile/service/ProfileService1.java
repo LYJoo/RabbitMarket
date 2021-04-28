@@ -7,9 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.market.rabbit.dto.MemberDTO;
+import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.WishDTO;
 import com.market.rabbit.profile.dao.ProfileDAO1;
 
@@ -67,6 +70,18 @@ public class ProfileService1 {
 		map.put("currPage", page);
 		
 		return map;
+	}
+
+	@Transactional
+	public ModelAndView profile(String member_id) {
+		MemberDTO member = dao.profile(member_id);
+		ArrayList<ProfileFileDTO> fileList = dao.fileList(member_id);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("member", member);
+		mav.addObject("fileList", fileList);
+		mav.setViewName("myPage/profile");
+		return mav;
 	}
 
 

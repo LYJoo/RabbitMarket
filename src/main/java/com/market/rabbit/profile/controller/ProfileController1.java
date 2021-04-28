@@ -29,7 +29,7 @@ public class ProfileController1 {
 	//3. 페이징 처리
 	
 	//1. 리스트 불러오기
-	@RequestMapping(value = "/wishlist", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/wishlist", method = RequestMethod.GET)
 	public String wishlist(Model model) {
 		logger.info("위시리스트 요청");
 		service.wishlist(model);
@@ -51,13 +51,13 @@ public class ProfileController1 {
 		
 		logger.info("리스트 페이지 이동");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("wishlist");
+		mav.setViewName("myPage/wishlist");
 		
 		return mav;
 	}
 	
 	//list / 보여줄갯수 / 페이지
-	@RequestMapping(value = "/list/{pagePerCnt}/{page}", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/wishlist/{pagePerCnt}/{page}", method = RequestMethod.GET)
 	public HashMap<String, Object> list(@PathVariable int pagePerCnt, @PathVariable int page) {
 		//@PathVariable 은 요청의 특정 부분을 변수에 담는다.
 		logger.info("pagePerCnt : {}, page : {}", pagePerCnt, page);
@@ -74,6 +74,13 @@ public class ProfileController1 {
 //		
 //		return "profile";
 //	}
+	
+	@RequestMapping(value = "myPage/profile/{member_id}", method = RequestMethod.GET)
+	public ModelAndView profile(@PathVariable String member_id) {
+		logger.info("프로필 요청 : "+member_id);
+		
+		return service.profile(member_id);
+	}
 	
 	//프로필 - 해당사용자가 판매중인 판매게시글 불러오기
 	//프로필 - 해당 사용자에 대한 후기 불러오기
