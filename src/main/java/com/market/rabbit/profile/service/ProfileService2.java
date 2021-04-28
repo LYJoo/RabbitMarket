@@ -110,7 +110,7 @@ public class ProfileService2 {
 	@Transactional
 	public ModelAndView callInfoUpdate(HashMap<String, Object> dto) {
 		ModelAndView mav = new ModelAndView();
-		String page = "myPage/memberInfo";
+		String page = "redirect:/myPage/memberInfo";
 		MemberDTO member = new MemberDTO();
 		ProfileFileDTO profile = new ProfileFileDTO();
 		String beforeUpdateOriFileName = dao.getOriFileName((String)dto.get("member_id"));
