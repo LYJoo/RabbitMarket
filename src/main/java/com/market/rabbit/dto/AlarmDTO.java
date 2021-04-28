@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("alarm")
@@ -9,7 +7,7 @@ public class AlarmDTO {
 	
 	private int alarm_idx;
 	private String alarm_content;
-	private Date reg_date;
+	private String reg_date;
 	private Boolean isCheck;
 	private String member_id;
 	private int code_num;
@@ -25,10 +23,10 @@ public class AlarmDTO {
 	public void setAlarm_content(String alarm_content) {
 		this.alarm_content = alarm_content;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
 	public Boolean getIsCheck() {

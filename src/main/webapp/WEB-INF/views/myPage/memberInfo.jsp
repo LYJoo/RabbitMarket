@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Insert title here</title>
         <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="resources/css/hwi_css.css">
+        <link rel="stylesheet" type="text/css" href="../resources/css/hwi_css.css">
         <style type="text/css"></style>
     </head>
     <body>
@@ -32,8 +32,7 @@
                     <tr>
                         <th>생년월일</th>
                         <td>
-                        	<fmt:formatDate var="resultRegDt" value="${dto.birth_date }" pattern="yyyy-MM-dd"/>
-                        	${resultRegDt}
+                        	${dto.birth_date}
                         </td>
                     </tr>
                     <tr>

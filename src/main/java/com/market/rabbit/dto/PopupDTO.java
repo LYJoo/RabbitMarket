@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("popup")
@@ -12,7 +10,8 @@ public class PopupDTO {
 	private String popup_content;
 	private boolean isLook;
 	private String admin_id;
-	private Date reg_date;
+	private String reg_date;
+	
 	public int getPopup_idx() {
 		return popup_idx;
 	}
@@ -43,12 +42,13 @@ public class PopupDTO {
 	public void setAdmin_id(String admin_id) {
 		this.admin_id = admin_id;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
+	
 
 	
 

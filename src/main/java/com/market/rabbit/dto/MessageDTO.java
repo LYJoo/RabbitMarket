@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("message")
@@ -10,7 +8,7 @@ public class MessageDTO {
 	private int msg_idx;
 	private String send_id;
 	private String msg_content;
-	private Date send_time;
+	private String send_time;
 	private boolean read_boolean;
 	private String member_id;
 	private boolean receiver_delete;
@@ -39,12 +37,12 @@ public class MessageDTO {
 	public void setMsg_content(String msg_content) {
 		this.msg_content = msg_content;
 	}
-
-	public Date getSend_time() {
+	
+	public String getSend_time() {
 		return send_time;
 	}
 
-	public void setSend_time(Date send_time) {
+	public void setSend_time(String send_time) {
 		this.send_time = send_time;
 	}
 

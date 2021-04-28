@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("member")
@@ -30,9 +28,9 @@ public class MemberDTO {
 	private String name;
 	private String phone;
 	private String email;
-	private Date birth_date;
+	private String birth_date;
 	private String address;
-	private Date reg_date;
+	private String reg_date;
 	private int report_cnt;
 	private int black_cnt;
 	private int blind_cnt;
@@ -72,10 +70,10 @@ public class MemberDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getBirth_date() {
+	public String getBirth_date() {
 		return birth_date;
 	}
-	public void setBirth_date(Date birth_date) {
+	public void setBirth_date(String birth_date) {
 		this.birth_date = birth_date;
 	}
 	public String getAddress() {
@@ -84,10 +82,10 @@ public class MemberDTO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
 	public int getReport_cnt() {
@@ -144,6 +142,8 @@ public class MemberDTO {
 	public void setWithdraw(boolean withdraw) {
 		this.withdraw = withdraw;
 	}
+
+	
 	
 	
 	

@@ -7,7 +7,8 @@
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
  <mapper namespace="com.market.rabbit.profile.dao.ProfileDAO2">
  	<select id="callMemberInfo" resultType="member">
- 		SELECT * FROM member WHERE member_id = #{param1}
+ 		SELECT member_id, name, phone, email, to_char(birth_date, 'yyyy-mm-dd') as birth_date, address, reg_date, location 
+ 		FROM member WHERE member_id = #{param1}
  	</select>
  	
  	<select id="callMemberProfile" resultType="profileFile">
@@ -19,9 +20,21 @@
 	</update>
 	
 	<update id="updateMember" parameterType="member">
-		UPDATE profilefile 
+		UPDATE member 
 		SET name=#{name}, birth_date=#{birth_date}, phone=#{phone}, email=#{email}, address=#{address}, location=#{location}
 		WHERE member_id=#{member_id}
+	</update>
+	
+	<select id="getOriFileName" resultType="String" parameterType="String">
+		SELECT newFileName FROM profilefile WHERE member_id=#{param1}
+	</select>
+	
+	<select id="confirmPw" resultType="String">
+		SELECT member_id FROM member WHERE member_id=#{param1} AND pw=#{param2}
+	</select>
+	
+	<update id="updatePw">
+		UPDATE member SET pw=#{param2} WHERE member_id=#{param1}
 	</update>
  	
  </mapper>

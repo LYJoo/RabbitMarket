@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("trading")
@@ -17,9 +15,9 @@ public class TradingDTO {
 	private String cancel_reason;
 	private boolean seller_manner;
 	private boolean buyer_manner;
-	private Date trade_time;
-	private Date trade_start_date;
-	private Date trade_end_date;
+	private String trade_time;
+	private String trade_start_date;
+	private String trade_end_date;
 	
 	public int getTrade_idx() {
 		return trade_idx;
@@ -87,22 +85,23 @@ public class TradingDTO {
 	public void setBuyer_manner(boolean buyer_manner) {
 		this.buyer_manner = buyer_manner;
 	}
-	public Date getTrade_time() {
+	public String getTrade_time() {
 		return trade_time;
 	}
-	public void setTrade_time(Date trade_time) {
+	public void setTrade_time(String trade_time) {
 		this.trade_time = trade_time;
 	}
-	public Date getTrade_start_date() {
+	public String getTrade_start_date() {
 		return trade_start_date;
 	}
-	public void setTrade_start_date(Date trade_start_date) {
+	public void setTrade_start_date(String trade_start_date) {
 		this.trade_start_date = trade_start_date;
 	}
-	public Date getTrade_end_date() {
+	public String getTrade_end_date() {
 		return trade_end_date;
 	}
-	public void setTrade_end_date(Date trade_end_date) {
+	public void setTrade_end_date(String trade_end_date) {
 		this.trade_end_date = trade_end_date;
 	}
+	
 }

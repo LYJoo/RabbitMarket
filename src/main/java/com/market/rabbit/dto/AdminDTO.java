@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("admin")
@@ -11,7 +9,7 @@ public class AdminDTO {
 	private String admin_pw; 
 	private String position; 
 	private Boolean activation; 
-	private Date reg_date;
+	private String reg_date;
 	
 	public String getAdmin_id() {
 		return admin_id;
@@ -37,10 +35,10 @@ public class AdminDTO {
 	public void setActivation(Boolean activation) {
 		this.activation = activation;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
 	

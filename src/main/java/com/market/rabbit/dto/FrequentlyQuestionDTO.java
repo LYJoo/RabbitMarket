@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("frequentlyQuestion")
@@ -18,7 +16,7 @@ public class FrequentlyQuestionDTO {
 	private String fq_question;
 	private String fq_answer;
 	private String admin_id;
-	private Date reg_date;
+	private String reg_date;
 	
 	
 	public int getFrequently_idx() {
@@ -45,12 +43,13 @@ public class FrequentlyQuestionDTO {
 	public void setAdmin_id(String admin_id) {
 		this.admin_id = admin_id;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
+	
 	
 
 	
