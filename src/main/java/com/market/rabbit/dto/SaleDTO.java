@@ -16,8 +16,8 @@ public class SaleDTO {
 	private boolean pull_up;//끌어올리기여부
 	private boolean minor;//미성년자글보이기여부
 	private boolean negotiation;//가격제안가능여부
-	private boolean isblind;//블라인드여부
-	private boolean isdelete;//삭제여부
+	private boolean isBlind;//블라인드여부
+	private boolean isDelete;//삭제여부
 	private String sale_location;//판매위치
 	//
 	private int s_category_idx;//카테고리번호 -fk
@@ -28,8 +28,6 @@ public class SaleDTO {
 	//
 	private int bHit;//조회수
 	private String keyword;//키워드
-	
-	
 	public int getProduct_idx() {
 		return product_idx;
 	}
@@ -90,17 +88,17 @@ public class SaleDTO {
 	public void setNegotiation(boolean negotiation) {
 		this.negotiation = negotiation;
 	}
-	public boolean isIsblind() {
-		return isblind;
+	public boolean isBlind() {
+		return isBlind;
 	}
-	public void setIsblind(boolean isblind) {
-		this.isblind = isblind;
+	public void setBlind(boolean isBlind) {
+		this.isBlind = isBlind;
 	}
-	public boolean isIsdelete() {
-		return isdelete;
+	public boolean isDelete() {
+		return isDelete;
 	}
-	public void setIsdelete(boolean isdelete) {
-		this.isdelete = isdelete;
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 	public String getSale_location() {
 		return sale_location;
@@ -144,7 +142,9 @@ public class SaleDTO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+
 	
+
 	
 	
 	

@@ -17,11 +17,10 @@ public class CommentsDTO {
 	private int comment_idx;
 	private String comment_content;
 	private Date reg_date;
-	private boolean isblind;
-	private boolean isdelete;
+	private boolean isBlind;
+	private boolean isDelete;
 	private String member_id;
 	private int product_idx;
-	
 	public int getComment_idx() {
 		return comment_idx;
 	}
@@ -40,17 +39,17 @@ public class CommentsDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	public boolean isIsblind() {
-		return isblind;
+	public boolean isBlind() {
+		return isBlind;
 	}
-	public void setIsblind(boolean isblind) {
-		this.isblind = isblind;
+	public void setBlind(boolean isBlind) {
+		this.isBlind = isBlind;
 	}
-	public boolean isIsdelete() {
-		return isdelete;
+	public boolean isDelete() {
+		return isDelete;
 	}
-	public void setIsdelete(boolean isdelete) {
-		this.isdelete = isdelete;
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 	public String getMember_id() {
 		return member_id;
@@ -64,6 +63,8 @@ public class CommentsDTO {
 	public void setProduct_idx(int product_idx) {
 		this.product_idx = product_idx;
 	}
+	
+	
 	
 	
 	

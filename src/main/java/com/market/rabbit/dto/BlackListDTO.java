@@ -7,18 +7,17 @@ import org.apache.ibatis.type.Alias;
 @Alias("blackList")
 public class BlackListDTO {
 	
-	private Number black_idx;
+	private int black_idx;
 	private String black_reason;
 	private String unblack_reason;
 	private String admin_id;
 	private String member_id;
 	private Date unblack_date;
 	private Date reg_date;
-	
-	public Number getBlack_idx() {
+	public int getBlack_idx() {
 		return black_idx;
 	}
-	public void setBlack_idx(Number black_idx) {
+	public void setBlack_idx(int black_idx) {
 		this.black_idx = black_idx;
 	}
 	public String getBlack_reason() {
@@ -57,6 +56,7 @@ public class BlackListDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
+	
 	
 	
 	

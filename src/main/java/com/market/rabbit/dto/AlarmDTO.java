@@ -7,17 +7,16 @@ import org.apache.ibatis.type.Alias;
 @Alias("alarm")
 public class AlarmDTO {
 	
-	private Number alarm_idx;
+	private int alarm_idx;
 	private String alarm_content;
 	private Date reg_date;
-	private Boolean ischeck;
+	private Boolean isCheck;
 	private String member_id;
-	private Number code_num;
-	
-	public Number getAlarm_idx() {
+	private int code_num;
+	public int getAlarm_idx() {
 		return alarm_idx;
 	}
-	public void setAlarm_idx(Number alarm_idx) {
+	public void setAlarm_idx(int alarm_idx) {
 		this.alarm_idx = alarm_idx;
 	}
 	public String getAlarm_content() {
@@ -32,11 +31,11 @@ public class AlarmDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	public Boolean getIscheck() {
-		return ischeck;
+	public Boolean getIsCheck() {
+		return isCheck;
 	}
-	public void setIscheck(Boolean ischeck) {
-		this.ischeck = ischeck;
+	public void setIsCheck(Boolean isCheck) {
+		this.isCheck = isCheck;
 	}
 	public String getMember_id() {
 		return member_id;
@@ -44,12 +43,15 @@ public class AlarmDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public Number getCode_num() {
+	public int getCode_num() {
 		return code_num;
 	}
-	public void setCode_num(Number code_num) {
+	public void setCode_num(int code_num) {
 		this.code_num = code_num;
 	}
+	
+	
+	
 	
 	
 }
