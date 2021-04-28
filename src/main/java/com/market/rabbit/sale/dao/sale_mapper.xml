@@ -52,4 +52,40 @@
  		INSERT INTO alarm(alarm_idx, alarm_content, member_id, code_num) 
 			VALUES(seq_alarm.NEXTVAL, #{param2}, #{param1}, 2002)
  	</insert>
+ 	
+ 	<resultMap type="sale" id="callProductList_unmembe_list">
+ 		<id property="product_idx" column="product_idx"/>
+ 		<result property="seller_id" column="seller_id"/>
+ 		<result property="sale_subject" column="sale_subject"/>
+ 		<result property="sale_content" column="sale_content"/>
+ 		<result property="price" column="price"/>
+ 		<result property="reg_date" column="reg_date"/>
+ 		<result property="pull_up_date" column="pull_up_date"/>
+ 		<result property="pull_up" column="pull_up"/>
+ 		<result property="sale_location" column="sale_location"/>
+ 		<result property="s_category_idx" column="s_category_idx"/>
+ 		<result property="code_num" column="code_num"/>
+ 		<result property="bHit" column="bHit"/>
+ 		<result property="wishCnt" column="wishCnt"/>
+ 		<association property="memberDto" javaType="member">
+ 			<result property="manner_percent" column="manner_percent"/>
+ 		</association>
+ 		<association property="saleFileDto" javaType="saleFile">
+ 			<id property="file_idx" column="file_idx"/>
+ 			<result property="oriFileName" column="oriFileName"/>
+ 			<result property="newFileName" column="newFileName"/>
+ 		</association>
+ 	</resultMap>
+ 	
+ 	<select id="callProductList_unmember" resultMap="callProductList_unmembe_list">
+ 		SELECT l.product_idx,seller_id,sale_subject, sale_content, price, reg_date,pull_up_date, pull_up, sale_location, s_category_idx, code_num, bHit, manner_percent, wishCnt, file_idx, oriFileName,newFileName 
+ 		FROM (select p.product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, pull_up, sale_location, s_category_idx, code_num, bHit, manner_percent, nvl(wish,0)as wishCnt 
+ 		FROM (select product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, pull_up, sale_location, s_category_idx, code_num, bHit, manner_percent 
+		FROM (SELECT product_idx, seller_id, sale_subject, sale_content, price, reg_date, pull_up_date, pull_up, sale_location, s_category_idx, code_num, bHit FROM sale WHERE isBlind = 0 and isDelete = 0 and code_num != 3003)
+		INNER JOIN(SELECT member_id, manner_percent, isBlack, withdraw FROM member WHERE isBlack = 0 AND withdraw = 0)ON member_id = seller_id)p 
+		LEFT OUTER JOIN (SELECT product_idx, count(wish_idx)as wish FROM wish WHERE isDelete = 0 GROUP BY product_idx)w on p.product_idx = w.product_idx)l
+		INNER JOIN (select file_idx, oriFileName, newFileName, product_idx from(select row_number() over(PARTITION BY product_idx ORDER BY file_idx) as rank, file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3)as ext 
+		FROM (SELECT * FROM (SELECT file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3) as ext FROM sale_file ORDER BY file_idx ASC ) WHERE ext NOT LIKE 'mp4')) WHERE rank = 1)f on l.product_idx = f.product_idx ORDER BY pull_up_date DESC
+ 	</select>
+ 	
  </mapper>

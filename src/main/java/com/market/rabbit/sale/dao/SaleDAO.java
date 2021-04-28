@@ -18,5 +18,9 @@ public interface SaleDAO {
 	ArrayList<String> selectKeywordAlarmMember(String keyword, String seller_id);
 
 	void insertKeywordAlarm(String member_id, String msg);
+	
+	ArrayList<SaleDTO> callProductList_unmember();
+	
+	ArrayList<SaleDTO> callProductList_member();
 
 }

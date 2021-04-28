@@ -1,31 +1,33 @@
 package com.market.rabbit.dto;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("sale")
 public class SaleDTO {
-	private int product_idx;//판매글idx
-	private String seller_id;//회원id
-	private String sale_subject;//제목
-	private String sale_content;//내용
-	private int price;//가격
-	private String reg_date;//등록일
-	private String pull_up_date;//끌어올리기날짜
-	private boolean pull_up;//끌어올리기여부
-	private boolean minor;//미성년자글보이기여부
-	private boolean negotiation;//가격제안가능여부
-	private boolean isBlind;//블라인드여부
-	private boolean isDelete;//삭제여부
-	private String sale_location;//판매위치
+	private int product_idx;
+	private String seller_id;
+	private String sale_subject;
+	private String sale_content;
+	private int price;
+	private String reg_date;
+	private String pull_up_date;
+	private boolean pull_up;
+	private boolean minor;
+	private boolean negotiation;
+	private boolean isBlind;
+	private boolean isDelete;
+	private String sale_location;
+	private int s_category_idx;
+	private int code_num;
+	private int bHit;
+	private String keyword;
 	
-	private int s_category_idx;//카테고리번호 -fk
-	private String s_category_name;//카테고리명
-	//
-	private int code_num;//코드번호 : 판매상태 -fk
-	private String code_content; //코드 내용
-	//
-	private int bHit;//조회수
-	private String keyword;//키워드
+	private int wishCnt;
+	private MemberDTO memberDto;
+	private SaleFileDTO saleFileDto;
+	
 	public int getProduct_idx() {
 		return product_idx;
 	}
@@ -110,23 +112,11 @@ public class SaleDTO {
 	public void setS_category_idx(int s_category_idx) {
 		this.s_category_idx = s_category_idx;
 	}
-	public String getS_category_name() {
-		return s_category_name;
-	}
-	public void setS_category_name(String s_category_name) {
-		this.s_category_name = s_category_name;
-	}
 	public int getCode_num() {
 		return code_num;
 	}
 	public void setCode_num(int code_num) {
 		this.code_num = code_num;
-	}
-	public String getCode_content() {
-		return code_content;
-	}
-	public void setCode_content(String code_content) {
-		this.code_content = code_content;
 	}
 	public int getbHit() {
 		return bHit;
@@ -140,10 +130,23 @@ public class SaleDTO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-
-	
-
-	
-	
+	public int getWishCnt() {
+		return wishCnt;
+	}
+	public void setWishCnt(int wishCnt) {
+		this.wishCnt = wishCnt;
+	}
+	public MemberDTO getMemberDto() {
+		return memberDto;
+	}
+	public void setMemberDto(MemberDTO memberDto) {
+		this.memberDto = memberDto;
+	}
+	public SaleFileDTO getSaleFileDto() {
+		return saleFileDto;
+	}
+	public void setSaleFileDto(SaleFileDTO saleFileDto) {
+		this.saleFileDto = saleFileDto;
+	}
 	
 }
