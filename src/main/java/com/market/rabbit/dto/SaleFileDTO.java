@@ -9,6 +9,7 @@ public class SaleFileDTO {
 	private String oriFileName;//원본파일이름
 	private String newFileName;//새파일이음
 	private int product_idx;//판매글idx -fk
+	
 	public int getFile_idx() {
 		return file_idx;
 	}

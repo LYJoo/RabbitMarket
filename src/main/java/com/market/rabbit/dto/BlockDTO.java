@@ -8,6 +8,7 @@ public class BlockDTO {
 	private int block_idx;
 	private String target_id;
 	private String member_id;
+	
 	public int getBlock_idx() {
 		return block_idx;
 	}

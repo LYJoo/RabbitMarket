@@ -1,14 +1,12 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("review")
 public class ReviewDTO {
 	private int review_idx;//후기번호 -pk
 	private String review_content;//내용
-	private Date reg_date;//작성일
+	private String reg_date;//작성일
 	private String write_id;//작성자
 	private String member_id;//회원id:판매자 -fk
 	private int product_idx;//판매글 - fk
@@ -25,10 +23,10 @@ public class ReviewDTO {
 	public void setReview_content(String review_content) {
 		this.review_content = review_content;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
 	public String getWrite_id() {

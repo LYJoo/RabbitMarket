@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("sale")
@@ -11,15 +9,15 @@ public class SaleDTO {
 	private String sale_subject;//제목
 	private String sale_content;//내용
 	private int price;//가격
-	private Date reg_date;//등록일
-	private Date pull_up_date;//끌어올리기날짜
+	private String reg_date;//등록일
+	private String pull_up_date;//끌어올리기날짜
 	private boolean pull_up;//끌어올리기여부
 	private boolean minor;//미성년자글보이기여부
 	private boolean negotiation;//가격제안가능여부
 	private boolean isBlind;//블라인드여부
 	private boolean isDelete;//삭제여부
 	private String sale_location;//판매위치
-	//
+	
 	private int s_category_idx;//카테고리번호 -fk
 	private String s_category_name;//카테고리명
 	//
@@ -58,16 +56,16 @@ public class SaleDTO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
-	public Date getPull_up_date() {
+	public String getPull_up_date() {
 		return pull_up_date;
 	}
-	public void setPull_up_date(Date pull_up_date) {
+	public void setPull_up_date(String pull_up_date) {
 		this.pull_up_date = pull_up_date;
 	}
 	public boolean isPull_up() {

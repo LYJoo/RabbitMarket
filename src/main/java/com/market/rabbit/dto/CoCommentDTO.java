@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("coComent")
@@ -9,11 +7,12 @@ public class CoCommentDTO {
 	
 	private int cocomment_idx;
 	private String cocomment_content;
-	private Date reg_date;
+	private String reg_date;
 	private String isBlind;
 	private String isDelete;
 	private int comment_idx;
 	private String member_id;
+	
 	public int getCocomment_idx() {
 		return cocomment_idx;
 	}
@@ -26,10 +25,11 @@ public class CoCommentDTO {
 	public void setCocomment_content(String cocomment_content) {
 		this.cocomment_content = cocomment_content;
 	}
-	public Date getReg_date() {
+	
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
 	public String getIsBlind() {

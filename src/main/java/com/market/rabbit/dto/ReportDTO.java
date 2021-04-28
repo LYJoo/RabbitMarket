@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("report")
@@ -10,9 +8,9 @@ public class ReportDTO {
 	private String reporter;//신고자id
 	private String target;//피신고자
 	private String report_reason;//사유
-	private Date reg_date;//신고날짜
+	private String reg_date;//신고날짜
 	private String report_state;//처리상태
-	private Date complete_date;//처리날짜
+	private String complete_date;//처리날짜
 	private int target_idx;//피신고자idx
 	//
 	private int code_num;//코드번호 : 신고분류 -fk
@@ -43,10 +41,10 @@ public class ReportDTO {
 	public void setReport_reason(String report_reason) {
 		this.report_reason = report_reason;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
 	public String getReport_state() {
@@ -55,10 +53,10 @@ public class ReportDTO {
 	public void setReport_state(String report_state) {
 		this.report_state = report_state;
 	}
-	public Date getComplete_date() {
+	public String getComplete_date() {
 		return complete_date;
 	}
-	public void setComplete_date(Date complete_date) {
+	public void setComplete_date(String complete_date) {
 		this.complete_date = complete_date;
 	}
 	public int getTarget_idx() {
