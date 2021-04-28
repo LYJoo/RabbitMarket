@@ -9,6 +9,7 @@ public class ProfileFileDTO {
 	private String oriFileName;
 	private String newFileName;
 	private String member_id;
+	
 	public int getFile_idx() {
 		return file_idx;
 	}

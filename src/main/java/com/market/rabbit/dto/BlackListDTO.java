@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("blackList")
@@ -12,8 +10,9 @@ public class BlackListDTO {
 	private String unblack_reason;
 	private String admin_id;
 	private String member_id;
-	private Date unblack_date;
-	private Date reg_date;
+	private String unblack_date;
+	private String reg_date;
+	
 	public int getBlack_idx() {
 		return black_idx;
 	}
@@ -44,18 +43,19 @@ public class BlackListDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public Date getUnblack_date() {
+	public String getUnblack_date() {
 		return unblack_date;
 	}
-	public void setUnblack_date(Date unblack_date) {
+	public void setUnblack_date(String unblack_date) {
 		this.unblack_date = unblack_date;
 	}
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
+	
 	
 	
 	
