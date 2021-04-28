@@ -13,4 +13,6 @@ public interface ProfileDAO2 {
 
 	int updateMember(MemberDTO member);
 
+	String getOriFileName(String member_id);
+
 }

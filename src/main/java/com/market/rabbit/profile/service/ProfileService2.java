@@ -110,15 +110,15 @@ public class ProfileService2 {
 	@Transactional
 	public ModelAndView callInfoUpdate(HashMap<String, Object> dto) {
 		ModelAndView mav = new ModelAndView();
-		String page = "myPage/profileUploadForm";
+		String page = "myPage/memberInfo";
 		MemberDTO member = new MemberDTO();
 		ProfileFileDTO profile = new ProfileFileDTO();
+		String beforeUpdateOriFileName = dao.getOriFileName((String)dto.get("member_id"));
 		
 		try {
 			member.setMember_id((String) dto.get("member_id"));
 			member.setName((String) dto.get("name"));
-			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			member.setBirth_date(transFormat.parse((String) dto.get("birth_date")));
+			member.setBirth_date((String)dto.get("birth_date"));
 			member.setPhone((String) dto.get("phone"));
 			member.setEmail((String) dto.get("email"));
 			member.setAddress((String) dto.get("address"));
@@ -137,6 +137,20 @@ public class ProfileService2 {
 		}
 		if(dao.updateMember(member) > 0) {
 			logger.info("회원정보 수정 성공");
+		}
+		
+		//upload에서 원래 프로필 사진 삭제하기
+		File delFile = new File(root+"upload/"+beforeUpdateOriFileName);
+		try {
+			logger.info("delete file : "+delFile);
+			if(delFile.exists()) {
+				delFile.delete();
+			}else {
+				logger.info("이미 삭제된 파일");
+			}			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		

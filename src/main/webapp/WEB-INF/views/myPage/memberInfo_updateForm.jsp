@@ -30,8 +30,7 @@
 					<tr>
 						<th>생년월일</th>
 						<td>
-							<fmt:formatDate var="resultRegDt" value="${dto.birth_date }" pattern="yyyy-MM-dd"/>
-							<input type="date" name="birth_date" id="" value="${resultRegDt}" >
+							<input type="date" name="birth_date" id="" value="${dto.birth_date}" >
 						</td>
 					</tr>
 					<tr>
@@ -51,10 +50,12 @@
 									<td rowspan="2"><button type="button" onclick="findAddress()">주소찾기</button><br></td>
 								</tr>
 								<tr>
-									<td><input type="text" id="address" style="width: 250px;" value="${dto.address }"></td>
+									<td>
+										<input type="text" id="address" name="address" style="width: 250px;" value="${dto.address }">
+										<input type="text" id="location" name="location" value="${dto.location }">
+									</td>
 								</tr>
 							</table> 
-							<input type="hidden" id="location" name="location">
 						</td>
 					</tr>
 					<tr>

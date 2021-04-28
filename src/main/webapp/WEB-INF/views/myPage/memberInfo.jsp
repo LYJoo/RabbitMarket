@@ -32,8 +32,7 @@
                     <tr>
                         <th>생년월일</th>
                         <td>
-                        	<fmt:formatDate var="resultRegDt" value="${dto.birth_date }" pattern="yyyy-MM-dd"/>
-                        	${resultRegDt}
+                        	${dto.birth_date}
                         </td>
                     </tr>
                     <tr>
