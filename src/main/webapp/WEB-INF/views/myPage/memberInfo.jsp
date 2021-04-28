@@ -19,7 +19,7 @@
             </div>
             <table id="table-mypage">
                     <tr>
-                        <td colspan="2"><p><img src="1.png" alt="" style="width: 150px; height: 150px;"></p></td>
+                        <td colspan="2"><p><img src="${path }" alt="" style="width: 150px; height: 150px;"></p></td>
                     </tr>
                     <tr>
                         <th>아이디</th>
@@ -58,5 +58,10 @@
                 </table>
         </div>
     </body>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+    	var msg = '${msg}';
+    	if(msg != ""){
+    		alert(msg);
+    	}
+    </script>
 </html>

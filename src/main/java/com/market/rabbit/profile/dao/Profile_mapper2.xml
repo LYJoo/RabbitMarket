@@ -14,5 +14,14 @@
  		SELECT * FROM profilefile WHERE member_id = #{param1}
  	</select>
 
+	<update id="updateProfile" parameterType="profileFile">
+		UPDATE profilefile SET oriFileName=#{oriFileName}, newFileName=#{newFileName} WHERE member_id=#{member_id}
+	</update>
+	
+	<update id="updateMember" parameterType="member">
+		UPDATE profilefile 
+		SET name=#{name}, birth_date=#{birth_date}, phone=#{phone}, email=#{email}, address=#{address}, location=#{location}
+		WHERE member_id=#{member_id}
+	</update>
  	
  </mapper>

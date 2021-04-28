@@ -9,4 +9,8 @@ public interface ProfileDAO2 {
 
 	ProfileFileDTO callMemberProfile(String loginId);
 
+	int updateProfile(ProfileFileDTO profile);
+
+	int updateMember(MemberDTO member);
+
 }

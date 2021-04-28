@@ -40,9 +40,8 @@ public class MemberDTO {
 	private String location;
 	private double manner_percent;
 	private int manner_cnt;
-	private boolean isblack;
+	private boolean isBlack;
 	private boolean withdraw;
-	
 	public String getMember_id() {
 		return member_id;
 	}
@@ -133,11 +132,11 @@ public class MemberDTO {
 	public void setManner_cnt(int manner_cnt) {
 		this.manner_cnt = manner_cnt;
 	}
-	public boolean isIsblack() {
-		return isblack;
+	public boolean isBlack() {
+		return isBlack;
 	}
-	public void setIsblack(boolean isblack) {
-		this.isblack = isblack;
+	public void setBlack(boolean isBlack) {
+		this.isBlack = isBlack;
 	}
 	public boolean isWithdraw() {
 		return withdraw;
@@ -145,6 +144,8 @@ public class MemberDTO {
 	public void setWithdraw(boolean withdraw) {
 		this.withdraw = withdraw;
 	}
+	
+	
 	
 	
 

@@ -7,25 +7,24 @@ import org.apache.ibatis.type.Alias;
 @Alias("coComent")
 public class CoCommentDTO {
 	
-	private Number cocomment_idx;
-	private String comment_content;
+	private int cocomment_idx;
+	private String cocomment_content;
 	private Date reg_date;
-	private String isblind;
-	private String isdelete;
-	private Number comment_idx;
+	private String isBlind;
+	private String isDelete;
+	private int comment_idx;
 	private String member_id;
-	
-	public Number getCocomment_idx() {
+	public int getCocomment_idx() {
 		return cocomment_idx;
 	}
-	public void setCocomment_idx(Number cocomment_idx) {
+	public void setCocomment_idx(int cocomment_idx) {
 		this.cocomment_idx = cocomment_idx;
 	}
-	public String getComment_content() {
-		return comment_content;
+	public String getCocomment_content() {
+		return cocomment_content;
 	}
-	public void setComment_content(String comment_content) {
-		this.comment_content = comment_content;
+	public void setCocomment_content(String cocomment_content) {
+		this.cocomment_content = cocomment_content;
 	}
 	public Date getReg_date() {
 		return reg_date;
@@ -33,22 +32,22 @@ public class CoCommentDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	public String getIsblind() {
-		return isblind;
+	public String getIsBlind() {
+		return isBlind;
 	}
-	public void setIsblind(String isblind) {
-		this.isblind = isblind;
+	public void setIsBlind(String isBlind) {
+		this.isBlind = isBlind;
 	}
-	public String getIsdelete() {
-		return isdelete;
+	public String getIsDelete() {
+		return isDelete;
 	}
-	public void setIsdelete(String isdelete) {
-		this.isdelete = isdelete;
+	public void setIsDelete(String isDelete) {
+		this.isDelete = isDelete;
 	}
-	public Number getComment_idx() {
+	public int getComment_idx() {
 		return comment_idx;
 	}
-	public void setComment_idx(Number comment_idx) {
+	public void setComment_idx(int comment_idx) {
 		this.comment_idx = comment_idx;
 	}
 	public String getMember_id() {
@@ -57,6 +56,7 @@ public class CoCommentDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
+	
 	
 	
 }

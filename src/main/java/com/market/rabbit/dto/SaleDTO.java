@@ -16,8 +16,8 @@ public class SaleDTO {
 	private boolean pull_up;//끌어올리기여부
 	private boolean minor;//미성년자글보이기여부
 	private boolean negotiation;//가격제안가능여부
-	private boolean isblind;//블라인드여부
-	private boolean isdelete;//삭제여부
+	private boolean isBlind;//블라인드여부
+	private boolean isDelete;//삭제여부
 	private String location;//판매위치
 	//
 	private int s_category_idx;//카테고리번호 -fk
@@ -28,26 +28,6 @@ public class SaleDTO {
 	//
 	private int bHit;//조회수
 	private String keyword;//키워드
-	
-	
-	public int getS_category_idx() {
-		return s_category_idx;
-	}
-	public void setS_category_idx(int s_category_idx) {
-		this.s_category_idx = s_category_idx;
-	}
-	public String getS_category_name() {
-		return s_category_name;
-	}
-	public void setS_category_name(String s_category_name) {
-		this.s_category_name = s_category_name;
-	}
-	public String getCode_content() {
-		return code_content;
-	}
-	public void setCode_content(String code_content) {
-		this.code_content = code_content;
-	}
 	public int getProduct_idx() {
 		return product_idx;
 	}
@@ -108,17 +88,17 @@ public class SaleDTO {
 	public void setNegotiation(boolean negotiation) {
 		this.negotiation = negotiation;
 	}
-	public boolean isIsblind() {
-		return isblind;
+	public boolean isBlind() {
+		return isBlind;
 	}
-	public void setIsblind(boolean isblind) {
-		this.isblind = isblind;
+	public void setBlind(boolean isBlind) {
+		this.isBlind = isBlind;
 	}
-	public boolean isIsdelete() {
-		return isdelete;
+	public boolean isDelete() {
+		return isDelete;
 	}
-	public void setIsdelete(boolean isdelete) {
-		this.isdelete = isdelete;
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 	public String getLocation() {
 		return location;
@@ -126,11 +106,29 @@ public class SaleDTO {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	public int getS_category_idx() {
+		return s_category_idx;
+	}
+	public void setS_category_idx(int s_category_idx) {
+		this.s_category_idx = s_category_idx;
+	}
+	public String getS_category_name() {
+		return s_category_name;
+	}
+	public void setS_category_name(String s_category_name) {
+		this.s_category_name = s_category_name;
+	}
 	public int getCode_num() {
 		return code_num;
 	}
 	public void setCode_num(int code_num) {
 		this.code_num = code_num;
+	}
+	public String getCode_content() {
+		return code_content;
+	}
+	public void setCode_content(String code_content) {
+		this.code_content = code_content;
 	}
 	public int getbHit() {
 		return bHit;
@@ -145,6 +143,7 @@ public class SaleDTO {
 		this.keyword = keyword;
 	}
 	
+
 	
 	
 	
