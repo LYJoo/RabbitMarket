@@ -7,6 +7,8 @@
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
  <mapper namespace="com.market.rabbit.help.dao.HelpDAO">
  	
+ 	<!-- 공지사항 -->
+ 	
  	<!-- 공지사항 리스트 : 전체수 / 페이징리스트-->
 	<select id="allCountNotice" resultType="int">
 		SELECT COUNT(*) AS cnt FROM notice
@@ -17,5 +19,40 @@
 		                OVER(ORDER BY notice_idx DESC) AS rnum FROM notice)
 		WHERE rnum BETWEEN #{param1} AND #{param2}
 	</select>
+	
+	<!-- 공지사항 상세보기 -->
+	<select id="detailNotice" resultType="notice">
+		SELECT notice_idx, admin_id, subject, content,reg_date FROM notice 
+			WHERE notice_idx=#{param1}
+	</select>
+	
+ 	<!-- 공지사항 등록 -->
+	<insert id="writeNotice" 
+		useGeneratedKeys="true"
+		keyProperty="notice_idx"
+		keyColumn="notice_idx"
+		parameterType="notice">
+	INSERT INTO notice (notice_idx, admin_id, subject, content)
+    	VALUES (seq_notice.NEXTVAL, #{admin_id},#{subject},#{content})
+	</insert>
+ 	
+ 	<!-- 공지사항 수정 -->
+ 	<update id="updateNotice" parameterType="notice">
+ 		UPDATE notice 
+			<set>
+				<if test="!subject.equals('')">subject=#{subject}, </if>
+				<if test="!content.equals('')">content=#{content} </if>
+			</set>
+ 			WHERE notice_idx=#{notice_idx}
+ 	</update>
+ 	
+ 	<!-- 공지사항 삭제 -->
+ 	<delete id="delNotice">
+ 		DELETE FROM notice WHERE notice_idx=#{param1}
+ 	</delete>
+ 	
+ 	<!-- 자주묻는질문 -->
+ 	
+ 	
  	
  </mapper>

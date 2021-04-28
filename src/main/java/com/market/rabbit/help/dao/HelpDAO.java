@@ -10,4 +10,12 @@ public interface HelpDAO {
 
 	ArrayList<NoticeDTO> noticeList(int start, int end);
 
+	int writeNotice(NoticeDTO dto);
+
+	NoticeDTO detailNotice(int notice_idx);
+
+	int updateNotice(NoticeDTO dto);
+
+	int delNotice(int notice_idx);
+
 }
