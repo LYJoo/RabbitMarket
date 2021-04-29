@@ -6,6 +6,9 @@
 	<meta charset="UTF-8">
 	<title>토끼마켓</title>
     <script  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script src="/resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
     <script src="https://kit.fontawesome.com/abf52b8f21.js"></script>
 	    <style>
         .main_title{
@@ -78,12 +81,23 @@
             font-weight: 600;
         }
 
-        .sale_state{
+        .sale_state_1{
             background-color: #F79646;
             float: right;
             padding: 5px;
             border-radius: 3px;
             color: white;
+            font-size: small;
+            margin-bottom: 3px;
+        }
+        
+        .sale_state_2{
+            background-color: white;
+            float: right;
+            padding: 3px 5px;
+            border: 1px solid #F79646;
+            border-radius: 3px;
+            color: #F79646;
             font-size: small;
             margin-bottom: 3px;
         }
@@ -110,44 +124,96 @@
 
         <div class="write_area_cover">
         <c:if test="${sessionScope.loginId ne null}">
-        	 <div class="write_area">
+        	 <div class="write_area" onclick="writeForm()">
             	글 올리기
             </div>
         </c:if>
            
         </div>
 		
-		<div class="location">${location}</div>
+		<div class="location">${location}
+		</div>
 		
-        <div class="list_start">
-			<c:forEach items="${list}" var="item" >
-				<div class="list_detail">
-                <div class="sale_state">
-                   <c:if test="${item.code_num eq 3001}">
-                   	판매중
-                   </c:if>
-                    <c:if test="${item.code_num eq 3002}">
-                   	거래중
-                   </c:if>
-                </div>
-                <a href="#">
-                <img src="/saleFile/${item.saleFileDto.newFileName}"/>
-                <p> ${item.sale_subject}</p>
-                <p>${item.price}원</p>
-                <p>${item.reg_date}</p>
-                <p>관심 ${item.wishCnt} 조회수 ${item.bHit}</p>
-                </a>
-            </div>
-			</c:forEach>
+        <div id="product_list" class="list_start">
         </div>
-
+        
+		<!-- 플러그인 사용 (부트스트랩 사용할때는 지정해둔 이름 써야함)-->
+		<div class="container">
+			<nav aria-label="page navigation" style="text-align: center">
+				<ul class="pagination" id="pagination"></ul>
+			</nav>
+		</div>
+		<!-- 플러그인 사용  -->
+       	
     </div>
 </body>
 <script>
+	jQuery.noConflict();
+
+	var showPage = 1;
+	listCall(showPage);
+
 	var msg = '${msg}';
 	if(msg != ""){
 		alert(msg);
 	}
-
+	
+	function writeForm(){
+		location.href="/sale/writeForm";
+	}
+	
+	
+	
+	function listCall(reqPage){
+		var reqUrl = "/sale/main/"+reqPage;
+		
+		$.ajax({
+			url:reqUrl
+			,type: 'GET'
+			,data:{}
+			,success:function(data){
+				showPage = data.currPage;
+				listPrint(data.list);
+				
+				$('#pagination').twbsPagination({
+					startPage:data.currPage, //들어가는 옵션들 - 시작페이지
+					totalPages:data.range, //생성 가능 최대 페이지 수
+					visiblePages:10,//몇개의 페이지를 보여주겠는가? 1~5까지
+					onPageClick:function(evt,page){ //각 페이지를 눌렀을 경우
+						console.log(evt);
+						console.log(page);
+						listCall(page);
+					}
+				});
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	}
+	
+	function listPrint(list){
+		var content = "";
+		for(var i = 0; i<list.length; i++){
+			content += "<div class='list_detail'>";
+			if(list[i].code_num == 3001){
+			content += "<div class='sale_state_1'>";
+				content += "판매중";
+			}else if(list[i].code_num == 3002){
+				content += "<div class='sale_state_2'>";				
+				content += "거래중";
+			}
+			content += "</div>";
+			content += "<a href='#''>"
+			content += "<img src='/saleFile/"+list[i].saleFileDto.newFileName+"'/>"
+			content += "<p>"+list[i].sale_subject+"</p>"
+			content += "<p>"+list[i].price+"원</p>"
+			content += "<p>"+list[i].reg_date+"</p>"
+			content += "<p>관심 "+ list[i].wishCnt +"  조회수 "+ list[i].bHit+"</p>"
+			content += "</a>"
+			content += "</div>"
+		}
+		$('#product_list').html(content);
+	}
 </script>
 </html>

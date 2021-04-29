@@ -1,7 +1,5 @@
 package com.market.rabbit.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 @Alias("sale")

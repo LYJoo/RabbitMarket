@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.market.rabbit.dto.SaleCategoryDTO;
@@ -31,9 +33,20 @@ public class SaleController {
 	
 	@RequestMapping(value = "/sale/main", method = RequestMethod.GET)
 	public String main(Model model, HttpSession session) {
+		
+		return "/sale/mainPage";
+	}
+	
+	@RequestMapping(value = "/sale/main/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> mainPaging(HttpSession session,  @PathVariable int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<SaleDTO> list = null;
 		int memberAge = 0;
 		String location = "";
+		
+		int end = page * 20;
+		int start = end -19;
+		int range = 0;
 		
 		//해야할것!! 로그인한 사람인지 확인하기
 		String loginId = (String) session.getAttribute("loginId");
@@ -41,19 +54,29 @@ public class SaleController {
 		
 		//로그인 안했을 경우
 		if(loginId == null) {
-			list = service.callProductList_unmember();
+			list = service.callProductList_unmember(start, end);
+			long allCnt = service.getEndPage_ummember();
+			range = (int) (allCnt%20 > 0 ?  Math.floor(allCnt/20)+1 : Math.floor(allCnt/20));
+			System.out.println(range);
 		}else {
 			memberAge = service.getAge(loginId);
 			location = service.getLocation(loginId);
+			
 			if(memberAge <20) {
-				list = service.callProductListMinorMember(loginId);
+				list = service.callProductListMinorMember(loginId, start, end);
+				long allCnt = service.getEndPageMinorMember(loginId);
+				range = (int) (allCnt%20 > 0 ?  Math.floor(allCnt/20)+1 : Math.floor(allCnt/20));
 			}else {
-				list = service.callProductListMember(loginId);
+				list = service.callProductListMember(loginId, start, end);
+				long allCnt = service.getEndPageMember(loginId);
+				range = (int) (allCnt%20 > 0 ?  Math.floor(allCnt/20)+1 : Math.floor(allCnt/20));
 			}
 		}
-		model.addAttribute("location",location);
-		model.addAttribute("list",list);
-		return "sale/mainPage";
+		map.put("page", page);
+		map.put("range", range);
+		map.put("location",location);
+		map.put("list",list);
+		return map;
 	}
 	
 	@RequestMapping(value = "/sale/writeForm", method = RequestMethod.GET)

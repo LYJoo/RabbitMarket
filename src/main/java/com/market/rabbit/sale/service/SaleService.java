@@ -45,41 +45,13 @@ public class SaleService {
 	static final int DAY = 7;
 	static final int MONTH = 12;
 	
-	public ArrayList<SaleDTO> callProductList_unmember() {
-		ArrayList<SaleDTO> list = dao.callProductList_unmember();
-
-		String reg_date;
-		for (int i = 0; i < list.size(); i++) {
-			try {
-				reg_date = list.get(i).getReg_date();
-				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date date = transFormat.parse(reg_date);
-	
-				long curTime = System.currentTimeMillis();
-				long regTime = date.getTime();
-				long diffTime = (curTime - regTime) / 1000;
-				
-				String diff_msg = "";
-
-				if (diffTime < SEC) {
-					diff_msg = "방금 전";
-				} else if ((diffTime /= SEC) < MIN) {
-					diff_msg = diffTime + "분 전";
-				} else if ((diffTime /= MIN) < HOUR) {
-					diff_msg = (diffTime) + "시간 전";
-				} else if ((diffTime /= HOUR) < DAY) {
-					diff_msg = (diffTime) + "일 전";
-				} else {
-					diff_msg = reg_date.substring(0, 10);
-				}
-				list.get(i).setReg_date(diff_msg);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
+	public ArrayList<SaleDTO> callProductList_unmember(int start, int end) {
+		ArrayList<SaleDTO> list = dao.callProductList_unmember(start, end);
+		setReg_date(list);
+		
 		return list;
 	}
-
+	
 	public int getAge(String loginId) {
 		
 		return dao.getAge(loginId);
@@ -90,45 +62,21 @@ public class SaleService {
 		return dao.getLocation(loginId);
 	}
 
-	public ArrayList<SaleDTO> callProductListMinorMember(String loginId) {
-		ArrayList<SaleDTO> list = dao.callProductListMinorMember(loginId);
-		
-		String reg_date;
-		for (int i = 0; i < list.size(); i++) {
-			try {
-				reg_date = list.get(i).getReg_date();
-				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date date = transFormat.parse(reg_date);
-	
-				long curTime = System.currentTimeMillis();
-				long regTime = date.getTime();
-				long diffTime = (curTime - regTime) / 1000;
-				
-				String diff_msg = "";
-
-				if (diffTime < SEC) {
-					diff_msg = "방금 전";
-				} else if ((diffTime /= SEC) < MIN) {
-					diff_msg = diffTime + "분 전";
-				} else if ((diffTime /= MIN) < HOUR) {
-					diff_msg = (diffTime) + "시간 전";
-				} else if ((diffTime /= HOUR) < DAY) {
-					diff_msg = (diffTime) + "일 전";
-				} else {
-					diff_msg = reg_date.substring(0, 10);
-				}
-				list.get(i).setReg_date(diff_msg);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
+	public ArrayList<SaleDTO> callProductListMinorMember(String loginId, int start, int end) {
+		ArrayList<SaleDTO> list = dao.callProductListMinorMember(loginId,start, end);
+		setReg_date(list);
 		
 		return list;
 	}
 
-	public ArrayList<SaleDTO> callProductListMember(String loginId) {
-		ArrayList<SaleDTO> list = dao.callProductListMember(loginId);
+	public ArrayList<SaleDTO> callProductListMember(String loginId, int start, int end) {
+		ArrayList<SaleDTO> list = dao.callProductListMember(loginId,start, end);
+		setReg_date(list);
 		
+		return list;
+	}
+	
+	private void setReg_date(ArrayList<SaleDTO> list) {
 		String reg_date;
 		for (int i = 0; i < list.size(); i++) {
 			try {
@@ -158,8 +106,6 @@ public class SaleService {
 				e.printStackTrace();
 			}
 		}
-		
-		return list;
 	}
 	
 	public ArrayList<SaleCategoryDTO> getSaleCategory() {
@@ -328,8 +274,17 @@ public class SaleService {
 		dao.insertKeywordAlarm(member_id, msg);
 	}
 
-	
+	public int getEndPage_ummember() {
+		return dao.getEndPage_ummember();
+	}
 
-	
+	public int getEndPageMinorMember(String loginId) {
+		return dao.getEndPageMinorMember(loginId);
+	}
+
+	public int getEndPageMember(String loginId) {
+		return dao.getEndPageMember(loginId);
+	}
+
 
 }
