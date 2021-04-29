@@ -53,6 +53,48 @@
  	
  	<!-- 자주묻는질문 -->
  	
+ 	<!-- 자주묻는질문 리스트 : 전체수 / 페이징리스트-->
+	<select id="allCountFaq" resultType="int">
+		SELECT COUNT(*) AS cnt FROM frequently_question
+	</select>
+	<select id="faqList" resultType="frequentlyQuestion">
+		SELECT frequently_idx, fq_question, admin_id, reg_date, rnum 
+		    FROM (SELECT frequently_idx, fq_question, admin_id, reg_date, ROW_NUMBER() 
+		                OVER(ORDER BY frequently_idx DESC) AS rnum FROM frequently_question)
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<!-- 자주묻는질문 상세보기 -->
+	<select id="detailFaq" resultType="frequentlyQuestion">
+		SELECT frequently_idx, fq_question, fq_answer, admin_id, reg_date
+		    FROM frequently_question WHERE frequently_idx=#{param1}
+	</select>
+	
+ 	<!-- 자주묻는질문 등록 -->
+	<insert id="writeFaq" 
+		useGeneratedKeys="true"
+		keyProperty="frequently_idx"
+		keyColumn="frequently_idx"
+		parameterType="frequentlyQuestion">
+	INSERT INTO frequently_question (frequently_idx, fq_question, fq_answer, admin_id)
+	    VALUES (seq_frequently_question.NEXTVAL, #{fq_question}, #{fq_answer}, #{admin_id})
+	</insert>
+	
+ 	<!-- 자주묻는질문 수정 -->
+ 	<update id="updateFaq" parameterType="frequentlyQuestion">
+ 		UPDATE frequently_question 
+			<set>
+				<if test="!fq_question.equals('')">fq_question=#{fq_question}, </if>
+				<if test="!fq_answer.equals('')">fq_answer=#{fq_answer} </if>
+			</set>
+ 			WHERE frequently_idx=#{frequently_idx}
+ 	</update>
+ 	
+ 	<!-- 공지사항 삭제 -->
+ 	<delete id="delFaq">
+ 		DELETE FROM frequently_question WHERE frequently_idx=#{param1}
+ 	</delete>
+	
  	
  	
  </mapper>
