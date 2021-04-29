@@ -5,14 +5,30 @@
  >
  
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
- <mapper namespace="com.market.rabbit.member.dao.ProfileDAO1">
+ <mapper namespace="com.market.rabbit.profile.dao.ProfileDAO1">
  
-	<select id="wishlist" resultType="wish">
- 		SELECT * FROM WISH ORDER BY wish_idx DESC
+<!-- 	<select id="wishlist" resultType="wish">
+ 		SELECT wish_idx,member_id,product_idx FROM WISH ORDER BY wish_idx DESC
+ 	</select> -->
+ 	
+ 	<select id="sale" resultType="sale">
+ 		SELECT sale_subject,reg_date FROM sale ORDER BY reg_date DESC
  	</select>
  	
- 	<delete id="delete">
+ 	<select id="saleFile" resultType="saleFile">
+ 		SELECT * FROM sale_file WHERE newFileName=#{param1}
+ 	</select>
+ 	
+ 	<delete id="wishdelete">
  		DELETE FROM WISH WHERE wish_idx=#{param1}
  	</delete>
+ 	
+ 	<select id="profile" resultType="member">
+ 		SELECT member_id,address,manner_percent FROM MEMBER WHERE member_id=#{param1}
+ 	</select>
+ 	
+ 	<select id="fileList" resultType="profileFile">
+ 		SELECT * FROM PROFILEFILE WHERE member_id=#{param1}
+ 	</select>
  	
  </mapper>

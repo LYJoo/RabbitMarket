@@ -16,8 +16,16 @@ public class QuestionDTO {
 	private String member_id;
 	private boolean isDelete;
 	private boolean isPw;
-	private int question_category;
 	
+	private int question_category;//카테고리번호-fk
+	private String q_category_name;//카테고리이름
+	
+	public String getQ_category_name() {
+		return q_category_name;
+	}
+	public void setQ_category_name(String q_category_name) {
+		this.q_category_name = q_category_name;
+	}
 	public int getQuestion_idx() {
 		return question_idx;
 	}

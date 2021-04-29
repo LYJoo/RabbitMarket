@@ -52,4 +52,65 @@
  		INSERT INTO alarm(alarm_idx, alarm_content, member_id, code_num) 
 			VALUES(seq_alarm.NEXTVAL, #{param2}, #{param1}, 2002)
  	</insert>
+ 	
+ 	<resultMap type="sale" id="callProductList">
+ 	<id column="product_idx" property="product_idx"/>
+ 	<result column="seller_id" property="seller_id"/>
+ 	<result column="sale_subject" property="sale_subject"/>
+ 	<result column="sale_content" property="sale_content"/>
+ 	<result column="price" property="price"/>
+ 	<result column="reg_date" property="reg_date"/>
+ 	<result column="pull_up_date" property="pull_up_date"/>
+ 	<result column="sale_location" property="sale_location"/>
+ 	<result column="code_num" property="code_num"/>
+ 	<result column="bHit" property="bHit"/>
+ 	<result column="wishCnt" property="wishCnt"/>
+ 	<association property="saleFileDto" javaType="saleFile">
+ 		<result column="newFileName" property="newFileName"/>
+ 	</association>
+	</resultMap>
+ 	
+ 	<select id="callProductList_unmember" resultMap="callProductList">
+ 		SELECT l.product_idx,seller_id,sale_subject, sale_content, price, reg_date,pull_up_date, sale_location, code_num, bHit, wishCnt,newFileName 
+ 		FROM (SELECT p.product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, sale_location, code_num, bHit, nvl(wish,0)as wishCnt 
+ 		FROM (SELECT product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, sale_location, code_num, bHit
+		FROM (SELECT product_idx, seller_id, sale_subject, sale_content, price, reg_date, pull_up_date, sale_location, code_num, bHit FROM sale WHERE isBlind = 0 and isDelete = 0 and code_num != 3003)
+		INNER JOIN(SELECT member_id FROM member WHERE isBlack = 0 AND withdraw = 0)ON member_id = seller_id)p 
+		LEFT OUTER JOIN (SELECT product_idx, count(wish_idx)as wish FROM wish WHERE isDelete = 0 GROUP BY product_idx)w on p.product_idx = w.product_idx)l
+		INNER JOIN (SELECT file_idx, oriFileName, newFileName, product_idx FROM(SELECT row_number() over(PARTITION BY product_idx ORDER BY file_idx) as rank, file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3)as ext 
+		FROM (SELECT * FROM (SELECT file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3) as ext FROM sale_file ORDER BY file_idx ASC ) WHERE ext NOT LIKE 'mp4')) WHERE rank = 1)f on l.product_idx = f.product_idx ORDER BY pull_up_date DESC
+ 	</select>
+ 	
+ 	<select id="getAge" resultType="int">
+ 		SELECT MONTHS_BETWEEN(TRUNC(SYSDATE,'YEAR'),TRUNC((SELECT BIRTH_DATE FROM MEMBER WHERE MEMBER_ID=#{param}),'YEAR')) /12 +1 as age FROM DUAL
+ 	</select>
+ 	
+ 	<select id="getLocation" resultType="String">
+ 		SELECT location FROM member WHERE member_id = #{param}
+ 	</select>
+ 	
+ 	<select id="callProductListMinorMember" resultMap="callProductList">
+ 		SELECT l.product_idx, seller_id, sale_subject, sale_content, price, reg_date,pull_up_date, sale_location, code_num, bHit, wishCnt, newFileName 
+		FROM (SELECT p.product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, sale_location, code_num, bHit, nvl(wish,0)as wishCnt FROM 
+		(SELECT product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, sale_location, code_num, bHit
+		FROM (SELECT product_idx, seller_id, sale_subject, sale_content, price, reg_date, pull_up_date, sale_location, code_num, bHit 
+		FROM SALE WHERE isBlind = 0 and isDelete = 0 and code_num != 3003 and sale_location = (SELECT location FROM member WHERE member_id = #{param}))
+		INNER JOIN(SELECT member_id FROM member WHERE isBlack = 0 AND withdraw = 0 and member_id not in(SELECT target_id FROM BLOCK WHERE member_id =#{param} union SELECT member_id FROM BLOCK WHERE target_id =#{param}))ON member_id = seller_id)p 
+		LEFT OUTER JOIN (SELECT product_idx, count(wish_idx)as wish FROM wish WHERE isDelete = 0 GROUP BY product_idx)w on p.product_idx = w.product_idx)l
+		INNER JOIN (SELECT file_idx, oriFileName, newFileName, product_idx FROM(SELECT row_number() over(PARTITION BY product_idx ORDER BY file_idx) as rank, file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3)as ext 
+		FROM (SELECT * FROM (SELECT file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3) as ext FROM sale_file ORDER BY file_idx ASC ) WHERE EXT NOT LIKE 'mp4')) WHERE rank = 1)f on l.product_idx = f.product_idx ORDER BY pull_up_date DESC
+ 	</select>
+ 	
+ 	<select id="callProductListMember" resultMap="callProductList">
+ 		SELECT l.product_idx, seller_id, sale_subject, sale_content, price, reg_date,pull_up_date, sale_location, code_num, bHit, wishCnt,newFileName 
+		FROM (SELECT p.product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, sale_location, code_num, bHit, nvl(wish,0)as wishCnt FROM 
+		(SELECT product_idx, seller_id, sale_subject, sale_content,price,reg_date, pull_up_date, sale_location, code_num, bHit 
+		FROM (SELECT product_idx, seller_id, sale_subject, sale_content, price, reg_date, pull_up_date, sale_location, code_num, bHit 
+		FROM SALE WHERE isBlind = 0 and isDelete = 0 and code_num != 3003 and minor = 1 and sale_location = (SELECT location FROM member WHERE member_id = #{param}))
+		INNER JOIN(SELECT member_id FROM member WHERE isBlack = 0 AND withdraw = 0 and member_id not in(SELECT target_id FROM BLOCK WHERE member_id =#{param} union SELECT member_id FROM BLOCK WHERE target_id = #{param}))ON member_id = seller_id)p 
+		LEFT OUTER JOIN (SELECT product_idx, count(wish_idx)as wish FROM wish WHERE isDelete = 0 GROUP BY product_idx)w on p.product_idx = w.product_idx)l
+		INNER JOIN (SELECT file_idx, oriFileName, newFileName, product_idx FROM(SELECT row_number() over(PARTITION BY product_idx ORDER BY file_idx) as rank, file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3)as ext 
+		FROM (SELECT * FROM (SELECT file_idx, oriFileName, newFileName, product_idx, substr(oriFileName, -3) as ext FROM sale_file ORDER BY file_idx ASC ) WHERE EXT NOT LIKE 'mp4')) WHERE rank = 1)f on l.product_idx = f.product_idx ORDER BY pull_up_date DESC
+ 	</select>
+ 	
  </mapper>
