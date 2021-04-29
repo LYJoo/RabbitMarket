@@ -7,8 +7,16 @@
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
  <mapper namespace="com.market.rabbit.profile.dao.ProfileDAO1">
  
-	<select id="wishlist" resultType="wish">
+<!-- 	<select id="wishlist" resultType="wish">
  		SELECT wish_idx,member_id,product_idx FROM WISH ORDER BY wish_idx DESC
+ 	</select> -->
+ 	
+ 	<select id="sale" resultType="sale">
+ 		SELECT sale_subject,reg_date FROM sale ORDER BY reg_date DESC
+ 	</select>
+ 	
+ 	<select id="saleFile" resultType="saleFile">
+ 		SELECT * FROM sale_file WHERE newFileName=#{param1}
  	</select>
  	
  	<delete id="wishdelete">
@@ -16,11 +24,11 @@
  	</delete>
  	
  	<select id="profile" resultType="member">
- 		SELECT member_id, address, manner_percent FROM MEMBER WHERE member_id=#{param1}
+ 		SELECT member_id,address,manner_percent FROM MEMBER WHERE member_id=#{param1}
  	</select>
  	
  	<select id="fileList" resultType="profileFile">
- 		SELECT * FROM PROFILEFILE WHRER member_id=#{param1}
+ 		SELECT * FROM PROFILEFILE WHERE member_id=#{param1}
  	</select>
  	
  </mapper>

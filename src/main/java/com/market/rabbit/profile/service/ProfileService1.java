@@ -3,6 +3,8 @@ package com.market.rabbit.profile.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
+import com.market.rabbit.dto.SaleDTO;
+import com.market.rabbit.dto.SaleFileDTO;
 import com.market.rabbit.dto.WishDTO;
 import com.market.rabbit.profile.dao.ProfileDAO1;
 
@@ -23,11 +27,26 @@ public class ProfileService1 {
 	
 	@Autowired ProfileDAO1 dao;
 
-	public void wishlist(Model model) {
-		logger.info("위시리스트 보이기 처리");
-		ArrayList<WishDTO> wishlist = dao.wishlist();
+//	public void wishlist(Model model) {
+//		logger.info("위시리스트 보이기 처리");
+//		ArrayList<WishDTO> wishlist = dao.wishlist();
+//		
+//		model.addAttribute("wishlist", wishlist);
+//	}
+	@Transactional
+	public ModelAndView wishlist(HttpSession session) {
+		logger.info("위시리스트 요청");
+		ModelAndView mav = new ModelAndView();
+		String page = "myPage/wishlist";
+		String loginId="";
 		
-		model.addAttribute("wishlist", wishlist);
+		SaleDTO sale = dao.sale(loginId);
+		SaleFileDTO salefile = dao.salefile(loginId);
+		
+		mav.addObject("sale", sale);
+		mav.addObject("salefile", salefile);
+		mav.setViewName(page);
+		return mav;
 	}
 
 	public ModelAndView wishdelete(String wish_idx) {
@@ -73,16 +92,22 @@ public class ProfileService1 {
 	}
 
 	@Transactional
-	public ModelAndView profile(String member_id) {
-		MemberDTO member = dao.profile(member_id);
-		ArrayList<ProfileFileDTO> fileList = dao.fileList(member_id);
-		
+	public ModelAndView profile(HttpSession session) {
+		logger.info("회원프로필 요청");
 		ModelAndView mav = new ModelAndView();
+		String page = "myPage/profile";
+		String loginId="";
+		
+		MemberDTO member = dao.profile(loginId);
+		ProfileFileDTO fileList = dao.fileList(loginId);
+		
 		mav.addObject("member", member);
 		mav.addObject("fileList", fileList);
-		mav.setViewName("myPage/profile");
+		mav.setViewName(page);
 		return mav;
 	}
+
+
 
 
 }

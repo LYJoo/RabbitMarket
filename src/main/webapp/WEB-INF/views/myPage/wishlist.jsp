@@ -62,6 +62,7 @@
 						<th>게시번호</th>
 						<th>아이디</th>
 						<th>판매번호</th>
+						<th>삭제</th>
 					</tr>
 					<!-- 임시 -->
 					<c:forEach items="${wishlist}" var="row">
@@ -69,12 +70,27 @@
 							<td>${row.wish_idx}</td>
 							<td>${row.member_id}</td>
 							<td>${row.product_idx}</td>
-							<td>
-								<input type="button" value="삭제" onclick="deletelist(${row.wish_idx})" class="del"/>
-							</td>
+							<td><a href="wishdelete?wish_idx=${row.wish_idx}">삭제</a></td>
 						</tr>
 					</c:forEach>
 				</thread>
+				<%-- <thread>
+					<tr>
+						<th>게시물</th>
+						<th>제목</th>
+						<th>작성일</th>
+						<th>삭제</th>
+					</tr>
+					<!-- 임시 -->
+					<c:forEach items="${wishlist}" var="row">
+						<tr align="center">
+							<td colspan="2"><p><img src="${path }" alt="" style="width: 150px; height: 150px;"></p></td>
+							<td>${row.sale_subject}</td>
+							<td>${row.reg_date}</td>
+							<td><a href="wishdelete?wish_idx=${row.wish_idx}">삭제</a></td>
+						</tr>
+					</c:forEach>
+				</thread> --%>
 				<tbody id="list">
 				<!-- 불러온 데이터 뿌리는 영역 -->
 				</tbody>
@@ -139,7 +155,7 @@
 		function listCall(reqPage){
 			//restful service 는 ajax 를 통해 호출하여 사용하는 경우가 많지만
 			//그렇다고 restful service == ajax 라고 생각해서는 안된다.
-			var reqUrl = './list/'+$("#pagePerNum").val()+"/"+reqPage;
+			var reqUrl = './wishlist/'+$("#pagePerNum").val()+"/"+reqPage;
 			$.ajax({
 				url:reqUrl,
 				Type:'GET',
@@ -199,7 +215,7 @@
 			//이전(5페이지가 넘어갔을때 나타나는 녀석)
 			if(showPage>5){
 				end = Math.ceil(showPage/5)*5			
-				//end = range<Math.ceil(showPage/5)*5 ? range : Math.ceil(showPage/5)*5; //예은님이 해보신거
+				//end = range<Math.ceil(showPage/5)*5 ? range : Math.ceil(showPage/5)*5;
 				
 				if(end>range){
 					end = range;

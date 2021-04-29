@@ -2,13 +2,21 @@ package com.market.rabbit.profile.dao;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
+import com.market.rabbit.dto.SaleDTO;
+import com.market.rabbit.dto.SaleFileDTO;
 import com.market.rabbit.dto.WishDTO;
 
 public interface ProfileDAO1 {
 
-	ArrayList<WishDTO> wishlist();
+//	ArrayList<WishDTO> wishlist();
+
+	SaleDTO sale(String loginId);
+	
+	SaleFileDTO salefile(String loginId);
 
 	int wishdelete(String wish_idx);
 
@@ -16,8 +24,9 @@ public interface ProfileDAO1 {
 
 	ArrayList<WishDTO> wishlist(int start, int end);
 
-	MemberDTO profile(String member_id);
+	MemberDTO profile(String loginId);
 
-	ArrayList<ProfileFileDTO> fileList(String member_id);
+	ProfileFileDTO fileList(String loginId);
+
 
 }

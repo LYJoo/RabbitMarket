@@ -91,26 +91,19 @@
 
         </div>
         <table id="profile">
-        	<c:if test="${fileList.size()>0}">
-			<tr>
-				<th>파일첨부</th>
-				<td>
-					<ul>
-					<!-- 마지막에 / 가없으면 . 이후 확장자가 생략되어 버린다. -->
-						<c:forEach items="${fileList}" var="file">
-							<li><a href="/main/download/${file.oriFileName}/${file.newFileName}/">${file.oriFileName}</a></li>
-						</c:forEach>
-					</ul>
-				</td>
-			</tr>
-			</c:if>
+        	<tr>
+            	<td colspan="2"><p><img src="${path }" alt="" style="width: 150px; height: 150px;"></p></td>
+            </tr>
             <tr>
+            	<th>매너지수 들어가야함</th>
                 <td>${member.manner_percent}</td>
             </tr>
             <tr>
-                <td>${sessionScope.loginId}</td>
+            	<th>아이디 들어가야함</th>
+                <td>${member.member_id}</td>
             </tr>
             <tr>
+            	<th>주소 들어가야함</th>
                 <td>${member.address}</td>
             </tr>
         </table>
@@ -149,26 +142,20 @@
         <div id="tab-2" class="tab-content">
             <table class="type04">
                 <tr>
-                    <td>내용</td>
-                    <td>ID</td>
-                    <td>보낸날짜</td>
+                    <td>게시글제목</td>
+                    <td>아이디</td>
+                    <td>주소</td>
+                    <td>작성일</td>
                 </tr>
                 <tr>
-                  <th scope="row">항목명</th>
-                  <td>내용이 들어갑니다.</td>
-                  <td>내용이 들어갑니다.</td>
-                </tr>
-                <tr>
-                  <th scope="row">항목명</th>
-                  <td>내용이 들어갑니다.</td>
-                  <td>내용이 들어갑니다.</td>
+                  <th scope="row">${sale.sale_subject}</th>
+                  <td>${sale.seller_id}</td>
+                  <td>으앙</td>
+                  <td>으엉</td>
                 </tr>
               </table>
               <!-- 페이지 -->
               <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
-        </div>
-        <div>
-            <button class="msg-btn">글쓰기</button>
         </div>
     </div>
 </body>

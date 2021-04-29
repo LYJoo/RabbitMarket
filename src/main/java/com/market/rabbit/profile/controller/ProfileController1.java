@@ -2,6 +2,8 @@ package com.market.rabbit.profile.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,6 @@ public class ProfileController1 {
 	@Autowired ProfileService1 service;
 	
 	//위시리스트
-	//1. 리스트불러오기
-	//2. 리스트 삭제
-	//3. 페이징 처리
-	
 	//1. 리스트 불러오기
 	@RequestMapping(value = "myPage/wishlist", method = RequestMethod.GET)
 	public String wishlist(Model model) {
@@ -36,9 +34,16 @@ public class ProfileController1 {
 		
 		return "myPage/wishlist";
 	}
+//	@RequestMapping(value = "myPage/wishlist", method = RequestMethod.GET)
+//	public ModelAndView wishlist(Model model, HttpSession session) {
+//		logger.info("위시리스트 요청 : "+session);
+//		
+//		
+//		return service.wishlist(session);
+//	}
 	
 	//2. 리스트 삭제
-	@RequestMapping(value = "/wishdelete", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/wishdelete", method = RequestMethod.GET)
 	public ModelAndView wishdelete(Model model, @RequestParam String wish_idx) {
 		logger.info("위시리스트 삭제요청"+wish_idx);
 		
@@ -66,23 +71,25 @@ public class ProfileController1 {
 	}
 
 	
-//	//프로필불러오기(프로필사진, id, 주소, 차단여부, 매너지수)
-//	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-//	public String profile(Model model) {
-//		logger.info("프로필 요청");
-//		service.profile(model);
-//		
-//		return "profile";
-//	}
-	
-	@RequestMapping(value = "myPage/profile/{member_id}", method = RequestMethod.GET)
-	public ModelAndView profile(@PathVariable String member_id) {
-		logger.info("프로필 요청 : "+member_id);
+	//프로필불러오기(프로필사진, id, 주소, 차단여부, 매너지수)
+	@RequestMapping(value = "myPage/profile", method = RequestMethod.GET)
+	public ModelAndView profile(Model model, HttpSession session) {
+//		String id = (String) session.getAttribute("loginId");
+//		logger.info("로그인아이디"+loginId);
+		logger.info("프로필 요청 : "+session);
 		
-		return service.profile(member_id);
+		return service.profile(session);
 	}
 	
 	//프로필 - 해당사용자가 판매중인 판매게시글 불러오기
+	
 	//프로필 - 해당 사용자에 대한 후기 불러오기
+	@RequestMapping(value = "myPage/review", method = RequestMethod.GET)
+	public String review(Model model) {
+		logger.info("후기 요청");
+		service.review(model);
+		
+		return "myPage/wishlist";
+	}
 	
 }
