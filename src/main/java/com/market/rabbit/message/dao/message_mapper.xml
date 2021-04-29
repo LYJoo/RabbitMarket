@@ -5,8 +5,36 @@
  >
  
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
- <mapper namespace="com.market.rabbit.member.dao.MessageDAO">
- 
+ <mapper namespace="com.market.rabbit.message.dao.MessageDAO">
+ 	<select id="callReceiveMsgList" resultType="message">
+ 		SELECT *
+		FROM (
+		    SELECT msg_idx, member_id, SUBSTR(msg_content,1,10) as msg_content, send_time, read_boolean, send_id, ROW_NUMBER() OVER(ORDER BY send_time DESC) AS rnum
+		    FROM message 
+		    WHERE RECEIVER_DELETE=0 AND member_id=#{param3} AND send_id NOT IN (select target_id from block where member_id=#{param3})
+		    )
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+ 	</select>
+ 	
+ 	<select id="callSendMsgList" resultType="message">
+ 		SELECT *
+		FROM (
+		    SELECT msg_idx, member_id, SUBSTR(msg_content,1,10) as msg_content, send_time, read_boolean, send_id, ROW_NUMBER() OVER(ORDER BY send_time DESC) AS rnum
+		    FROM message
+		    WHERE SENDER_DELETE=0 AND send_id=#{param3}
+		    )
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+ 	</select>
+ 	
+ 	<select id="callBlockMsgList" resultType="message">
+ 		SELECT *
+		FROM (
+		    SELECT msg_idx, member_id, SUBSTR(msg_content,1,10) as msg_content, send_time, read_boolean, send_id, ROW_NUMBER() OVER(ORDER BY send_time DESC) AS rnum
+		    FROM message 
+		    WHERE RECEIVER_DELETE=0 AND member_id=#{param3} AND send_id IN (select target_id from block where member_id=#{param3})
+		    )
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+ 	</select>
 
  	
  </mapper>
