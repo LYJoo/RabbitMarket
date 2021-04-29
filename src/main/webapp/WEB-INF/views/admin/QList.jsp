@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>admin_faq</title>
+    <title>admin_question</title>
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- 반응형 디자인을 위한 css/js 라이브러리 -->
@@ -18,31 +18,32 @@
 <body>
     <div id="list_content">
         <div class="flex_box btn_flex">
-            <h2>자주묻는질문</h2>
-            <button onclick="location.href='/admin/writeFormFaq'" class="list_btn">등록</button>
+            <h2>1:1문의하기</h2>
         </div>
         <table id="list_table">
             <thead>
                 <tr>
                     <th>질문번호</th>
+                    <th>카테고리</th>
                     <th id="list_subject">제목</th>
                     <th>작성자</th>
-                    <th>작성일</th>
-                    <th>삭제</th>
+                    <th style="width: 14%;max-width: 105px;">문의날짜</th>
+                    <th>문의상태</th>
                 </tr>
             </thead>
             <tbody id="list">
                 <!-- 불러온 데이터 뿌리는 영역 -->
                 <tr>
                     <td>00</td>
+                    <td>너차단</td>
                     <td><a href="">로드중...</a></td>
                     <td>토끼마켓</td>
                     <td>0000-00-00</td>
-                    <td><a href="">X</a></td>
+                    <td>답변중</td>
                 </tr>
             </tbody>
             <tr>
-				<td id="paging" colspan="5">  
+				<td id="paging" colspan="6">  
 					<!-- 플러그인 사용 -->
 					<div class="container">
 						<nav aria-label="page navigation" style="text-align:center">
@@ -63,7 +64,7 @@
     listCall(showPage);//시작하자 마자 이 함수를 호출
     
     function listCall(reqPage){	//페이지 요청 함수
-        var reqUrl ='./faqList/'+pagePerNum+"/"+reqPage; //restful 로 요청 -> /list/보여줄갯수/페이지
+        var reqUrl ='./QList/'+pagePerNum+"/"+reqPage; //restful 로 요청 -> /list/보여줄갯수/페이지
         $.ajax({
             url:reqUrl
             ,type:'get'
@@ -94,15 +95,24 @@
         var content="";
         for(var i=0;i<list.length;i++){
             content +="<tr>";
-            content +="<td>"+list[i].frequently_idx+"</td>";
-            content +="<td><a href='./detailFaq/"+list[i].frequently_idx+"'>"+list[i].fq_question+"</a></td>";
-            content +="<td>"+list[i].admin_id+"</td>";
+            content +="<td>"+list[i].question_idx+"</td>";
+            content +="<td>"+list[i].q_category_name+"</td>";
+            if(list[i].state == 1 ){//답변이 있을경우
+	           content +="<td><a href='/admin/detailQ/"+list[i].question_idx+"'>"+list[i].subject+"</a></td>";            	
+            } else{//답변이 없을 경우 
+           	   content +="<td><a href='/admin/anwerQFrom/"+list[i].question_idx+"'>"+list[i].subject+"</a></td>";    
+            }
+            content +="<td>"+list[i].member_id+"</td>";
             
             //java 에서 가끔 날짜가 milliseconds 로 나올 경우...
             var date = new Date(list[i].reg_date);
             content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
             
-            content +="<td><a href='./delFaq/"+list[i].frequently_idx+"'>X</a></td>";
+            if(list[i].state == 1 ){//답변이 있을경우
+            	content +="<td>답변완료</td>";
+ 	        } else{//답변이 없을 경우 
+                content +="<td>답변중</td>";            	
+ 	        }
             content +="</tr>";
         }
         $('#list').empty();//원래 있던 리스트들을 비워준다.

@@ -60,7 +60,7 @@
 	<select id="faqList" resultType="frequentlyQuestion">
 		SELECT frequently_idx, fq_question, admin_id, reg_date, rnum 
 		    FROM (SELECT frequently_idx, fq_question, admin_id, reg_date, ROW_NUMBER() 
-		                OVER(ORDER BY frequently_idx DESC) AS rnum FROM frequently_question)
+		                OVER(ORDER BY frequently_idx ASC) AS rnum FROM frequently_question)
 		WHERE rnum BETWEEN #{param1} AND #{param2}
 	</select>
 	
@@ -95,6 +95,35 @@
  		DELETE FROM frequently_question WHERE frequently_idx=#{param1}
  	</delete>
 	
- 	
+	<!-- 1:1문의 -->
+	
+	<!-- 1:1문의 리스트 -->
+	<select id="allCountQ" resultType="int">
+		SELECT COUNT(*) AS cnt FROM question
+	</select>
+	<select id="QList" resultType="question">
+		SELECT question_idx, q_category_name, subject, member_id, reg_date, state, rnum 
+		    FROM 
+		        (	SELECT q.question_idx, qc.q_category_name, q.subject, q.member_id, q.reg_date, q.state, 
+		                ROW_NUMBER() OVER(ORDER BY q.question_idx DESC) AS rnum 
+		            FROM question q, question_category qc
+		            WHERE q.question_category=qc.q_category_idx AND q.isdelete = 0
+		        )
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<!-- 1:1문의 상세보기 -->
+	<select id="detailQ" resultType="question">
+		SELECT q.question_idx, qc.q_category_name, q.subject, q.member_id, q.reg_date, q.state, q.content,q.answer ,q.answer_date, q.admin_id
+		    FROM question q, question_category qc 
+		    WHERE q.question_category=qc.q_category_idx AND q.question_idx=#{param1}
+	</select>
+	
+	<!-- 1:1문의 답변하기 -->
+	<update id="answerQ" parameterType="question">
+		UPDATE question SET answer=#{answer}, admin_id=#{admin_id}, state=1, answer_date=to_date(#{answer_date},'yyyy/mm/dd hh24:mi:ss')
+    		WHERE question_idx=#{question_idx}
+	</update>
+	
  	
  </mapper>

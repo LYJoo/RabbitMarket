@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.market.rabbit.dto.FrequentlyQuestionDTO;
 import com.market.rabbit.dto.NoticeDTO;
+import com.market.rabbit.dto.QuestionDTO;
 
 public interface HelpDAO {
 	
@@ -32,6 +33,15 @@ public interface HelpDAO {
 	int updateFaq(FrequentlyQuestionDTO dto);
 
 	int delFaq(int frequently_idx);
+	
+	/* 1:1문의하기 */
+	int allCountQ();
+
+	ArrayList<QuestionDTO> QList(int start, int end);
+
+	QuestionDTO detailQ(int question_idx);
+
+	int answerQ(QuestionDTO dto);
 	
 	
 

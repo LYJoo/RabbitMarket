@@ -1,5 +1,7 @@
 package com.market.rabbit.help.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -17,12 +19,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.market.rabbit.dto.FrequentlyQuestionDTO;
 import com.market.rabbit.dto.NoticeDTO;
+import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.help.service.HelpService;
 
 
 @Controller
 public class HelpMgtController {
 	//고객센터 관리 컨트롤러 : 관리자 아이디를 가지고 있는 사람만 접근할 것.
+	//각 리스트 부분에 임의로 adminId가 세션에 들어가게 되어 있음. 로그인 체크시 반드시 제거 할 것.
+	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired HelpService service;
@@ -200,6 +205,66 @@ public class HelpMgtController {
 		return "redirect:/admin/callFaqList";
 	}
 	
+	/* 1:1문의하기 */
+	
+	//1:1문의하기 리스트
+	@RequestMapping(value = "/admin/callQList", method = RequestMethod.GET)
+	public String callQList(HttpSession session) {
+		logger.info("1:1문의하기 관리 리스트 페이지 요청");
+		session.setAttribute("adminId", "admin");//로그인체크 시 지울 부분
+		return "admin/QList";
+	}
+	
+	@RequestMapping(value = "/admin/QList/{pagePerCnt}/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> QList(@PathVariable int pagePerCnt, @PathVariable int page) {
+		logger.info("1:1문의하기 리스트 요청 pagePerCnt: {}, page: {}",pagePerCnt,page);
+		return service.QList(page,pagePerCnt);
+	}
+	
+	//1:1문의하기 상세보기
+	@RequestMapping(value = "/admin/detailQ/{question_idx}", method = RequestMethod.GET)
+	public ModelAndView detailQ(@PathVariable int question_idx) {
+		logger.info("1:1문의하기 상세보기 요청 idx : " +question_idx);
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/admin/callQList";//실패 : 리스트
+		QuestionDTO dto = service.detailQ(question_idx);
+		if(dto != null) {//성공 : 상세보기
+			page = "admin/QDetail";
+			mav.addObject("dto", dto);
+		}
+		mav.setViewName(page);
+		return mav;
+	}
+	
+	//1:1문의하기 답변하기
+	@RequestMapping(value = "/admin/anwerQFrom/{question_idx}", method = RequestMethod.GET)
+	public ModelAndView anwerQFrom(@PathVariable int question_idx) {
+		logger.info("1:1문의하기 답변 폼 요청 idx : " +question_idx);
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/admin/callQList";//실패 : 리스트
+		QuestionDTO dto = service.detailQ(question_idx);
+		if(dto != null) {//성공 : 답변 폼
+			page = "admin/QAnswer";
+			mav.addObject("dto", dto);
+		}
+		mav.setViewName(page);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/admin/anwerQ", method = RequestMethod.POST)
+	public ModelAndView anwerQ(@ModelAttribute QuestionDTO dto) {
+		logger.info("1:1문의하기 답변 하기 idx : " +dto.getQuestion_idx());
+		ModelAndView mav = new ModelAndView();
+		Date now = new Date();//답변시간 삽입
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		dto.setAnswer_date(transFormat.format(now));
+		String page = "redirect:/admin/anwerQFrom/"+dto.getQuestion_idx();//실패 : 답변 폼
+		if(service.answerQ(dto) > 0) {//성공 : 상세보기
+			page = "redirect:/admin/detailQ/"+dto.getQuestion_idx();
+		}
+		mav.setViewName(page);
+		return mav;
+	}
 	
 	
 	
