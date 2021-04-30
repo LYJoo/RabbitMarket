@@ -42,7 +42,7 @@
         border: none;
     }
 	
-	.form-signin .form-control {
+	.login .form-control {
   		position: relative;
   		height: auto;
   		-webkit-box-sizing: border-box;
@@ -75,25 +75,26 @@
 	<div class="card align-middle" style="width:25rem;">
 		<div class="card-title" style="margin-top:30px;">
             
-			<h2 class="card-title" style="color:#f58b34;"><img src="resources/img/rabbit_logo.png"/></h2>
+			<h2 class="card-title" style="color:#f58b34;"><img src="./resources/img/rabbit_logo.png"/></h2>
 		</div>
+      <form action="login" class="login" method="POST">
         <div class="checkbox">
             <label>
-              <input type="checkbox" value="admin"> 관리자
-              <input type="checkbox" value="member"> 일반회원
+            <input type="radio" name="mode" value="admin"> 관리자
+			&nbsp;&nbsp;
+			<input type="radio" name="mode" value="member" checked> 일반회원
             </label>
           </div>
 		<div class="card-body">
-      <form class="form-signin" method="POST" onSubmit="logincall();">
   
-        <input type="text" name="loginId" id="loginId" class="form-control" placeholder="아이디" required autofocus><BR>
-        <input type="password" name="loginPw" id="loginPw" class="form-control" placeholder="비밀번호" required><br>
-        <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">로 그 인</button>
+        <input type="text" name="Id" id="Id" class="form-control" placeholder="아이디" required autofocus><BR>
+        <input type="password" name="Pw" id="Pw" class="form-control" placeholder="비밀번호" required><br>
+        <input id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit" value="로 그 인">
       </form>
-        
+    
 		</div>
         <div class="links">
-            <a href="MemberId">아이디 찾기</a> | <a href="MemberPw">비밀번호 찾기</a> | <a href="MemberRegist">회원가입</a>
+            <a href="memberId">아이디 찾기</a> | <a href="memberPw">비밀번호 찾기</a> | <a href="memberRegist">회원가입</a> | <a href="helpMain">고객센터</a>
 
         </div>
 	</div>
@@ -101,6 +102,7 @@
   </body>
   
   <script type="text/javascript">
-  
+	
+
   </script>
 </html>
