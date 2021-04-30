@@ -90,7 +90,7 @@
  			WHERE frequently_idx=#{frequently_idx}
  	</update>
  	
- 	<!-- 공지사항 삭제 -->
+ 	<!-- 자주묻는질문 삭제 -->
  	<delete id="delFaq">
  		DELETE FROM frequently_question WHERE frequently_idx=#{param1}
  	</delete>
@@ -107,7 +107,7 @@
 		        (	SELECT q.question_idx, qc.q_category_name, q.subject, q.member_id, q.reg_date, q.state, 
 		                ROW_NUMBER() OVER(ORDER BY q.question_idx DESC) AS rnum 
 		            FROM question q, question_category qc
-		            WHERE q.question_category=qc.q_category_idx AND q.isdelete = 0
+		            WHERE q.question_category=qc.q_category_idx AND q.isdelete = 1
 		        )
 		WHERE rnum BETWEEN #{param1} AND #{param2}
 	</select>
