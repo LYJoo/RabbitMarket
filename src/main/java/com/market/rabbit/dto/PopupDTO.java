@@ -8,7 +8,7 @@ public class PopupDTO {
 	private int popup_idx;
 	private String popup_subject;
 	private String popup_content;
-	private boolean isLook;
+	private String islook;//mybatis가 못 찾아서 isLook -> islook 으로 변경함.
 	private String admin_id;
 	private String reg_date;
 	
@@ -30,11 +30,11 @@ public class PopupDTO {
 	public void setPopup_content(String popup_content) {
 		this.popup_content = popup_content;
 	}
-	public boolean isLook() {
-		return isLook;
+	public String getIslook() {
+		return islook;
 	}
-	public void setLook(boolean isLook) {
-		this.isLook = isLook;
+	public void setIslook(String islook) {
+		this.islook = islook;
 	}
 	public String getAdmin_id() {
 		return admin_id;

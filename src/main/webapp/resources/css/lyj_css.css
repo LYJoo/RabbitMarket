@@ -111,6 +111,7 @@ table td{
 /**/
 
 #list_table>tbody>tr>td>a { /*링크스타일*/
+	color: black;
     text-decoration: none;
 }
 #list_table>tbody>tr>td>a:hover{

@@ -90,7 +90,7 @@
  			WHERE frequently_idx=#{frequently_idx}
  	</update>
  	
- 	<!-- 공지사항 삭제 -->
+ 	<!-- 자주묻는질문 삭제 -->
  	<delete id="delFaq">
  		DELETE FROM frequently_question WHERE frequently_idx=#{param1}
  	</delete>

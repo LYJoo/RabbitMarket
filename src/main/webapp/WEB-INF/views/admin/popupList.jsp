@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>admin_notice</title>
+    <title>admin_popup</title>
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- 반응형 디자인을 위한 css/js 라이브러리 -->
@@ -15,19 +15,19 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 </head>
 <body>
-	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
     <div id="list_content">
         <div class="flex_box btn_flex">
-            <h2>공지사항</h2>
-            <button onclick="location.href='./writeFormNotice'" class="list_btn">공지등록</button>
+            <h2>팝업관리</h2>
+            <button onclick="location.href='/admin/writeFormPopup'" class="list_btn">팝업등록</button>
         </div>
         <table id="list_table">
             <thead>
                 <tr>
-                    <th>글번호</th>
+                    <th>질문번호</th>
+                    <th>노출여부</th>
                     <th id="list_subject">제목</th>
                     <th>작성자</th>
-                    <th>공지날짜</th>
+                    <th style="width: 14%;max-width: 105px;">등록일</th>
                     <th>삭제</th>
                 </tr>
             </thead>
@@ -35,6 +35,7 @@
                 <!-- 불러온 데이터 뿌리는 영역 -->
                 <tr>
                     <td>00</td>
+                    <td>N</td>
                     <td><a href="">로드중...</a></td>
                     <td>토끼마켓</td>
                     <td>0000-00-00</td>
@@ -42,7 +43,7 @@
                 </tr>
             </tbody>
             <tr>
-				<td id="paging" colspan="5">  
+				<td id="paging" colspan="6">  
 					<!-- 플러그인 사용 -->
 					<div class="container">
 						<nav aria-label="page navigation" style="text-align:center">
@@ -56,8 +57,6 @@
     </div>
 </body>
 <script>
-	jQuery.noConflict();
-	
     var showPage = 1;//첫시작시에 보여줄 페이지 1
     var pagePerNum = 10;//보여줄갯수
 
@@ -65,7 +64,7 @@
     listCall(showPage);//시작하자 마자 이 함수를 호출
     
     function listCall(reqPage){	//페이지 요청 함수
-        var reqUrl ='/admin/noticeList/'+pagePerNum+'/'+reqPage; // /list/보여줄갯수/페이지
+        var reqUrl ='./popupList/'+pagePerNum+"/"+reqPage; //restful 로 요청
         $.ajax({
             url:reqUrl
             ,type:'get'
@@ -96,15 +95,20 @@
         var content="";
         for(var i=0;i<list.length;i++){
             content +="<tr>";
-            content +="<td>"+list[i].notice_idx+"</td>";
-            content +="<td><a href='./detailNotice/"+list[i].notice_idx+"'>"+list[i].subject+"</a></td>";
+            content +="<td>"+list[i].popup_idx+"</td>";
+            if(list[i].islook=="1"){
+            	content +="<td>Y</td>";	
+            } else {
+            	content +="<td>N</td>";
+            }
+            content +="<td><a href='/admin/updateFormPopup/"+list[i].popup_idx+"'>"+list[i].popup_subject+"</a></td>";
             content +="<td>"+list[i].admin_id+"</td>";
             
             //java 에서 가끔 날짜가 milliseconds 로 나올 경우...
             var date = new Date(list[i].reg_date);
             content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
             
-            content +="<td><a href='./delNotice/"+list[i].notice_idx+"'>X</a></td>";
+            content +="<td><a href='/admin/delPopup/"+list[i].popup_idx+"'>X</a></td>";
             content +="</tr>";
         }
         $('#list').empty();//원래 있던 리스트들을 비워준다.

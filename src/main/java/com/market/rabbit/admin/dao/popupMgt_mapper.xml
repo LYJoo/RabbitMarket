@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+ >
+ 
+ <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
+ <mapper namespace="com.market.rabbit.admin.dao.PopupDAO">
+ 	
+ 	<!-- 리스트 : 전체수 / 페이징리스트-->
+	<select id="allCountPopup" resultType="int">
+		SELECT COUNT(*) AS cnt FROM popup
+	</select>
+	<select id="popupList" resultType="popup">
+		SELECT popup_idx, islook, popup_subject, admin_id, reg_date, rnum 
+		    FROM (SELECT popup_idx, islook, popup_subject, admin_id, reg_date, ROW_NUMBER() 
+		                OVER(ORDER BY popup_idx DESC) AS rnum FROM popup)
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="detailPopup" resultType="popup">
+		SELECT popup_idx, islook, popup_subject, popup_content, admin_id, reg_date FROM popup 
+			WHERE popup_idx=#{param1}
+	</select>
+	
+ 	<!-- 등록 -->
+	<insert id="writePopup" 
+		useGeneratedKeys="true"
+		keyProperty="popup_idx"
+		keyColumn="popup_idx"
+		parameterType="popup">
+	INSERT INTO popup(popup_idx, popup_subject,admin_id,popup_content, islook)
+    	VALUES(seq_popup.NEXTVAL, #{popup_subject}, #{admin_id}, #{popup_content}, #{islook})
+	</insert>
+ 		
+ 	<!-- 수정 -->
+ 	<update id="updatePopup" parameterType="popup">
+ 		UPDATE popup 
+			<set>
+				<if test="!popup_subject.equals('')">popup_subject=#{popup_subject}, </if>
+				<if test="!popup_content.equals('')">popup_content=#{popup_content}, </if>
+				<if test="!islook.equals('')">islook=#{islook} </if>
+			</set>
+ 			WHERE popup_idx=#{popup_idx}
+ 	</update>
+ 	
+ 	<!-- 삭제 -->
+ 	<delete id="delPopup">
+ 		DELETE FROM popup WHERE popup_idx=#{param1}
+ 	</delete>
+ 	
+
+ 	
+ </mapper>
