@@ -1,7 +1,7 @@
 #container{
     min-width: 1920px;
 }
-table, th, td{
+.original-tab, .original-tab th, .original-tab td{
     border-collapse: collapse;
     font-size: 20px;
 }

@@ -18,7 +18,7 @@
                 <a href="">내 프로필 보기</a><br/>
                 <a href="" id="message">쪽지</a>
             </div>
-            <table id="table-mypage">
+            <table id="table-mypage" class="original-tab">
                     <tr>
                         <td colspan="2"><p><img src="${path }" alt="" style="width: 150px; height: 150px;"></p></td>
                     </tr>
