@@ -16,5 +16,9 @@ public interface MessageDAO {
 
 	MessageDTO callDetailMsg(int msg_idx);
 
+	int delReceiveMsg(String msg_idx);
+
+	int delSendMsg(String msg_idx);
+
 
 }

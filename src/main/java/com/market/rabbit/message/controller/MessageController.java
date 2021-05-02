@@ -48,7 +48,7 @@ public class MessageController {
 	
 	//답장할때
 	@RequestMapping(value = "/message/replyForm", method = RequestMethod.GET)
-	public ModelAndView callReplyForm(@RequestParam String receiver) {
+	public ModelAndView callReplyForm(String receiver) {
 		logger.info("쪽지 답장폼 요청");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("receiver", receiver);
@@ -81,6 +81,20 @@ public class MessageController {
 		
 		return service.callDetailMsg(msg_idx, serviceType);
 		
+	}
+	
+	@RequestMapping(value = "/message/delMsg", method = RequestMethod.GET)
+	public ModelAndView delMsg(String msg_idx, String msgType, RedirectAttributes rAttr) {
+		int serviceType = 0;	//기본 읽기는 받은메시지
+		
+		if(msgType.equals("receiveMsg")) {
+			logger.info(msg_idx+"번 받은 쪽지 삭제 요청");
+			serviceType = 0;
+		}else if(msgType.equals("sendMsg")) {
+			logger.info(msg_idx+"번 보낸 쪽지 삭제 요청");
+			serviceType = 1;
+		}
+		return service.delMsg(msg_idx, serviceType, rAttr);
 	}
 	
 }

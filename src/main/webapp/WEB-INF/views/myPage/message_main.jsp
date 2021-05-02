@@ -66,7 +66,6 @@
 	        table.type04 th {
 	            width: 150px;
 	            font-weight: bold;
-	            vertical-align: top;
 	            border-bottom: 1px solid #ccc;
 	        }
 	        table.type04 td {
@@ -75,6 +74,15 @@
 	            vertical-align: top;
 	            border-bottom: 1px solid #ccc;
 	        }
+	        .a-del{
+	        padding:5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: #F79646;
+            color: white;
+            border: none;
+
+        }
 	        .msg_paging{
 	            text-align: center;
 	        }
@@ -97,6 +105,7 @@
 		                    <th scope="row">내용</th>
 		                    <th scope="row">ID</th>
 		                    <th scope="row">보낸날짜</th>
+		                    <th scope="row">삭제</th>
 		                </tr>
 	            	</thead>
 	            	<tbody id="receiveList">
@@ -113,6 +122,7 @@
 		                    <th scope="row">내용</th>
 		                    <th scope="row">ID</th>
 		                    <th scope="row">보낸날짜</th>
+		                    <th scope="row">삭제</th>
 		                </tr>
 	            	</thead>
 	            	<tbody id="sendList">
@@ -129,6 +139,7 @@
 		                    <th scope="row">내용</th>
 		                    <th scope="row">ID</th>
 		                    <th scope="row">보낸날짜</th>
+		                    <th scope="row">삭제</th>
 		                </tr>
 	            	</thead>
 	            	<tbody id="blockList">
@@ -195,6 +206,7 @@
     			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg'>"+list[i].msg_content+"</a></td>";
     			content += "<td>"+list[i].send_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
+    			content += "<td><a href='./delMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg' class='a-del' style='color:white;'>삭제</a></td>";
     			content += "</tr>";
     			
     		}
@@ -210,6 +222,7 @@
     			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=sendMsg'>"+list[i].msg_content+"</a></td>";
     			content += "<td>"+list[i].member_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
+    			content += "<td><a href='./delMsg?msg_idx="+list[i].msg_idx+"&msgType=sendMsg' class='a-del' style='color:white;'>삭제</a></td>";
     			content += "</tr>";
     			
     		}
@@ -225,6 +238,7 @@
     			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=blockMsg'>"+list[i].msg_content+"</a></td>";
     			content += "<td>"+list[i].send_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
+    			content += "<td><a href='./delMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg' class='a-del' style='color:white;'>삭제</a></td>";
     			content += "</tr>";
     			
     		}

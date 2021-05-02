@@ -81,6 +81,25 @@ public class MessageService {
 		return mav;
 	}
 
+	public ModelAndView delMsg(String msg_idx, int serviceType, RedirectAttributes rAttr) {
+		ModelAndView mav = new ModelAndView();
+		String msg = "쪽지 삭제에 실패하였습니다.";
+		
+		if(serviceType == 0) {
+			if(dao.delReceiveMsg(msg_idx) > 0) {
+				msg = "받은 쪽지 삭제에 성공하였습니다.";
+			}
+		}else if(serviceType == 1) {
+			if(dao.delSendMsg(msg_idx) > 0) {
+				msg = "보낸 쪽지 삭제에 성공하였습니다.";
+			}
+		}
+		
+		rAttr.addFlashAttribute("msg", msg);
+		mav.setViewName("redirect:/message/mainPage");
+		return mav;
+	}
+
 
 
 

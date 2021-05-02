@@ -44,5 +44,24 @@
 	<select id="callDetailMsg" resultType="message">
 		SELECT * FROM message WHERE msg_idx=#{param1}
 	</select>
+	
+	<update id="delReceiveMsg">
+		UPDATE message SET RECEIVER_DELETE=1 WHERE msg_idx=#{param1}
+	</update>
+	
+	<update id="delSendMsg">
+		UPDATE message SET SENDER_DELETE=1 WHERE msg_idx=#{param1}
+	</update>
  	
  </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
