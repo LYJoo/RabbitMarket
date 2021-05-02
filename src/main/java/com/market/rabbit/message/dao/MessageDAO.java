@@ -12,5 +12,9 @@ public interface MessageDAO {
 
 	ArrayList<MessageDTO> callBlockMsgList(int start, int end, String loginId);
 
+	int writeMsg(String loginId, String receiver, String msg_content);
+
+	MessageDTO callDetailMsg(int msg_idx);
+
 
 }

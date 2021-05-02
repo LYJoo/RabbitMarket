@@ -61,6 +61,7 @@
 	            text-align: center;
 	            line-height: 1.5;
 	            border-top: 1px solid #ccc;
+	            font-size: 13px;
 	        }
 	        table.type04 th {
 	            width: 150px;
@@ -90,74 +91,64 @@
 	            <li class="tab-link" data-tab="tab-3">차단쪽지함<hr class="tab-hr"></li>
 	        </ul>
 	        <div id="tab-1" class="tab-content current">
-	            <table class="type04">
-	                <tr>
-	                    <th scope="row">내용</th>
-	                    <th scope="row">ID</th>
-	                    <th scope="row">보낸날짜</th>
-	                </tr>
-	                <tr>
-	                  <td>항목명</td>
-	                  <td>내용이 들어갑니다.</td>
-	                  <td>내용이 들어갑니다.</td>
-	                </tr>
-	                <tr>
-	                  <td>항목명</td>
-	                  <td>내용이 들어갑니다.</td>
-	                  <td>내용이 들어갑니다.</td>
-	                </tr>
+	            <table class="type04" style="font-size: 13px">
+	            	<thead>
+		                <tr>
+		                    <th scope="row">내용</th>
+		                    <th scope="row">ID</th>
+		                    <th scope="row">보낸날짜</th>
+		                </tr>
+	            	</thead>
+	            	<tbody id="receiveList">
+	            	
+	            	</tbody>
 	              </table>
 	              <!-- 페이지 -->
 	              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
 	        </div>
 	        <div id="tab-2" class="tab-content">
-	            <table class="type04">
-	                <tr>
-	                    <th scope="row">내용</th>
-	                    <th scope="row">ID</th>
-	                    <th scope="row">보낸날짜</th>
-	                </tr>
-	                <tr>
-	                  <td>항목명</td>
-	                  <td>내용이 들어갑니다.</td>
-	                  <td>내용이 들어갑니다.</td>
-	                </tr>
-	                <tr>
-	                  <td>항목명</td>
-	                  <td>내용이 들어갑니다.</td>
-	                  <td>내용이 들어갑니다.</td>
-	                </tr>
+	            <table class="type04" style="font-size: 13px">
+	            	<thead>
+		                <tr>
+		                    <th scope="row">내용</th>
+		                    <th scope="row">ID</th>
+		                    <th scope="row">보낸날짜</th>
+		                </tr>
+	            	</thead>
+	            	<tbody id="sendList">
+	            		
+	            	</tbody>
 	              </table>
 	              <!-- 페이지 -->
 	              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
 	        </div>
 	        <div id="tab-3" class="tab-content">
-	            <table class="type04">
-	                <tr>
-	                    <th scope="row">내용</th>
-	                    <th scope="row">ID</th>
-	                    <th scope="row">보낸날짜</th>
-	                </tr>
-	                <tr>
-	                  <td>항목명</td>
-	                  <td>내용이 들어갑니다.</td>
-	                  <td>내용이 들어갑니다.</td>
-	                </tr>
-	                <tr>
-	                  <td>항목명</td>
-	                  <td>내용이 들어갑니다.</td>
-	                  <td>내용이 들어갑니다.</td>
-	                </tr>
+	            <table class="type04" style="font-size: 13px">
+	            	<thead>
+		                <tr>
+		                    <th scope="row">내용</th>
+		                    <th scope="row">ID</th>
+		                    <th scope="row">보낸날짜</th>
+		                </tr>
+	            	</thead>
+	            	<tbody id="blockList">
+	            	
+	            	</tbody>
 	              </table>
 	              <!-- 페이지 -->
 	              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
 	        </div>
 	        <div>
-	            <button class="msg-btn">글쓰기</button>
+	            <button class="msg-btn" onclick="location.href='./writeForm'">글쓰기</button>
 	        </div>
 	    </div>
     </body>
     <script type="text/javascript">
+    	var msg = '${msg}';
+    	if(msg != ""){
+    		alert(msg);
+    	}
+    
 	    $(document).ready(function(){
 	    	
 	    	$('ul.tabs li').click(function(){
@@ -185,9 +176,10 @@
     			dataType:'JSON',
     			success:function(data){
     				console.log(data);
-    				console.log(data.receiveMsgList);
-    				console.log(data.sendMsgList);
-    				console.log(data.blockMsgList);
+    				printReceiveList(data.receiveMsgList);
+    				printSendList(data.sendMsgList);
+    				printBlockList(data.blockMsgList);
+    				
     			},
     			error:function(e){
     				console.log(e);
@@ -195,23 +187,49 @@
     		});
     	}
     	
-    	function listPrint(list){
+    	function printReceiveList(list){
     		var content="";
     		
     		for(var i=0; i<list.length; i++){
     			content += "<tr>";
-    			content += "<td>"+list[i].idx+"</td>";
-    			content += "<td>"+list[i].subject+"</td>";
-    			content += "<td>"+list[i].user_name+"</td>";
-    			//java에서 가끔 날짜가 milliseconds로 나올 경우
-    			var date = new Date(list[i].reg_date);
-    			content += "<td>"+date.toLocaleDateString("ko-KR")+"</td>";
-    			content += "<td>"+list[i].bHit+"</td>";
+    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg'>"+list[i].msg_content+"</a></td>";
+    			content += "<td>"+list[i].send_id+"</td>";
+    			content += "<td>"+list[i].send_time+"</td>";
     			content += "</tr>";
     			
     		}
-    		$('#list').empty();
-    		$('#list').append(content);
+    		$('#receiveList').empty();
+    		$('#receiveList').append(content);
+    	}
+    	
+    	function printSendList(list){
+    		var content="";
+    		
+    		for(var i=0; i<list.length; i++){
+    			content += "<tr>";
+    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=sendMsg'>"+list[i].msg_content+"</a></td>";
+    			content += "<td>"+list[i].member_id+"</td>";
+    			content += "<td>"+list[i].send_time+"</td>";
+    			content += "</tr>";
+    			
+    		}
+    		$('#sendList').empty();
+    		$('#sendList').append(content);
+    	}
+    	
+    	function printBlockList(list){
+    		var content="";
+    		
+    		for(var i=0; i<list.length; i++){
+    			content += "<tr>";
+    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=blockMsg'>"+list[i].msg_content+"</a></td>";
+    			content += "<td>"+list[i].send_id+"</td>";
+    			content += "<td>"+list[i].send_time+"</td>";
+    			content += "</tr>";
+    			
+    		}
+    		$('#blockList').empty();
+    		$('#blockList').append(content);
     	}
     </script>
 </html>
