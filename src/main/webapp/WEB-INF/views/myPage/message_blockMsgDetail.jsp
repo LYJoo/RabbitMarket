@@ -36,7 +36,7 @@
 	            	${dto.msg_content }
 				</div>
 	            <div class="msg-detail-btn">
-	                <button class="msg-btn" onclick="location.href='./writeForm?sender=${dto.send_id }'">답장하기</button>
+	                <button class="msg-btn" onclick="location.href='./replyForm?receiver=${dto.send_id }'">답장</button>
 	                <button class="msg-btn" onclick="location.href='./mainPage'">목록</button>
 	            </div>
 	        </div>

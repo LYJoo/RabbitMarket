@@ -30,14 +30,19 @@
 						쪽지보내기
 		            </div>
 		            <div class="msg-detail-info">
-		                <span class="msg-detail-info-span">받을사람 : <input type="text" name="receiver" id="" style="width: 100px;"></span>
+		            	<c:if test="${receiver eq null }">
+			                <span class="msg-detail-info-span">받을사람 : <input type="text" name="receiver" id="" style="width: 100px;"></span>
+		            	</c:if>
+		            	<c:if test="${receiver ne null }">
+			                <span class="msg-detail-info-span">받을사람 : <input type="text" name="receiver" id="" style="width: 100px;" value="${receiver }"></span>
+		            	</c:if>
 		            </div>
 		            <div id="msg-write">
 		                <textarea name="msg_content" id="" cols="52" rows="20"></textarea>
 		            </div>
 		            <div class="msg-detail-btn">
 		                <button class="msg-btn">보내기</button>
-		                <button type="button" class="msg-btn" >목록</button>
+		                <button type="button" class="msg-btn" onclick="location.href='./mainPage'">목록</button>
 		            </div>
 	        	</div>
 			</form>

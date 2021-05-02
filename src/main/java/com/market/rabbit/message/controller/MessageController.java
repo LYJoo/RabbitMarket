@@ -39,10 +39,21 @@ public class MessageController {
 		return service.callMsgList(page);
 	}
 	
+	//그냥 바로 쪽지 보낼때
 	@RequestMapping(value = "/message/writeForm", method = RequestMethod.GET)
-	public String callWriteForm(Model model) {
+	public String callWriteForm() {
 		logger.info("쪽지 작성폼 요청");
 		return "myPage/message_writeForm";
+	}
+	
+	//답장할때
+	@RequestMapping(value = "/message/replyForm", method = RequestMethod.GET)
+	public ModelAndView callReplyForm(@RequestParam String receiver) {
+		logger.info("쪽지 답장폼 요청");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("receiver", receiver);
+		mav.setViewName("myPage/message_writeForm");
+		return mav;
 	}
 	
 	@RequestMapping(value = "/message/writeMsg", method = RequestMethod.POST)
