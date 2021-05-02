@@ -35,6 +35,11 @@
 		    )
 		WHERE rnum BETWEEN #{param1} AND #{param2}
  	</select>
+ 	
+ 	<insert id="writeMsg">
+ 		INSERT INTO message (msg_idx, send_id, msg_content, member_id)
+ 		VALUES (seq_message.nextval, #{param1}, #{param3}, #{param2})
+ 	</insert>
 
  	
  </mapper>

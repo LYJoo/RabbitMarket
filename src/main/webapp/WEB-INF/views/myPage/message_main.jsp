@@ -139,11 +139,16 @@
 	              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
 	        </div>
 	        <div>
-	            <button class="msg-btn">글쓰기</button>
+	            <button class="msg-btn" onclick="location.href='./writeForm'">글쓰기</button>
 	        </div>
 	    </div>
     </body>
     <script type="text/javascript">
+    	var msg = '${msg}';
+    	if(msg != ""){
+    		alert(msg);
+    	}
+    
 	    $(document).ready(function(){
 	    	
 	    	$('ul.tabs li').click(function(){
