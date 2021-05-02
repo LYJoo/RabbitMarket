@@ -79,7 +79,7 @@
 		</div>
         
 		<div class="card-body">
-      <form class="form-signin" method="POST" onSubmit="logincall();return false">
+      <form action="findId" class="form-signin" method="POST">
   
         <input type="text" name="name" id="name" class="form-control" placeholder="이름" required autofocus><BR>
         <input type="email" name="email" id="email" class="form-control" placeholder="이메일" required><br>

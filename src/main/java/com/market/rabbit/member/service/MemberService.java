@@ -46,12 +46,12 @@ public class MemberService {
 		return map;
 	}
 
-	public ModelAndView login(HashMap<String, Object> params, RedirectAttributes rAttr, HttpSession session, String pw) {
+	public ModelAndView login(HashMap<String, Object> params, RedirectAttributes rAttr, HttpSession session) {
 		logger.info("로그인 서비스 요청");
-		
+	
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("login_id", params.get("LoginId"));
-		map.put("pw", params.get("pw"));
+		map.put("pw", params.get("LoginPw"));
 		logger.info("map"+map);
 		
 		//일반인 모드로 오면 
@@ -84,6 +84,14 @@ public class MemberService {
 		mav.setViewName(page);	
 		return mav;
 	}
+
+
+	public ModelAndView findId(String name, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 
 

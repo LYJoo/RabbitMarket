@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
-<mvc:interceptors>
+<!--  <mvc:interceptors>
 		<mvc:interceptor>
 				 <mvc:mapping path="/help/helpMain"/> 
 				<bean class="com.market.rabbit.service.LoginInterceptor"></bean>
@@ -14,5 +14,5 @@
 		</mvc:interceptor>
 	
 </mvc:interceptors>
-
+-->
 </beans>

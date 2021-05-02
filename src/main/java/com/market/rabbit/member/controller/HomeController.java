@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.MemberDTO;
+import com.market.rabbit.member.dao.MemberDAO;
 import com.market.rabbit.member.service.MemberService;
 
 
@@ -31,6 +32,7 @@ public class HomeController {
 	BCryptPasswordEncoder en = new BCryptPasswordEncoder();
 	
 	@Autowired MemberService service;
+	@Autowired MemberDAO dao;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/member/memberLogin",  method = RequestMethod.GET)
@@ -50,6 +52,8 @@ public class HomeController {
 		logger.info("고객이 입력한 아이디 : "+id);
 		 return service.overlay(id);
 	}
+	
+	
 	@RequestMapping(value = "/member/emoverlay",  method = RequestMethod.POST)
 	public @ResponseBody HashMap<String, Object> emoverlay( Model model, @RequestParam String email) {
 		logger.info("고객이 입력한 이메일 : "+email);
@@ -95,14 +99,14 @@ public class HomeController {
 	        }
 		 
 		//비밀번호 암호
-				
+			
 				 boolean success = en.matches(LoginPw, hash);//비교
-				 String pw = hash;
+				
 				 logger.info("입력전 패스워드 :"+LoginPw);	
 				 logger.info("db에 패스워드 :"+hash);	
 				 logger.info("입력후 패스워드 :"+success);	
 				 
-		return service.login(params, rAttr,session,pw);
+		return service.login(params, rAttr,session);
 	}
 	
 	// 로그아웃 하는 부분
@@ -111,6 +115,14 @@ public class HomeController {
     	session.invalidate(); //세션 전부 날림
         return "redirect:/member/memberLogin"; // 로그아웃 후 로그인화면으로 이동
     }
+    
+    
+    @RequestMapping(value = "/member/findId",  method = RequestMethod.POST)
+	public ModelAndView findId(@RequestParam String email, String name) {
+		logger.info("고객이 입력한 이름과 이메일 :"+name+"/"+email);
+		return service.findId(name,email);
+	}
+    
 	@RequestMapping(value = "/member/memberRegist", method = RequestMethod.GET)
 	public String MemberRegist( Model model) {
 		
