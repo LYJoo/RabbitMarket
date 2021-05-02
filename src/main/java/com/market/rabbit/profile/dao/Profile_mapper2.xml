@@ -55,6 +55,24 @@
 		DELETE FROM alarm WHERE alarm_idx=#{param1}
 	</delete>
 	
+	<select id="callBlockList" resultMap="callBlockListAfterJoin">
+		SELECT *
+		FROM (
+		    SELECT b.block_idx, b.target_id, b.member_id, p.newfilename, ROW_NUMBER() OVER(ORDER BY b.block_idx) AS rnum
+		    FROM block b, profilefile p
+		    WHERE b.member_id = p.member_id AND b.member_id=#{param1}
+		    )
+		WHERE rnum BETWEEN #{param2} AND #{param3}
+	</select>
+	
+	<resultMap type="block" id="callBlockListAfterJoin">
+		<id column="block_idx" property="block_idx"/>
+		<result column="target_id" property="target_id"/>
+		<result column="member_id" property="member_id"/>
+		<association property="profilefileDto" javaType="profilefile">
+			<result column="newFileName" property="newFileName"/>
+		</association>
+	</resultMap>
 	
  	
  </mapper>

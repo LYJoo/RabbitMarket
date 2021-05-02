@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.AlarmDTO;
+import com.market.rabbit.dto.BlockDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.profile.dao.ProfileDAO2;
@@ -215,6 +216,18 @@ public class ProfileService2 {
 		}
 		
 		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> callBlockList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String loginId = "hwi";
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		
+		ArrayList<BlockDTO> blockList = dao.callBlockList(loginId, start, end);
+		map.put("blockList", blockList);
 		return map;
 	}
 	

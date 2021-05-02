@@ -14,85 +14,71 @@
         <div id="main_content">
         	<jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
 			<table id="table-block">
-				<tr>
-					<th colspan="4"><span class="info_title">차단 목록</span><br>
-					<br></th>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
-				<tr>
-					<td class="td-block-img"><p>
-							<img src="1.png" alt="" class="block-img">
-						</p></td>
-					<td class="td-block-id">test01</td>
-					<td class="td-block-btn"><button>차단해제</button></td>
-				</tr>
+				<thead>
+					<tr>
+						<th colspan="3"><span class="info_title">차단 목록</span><br>
+						<br></th>
+					</tr>
+				</thead>
+				<tbody id="blockList">
+
+				</tbody>
 				<tr>
 					<td id="paging" colspan="3">◁ 1 2 3 4 5 ▷</td>
 				</tr>
 			</table>
 		</div>
     </body>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+	    var showPage = 1;
+		listCall(showPage);
+		
+		function listCall(reqPage){
+			$.ajax({
+				url:'./blockList/'+reqPage,
+				type:'GET',
+				data:{},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data.blockList);
+					printBlockList(data.blockList);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}
+		
+		function printBlockList(list){
+			var content="";
+			
+	
+			for(var i=0; i<list.length; i++){
+				content += "<tr>";
+				content += "<td class='td-block-img'><p><img src='' class='block-img'/></p></td>"
+				content += "<td class='td-block-id'>"+list[i].target_id+"</td>"
+				content += "<td><a onclick='delBlock("+list[i].block_idx+")' class='a-del' style='color:white;'>차단해제</a></td>";
+				content += "</tr>";
+				
+			}
+			$('#blockList').empty();
+			$('#blockList').append(content);
+		}
+		
+ 		/* function delBlock(block_idx){
+			$.ajax({
+				url:'./delBlock/'+alarm_idx,
+				type:'GET',
+				data:{},
+				dataType:'JSON',
+				success:function(data){
+					console.log('삭제여부 : '+data.success);
+					listCall(1);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}  */
+    </script>
 </html>
