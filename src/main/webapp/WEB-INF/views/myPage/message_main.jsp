@@ -74,15 +74,7 @@
 	            vertical-align: top;
 	            border-bottom: 1px solid #ccc;
 	        }
-	        .a-del{
-	        padding:5px 10px;
-            cursor: pointer;
-            font-size: 14px;
-            background-color: #F79646;
-            color: white;
-            border: none;
 
-        }
 	        .msg_paging{
 	            text-align: center;
 	        }

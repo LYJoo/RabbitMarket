@@ -231,7 +231,7 @@ p{
 
 
 #table-alarm{
-    width: 700px;
+    width: 800px;
     text-align: center;
     margin-left: 625px;
     margin-top: 30px
@@ -315,4 +315,13 @@ a:hover{
 #table-block tr #paging{
     background-color: white;
     padding: 10px 0;
+}
+
+.a-del {
+	padding: 5px 10px;
+	cursor: pointer;
+	font-size: 14px;
+	background-color: #F79646;
+	color: white;
+	border: none;
 }

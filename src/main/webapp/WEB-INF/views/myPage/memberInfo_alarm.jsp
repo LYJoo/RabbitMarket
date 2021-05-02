@@ -14,55 +14,72 @@
         <div id="main_content">
 	        <jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
 			<table id="table-alarm">
-				<tr>
-					<th colspan="2"><span class="info_title">알림목록</span><br>
-					<br></th>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
-				<tr>
-					<td><a href="">[게시글제목]</a> 게시글에 댓글이 입력되었습니다.</td>
-					<td><button class="btn-alarm-remove">지우기</button></td>
-				</tr>
+				<thead>
+					<tr>
+						<th colspan="2"><span class="info_title">알림목록</span><br><br></th>
+					</tr>
+				</thead>
+				<tbody id="alarmList">
+				
+				</tbody>
 				<tr>
 					<td id="paging" colspan="2">◁ 1 2 3 4 5 ▷</td>
 				</tr>
 			</table>
 		</div>
     </body>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+	    var showPage = 1;
+		listCall(showPage);
+		
+		function listCall(reqPage){
+			$.ajax({
+				url:'./alarmList/'+reqPage,
+				type:'GET',
+				data:{},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data.alarmList);
+					printAlarmList(data.alarmList);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}
+		
+		function printAlarmList(list){
+    		var content="";
+
+    		for(var i=0; i<list.length; i++){
+    			content += "<tr>";
+    			if(!(list[i].isCheck)){	//아직 읽은적 없는 메시지면 제목 진하게
+	    			content += "<td><b>"+list[i].reg_date+"   "+list[i].alarm_content+"</b></td>";
+    			}else{							//읽은적 있으면 그대로
+    				content += "<td>"+list[i].reg_date+"   "+list[i].alarm_content+"</td>";
+    			}
+    			content += "<td><a onclick='delAlarm("+list[i].alarm_idx+")' class='a-del' style='color:white;'>지우기</a></td>";
+    			content += "</tr>";
+    			
+    		}
+    		$('#alarmList').empty();
+    		$('#alarmList').append(content);
+    	}
+		
+		function delAlarm(alarm_idx){
+			$.ajax({
+				url:'./delAlarm/'+alarm_idx,
+				type:'GET',
+				data:{},
+				dataType:'JSON',
+				success:function(data){
+					console.log('삭제여부 : '+data.success);
+					listCall(1);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}
+    </script>
 </html>

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.profile.dao.ProfileDAO2;
@@ -30,6 +32,7 @@ public class ProfileService2 {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ProfileDAO2 dao;
 	@Value("#{config['Globals.root']}") String root;
+	int numPerPage = 10;
 
 	@Transactional
 	public ModelAndView callMemberInfo(HttpSession session) {
@@ -190,7 +193,43 @@ public class ProfileService2 {
 		mav.setViewName(page);
 		return mav;
 	}
+
+	public HashMap<String, Object> callAlarmList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		ArrayList<AlarmDTO> alarmList = dao.callAlarmList(loginId, start, end);
+		
+		map.put("alarmList", alarmList);
+		return map;
+	}
+
+	public HashMap<String, Object> delAlarm(int alarm_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		Boolean success = false;
+		if(dao.delAlarm(alarm_idx) > 0) {
+			logger.info("삭제완료");
+			success = true;
+		}
+		
+		map.put("success", success);
+		return map;
+	}
 	
 
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -87,37 +90,51 @@ public class ProfileController2 {
 		return service.delMemberWithdraw(session, currPw, rAttr);
 	}
 	
-	@RequestMapping(value = "myPage/memberAlarmList", method = RequestMethod.GET)
-	public String callMemberAlarmList(Model model) {
+	@RequestMapping(value = "myPage/alarmList", method = RequestMethod.GET)
+	public String callMemberAlarmListForm(Model model) {
 		logger.info("마이페이지-알림리스트페이지요청");
 		return "myPage/memberInfo_alarm";
 	}
 	
-	@RequestMapping(value = "myPage/memberBlockList", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/alarmList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callMsgList(@PathVariable int page) {
+		
+		logger.info("Alarm {} 페이지 리스트 요청", page);
+		return service.callAlarmList(page);
+	}
+	
+	@RequestMapping(value = "myPage/delAlarm/{alarm_idx}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> delAlarm(@PathVariable int alarm_idx) {
+		
+		logger.info("{}번 알람 삭제 요청", alarm_idx);
+		return service.delAlarm(alarm_idx);
+	}
+	
+	@RequestMapping(value = "myPage/blockList", method = RequestMethod.GET)
 	public String callMemberBlockList(Model model) {
 		logger.info("마이페이지-차단리스트페이지요청");
 		return "myPage/memberInfo_block";
 	}
 	
-	@RequestMapping(value = "myPage/memberSaleReportList", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/saleReportList", method = RequestMethod.GET)
 	public String callMemberSaleReportList(Model model) {
 		logger.info("마이페이지-판매글신고리스트페이지요청");
 		return "myPage/memberInfo_reportSale";
 	}
 	
-	@RequestMapping(value = "myPage/memberCommentReportList", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/commentReportList", method = RequestMethod.GET)
 	public String callMemberCommentReportList(Model model) {
 		logger.info("마이페이지-댓글신고리스트페이지요청");
 		return "myPage/memberInfo_reportComment";
 	}
 	
-	@RequestMapping(value = "myPage/memberCocommentReportList", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/cocommentReportList", method = RequestMethod.GET)
 	public String callMemberCocommentReportList(Model model) {
 		logger.info("마이페이지-대댓글신고리스트페이지요청");
 		return "myPage/memberInfo_reportCocomment";
 	}
 	
-	@RequestMapping(value = "myPage/memberQuestionList", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage/questionList", method = RequestMethod.GET)
 	public String callMemberQuestionList(Model model) {
 		logger.info("마이페이지-대댓글신고리스트페이지요청");
 		return "myPage/memberInfo_question";

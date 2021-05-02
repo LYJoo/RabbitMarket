@@ -37,8 +37,24 @@
 		UPDATE member SET pw=#{param2} WHERE member_id=#{param1}
 	</update>
 	
-	<delete id="delMemberWithdraw">
-		DELETE FROM member WHERE member_id=#{param1}
+	<update id="delMemberWithdraw">
+		UPDATE member SET WITHDRAW=1 WHERE member_id=#{param1}
+	</update>
+	
+	<select id="callAlarmList" resultType="alarm">
+		SELECT *
+		FROM (
+		    SELECT alarm_idx, alarm_content, reg_date, ischeck, member_id, code_num, ROW_NUMBER() OVER(ORDER BY reg_date DESC) AS rnum
+		    FROM alarm 
+		    WHERE member_id=#{param1}
+		    )
+		WHERE rnum BETWEEN #{param2} AND #{param3}
+	</select>
+	
+	<delete id="delAlarm">
+		DELETE FROM alarm WHERE alarm_idx=#{param1}
 	</delete>
+	
+	
  	
  </mapper>
