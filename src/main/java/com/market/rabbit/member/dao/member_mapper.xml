@@ -6,7 +6,27 @@
  
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
  <mapper namespace="com.market.rabbit.member.dao.MemberDAO">
- 
+<insert id="join" parameterType="member">
+		INSERT INTO member(member_id,pw,name,birth_date,address,email,phone,withdraw)
+		VALUES(#{member_id},#{pw},#{name},#{birth_date},#{address},#{email},#{phone},'0')	
+	</insert>
+	
+	
+	<select id="overlay" parameterType="String" resultType="Integer">
+	        SELECT COUNT(*) FROM member WHERE member_id=#{member_id} OR(member_id=#{member_id} AND withdraw='1')
+	</select>
+	
+	<select id="emoverlay" parameterType="String" resultType="Integer">
+	      SELECT COUNT(*) FROM member WHERE email = #{email} 
+	</select>
+	
+	<select id="login" parameterType="member" resultType="Integer">
+		SELECT COUNT(*) FROM member WHERE member_id = #{login_id} AND pw = #{pw}	
+	</select
+	>	
+	<select id="admin" parameterType="member" resultType="Integer">
+		SELECT COUNT(*) FROM admin WHERE admin_id=#{login_id}  AND admin_pw=#{pw}	
+	</select>
 
  	
  </mapper>
