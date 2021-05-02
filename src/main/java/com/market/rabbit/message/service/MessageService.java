@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -75,9 +76,35 @@ public class MessageService {
 		}
 		
 		MessageDTO dto = dao.callDetailMsg(msg_idx);
+		//받은메시지or차단메시지이고 처음 디테일 불러온다면(read_boolean == 0(false)) 1(true)로 바꾼다
+		if(serviceType == 0 || serviceType == 2) {
+			if(!dto.isRead_boolean()) {
+				dao.updateRead(msg_idx);
+				dto.setRead_boolean(true);
+			}			
+		}
 		
 		mav.addObject("dto", dto);
 		mav.setViewName(page);
+		return mav;
+	}
+
+	public ModelAndView delMsg(String msg_idx, int serviceType, RedirectAttributes rAttr) {
+		ModelAndView mav = new ModelAndView();
+		String msg = "쪽지 삭제에 실패하였습니다.";
+		
+		if(serviceType == 0) {
+			if(dao.delReceiveMsg(msg_idx) > 0) {
+				msg = "받은 쪽지 삭제에 성공하였습니다.";
+			}
+		}else if(serviceType == 1) {
+			if(dao.delSendMsg(msg_idx) > 0) {
+				msg = "보낸 쪽지 삭제에 성공하였습니다.";
+			}
+		}
+		
+		rAttr.addFlashAttribute("msg", msg);
+		mav.setViewName("redirect:/message/mainPage");
 		return mav;
 	}
 
