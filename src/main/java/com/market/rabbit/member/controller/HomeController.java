@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ public class HomeController {
 
 	String plain ="";
 	String hash ="";
+	BCryptPasswordEncoder en = new BCryptPasswordEncoder();
 	
 	@Autowired MemberService service;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -62,11 +64,13 @@ public class HomeController {
 	
 		plain = pw;
 		logger.info("평문"+plain);
-		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
-		hash = en.encode(plain); //암호화`
-		logger.info("암호문"+hash);
-		dto.setPw(hash);
+		
+		dto.setPw(en.encode(dto.getPw()));
+//		hash = en.encode(plain); //암호화`
+//		logger.info("암호문"+hash);
+//		dto.setPw(hash);
 		logger.info("회원 정보 입력 값 = "+dto.getPw());
+		
 
 		String msg = "회원 가입에 실패했습니다. 잠시 후 다시 시도해주세요";
 		String page = "redirect:/";
@@ -75,7 +79,7 @@ public class HomeController {
 			page = "member/memberLogin";
 		}
 		
-		model.addAttribute("msg", msg);
+		model.addAttribute("regist_msg", msg);
 		
 		return page;
 }
@@ -84,16 +88,29 @@ public class HomeController {
 	public ModelAndView login(Model model,@RequestParam HashMap<String, Object> params,
 			 RedirectAttributes rAttr,HttpSession session, @RequestParam String LoginPw, MemberDTO dto) {
 		logger.info("login : "+params);	
+		
+		 if ( session.getAttribute("loginId") != null ){
+	            // 기존에 login이란 세션 값이 존재한다면
+	            session.removeAttribute("loginId"); // 기존값을 제거해 준다.
+	        }
+		 
 		//비밀번호 암호
-				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-				//입력된 평문, 암호화된 내용
-				 boolean success = encoder.matches(LoginPw, dto.getPw());//비교
+				
+				 boolean success = en.matches(LoginPw, hash);//비교
+				 String pw = hash;
 				 logger.info("입력전 패스워드 :"+LoginPw);	
+				 logger.info("db에 패스워드 :"+hash);	
 				 logger.info("입력후 패스워드 :"+success);	
 				 
-		return service.login(params, rAttr,session);
+		return service.login(params, rAttr,session,pw);
 	}
 	
+	// 로그아웃 하는 부분
+    @RequestMapping(value="/member/logout")
+    public String logout(HttpSession session) {
+    	session.invalidate(); //세션 전부 날림
+        return "redirect:/member/memberLogin"; // 로그아웃 후 로그인화면으로 이동
+    }
 	@RequestMapping(value = "/member/memberRegist", method = RequestMethod.GET)
 	public String MemberRegist( Model model) {
 		
@@ -110,5 +127,11 @@ public class HomeController {
 	public String MemberPw( Model model) {
 		
 		return "member/memberPw";
+	}
+	
+	@RequestMapping(value = "/help/helpMain", method = RequestMethod.GET)
+	public String helpMain( Model model) {
+		
+		return "help/helpMain";
 	}
 }

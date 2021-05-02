@@ -22,5 +22,7 @@
 	
 	<!-- <beans:import resource="classpath:config/interceptor.xml"/> -->
 	
+	<beans:import resource="classpath:config/interceptor.xml"/>
+	
 	
 </beans:beans>

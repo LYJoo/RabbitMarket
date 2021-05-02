@@ -422,7 +422,7 @@
 			var fileExt = files[i].name.substring(files[i].name.lastIndexOf('.'),files[i].name.length).toLowerCase();
 			console.log(fileExt);
 			
-			if(fileExt == '.jpg' || fileExt == '.png' || fileExt == '.mp4'){
+			if(fileExt == '.jpg' || fileExt == '.mp4'){
 				new_file_cnt++;
 				file_cnt++;
 				if(file_cnt > 5){

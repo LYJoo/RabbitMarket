@@ -21,11 +21,18 @@ public class SaleDTO {
 	private int code_num;
 	private int bHit;
 	private String keyword;
-	
 	private int wishCnt;
+	private int fileCnt;
 	private MemberDTO memberDto;
 	private SaleFileDTO saleFileDto;
+	private ProfileFileDTO profileFileDto;
 	
+	public ProfileFileDTO getProfileFileDto() {
+		return profileFileDto;
+	}
+	public void setProfileFileDto(ProfileFileDTO profileFileDto) {
+		this.profileFileDto = profileFileDto;
+	}
 	public int getProduct_idx() {
 		return product_idx;
 	}
@@ -133,6 +140,12 @@ public class SaleDTO {
 	}
 	public void setWishCnt(int wishCnt) {
 		this.wishCnt = wishCnt;
+	}
+	public int getFileCnt() {
+		return fileCnt;
+	}
+	public void setFileCnt(int fileCnt) {
+		this.fileCnt = fileCnt;
 	}
 	public MemberDTO getMemberDto() {
 		return memberDto;

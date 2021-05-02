@@ -92,13 +92,13 @@
   
         <input type="text" name="LoginId" id="Id" class="form-control" placeholder="아이디" autofocus><BR>
         <input type="password" name="LoginPw" id="Pw" class="form-control" placeholder="비밀번호" ><br>
-         <p id="check" class="check">${msg2}</p><br/>
+         <p id="check" class="check">${login_msg}</p><br/>
         <input id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit" value="로 그 인">
       </form>
     
 		</div>
         <div class="links">
-            <a href="memberId">아이디 찾기</a> | <a href="memberPw">비밀번호 찾기</a> | <a href="memberRegist">회원가입</a> | <a href="helpMain">고객센터</a>
+            <a href="memberId">아이디 찾기</a> | <a href="memberPw">비밀번호 찾기</a> | <a href="memberRegist">회원가입</a>
 
         </div>
 	</div>
@@ -106,6 +106,9 @@
   </body>
   
   <script type="text/javascript">
-
+	var msg = "${regist_msg}";
+	if(msg != ""){
+	 	alert(msg);
+}
   </script>
 </html>

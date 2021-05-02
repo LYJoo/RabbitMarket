@@ -16,5 +16,7 @@ public interface MemberDAO {
 
 	int login(HashMap<String, Object> map);
 
+	
+
 
 }

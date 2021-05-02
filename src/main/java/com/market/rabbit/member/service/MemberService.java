@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,12 +46,12 @@ public class MemberService {
 		return map;
 	}
 
-	public ModelAndView login(HashMap<String, Object> params, RedirectAttributes rAttr, HttpSession session) {
+	public ModelAndView login(HashMap<String, Object> params, RedirectAttributes rAttr, HttpSession session, String pw) {
 		logger.info("로그인 서비스 요청");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("login_id", params.get("LoginId"));
-		map.put("pw", params.get("LoginPw"));
+		map.put("pw", params.get("pw"));
 		logger.info("map"+map);
 		
 		//일반인 모드로 오면 
@@ -79,10 +80,12 @@ public class MemberService {
 			}
 		}
 		
-		rAttr.addFlashAttribute("msg2", msg);		
+		rAttr.addFlashAttribute("login_msg", msg);		
 		mav.setViewName(page);	
 		return mav;
 	}
+
+
 
 
 	

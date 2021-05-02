@@ -131,7 +131,7 @@
            
         </div>
 		
-		<div class="location">${location}
+		<div class="location">
 		</div>
 		
         <div id="product_list" class="list_start">
@@ -162,8 +162,6 @@
 		location.href="/sale/writeForm";
 	}
 	
-	
-	
 	function listCall(reqPage){
 		var reqUrl = "/sale/main/"+reqPage;
 		
@@ -174,6 +172,8 @@
 			,success:function(data){
 				showPage = data.currPage;
 				listPrint(data.list);
+				console.log(data.list[0]);
+				$('.location').html(data.location);
 				
 				$('#pagination').twbsPagination({
 					startPage:data.currPage, //들어가는 옵션들 - 시작페이지
@@ -193,6 +193,7 @@
 	}
 	
 	function listPrint(list){
+		
 		var content = "";
 		for(var i = 0; i<list.length; i++){
 			content += "<div class='list_detail'>";
@@ -204,14 +205,18 @@
 				content += "거래중";
 			}
 			content += "</div>";
-			content += "<a href='#''>"
-			content += "<img src='/saleFile/"+list[i].saleFileDto.newFileName+"'/>"
-			content += "<p>"+list[i].sale_subject+"</p>"
-			content += "<p>"+list[i].price+"원</p>"
-			content += "<p>"+list[i].reg_date+"</p>"
-			content += "<p>관심 "+ list[i].wishCnt +"  조회수 "+ list[i].bHit+"</p>"
-			content += "</a>"
-			content += "</div>"
+			content += "<a href='/sale/detail?product_idx="+list[i].product_idx+"'>";
+			if(list[i].saleFileDto.ext == 'mp4'){
+				content += "<img src='/resources/img/noIMG.jpg'/>";
+			}else{
+				content += "<img src='/saleFile/"+list[i].saleFileDto.newFileName+"'/>";
+			}
+			content += "<p>"+list[i].sale_subject+"</p>";
+			content += "<p>"+list[i].price+"원</p>";
+			content += "<p>"+list[i].reg_date+"</p>";
+			content += "<p>관심 "+ list[i].wishCnt +"  조회수 "+ list[i].bHit+"</p>";
+			content += "</a>";
+			content += "</div>";
 		}
 		$('#product_list').html(content);
 	}

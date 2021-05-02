@@ -12,6 +12,8 @@ public class CoCommentDTO {
 	private String isDelete;
 	private int comment_idx;
 	private String member_id;
+	private MemberDTO memberDto;
+	private ProfileFileDTO profileFileDto;
 	
 	public int getCocomment_idx() {
 		return cocomment_idx;
@@ -56,9 +58,17 @@ public class CoCommentDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	
-	
-
-	
+	public MemberDTO getMemberDto() {
+		return memberDto;
+	}
+	public void setMemberDto(MemberDTO memberDto) {
+		this.memberDto = memberDto;
+	}
+	public ProfileFileDTO getProfileFileDto() {
+		return profileFileDto;
+	}
+	public void setProfileFileDto(ProfileFileDTO profileFileDto) {
+		this.profileFileDto = profileFileDto;
+	}
 	
 }

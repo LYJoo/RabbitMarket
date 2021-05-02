@@ -127,7 +127,7 @@
         <a href="#"><img style="margin-right: 30px" src="/resources/img/bell.png" alt="알림"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
-            <img id="profile_img"src="/resources/img/dog.jpg" alt="프로필사진"><!-- 나중에 프로필 사진 가져오기 -->
+        	<img id="profile_img"src="/resources/img/dog.jpg" alt="프로필사진"><!-- 나중에 프로필 사진 가져오기 -->
         </div>
     </span>
 </div>
