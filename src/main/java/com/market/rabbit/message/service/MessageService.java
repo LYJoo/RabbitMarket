@@ -62,6 +62,27 @@ public class MessageService {
 		return mav;
 	}
 
+	public ModelAndView callDetailMsg(int msg_idx, int serviceType) {
+		ModelAndView mav = new ModelAndView();
+		String page = "myPage/mainPage";//view 초기화
+		
+		if(serviceType == 0) {			//받은메시지 상세
+			page = "myPage/message_receiveMsgDetail";
+		}else if(serviceType == 1) {	//보낸메시지 상세
+			page = "myPage/message_sendMsgDetail";
+		}else if(serviceType == 2) {	//차단메시지 상세
+			page = "myPage/message_blockMsgDetail";
+		}
+		
+		MessageDTO dto = dao.callDetailMsg(msg_idx);
+		
+		mav.addObject("dto", dto);
+		mav.setViewName(page);
+		return mav;
+	}
+
+
+
 }
 
 

@@ -40,6 +40,9 @@
  		INSERT INTO message (msg_idx, send_id, msg_content, member_id)
  		VALUES (seq_message.nextval, #{param1}, #{param3}, #{param2})
  	</insert>
-
+	
+	<select id="callDetailMsg" resultType="message">
+		SELECT * FROM message WHERE msg_idx=#{param1}
+	</select>
  	
  </mapper>

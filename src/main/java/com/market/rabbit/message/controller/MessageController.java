@@ -51,6 +51,27 @@ public class MessageController {
 		return service.writeMsg(session, receiver, msg_content, rAttr);
 	}
 	
+	@RequestMapping(value = "/message/detailMsg", method = RequestMethod.GET)
+	public ModelAndView callDetailMsg(int msg_idx, String msgType) {
+		
+		int serviceType = 0;	//기본 읽기는 받은메시지
+		
+		//메시지 타입 분기
+		if(msgType.equals("receiveMsg")) {
+			logger.info(msg_idx+"번 받은 쪽지 상세보기 요청");
+			serviceType = 0;	//0은 받은메시지 상세
+		}else if(msgType.equals("sendMsg")) {
+			logger.info(msg_idx+"번 보낸 쪽지 상세보기 요청");
+			serviceType = 1;	//1은 보낸메시지 상세
+		}else if(msgType.equals("blockMsg")) {
+			logger.info(msg_idx+"번 차단 쪽지 상세보기 요청");
+			serviceType = 2;	//2는 차단메시지 상세
+		}
+		
+		return service.callDetailMsg(msg_idx, serviceType);
+		
+	}
+	
 }
 
 

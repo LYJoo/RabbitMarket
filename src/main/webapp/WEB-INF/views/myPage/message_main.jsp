@@ -192,7 +192,7 @@
     		
     		for(var i=0; i<list.length; i++){
     			content += "<tr>";
-    			content += "<td>"+list[i].msg_content+"</td>";
+    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg'>"+list[i].msg_content+"</a></td>";
     			content += "<td>"+list[i].send_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
     			content += "</tr>";
@@ -207,7 +207,7 @@
     		
     		for(var i=0; i<list.length; i++){
     			content += "<tr>";
-    			content += "<td>"+list[i].msg_content+"</td>";
+    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=sendMsg'>"+list[i].msg_content+"</a></td>";
     			content += "<td>"+list[i].member_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
     			content += "</tr>";
@@ -222,7 +222,7 @@
     		
     		for(var i=0; i<list.length; i++){
     			content += "<tr>";
-    			content += "<td>"+list[i].msg_content+"</td>";
+    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=blockMsg'>"+list[i].msg_content+"</a></td>";
     			content += "<td>"+list[i].send_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
     			content += "</tr>";

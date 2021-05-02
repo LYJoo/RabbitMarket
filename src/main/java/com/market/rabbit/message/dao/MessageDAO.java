@@ -14,5 +14,7 @@ public interface MessageDAO {
 
 	int writeMsg(String loginId, String receiver, String msg_content);
 
+	MessageDTO callDetailMsg(int msg_idx);
+
 
 }
