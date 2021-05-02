@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,10 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.market.rabbit.dto.CoCommentDTO;
+import com.market.rabbit.dto.CommentsDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
+import com.market.rabbit.dto.SaleFileDTO;
 import com.market.rabbit.sale.dao.SaleDAO;
 
 import net.bramp.ffmpeg.FFmpeg;
@@ -285,6 +290,127 @@ public class SaleService {
 	public int getEndPageMember(String loginId) {
 		return dao.getEndPageMember(loginId);
 	}
+	
+	@Transactional
+	public void detail(int product_idx, Model model) {
+		SaleDTO detail = new SaleDTO();
+		ArrayList<SaleFileDTO> fileList = new ArrayList<SaleFileDTO>();
+		ArrayList<CommentsDTO> commentList = new ArrayList<CommentsDTO>();
+		
+		dao.upHit(product_idx);
+		detail = dao.detail(product_idx);
+		setReg_date(detail);		
+		fileList = dao.fileList(product_idx);
+		commentList = dao.commentList(product_idx);
+		setReg_date2(commentList);	
+		
+		model.addAttribute("detail", detail);
+		model.addAttribute("fileList", fileList);
+		model.addAttribute("commentList", commentList);
+
+	}
 
 
+	private void setReg_date2(ArrayList<CommentsDTO> commentList) {
+		String reg_date;
+		for (int i = 0; i < commentList.size(); i++) {
+			try {
+				reg_date = commentList.get(i).getReg_date();
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = transFormat.parse(reg_date);
+	
+				long curTime = System.currentTimeMillis();
+				long regTime = date.getTime();
+				long diffTime = (curTime - regTime) / 1000;
+				
+				String diff_msg = "";
+
+				if (diffTime < SEC) {
+					diff_msg = "방금 전";
+				} else if ((diffTime /= SEC) < MIN) {
+					diff_msg = diffTime + "분 전";
+				} else if ((diffTime /= MIN) < HOUR) {
+					diff_msg = (diffTime) + "시간 전";
+				} else if ((diffTime /= HOUR) < DAY) {
+					diff_msg = (diffTime) + "일 전";
+				} else {
+					diff_msg = reg_date.substring(0, 10);
+				}
+				commentList.get(i).setReg_date(diff_msg);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void setReg_date(SaleDTO detail) {
+		String reg_date;
+		try {
+			reg_date = detail.getReg_date();
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = transFormat.parse(reg_date);
+
+			long curTime = System.currentTimeMillis();
+			long regTime = date.getTime();
+			long diffTime = (curTime - regTime) / 1000;
+			
+			String diff_msg = "";
+
+			if (diffTime < SEC) {
+				diff_msg = "방금 전";
+			} else if ((diffTime /= SEC) < MIN) {
+				diff_msg = diffTime + "분 전";
+			} else if ((diffTime /= MIN) < HOUR) {
+				diff_msg = (diffTime) + "시간 전";
+			} else if ((diffTime /= HOUR) < DAY) {
+				diff_msg = (diffTime) + "일 전";
+			} else {
+				diff_msg = reg_date.substring(0, 10);
+			}
+			detail.setReg_date(diff_msg);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<CoCommentDTO> cocommentList(int comment_idx) {
+		ArrayList<CoCommentDTO> list = new ArrayList<CoCommentDTO>();
+		list = dao.cocommentList(comment_idx);
+		setReg_date3(list);
+		
+		return list;
+	}
+
+	private void setReg_date3(ArrayList<CoCommentDTO> list) {
+		String reg_date;
+		for (int i = 0; i < list.size(); i++) {
+			try {
+				reg_date = list.get(i).getReg_date();
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = transFormat.parse(reg_date);
+	
+				long curTime = System.currentTimeMillis();
+				long regTime = date.getTime();
+				long diffTime = (curTime - regTime) / 1000;
+				
+				String diff_msg = "";
+
+				if (diffTime < SEC) {
+					diff_msg = "방금 전";
+				} else if ((diffTime /= SEC) < MIN) {
+					diff_msg = diffTime + "분 전";
+				} else if ((diffTime /= MIN) < HOUR) {
+					diff_msg = (diffTime) + "시간 전";
+				} else if ((diffTime /= HOUR) < DAY) {
+					diff_msg = (diffTime) + "일 전";
+				} else {
+					diff_msg = reg_date.substring(0, 10);
+				}
+				list.get(i).setReg_date(diff_msg);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }

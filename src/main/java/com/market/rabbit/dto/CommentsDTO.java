@@ -4,14 +4,6 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("comments")
 public class CommentsDTO {
-	/*COMMENT_IDX	NUMBER(10,0)
-	COMMENT_CONTENT	NVARCHAR2(100 CHAR)
-	REG_DATE	DATE
-	ISBLIND	NVARCHAR2(5 CHAR)
-	ISDELETE	NVARCHAR2(5 CHAR)
-	MEMBER_ID	NVARCHAR2(50 CHAR)
-	PRODUCT_IDX	NUMBER(10,0)*/
-	
 	private int comment_idx;
 	private String comment_content;
 	private String reg_date;
@@ -19,6 +11,9 @@ public class CommentsDTO {
 	private boolean isDelete;
 	private String member_id;
 	private int product_idx;
+	private int cocommentCnt;
+	private MemberDTO memberDto;
+	private ProfileFileDTO profileFileDto;
 	
 	public int getComment_idx() {
 		return comment_idx;
@@ -62,11 +57,24 @@ public class CommentsDTO {
 	public void setProduct_idx(int product_idx) {
 		this.product_idx = product_idx;
 	}
+	public MemberDTO getMemberDto() {
+		return memberDto;
+	}
+	public void setMemberDto(MemberDTO memberDto) {
+		this.memberDto = memberDto;
+	}
+	public int getCocommentCnt() {
+		return cocommentCnt;
+	}
+	public void setCocommentCnt(int cocommentCnt) {
+		this.cocommentCnt = cocommentCnt;
+	}
+	public ProfileFileDTO getProfileFileDto() {
+		return profileFileDto;
+	}
+	public void setProfileFileDto(ProfileFileDTO profileFileDto) {
+		this.profileFileDto = profileFileDto;
+	}
 	
 	
-	
-	
-	
-	
-
 }

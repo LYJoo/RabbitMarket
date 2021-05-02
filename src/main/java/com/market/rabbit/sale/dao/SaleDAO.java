@@ -2,8 +2,11 @@ package com.market.rabbit.sale.dao;
 
 import java.util.ArrayList;
 
+import com.market.rabbit.dto.CoCommentDTO;
+import com.market.rabbit.dto.CommentsDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
+import com.market.rabbit.dto.SaleFileDTO;
 
 public interface SaleDAO {
 
@@ -20,8 +23,7 @@ public interface SaleDAO {
 	void insertKeywordAlarm(String member_id, String msg);
 	
 	ArrayList<SaleDTO> callProductList_unmember(int start, int end);
-
-
+	
 	int getAge(String loginId);
 
 	String getLocation(String loginId);
@@ -35,5 +37,15 @@ public interface SaleDAO {
 	int getEndPageMinorMember(String loginId);
 
 	int getEndPageMember(String loginId);
+
+	SaleDTO detail(int product_idx);
+
+	ArrayList<SaleFileDTO> fileList(int product_idx);
+
+	void upHit(int product_idx);
+
+	ArrayList<CommentsDTO> commentList(int product_idx);
+
+	ArrayList<CoCommentDTO> cocommentList(int comment_idx);
 
 }

@@ -2,6 +2,7 @@ package com.market.rabbit.sale.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.market.rabbit.dto.CoCommentDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.sale.service.SaleService;
@@ -113,6 +116,31 @@ public class SaleController {
 		logger.info(" 받아온 파라메터 값들" + dto);
 
 		return service.save(dto, session);
+	}
+	
+	@RequestMapping(value = "/sale/detail", method = RequestMethod.GET)
+	public String detail(Model model, @RequestParam int product_idx) {
+		logger.info("받아온 파라메터 값" + product_idx);
+		
+		service.detail(product_idx, model);
+		
+		return "/sale/productDetail";
+	}
+	
+	@RequestMapping(value = "/sale/cocommentList", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> cocommentList(@RequestParam int comment_idx) {
+		logger.info("받아온 파라메터 값"+ comment_idx);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<CoCommentDTO> list = null;
+		int success = 0;
+		
+		list = service.cocommentList(comment_idx);
+		if(list != null) {
+			success = 1;
+		}
+		map.put("success", success);
+		map.put("list", list);
+		return map;
 	}
 	
 }

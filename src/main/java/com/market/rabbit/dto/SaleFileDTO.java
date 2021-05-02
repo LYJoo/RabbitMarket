@@ -5,11 +5,18 @@ import org.apache.ibatis.type.Alias;
 @Alias("saleFile")
 public class SaleFileDTO {
 	
-	private int file_idx;//파일idx -pk
-	private String oriFileName;//원본파일이름
-	private String newFileName;//새파일이음
-	private int product_idx;//판매글idx -fk
+	private int file_idx;
+	private String oriFileName;
+	private String newFileName;
+	private int product_idx;
+	private String ext;
 	
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
 	public int getFile_idx() {
 		return file_idx;
 	}

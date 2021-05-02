@@ -58,8 +58,8 @@
 
     .dot {
         cursor: pointer;
-        height: 15px;
-        width: 15px;
+      	height: 8px;
+        width: 8px;
         margin: 0 2px;
         background-color: #bbb;
         border-radius: 50%;
@@ -92,16 +92,26 @@
         .prev, .next,.text {font-size: 11px}
     }
 
-    .sale_state{
-        background-color: #F79646;
-        padding: 5px;
-        border-radius: 3px;
-        color: white;
-        font-size: small;
-        margin-bottom: 3px;
-        width: 60px;
-        text-align: center;
-    }
+    .sale_state_1{
+            background-color: #F79646;
+            float: right;
+            padding: 5px;
+            border-radius: 3px;
+            color: white;
+            font-size: small;
+            margin-bottom: 3px;
+        }
+        
+        .sale_state_2{
+            background-color: white;
+            float: right;
+            padding: 3px 5px;
+            border: 1px solid #F79646;
+            border-radius: 3px;
+            color: #F79646;
+            font-size: small;
+            margin-bottom: 3px;
+        }
     
     table{
         width: 70%;
@@ -191,6 +201,7 @@
     }
     .comment_profile{
         width: 60px;
+        height: 60px;
     }
 
     .comment_writer_id{
@@ -222,54 +233,65 @@
 	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
 	
     <div class="slideshow-container">
-
-        <div class="mySlides fade1">
-        <div class="sale_state">판매중</div>
-        <img src="/photo/16187543239120.jpg" style="width:100%">
-        </div>
+		<c:forEach items="${fileList}" var="file">
+			<div class="mySlides fade1">
+        		<c:if test="${detail.code_num eq 3001}">
+        			<div class="sale_state_1">
+        			판매중
+        			</div>
+        		</c:if>
+        		<c:if test="${detail.code_num eq 3002}">
+        			<div class="sale_state_2">
+        			거래중
+        			</div>
+        		</c:if>
+        		<c:if test="${detail.code_num eq 3003}">
+        			<div class="sale_state_3">
+        			거래완료
+        			</div>
+        		</c:if>
+        	
+        		<c:if test="${file.ext eq 'jpg'}">
+        			<img src="/saleFile/${file.newFileName}" style="width:100%">
+        		</c:if>
+        		<c:if test="${file.ext eq 'mp4'}">
+	                <video width="100%"controls>
+	                    <source src="/saleFile/${file.newFileName}" type="video/mp4">
+	                </video>
+        		</c:if>
+        	</div>
+		</c:forEach>
         
-        <div class="mySlides fade1">
-        <div class="sale_state">판매중</div>
-        <img src="/photo/16187543239141.jpg" style="width:100%">
-        </div>
+    	<c:if test="${detail.fileCnt ne 1}">
+    		<a class="prev" onclick="plusSlides(-1)"><i class="fas fa-chevron-left"></i></a>
+        	<a class="next" onclick="plusSlides(1)"><i class="fas fa-chevron-right"></i></a>
+    	</c:if>
         
-        <div class="mySlides fade1">
-            <div class="sale_state">판매중</div>
-        <img src="/photo/dog2.jpg" style="width:100%">
-        </div>
-
-        <div class="mySlides fade1">
-            <div class="sale_state">판매중</div>
-            <img src="/photo/dog2.jpg" style="width:100%">
-        </div>
-
-        <div class="mySlides fade1">
-            <div class="sale_state">판매중</div>
-            <img src="/photo/dog2.jpg" style="width:100%">
-        </div>
-        
-        <a class="prev" onclick="plusSlides(-1)"><i class="fas fa-chevron-left"></i></a>
-        <a class="next" onclick="plusSlides(1)"><i class="fas fa-chevron-right"></i></a>
-    
     </div>
     <br>
-
+	
+	
     <div style="text-align:center">
-        <span class="dot" onclick="currentSlide(1)"></span> 
-        <span class="dot" onclick="currentSlide(2)"></span> 
-        <span class="dot" onclick="currentSlide(3)"></span> 
-        <span class="dot" onclick="currentSlide(4)"></span> 
-        <span class="dot" onclick="currentSlide(5)"></span> 
+    	<c:if test="${detail.fileCnt ne 1}">
+    	<c:forEach begin="1" end="${detail.fileCnt}" var="num">
+    		<span class="dot" onclick='currentSlide(+${num}+)'></span> 
+    	</c:forEach>
+    	</c:if>
     </div>
     
     <table id="product_content_area">
         <tr>
             <td rowspan="2" style="width: 100px;">
-                <img src="/photo/16187554570321.jpg" style="width: 100px; height: 100px;"/>
+            	<c:if test="${detail.profileFileDto.newFileName ne null}">
+            		<img src="/photo/${detail.profileFileDto.newFileName}" style="width: 100px; height: 100px;"/>
+            	</c:if>
+            	<c:if test="${detail.profileFileDto.newFileName eq null}">
+            		<img src="/resources/img/default_profile.png" style="width: 100px; height: 100px;"/>
+            	</c:if>
             </td>
             <td style="padding-top: 15px;">
-                lololo
-                <img src="/photo/message_orange.png" style="width: 20px; cursor: pointer;"/>
+                ${detail.seller_id}
+                <img src="/resources/img/message_orange.png" style="width: 20px; cursor: pointer;"/>
             </td>
             <td rowspan="2"  style="width: 50%;">
                 <p style="margin: 0;">매너지수</p>
@@ -278,71 +300,142 @@
                     <i class="fas fa-long-arrow-alt-down"></i>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar bg-secondary" style="width: 70%;">70%</div>
+                    <div class="progress-bar bg-secondary" style="width: ${detail.memberDto.manner_percent}%;">${detail.memberDto.manner_percent}%</div>
                 </div>
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom: 15px;">인천시 남동구</td>
+            <td style="padding-bottom: 15px;">${detail.sale_location}</td>
         </tr>
 
         <tr>
             <td colspan="2" style="padding: 10px 0 0 0">
                 <div style="display: flex; align-items: center;">
-                    <div style="padding-right: 5px;">에어팟프로 팔아요</div>
-                    <div><i class="far fa-heart"></i>
+                    <div style="padding-right: 5px;">${detail.sale_subject}</div>
+                    <div>
+                    <c:if test="${sessionScope.loginId ne null}">
+                    <i class="far fa-heart"></i>
+                    </c:if>
+                    </div>
                 </div>
                 
             </td>
             <td rowspan="2" style="text-align: right;">
                 <div class="select_box_cover">
-                    <select class="trade_state_select_box" onchange="value2(this,this.value,$('.select_box_cover'))">
-                        <option value="판매중">판매중</option>
-                        <option value="거래중">거래중</option>
-                    </select>
+                	<c:if test="${detail.seller_id eq sessionScope.loginId}">
+	                	<c:if test="${detail.code_num eq 3001}">
+	                		<select class="trade_state_select_box" onchange="value2(this,this.value,$('.select_box_cover'))">
+		                        <option value="판매중">판매중</option>
+		                        <option value="거래중">거래중</option>
+		                    </select>
+	                	</c:if>
+                		<c:if test="${detail.code_num eq 3002}">
+	                		<select class="trade_state_select_box" onchange="value2(this,this.value,$('.select_box_cover'))">
+		                        <option value="거래중">거래중</option>
+		                        <option value="거래취소">거래취소</option>
+		                        <option value="거래완료">거래완료</option>
+		                    </select>
+	                	</c:if>
+	                	<c:if test="${detail.code_num eq 3003}">	                	
+	                		<b>거래완료</b>
+	                	</c:if>
+                	</c:if>
                 </div>
             </td>
         </tr>
         <tr>
             <td colspan="2" style="padding-bottom: 10px;">
                 <div style="font-size: 12px; color: gray; display: block; flex: auto;">
-                    디지털/가전 3시간전
+                    	<c:if test="${detail.s_category_idx eq 1}">
+                    	 디지털/가전  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 2}">
+                    	 가구/인테리어  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 3}">
+                    	 유아동/유아도서  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 4}">
+                    	 생활/가공식품  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 5}">
+                    	 스포츠/레저  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 6}">
+                    	 여성잡화  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 7}">
+                    	 여성의류  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 8}">
+                    	 남성패션/잡화  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 9}">
+                    	 게임/취미  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 10}">
+                    	 뷰티/미용  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 11}">
+                    	 반려동물용품  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 12}">
+                    	 도서/티켓/음반  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 13}">
+                    	 식물  ${detail.reg_date}
+                    	</c:if>
+                    	<c:if test="${detail.s_category_idx eq 14}">
+                    	 기타중고물품  ${detail.reg_date}
+                    	</c:if>
                 </div>
             </td>
         </tr>
         <tr>
             <td colspan="3" style="padding: 10px 0;">
                 <div>
-                    가격제안불가능
+                    <c:if test="${detail.negotiation eq false}">
+                    	가격제안불가능
+                    </c:if>
+                    <c:if test="${detail.negotiation eq true}">
+                    	가격제안가능
+                    </c:if>
                 </div>
                 <div>
-                    <b>30,000원</b>
+                    <b>${detail.price}원</b>
                 </div>
             </td>
         </tr>
 
         <tr>
-            <td colspan="3" style="padding: 20px 0;">실사용횟수는 10회 미만입니다. 생활기스 있어요~</td>
+            <td colspan="3" style="padding: 20px 0;">${detail.sale_content}</td>
         </tr>
 
         <tr>
             <td colspan="3" style="padding: 10px 0; font-size: 14px;">
-                관심 8 조회 339
+                관심 ${detail.wishCnt} 조회 ${detail.bHit}
             </td>
         </tr>
     </table>
 
     <div class="product_update_cover">
         <div class="product_update">
-            <a href="#">끌어올리기</a> 
+        	<c:if test="${detail.seller_id eq sessionScope.loginId and detail.pull_up eq false}">
+        		<a href="#">끌어올리기</a> 
+        	</c:if>
         </div>
         <div class="product_update">
-            <a href="#">수정</a> <a href="#">삭제</a> <a href="#">신고</a>
+        	<c:if test="${detail.seller_id eq sessionScope.loginId}">
+        		<a href="#">수정</a> <a href="#">삭제</a>
+        	</c:if>
+        	<c:if test="${detail.seller_id ne sessionScope.loginId}">
+        		 <a href="#">신고</a>
+        	</c:if>
         </div>
     </div>
 
     <div class="product_sale_detail_btn_cover">
-        <div class="product_sale_detail_btn">
+        <div class="product_sale_detail_btn" onclick="location.href='/sale/main'">
         목록
         </div>
     </div>  
@@ -363,22 +456,28 @@
                 </div>
             </td>
         </tr>
-
-        <tr>
+		
+		<c:forEach items="${commentList}" var="list">
+			<tr>
             <td rowspan="2" class="comment_profile">
-                <img class="comment_profile" src="/photo/dog2.jpg"/>
+            	<c:if test="${list.profileFileDto.newFileName ne null}">
+                	<img class="comment_profile" src="/photo/${list.profileFileDto.newFileName}"/>
+            	</c:if>
+            	<c:if test="${list.profileFileDto.newFileName eq null}">
+                	<img class="comment_profile" src="/resources/img/default_profile.png"/>
+            	</c:if>
             </td>
             <td class="comment_writer_id" colspan="2">
-                jujuju 2시간전
+                ${list.member_id} ${list.reg_date}
             </td>
             <td rowspan="2" class="comment_update_btn">
                 <a href="#">수정</a> <a href="#">삭제</a> <a href="#">신고</a>
             </td>
         </tr>
         <tr>
-           <td class="comment_content" colspan="2">이거제가살게요!<span class="cocoment_write_btn" onclick="cocoment_write_input(1)"> 답글</span></td> 
+           <td class="comment_content" colspan="2">${list.comment_content}<span class="cocoment_write_btn" onclick="cocoment_write_input(${list.comment_idx})"> 답글</span></td> 
         </tr>
-        <tr id="cocoment_write_1" style="display: none;">
+        <tr id="cocoment_write_${list.comment_idx}" style="display: none;">
             <td></td>
             <td colspan="2">
                 <input type="text" class="underline" placeholder="답글 내용"/>
@@ -389,81 +488,26 @@
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr id="cocommentList_${list.comment_idx}">
             <td></td>
             <td colspan="3">
-                <p class="cocoment_btn"><i class="fas fa-sort-down"></i>답글 5개 보기</p>
+                <p id="cocoment_btn_${list.comment_idx}" class="cocoment_btn" onclick="cocommentList(${list.comment_idx})">
+                	<c:if test="${list.cocommentCnt ne 0}">
+                	<i class="fas fa-sort-down"></i>
+                		답글 ${list.cocommentCnt}개 보기
+                	</c:if>
+                </p>
+                <p style="display: none" id="unCocoment_btn_${list.comment_idx}" class="cocoment_btn" onclick="cocommentUnList(${list.comment_idx},${list.cocommentCnt})">
+                	<c:if test="${list.cocommentCnt ne 0}">
+                	<i class="fas fa-sort-up"></i>
+                		답글 ${list.cocommentCnt}개 숨기기
+                	</c:if>
+                </p>
             </td>
          </tr>
-
-
-         <tr>
-             <td></td>
-             <td rowspan="2" class="comment_profile">
-                 <img class="comment_profile" src="/photo/dog2.jpg"/>
-             </td>
-             <td class="comment_writer_id">jojojo 1시간전</td>
-             <td rowspan="2" class="comment_update_btn">
-                <a href="#">수정</a> <a href="#">삭제</a> <a href="#">신고</a>
-            </td>
-         </tr>
-         <tr>
-             <td></td>
-             <td class="comment_content">네 쪽지드릴게요</td>
-         </tr>
-
-
-         <tr>
-            <td></td>
-            <td rowspan="2" class="comment_profile">
-                <img class="comment_profile" src="/photo/dog2.jpg"/>
-            </td>
-            <td class="comment_writer_id">jojojo 1시간전</td>
-            <td rowspan="2" class="comment_update_btn">
-               <a href="#">수정</a> <a href="#">삭제</a> <a href="#">신고</a>
-           </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="comment_content">네 쪽지드릴게요</td>
-        </tr>
-
-
-        <tr>
-            <td rowspan="2" class="comment_profile">
-                <img class="comment_profile" src="/photo/dog2.jpg"/>
-            </td>
-            <td class="comment_writer_id" colspan="2">
-                jujuju 2시간전
-            </td>
-            <td rowspan="2" class="comment_update_btn">
-                <a href="#">수정</a> <a href="#">삭제</a> <a href="#">신고</a>
-            </td>
-        </tr>
-        <tr>
-           <td class="comment_content" colspan="2">이거제가살게요! <span class="cocoment_write_btn" onclick="cocoment_write_input(2)"> 답글</span></td> 
-        </tr>
-        <tr id="cocoment_write_2" style="display: none;">
-            <td></td>
-            <td colspan="2">
-                <input type="text" class="underline" placeholder="답글 내용"/>
-            </td>
-            <td class="comment_write_btn_td">
-                <div class="comment_write_btn">
-                작성
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="3">
-                <p class="cocoment_btn"><i class="fas fa-sort-down"></i>답글 5개 보기</p>
-            </td>
-         </tr>
+		</c:forEach>
     </table>
-
 </body>
-
 <script>
 	jQuery.noConflict();
     $(".trade_state_select_box").select2();
@@ -519,5 +563,59 @@
         }else{
             $("#cocoment_write_"+num).css({'display':''});
         }
+    }
+    
+    function cocommentList(num){
+    	
+    	$.ajax({
+			url:'/sale/cocommentList'
+			,type: 'GET'
+			,data:{"comment_idx": num}
+			,success:function(data){
+				console.log(data.list);
+				drawCocomment(data.list);
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+    }
+    
+    function drawCocomment(data){
+    	for (var i = 0; i < data.length; i++) {
+    		var content = "";
+        	
+        	content += "<tr class='deleteCocomment'>";
+    		content += "<td></td>";
+        	content += "<td rowspan='2' class='comment_profile'>";
+        	if(data[i].profileFileDto == null){
+        		content += "<img class='comment_profile' src='/resources/img/default_profile.png'>";
+        	}else if(data[i].profileFileDto != null){
+        		content += "<img class='comment_profile' src='/photo/"+data[i].profileFileDto.newFileName+"'/>";
+        	}
+        	content += "</td>";
+        	content += "<td class='comment_writer_id'>"+data[i].member_id +"  "+ data[i].reg_date+"</td>";
+        	content += "<td rowspan='2' class='comment_update_btn'>";
+        	content += "<a href='#'>수정</a> <a href='#'>삭제</a> <a href='#'>신고</a>";
+        	content += "</td>";
+        	content += "</tr>";
+        	content += "<tr class='deleteCocomment'>";
+        	content += "<td></td>";
+        	content += "<td class='comment_content'>"+data[i].cocomment_content+"</td>";
+        	content += "</tr>";
+        	
+           	$('#cocommentList_'+data[i].comment_idx).after(content);
+		}
+    	$('#cocoment_btn_'+data[0].comment_idx).css({'display':'none'});
+    	$('#unCocoment_btn_'+data[0].comment_idx).css({'display':''});	
+    }
+    
+    function cocommentUnList(num, cnt){
+    	console.log(cnt);
+    	for (var i = 0; i < cnt*2; i++) {
+    		$('#cocommentList_'+num).next().remove();
+		}
+    	$('#cocoment_btn_'+num).css({'display':''});
+    	$('#unCocoment_btn_'+num).css({'display':'none'});	
     }
 </script>
