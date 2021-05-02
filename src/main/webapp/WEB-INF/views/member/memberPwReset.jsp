@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +14,7 @@
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>로그인 폼</title>
+    <title>아이디 찾기</title>
     <style>
         @import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
 	
@@ -42,7 +43,7 @@
         border: none;
     }
 	
-	.login .form-control {
+	.form-signin .form-control {
   		position: relative;
   		height: auto;
   		-webkit-box-sizing: border-box;
@@ -59,17 +60,15 @@
         margin-left: 30px;
     }
 
+
+    a{ 
+    	color: #f58b34; text-decoration: none; 
+    }
+
     .links{
         text-align: center;
         margin-bottom: 10px;
     }
-    a{ 
-    	color: #f58b34; text-decoration: none; 
-    }
-    .check{
-    	color : red;
-    }
-	 
     </style>
   </head>
 
@@ -78,34 +77,22 @@
 	<div class="card align-middle" style="width:25rem;">
 		<div class="card-title" style="margin-top:30px;">
             
-			<h2 class="card-title" style="color:#f58b34;"><img src="../resources/img/rabbit_logo.png"/></h2>
+			<h2 class="card-title" style="color:#f58b34;"><img src="./resources/img/rabbit_logo.png"/></h2>
 		</div>
-      <form action="login" class="login" method="POST">
-        <div class="checkbox">
-            <label>
-            <input type="radio" name="mode" value="admin"> 관리자
-			&nbsp;&nbsp;
-			<input type="radio" name="mode" value="member" checked> 일반회원
-            </label>
-          </div>
+        
 		<div class="card-body">
-  
-        <input type="text" name="LoginId" id="Id" class="form-control" placeholder="아이디" autofocus><BR>
-        <input type="password" name="LoginPw" id="Pw" class="form-control" placeholder="비밀번호" ><br>
-         <p id="check" class="check">${msg2}</p><br/>
-        <input id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit" value="로 그 인">
+      <form class="form-signin" method="POST" onSubmit="logincall();return false">
+        <input type="password" name="pw" id="pw" class="form-control" placeholder="비밀번호" required autofocus><BR>
+        <input type="password" name="pw2" id="pw2" class="form-control" placeholder="비밀번호 재확인" required><br>
+        <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">비밀번호 제설정</button>
       </form>
-    
+        
 		</div>
         <div class="links">
-            <a href="memberId">아이디 찾기</a> | <a href="memberPw">비밀번호 찾기</a> | <a href="memberRegist">회원가입</a> | <a href="helpMain">고객센터</a>
+            <a href="memberId">아이디 찾기</a> | <a href="./">로그인</a> | <a href="memberRegist">회원가입</a>
 
         </div>
 	</div>
    
   </body>
-  
-  <script type="text/javascript">
-
-  </script>
 </html>

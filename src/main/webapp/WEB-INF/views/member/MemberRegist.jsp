@@ -64,6 +64,12 @@
   		width: 250px;
         margin-left: 100px;
 	}
+	#email{
+		padding: 10px;
+  		font-size: 16px;
+  		width: 300px;
+        margin-left: 100px;
+	}
     .check{
     	font-size: 16px;
     	margin-left: 100px;
@@ -85,7 +91,7 @@
 	<div class="card" style="width:40rem;">
 		<div class="card-title" style="margin-top:30px;">
             
-			<h2 class="card-title" style="color:#e4932b;"><img src="resources/img/rabbit_logo.png"/></h2>
+			<h2 class="card-title" style="color:#e4932b;"><img src="../resources/img/rabbit_logo.png"/></h2>
 		</div>
 		<div class="card-body">
 		
@@ -93,7 +99,7 @@
         <p class="text">아이디</p>
         <input type="text" name="member_id" id="member_id"  class="form-control" >
         &nbsp; &nbsp;
-        <input type="button" id="overlay"  value="중복 체크"/><br/>
+        <input type="button" id="overlay" onclick="overlay()" value="중복 체크"/><br/>
         <p id="idch" class="check"> </p><br/>
         <p class="text">비밀번호</p>
         <input type="password" name="pw" id="pw" class="form-control" ><br>
@@ -114,7 +120,10 @@
             <span id="guide" style="color:#999;display:none"></span>
             <br/>
         <p class="text">이메일</p>
-        <input type="email" name="email" id="email" class="form-control" ><br>
+        <input type="email" name="email" id="email" class="form-control" >
+         &nbsp; &nbsp;
+        <input type="button" id="emoverlay" onclick="emoverlay()" value="중복 체크"/><br/>
+        <p id="emch" class="check"> </p><br/>
         <p class="text">전화번호</p>
         <input type="text" name="phone" id="phone" class="form-control" placeholder="010-000-000형식"><br><br>
        <p id="phonech" class="check"> </p><br/>
@@ -122,7 +131,7 @@
         <br>
     </form>
     
-    <button id="btn_login" class="btn btn-lg btn-primary btn-block" type="button" onclick="location.href = './' "><b>로그인하러가기</b></button>
+    <button id="btn_login" class="btn btn-lg btn-primary btn-block" type="button" onclick="location.href = 'memberLogin' "><b>로그인하러가기</b></button>
         
 		</div>
        
@@ -130,33 +139,62 @@
    
   </body>
   <script>
+  $(document).ready(function() { 
+	  $('p.check').text('*필수 정보입니다.');
+	  $('p.check').css('color', 'red');
+  });
 
-  //   var overChk = false;
-	// $("#overlay").click(function(){
-	// 	var id = $("#member_id").val();
-	// 		$.ajax({
-	// 			type:'post'
-	// 			,url:'overlay'
-	// 			,data:{'id' : id }
-	// 			,dataType:'JSON'
-	// 			,success:function(obj){
-	// 				console.log(obj);
-	// 				if(obj.use && id != ""){
-	// 					alert('사용할 수 있는 아이디 입니다.');
-	// 					overChk= true;
-	// 				}else{
-	// 					alert('이미 사용중인 아이디 입니다.');
-	// 					id.val('');
-	// 				}
-	// 			}
-	// 			,error:function(e){
-	// 				console.log(e);
-	// 			}
-	// 		});				
-	// 	});	
+  var emoverChk = false;
+	$("#emoverlay").click(function(){
+		var email = $("#email").val();
+			$.ajax({
+				type:'post'
+				,url:'emoverlay'
+				,data:{'email' : email }
+				,dataType:'JSON'
+				,success:function(obj){
+					console.log(obj);
+					if(obj.use2 != 1){
+						alert('사용할 수 있는 이메일 입니다.');
+						emoverChk= true;
+					}else{
+						alert('이미 사용중인 이메일 입니다.');
+						
+					}
+				}
+				,error:function(e){
+					console.log(e);
+				}
+			});				
+		});	
+	
+	 var overChk = false;
+		$("#overlay").click(function(){
+			var id = $("#member_id").val();
+				$.ajax({
+					type:'post'
+					,url:'overlay'
+					,data:{'id' : id }
+					,dataType:'JSON'
+					,success:function(obj){
+						console.log(obj);
+						if(obj.use != 1){
+							alert('사용할 수 있는 아이디 입니다.');
+							overChk= true;
+						}else{
+							alert('이미 사용중인 아이디 입니다.');
+							
+						}
+					}
+					,error:function(e){
+						console.log(e);
+					}
+				});				
+			});	
 	
 			var idc = false;
 		    var pwc = false;
+		    var pwc2 = false;
 		    var phonec = false;
 		    var namec = false;
 		    var emailc = false;
@@ -184,7 +222,7 @@
 				$('#idch').css('color', 'red') 
 
 				}else if($(this).val().indexOf("admin") != -1){
-				$('#idch').text('admin이 포함된 아이디는 사용이 불가합니다.')
+				$('#idch').text('admin이 포함된 아이디는 사용할 수 없습니다.')
 				$('#idch').css('color', 'red') 
 
 		       }else{
@@ -192,6 +230,8 @@
 			         $("#idch").hide();
 			     }
 			 });
+		   
+		  
 		   
 		   $("#pw").focusout(function(){
 			     if($('#pw').val() == ""){
@@ -201,7 +241,7 @@
 				$('#pw2ch').text('6~20자의 영문 소문자, 숫자만 사용가능합니다')
 				$('#pw2ch').css('color', 'red') 
 		       }else{
-			         pwc = true;
+			         pwc2 = true;
 			         $('#pw2ch').hide();
 			     }
 			 });
@@ -324,55 +364,12 @@
 				}
 			}); 
 		
-		// $("#member_id").change(function(){
-		//     alert("중복 검사를 해주세요");
-		//     overChk= false;
-		// });
-		//문제점 1. id값 변경시 일단 다 지워놓으면 ""로 인식되어 아이디를 확인하라는 경고창이 먼저 뜬 후 중복검사 경고창이 떠버린다.
-		
-		  function regist(){
-				
-			
-				var id = $("#member_id").val();
-				var pw = $("#pw").val();
-				var pw2 = $("#pw2").val();
-				var phone = $("#phone").val();
-				var name = $("#name").val();
-				var email = $("#email").val();
-				var addr = $("#address").val();
-				var birth = $("#birth_date").val();
-				
-					
-		  if(idc == false || id === ""){
-		      alert('아이디를 확인 해 주세요')
-		  }else if(pwc == false|| pw2 === ""){
-		      alert('비밀번호를 확인 해 주세요')
-		  }else if(namec == false || name === ""){
-		  	alert('이름을 입력해주세요')
-		  }else if(emailc == false || email === ""){
-		  	alert('이메일을 입력해주세요')
-		  }else if(phonec == false || phone === ""){
-		      alert('전화번호를 입력해주세요.')
-		  }else if( birth === ""){
-			  	alert('생일을 입력해주세요')
-		  }else if(addr == ""){
-			  	alert('주소를 선택해주세요')
-		  }else if( birthJ === false){
-			  	alert('생일을 다시 입력해주세요')
-		
-		  }else{
-		      $('form').submit();
-		  } 
-		} ;
 		
 		
-
-
-   
       function execPostCode(){
     new daum.Postcode({
         oncomplete: function(data) {
-        
+       
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
                 // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
@@ -390,7 +387,6 @@
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('sample4_postcode').value = data.zonecode;
                 document.getElementById("sample4_jibunAddress").value = data.sido+" "+data.sigungu;
-               
 
                 var guideTextBox = document.getElementById("guide");
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
@@ -412,6 +408,45 @@
     }).open();
    
 }
+      function regist(){
+			
+			
+			var id = $("#member_id").val();
+			var pw = $("#pw").val();
+			var pw2 = $("#pw2").val();
+			var phone = $("#phone").val();
+			var name = $("#name").val();
+			var email = $("#email").val();
+			var addr = $("#sample4_jibunAddress").val();
+			var birth = $("#birth_date").val();
+			
+				
+	  if(idc == false || id === ""){
+	      alert('아이디를 확인 해 주세요')
+	  }else if(overChk == false){
+	      alert('아이디 중복 검사를 해주세요')
+	  }else if(addr == ""){
+		  	alert('주소를 선택해주세요')
+	  }else if(pwc == false|| pw2 === "" || pwc2 == false){
+	      alert('비밀번호를 확인 해 주세요')
+	  }else if(namec == false || name === ""){
+	  	alert('이름을 입력해주세요')
+	  }else if(emailc == false || email === ""){
+	  	alert('이메일을 입력해주세요')
+	  }else if(emoverChk == false){
+	  	alert('이메일을 중복 검사를 해주세요')
+	  }else if(phonec == false || phone === ""){
+	      alert('전화번호를 입력해주세요.')
+	  }else if( birth === ""){
+		  	alert('생일을 입력해주세요')
+	  }else if( birthJ === false){
+		  	alert('생일을 다시 입력해주세요')
+	
+	  }else{
+	      $('form').submit();
+	  } 
+	} ;
+	
 
 
 
