@@ -52,6 +52,10 @@
 	<update id="delSendMsg">
 		UPDATE message SET SENDER_DELETE=1 WHERE msg_idx=#{param1}
 	</update>
+	
+	<update id="updateRead">
+		UPDATE message SET READ_BOOLEAN=1 WHERE msg_idx=#{param1}
+	</update>
  	
  </mapper>
  

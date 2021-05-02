@@ -20,5 +20,7 @@ public interface MessageDAO {
 
 	int delSendMsg(String msg_idx);
 
+	void updateRead(int msg_idx);
+
 
 }

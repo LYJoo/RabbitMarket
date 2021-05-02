@@ -186,7 +186,6 @@
     			data:{},
     			dataType:'JSON',
     			success:function(data){
-    				console.log(data);
     				printReceiveList(data.receiveMsgList);
     				printSendList(data.sendMsgList);
     				printBlockList(data.blockMsgList);
@@ -203,7 +202,11 @@
     		
     		for(var i=0; i<list.length; i++){
     			content += "<tr>";
-    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg'>"+list[i].msg_content+"</a></td>";
+    			if(!(list[i].read_boolean)){	//아직 읽은적 없는 메시지면 제목 진하게
+	    			content += "<td><b><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg'>"+list[i].msg_content+"</a></b></td>";
+    			}else{							//읽은적 있으면 그대로
+    				content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg'>"+list[i].msg_content+"</a></td>";
+    			}
     			content += "<td>"+list[i].send_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
     			content += "<td><a href='./delMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg' class='a-del' style='color:white;'>삭제</a></td>";
@@ -235,7 +238,11 @@
     		
     		for(var i=0; i<list.length; i++){
     			content += "<tr>";
-    			content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=blockMsg'>"+list[i].msg_content+"</a></td>";
+    			if(!(list[i].read_boolean)){	//아직 읽은적 없는 메시지면 제목 진하게
+    				content += "<td><b><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=blockMsg'>"+list[i].msg_content+"</a></b></td>";
+    			}else{							//읽은적 있으면 그대로
+    				content += "<td><a href='./detailMsg?msg_idx="+list[i].msg_idx+"&msgType=blockMsg'>"+list[i].msg_content+"</a></td>";
+    			}
     			content += "<td>"+list[i].send_id+"</td>";
     			content += "<td>"+list[i].send_time+"</td>";
     			content += "<td><a href='./delMsg?msg_idx="+list[i].msg_idx+"&msgType=receiveMsg' class='a-del' style='color:white;'>삭제</a></td>";
