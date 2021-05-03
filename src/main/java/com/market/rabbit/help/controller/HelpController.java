@@ -2,10 +2,16 @@ package com.market.rabbit.help.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.market.rabbit.dto.NoticeDTO;
+import com.market.rabbit.help.service.HelpService;
 
 
 @Controller
@@ -23,10 +29,26 @@ public class HelpController {
 	 	확인 후 고객센터에 맞는 !페이지! 분기 및 기타 작업들을 본 컨트롤러에서 해 줄 것.
 	 */
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired HelpService service;
 	
-	@RequestMapping(value = "/help", method = RequestMethod.GET)
-	public String home(Model model) {
-		return "help";
+	@RequestMapping(value = "/help/noticeMain", method = RequestMethod.GET)
+	public String help_noticeMain(Model model) {
+		logger.info("고객센터 요청");
+		return "help/noticeMain";
 	}
-	
+
+
+	@RequestMapping(value = "/help/helpNoticeDetail/{notice_idx}", method = RequestMethod.GET)
+	public ModelAndView help_detailNotice(@PathVariable int notice_idx) {
+		logger.info("공지사항 상세보기 요청 idx : " +notice_idx);
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/help/noticeMain";//실패 : 리스트
+		NoticeDTO dto = service.detailNotice(notice_idx);
+		if(dto != null) {//성공 : 상세보기
+			page = "help/helpNoticeDetail";
+			mav.addObject("list", dto);
+		}
+		mav.setViewName(page);
+		return mav;
+	}
 }

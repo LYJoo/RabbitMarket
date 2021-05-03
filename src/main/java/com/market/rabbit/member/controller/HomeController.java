@@ -143,9 +143,5 @@ public class HomeController {
 		return "member/memberPw";
 	}
 	
-	@RequestMapping(value = "/help/helpMain", method = RequestMethod.GET)
-	public String helpMain( Model model) {
-		
-		return "help/helpMain";
-	}
+	
 }
