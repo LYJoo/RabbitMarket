@@ -78,7 +78,7 @@
 	<div class="card align-middle" style="width:25rem;">
 		<div class="card-title" style="margin-top:30px;">
             
-			<h2 class="card-title" style="color:#f58b34;"><img src="../resources/img/rabbit_logo.png"/></h2>
+			<h2 class="card-title" style="color:#f58b34;"><img src="/resources/img/rabbit_logo.png"/></h2>
 		</div>
       <form action="login" class="login" method="POST">
         <div class="checkbox">
@@ -104,8 +104,15 @@
 	</div>
    
   </body>
-  
   <script type="text/javascript">
+  
+  //비번 재설정시 오는 경고창
+  	var check = "${resetpw_check}";
+	if(check != ""){
+	 	alert(check);
+	}
+	
+	//회원가입 성공시 오는 경고창
 	var msg = "${regist_msg}";
 	if(msg != ""){
 	 	alert(msg);
