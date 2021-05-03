@@ -9,6 +9,15 @@ public class BlockDTO {
 	private String target_id;
 	private String member_id;
 	
+	private ProfileFileDTO profilefileDto;
+	
+	public ProfileFileDTO getProfilefileDto() {
+		return profilefileDto;
+	}
+	public void setProfilefileDto(ProfileFileDTO profilefileDto) {
+		this.profilefileDto = profilefileDto;
+	}
+	
 	public int getBlock_idx() {
 		return block_idx;
 	}

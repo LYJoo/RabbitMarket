@@ -111,9 +111,16 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/blockList", method = RequestMethod.GET)
-	public String callMemberBlockList(Model model) {
+	public String callBlockListForm(Model model) {
 		logger.info("마이페이지-차단리스트페이지요청");
 		return "myPage/memberInfo_block";
+	}
+	
+	@RequestMapping(value = "myPage/blockList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callBlockList(@PathVariable int page) {
+		
+		logger.info("Block {} 페이지 리스트 요청", page);
+		return service.callBlockList(page);
 	}
 	
 	@RequestMapping(value = "myPage/saleReportList", method = RequestMethod.GET)
