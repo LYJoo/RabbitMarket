@@ -91,7 +91,7 @@
 	<div class="card" style="width:40rem;">
 		<div class="card-title" style="margin-top:30px;">
             
-			<h2 class="card-title" style="color:#e4932b;"><img src="../resources/img/rabbit_logo.png"/></h2>
+			<h2 class="card-title" style="color:#e4932b;"><img src="/resources/img/rabbit_logo.png"/></h2>
 		</div>
 		<div class="card-body">
 		
@@ -139,10 +139,7 @@
    
   </body>
   <script>
-  $(document).ready(function() { 
-	  $('p.check').text('*필수 정보입니다.');
-	  $('p.check').css('color', 'red');
-  });
+
 
   var emoverChk = false;
 	$("#emoverlay").click(function(){
@@ -210,24 +207,32 @@
 				var nameJ = /^[가-힣]{2,6}$/;
 				// 휴대폰 번호 정규식
 				var phoneJ = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
-		
+				
+				
 
 		   $("#member_id").focusout(function(){
 			     if($('#member_id').val() == ""){
-			         
-			         alert('아이디를 입력해주세요');
-
+			      
+			   		$('#idch').text('*필수 정보입니다.');
+			   	  	$('#idch').css('color', 'red');
+			   	 	$(this).focus(); 
+			   		return false;
+			   		
 				}else if(!idJ.test($(this).val())){
-				$('#idch').text('5~20자의 영문 소문자, 숫자만 사용가능합니다')
-				$('#idch').css('color', 'red') 
-
+					$(this).focus(); 
+			   		return false;
+					$('#idch').text('5~20자의 영문 소문자, 숫자만 사용가능합니다')
+					$('#idch').css('color', 'red') 
+			   		
 				}else if($(this).val().indexOf("admin") != -1){
-				$('#idch').text('admin이 포함된 아이디는 사용할 수 없습니다.')
-				$('#idch').css('color', 'red') 
-
+					$('#idch').text('admin이 포함된 아이디는 사용할 수 없습니다.')
+					$('#idch').css('color', 'red') 
+					$(this).focus(); 
+					return false;
 		       }else{
 			         idc = true;
 			         $("#idch").hide();
+			         return true;
 			     }
 			 });
 		   
@@ -235,16 +240,23 @@
 		   
 		   $("#pw").focusout(function(){
 			     if($('#pw').val() == ""){
-			         
-			         alert('비밀번호를 입력해주세요');
-			    }else if(!pwJ.test($(this).val())){
-				$('#pw2ch').text('6~20자의 영문 소문자, 숫자만 사용가능합니다')
-				$('#pw2ch').css('color', 'red') 
-		       }else{
-			         pwc2 = true;
-			         $('#pw2ch').hide();
-			     }
-			 });
+			    	 
+			    	 $('#pw2ch').text('*필수 정보입니다.');
+				   	 $('#pw2ch').css('color', 'red');
+				   	 $(this).focus(); 
+					 return false;
+					 
+				    }else if(!pwJ.test($(this).val())){
+					$('#pw2ch').text('6~20자의 영문 소문자, 숫자만 사용가능합니다')
+					$('#pw2ch').css('color', 'red') 
+					$(this).focus(); 
+					return false;
+			       }else{
+				         pwc2 = true;
+				         $('#pw2ch').hide();
+				         return true;
+				     }
+				 });
 		
 		$("#pw2").keyup(function(){
 		   
@@ -276,8 +288,9 @@
 		
 		$("#name").focusout(function(){
 			   if($('#name').val() == ""){
-			      
-			       alert('이름을 입력해주세요');
+				  
+				   $('#namech').text('*필수 정보입니다.');
+				   $('#namech').css('color', 'red');
 			     
 			   }else{
 			       namec = true;
@@ -287,18 +300,21 @@
 			
 		$("#email").focusout(function(){
 			   if($('#email').val() == ""){
-			      
-			       alert('이메일을 입력해주세요');
-			     
+				   
+				   $('#emch').text('*필수 정보입니다.');
+				   $('#emch').css('color', 'red');
+					$(this).focus(); 
+					return false;
 			   }else{
 			       emailc = true;
+			       return true;
 			   }
 			});
 			
 		$("#phone").focusout(function(){
 		   if($('#phone').val() == ""){
-		      
-		       alert('전화번호를 입력해주세요');
+			   $('#phonech').text('*필수 정보입니다.');
+			   $('#phonech').css('color', 'red');
 		     
 		   }else{
 		       phonec = true;
@@ -425,12 +441,12 @@
 	      alert('아이디를 확인 해 주세요')
 	  }else if(overChk == false){
 	      alert('아이디 중복 검사를 해주세요')
-	  }else if(addr == ""){
-		  	alert('주소를 선택해주세요')
 	  }else if(pwc == false|| pw2 === "" || pwc2 == false){
 	      alert('비밀번호를 확인 해 주세요')
 	  }else if(namec == false || name === ""){
 	  	alert('이름을 입력해주세요')
+	  }else if(addr == ""){
+		  	alert('주소를 선택해주세요')
 	  }else if(emailc == false || email === ""){
 	  	alert('이메일을 입력해주세요')
 	  }else if(emoverChk == false){

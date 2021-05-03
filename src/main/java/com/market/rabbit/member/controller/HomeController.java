@@ -2,6 +2,7 @@ package com.market.rabbit.member.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class HomeController {
 	String plain ="";
 	String hash ="";
 	BCryptPasswordEncoder en = new BCryptPasswordEncoder();
+	MemberDTO dto2 = new MemberDTO();
 	
 	@Autowired MemberService service;
 	@Autowired MemberDAO dao;
@@ -68,11 +70,10 @@ public class HomeController {
 	
 		plain = pw;
 		logger.info("평문"+plain);
-		
-		dto.setPw(en.encode(dto.getPw()));
-//		hash = en.encode(plain); //암호화`
-//		logger.info("암호문"+hash);
-//		dto.setPw(hash);
+
+		hash = en.encode(plain); //암호화`
+		logger.info("암호문"+hash);
+		dto.setPw(hash);
 		logger.info("회원 정보 입력 값 = "+dto.getPw());
 		
 
@@ -89,23 +90,10 @@ public class HomeController {
 }
 	
 	@RequestMapping(value = "/member/login", method = RequestMethod.POST)
-	public ModelAndView login(Model model,@RequestParam HashMap<String, Object> params,
-			 RedirectAttributes rAttr,HttpSession session, @RequestParam String LoginPw, MemberDTO dto) {
+	public ModelAndView login(Model model,@RequestParam HashMap<String, String> params,
+			 RedirectAttributes rAttr,HttpSession session) {
 		logger.info("login : "+params);	
 		
-		 if ( session.getAttribute("loginId") != null ){
-	            // 기존에 login이란 세션 값이 존재한다면
-	            session.removeAttribute("loginId"); // 기존값을 제거해 준다.
-	        }
-		 
-		//비밀번호 암호
-			
-				 boolean success = en.matches(LoginPw, hash);//비교
-				
-				 logger.info("입력전 패스워드 :"+LoginPw);	
-				 logger.info("db에 패스워드 :"+hash);	
-				 logger.info("입력후 패스워드 :"+success);	
-				 
 		return service.login(params, rAttr,session);
 	}
 	
@@ -116,12 +104,26 @@ public class HomeController {
         return "redirect:/member/memberLogin"; // 로그아웃 후 로그인화면으로 이동
     }
     
-    
+    //아이디 찾기
     @RequestMapping(value = "/member/findId",  method = RequestMethod.POST)
-	public ModelAndView findId(@RequestParam String email, String name) {
+	public ModelAndView findId(@RequestParam String email, String name, RedirectAttributes rAttr) {
 		logger.info("고객이 입력한 이름과 이메일 :"+name+"/"+email);
-		return service.findId(name,email);
+		return service.findId(name,email,rAttr);
 	}
+    
+    //비밀번호 찾기
+    @RequestMapping(value = "/member/findPw",  method = RequestMethod.POST)
+    public ModelAndView findPw(HttpSession session, @RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
+    	logger.info("고객이 입력한 이름과 이메일 {}"+params);
+    	return service.findPw(session, params,rAttr);
+    }
+    
+    //비밀번호 재설
+    @RequestMapping(value = "/member/resetPw",  method = RequestMethod.POST)
+    public ModelAndView resetPw(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
+    	logger.info("고객이 입력한 비밀번호 {}"+params);
+    	return service.resetPw(params,rAttr);
+    }
     
 	@RequestMapping(value = "/member/memberRegist", method = RequestMethod.GET)
 	public String MemberRegist( Model model) {

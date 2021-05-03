@@ -2,6 +2,8 @@ package com.market.rabbit.member.dao;
 
 import java.util.HashMap;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.market.rabbit.dto.MemberDTO;
 
 public interface MemberDAO {
@@ -15,6 +17,17 @@ public interface MemberDAO {
 	int admin(HashMap<String, Object> map);
 
 	int login(HashMap<String, Object> map);
+
+	String findId(@Param("name")String name,  @Param("email")String email);
+
+	int findPw(HashMap<String, String> params);
+
+	int resetPw(@Param("pw")String pw2, @Param("member_id")String id);
+
+
+	String logpw(@Param("pw")String loginPw, @Param("id")String loginId);
+
+	
 
 	
 	

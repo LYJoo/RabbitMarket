@@ -52,10 +52,6 @@
   		padding: 10px;
   		font-size: 16px;
 	}
-    .checkbox{
-        margin-right: 20px;
-        text-align: right;
-    }
     .card-title{
         margin-left: 30px;
     }
@@ -67,6 +63,9 @@
     a{ 
     	color: #f58b34; text-decoration: none; 
     }
+    .text2{
+    	color : blue;
+    }
     </style>
   </head>
 
@@ -75,15 +74,17 @@
 	<div class="card align-middle" style="width:25rem;">
 		<div class="card-title" style="margin-top:30px;">
             
-			<h2 class="card-title" style="color:#f58b34;"><img src="../resources/img/rabbit_logo.png"/></h2>
+			<h2 class="card-title" style="color:#f58b34;"><img src="/resources/img/rabbit_logo.png"/></h2>
 		</div>
         
 		<div class="card-body">
       <form action="findId" class="form-signin" method="POST">
-  
+  		 <p class="text2"> ${findid2}</p>
         <input type="text" name="name" id="name" class="form-control" placeholder="이름" required autofocus><BR>
         <input type="email" name="email" id="email" class="form-control" placeholder="이메일" required><br>
+        	<p class="check" id="check">${check}</p><br/>
         <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">아 이 디 찾 기</button>
+      
       </form>
         
 		</div>
@@ -94,4 +95,29 @@
 	</div>
    
   </body>
+  <script type="text/javascript">
+		
+  		
+  
+  		$("#name").focusout(function(){
+  			
+	     if($('#name').val() == ""){
+	   		$('#check').text('이름을 입력해주세요.');
+	   	  	$('#check').css('color', 'red');
+	   
+	     }else{
+	    	 $('#check').hide();
+	     }
+	     });
+	     
+  		$("#email").focusout(function(){
+	     if($('#email').val() == ""){
+	   		$('#check').text('이메일을 입력해주세요');
+	   	  	$('#check').css('color', 'red');
+	     }else{
+	    	 $('#check').hide();
+	     }
+	     });
+  
+  </script>
 </html>

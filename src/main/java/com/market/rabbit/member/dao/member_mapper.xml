@@ -34,12 +34,21 @@
 	
 	<!--비밀번호 암호화, DB에 비밀번호 가져오기 -->
 	<select id="logpw" parameterType="member" resultType="String">
-		SELECT pw FROM member WHERE member_id=#{login_id}
+		SELECT pw FROM member WHERE member_id=#{id}
 	</select>
 	
 	<!--아이디 찾기 -->
-	<select id="findId" parameterType="member" resultType="String">
+	<select id="findId" parameterType="map" resultType="String">
 		SELECT member_id FROM member WHERE email=#{email} AND name=#{name}
 	</select>
- 	
+	
+	<!--비밀번호 찾기 -->
+	<select id="findPw" parameterType="member" resultType="Integer">
+		SELECT count(pw) FROM member WHERE member_id=#{member_id} AND name=#{name} AND email=#{email} 
+	</select>
+	
+ 	<!--비밀번호 재설정 -->
+ 	<update id="resetPw" parameterType="member">
+ 		UPDATE member SET pw=#{pw} WHERE member_id=#{member_id}
+ 	</update>
  </mapper>

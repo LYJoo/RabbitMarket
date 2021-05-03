@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +24,8 @@ public class MemberService {
 	ModelAndView mav = new ModelAndView();
 	String page = "";
 	String msg = "";
+	BCryptPasswordEncoder en = new BCryptPasswordEncoder();
+	MemberDTO dto = new MemberDTO();
 	
 	public int join(MemberDTO dto) {
 		
@@ -46,12 +47,21 @@ public class MemberService {
 		return map;
 	}
 
-	public ModelAndView login(HashMap<String, Object> params, RedirectAttributes rAttr, HttpSession session) {
+	public ModelAndView login(HashMap<String, String> params, RedirectAttributes rAttr, HttpSession session) {
 		logger.info("로그인 서비스 요청");
-	
+		String loginPw = params.get("LoginPw");
+		String loginId = params.get("LoginId");
+		logger.info(loginId+"/"+loginPw);
+		String hash = dao.logpw(loginPw,loginId);
+		 boolean success = en.matches(loginPw, hash);//비교
+		
+		 logger.info("입력전 패스워드 :"+loginPw);	
+		 logger.info("db에 패스워드 :"+hash);	
+		 logger.info("입력후 패스워드 :"+success);
+		 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("login_id", params.get("LoginId"));
-		map.put("pw", params.get("LoginPw"));
+		map.put("login_id", loginId);
+		map.put("pw", hash);
 		logger.info("map"+map);
 		
 		//일반인 모드로 오면 
@@ -86,9 +96,62 @@ public class MemberService {
 	}
 
 
-	public ModelAndView findId(String name, String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public ModelAndView findId(String name, String email, RedirectAttributes rAttr) {
+		
+		String findid = dao.findId(name,email);
+		logger.info(findid);
+		
+		if(findid != null) {
+			msg = "아이디는 "+findid+" 입니다";
+		}else {
+			msg = "일치하는 회원정보가 없습니다.";
+		}
+	
+		rAttr.addFlashAttribute("findid2", msg);
+		mav.setViewName("redirect:/member/memberId");
+		return mav;
+	}
+
+
+	public ModelAndView findPw(HttpSession session,HashMap<String, String> params, RedirectAttributes rAttr) {
+		
+		int findpw = dao.findPw(params);
+		
+			msg ="일치하는 회원정보가 없습니다.";
+			page="redirect:/member/memberPw";
+		if(findpw > 0) {
+			page = "member/memberPwReset";
+			String msg2 ="비밀번호를 재설정해주세요";
+			mav.addObject("findpw_checkt", msg2);
+		}
+		
+		logger.info( params.get("member_id"));
+		session.setAttribute("findid", params.get("member_id"));
+		rAttr.addFlashAttribute("findpw_checkf", msg);
+		mav.setViewName(page);
+		return mav;
+	}
+
+
+	public ModelAndView resetPw(HashMap<String, String> params, RedirectAttributes rAttr) {
+		
+		String pw2 = params.get("pw2");
+		String id = params.get("member_id");
+		String pw = en.encode(pw2);
+		logger.info(pw+"/"+id);
+		dto.setPw(pw);
+		int resetpw = dao.resetPw(pw,id);
+		
+		msg="비밀번호 재설정에 실패했습니다";
+		page="redirect:/member/memberPwReset";
+		if(resetpw > 0) {
+			msg="비밀번호를 재설정 했습니다. 로그인 페이지로 이동합니다.";
+			page = "member/memberLogin";
+		}
+		rAttr.addFlashAttribute("resetpw_check", msg);
+		mav.setViewName(page);
+		return mav;
+		
 	}
 
 
