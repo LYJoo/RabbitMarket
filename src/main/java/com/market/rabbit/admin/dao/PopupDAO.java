@@ -17,6 +17,12 @@ public interface PopupDAO {
 
 	int updatePopup(PopupDTO dto);
 
+	int findNowPopup();
+
+	int chageNowPopup(int nowPopup);
+
 	int delPopup(int popup_idx);
+
+
 
 }

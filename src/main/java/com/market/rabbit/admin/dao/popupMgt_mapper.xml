@@ -45,6 +45,14 @@
  			WHERE popup_idx=#{popup_idx}
  	</update>
  	
+ 	<select id="findNowPopup" resultType="int">
+ 		SELECT popup_idx FROM popup WHERE islook = 1
+ 	</select>
+ 	
+ 	<update id= "chageNowPopup">
+ 		UPDATE popup SET islook=0 WHERE popup_idx=#{param1}
+ 	</update>
+ 	
  	<!-- 삭제 -->
  	<delete id="delPopup">
  		DELETE FROM popup WHERE popup_idx=#{param1}

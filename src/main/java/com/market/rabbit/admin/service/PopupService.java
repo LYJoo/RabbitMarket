@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.market.rabbit.admin.dao.PopupDAO;
 import com.market.rabbit.dto.NoticeDTO;
@@ -50,8 +51,15 @@ public class PopupService {
 	}
 	
 	// 수정
+	@Transactional
 	public int updatePopup(PopupDTO dto) {
-		return dao.updatePopup(dto);
+		if(dto.getIslook().equals("1")) {//노출여부가 true라면
+			int nowPopup_idx = dao.findNowPopup();//현재 노출되고 있는 팝업창
+			int chage = dao.chageNowPopup(nowPopup_idx);//해당 팝업창의 노출을 false로
+			logger.info("현재 노출 팝업 / 변경여부 : " + nowPopup_idx + "/" + chage);
+		}		
+		int success = dao.updatePopup(dto);
+		return success;
 	}	
 	
 	// 삭제
