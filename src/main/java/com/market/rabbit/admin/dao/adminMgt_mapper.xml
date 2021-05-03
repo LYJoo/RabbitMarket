@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+ >
+ 
+ <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
+ <mapper namespace="com.market.rabbit.admin.dao.AdminMgtDAO">
+ 	
+ 	<!-- 리스트 : 전체수 / 페이징리스트-->
+	<select id="allCountAdmin" resultType="int">
+		SELECT COUNT(*) AS cnt FROM admin
+	</select>
+	<select id="adminList" resultType="admin">
+		SELECT admin_id, position, reg_date, activation, rnum 
+		    FROM (SELECT admin_id, position, reg_date, activation, ROW_NUMBER() 
+		                OVER(ORDER BY reg_date ASC) AS rnum FROM admin)
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<!-- 등록 : 등록 / 아이디 중복검사-->
+	<insert id="joinAdmin" parameterType="admin">
+		INSERT INTO admin(admin_id, admin_pw, position, activation)
+	   		VALUES (#{admin_id}, #{admin_pw}, '중간관리자', 1)
+	</insert>
+	
+	<select id="findAdmin" resultType="String">
+		SELECT admin_id FROM admin WHERE admin_id = #{param1}
+	</select>
+	
+	<!-- 상세 -->
+	<select id="detailAdmin" resultType="admin">
+		SELECT admin_id, position, reg_date, activation FROM admin
+			WHERE admin_id = #{param1}
+	</select>
+	
+	<!-- 수정 -->
+ 	<update id="updateAdmin" parameterType="admin">
+ 		UPDATE admin 
+			<set>
+				<if test="!admin_pw.equals('')">admin_pw=#{admin_pw}, </if>
+				<if test="!activation.equals('')">activation=#{activation} </if>
+			</set>
+ 			WHERE admin_id=#{admin_id}
+ 	</update>
+	
+	<!-- 삭제 -->
+	<delete id="delAdmin">
+		DELETE FROM admin WHERE admin_id=#{param1}
+	</delete>
+ 	
+ </mapper>
