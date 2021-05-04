@@ -167,9 +167,15 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/questionList", method = RequestMethod.GET)
-	public String callMemberQuestionList(Model model) {
+	public String callMemberQuestionListForm(Model model) {
 		logger.info("마이페이지-대댓글신고리스트페이지요청");
 		return "myPage/memberInfo_question";
+	}
+	
+	@RequestMapping(value = "myPage/questionList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callMemberQuestionList(@PathVariable int page) {
+		logger.info("마이페이지-내 1:1 문의 리스트요청");
+		return service.callQuestionList(page);
 	}
 	
 }

@@ -147,6 +147,15 @@
 		</association>
 	</resultMap>
 	
+	<select id="callQuestionList" resultType="question">
+		SELECT *
+		FROM (
+		    SELECT question_idx, subject, content, reg_date, state, answer, ROW_NUMBER() OVER(ORDER BY reg_date DESC) AS rnum, question_category
+		    FROM question
+		    WHERE member_id=#{param1}
+		    )
+		WHERE rnum BETWEEN #{param2} AND #{param3}
+	</select>
 	
  	
  </mapper>

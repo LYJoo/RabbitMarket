@@ -26,6 +26,7 @@ import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.BlockDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
+import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.dto.ReportDTO;
 import com.market.rabbit.profile.dao.ProfileDAO2;
 
@@ -278,6 +279,18 @@ public class ProfileService2 {
 		ArrayList<ReportDTO> cocommentReportList = dao.callCocommentReportList(loginId, start, end);
 		
 		map.put("cocommentReportList", cocommentReportList);
+		return map;
+	}
+
+	public HashMap<String, Object> callQuestionList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		ArrayList<QuestionDTO> questionList = dao.callQuestionList(loginId, start, end);
+		
+		map.put("questionList", questionList);
 		return map;
 	}
 	
