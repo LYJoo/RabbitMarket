@@ -43,4 +43,6 @@ public interface ProfileDAO2 {
 
 	ArrayList<QuestionDTO> callQuestionList(String loginId, int start, int end);
 
+	int countQuestionList(String loginId);
+
 }

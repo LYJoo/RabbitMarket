@@ -288,8 +288,13 @@ public class ProfileService2 {
 		int start = end-(numPerPage-1);
 		String loginId = "hwi";
 		
+		int allCnt = dao.countQuestionList(loginId);	//전체 개수
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
 		ArrayList<QuestionDTO> questionList = dao.callQuestionList(loginId, start, end);
 		
+		map.put("range", range);
+		map.put("currPage", page);
 		map.put("questionList", questionList);
 		return map;
 	}

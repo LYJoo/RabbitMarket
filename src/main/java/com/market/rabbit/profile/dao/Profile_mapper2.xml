@@ -157,5 +157,8 @@
 		WHERE rnum BETWEEN #{param2} AND #{param3}
 	</select>
 	
+	<select id="countQuestionList" resultType="INTEGER">
+		SELECT count(question_idx) FROM question WHERE member_id=#{param1}
+	</select>
  	
  </mapper>
