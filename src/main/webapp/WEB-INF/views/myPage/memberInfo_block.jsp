@@ -41,7 +41,8 @@
 				dataType:'JSON',
 				success:function(data){
 					console.log(data.blockList);
-					printBlockList(data.blockList);
+					console.log(data.path);
+					printBlockList(data.blockList, data.path);
 				},
 				error:function(e){
 					console.log(e);
@@ -49,13 +50,13 @@
 			});
 		}
 		
-		function printBlockList(list){
+		function printBlockList(list, path){
 			var content="";
 			
 	
 			for(var i=0; i<list.length; i++){
 				content += "<tr>";
-				content += "<td class='td-block-img'><p><img src='' class='block-img'/></p></td>"
+				content += "<td class='td-block-img'><p><img src='"+path+list[i].profilefileDto.newFileName+"' class='block-img'/></p></td>"
 				content += "<td class='td-block-id'>"+list[i].target_id+"</td>"
 				content += "<td><a onclick='delBlock("+list[i].block_idx+")' class='a-del' style='color:white;'>차단해제</a></td>";
 				content += "</tr>";
@@ -65,9 +66,9 @@
 			$('#blockList').append(content);
 		}
 		
- 		/* function delBlock(block_idx){
+ 		 function delBlock(block_idx){
 			$.ajax({
-				url:'./delBlock/'+alarm_idx,
+				url:'./delBlock/'+block_idx,
 				type:'GET',
 				data:{},
 				dataType:'JSON',
@@ -79,6 +80,6 @@
 					console.log(e);
 				}
 			});
-		}  */
+		}  
     </script>
 </html>

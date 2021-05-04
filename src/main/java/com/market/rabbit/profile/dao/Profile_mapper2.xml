@@ -74,5 +74,33 @@
 		</association>
 	</resultMap>
 	
+	<delete id="delBlock">
+		DELETE FROM block WHERE block_idx=#{param1}
+	</delete>
+	
+	<select id="callSaleReportList" resultMap="callSaleReportListAfterJoin">
+		SELECT *
+		FROM (
+		    SELECT r.report_idx, r.target_idx, r.reporter, r.target, r.report_reason, r.report_state, r.reg_date, r.complete_date, ROW_NUMBER() OVER(ORDER BY r.reg_date DESC) AS rnum, s.sale_content
+		    FROM report r, sale s
+		    WHERE r.target_idx = s.product_idx AND r.code_num = '1001' AND r.reporter = #{param1}
+		    )
+		WHERE rnum BETWEEN #{param2} AND #{param3}
+	</select>
+	
+	<resultMap type="report" id="callSaleReportListAfterJoin">
+		<id column="report_idx" property="report_idx"/>
+		<result column="target_idx" property="target_idx"/>
+		<result column="reporter" property="reporter"/>
+		<result column="target" property="target"/>
+		<result column="report_reason" property="report_reason"/>
+		<result column="report_state" property="report_state"/>
+		<result column="reg_date" property="reg_date"/>
+		<result column="complete_date" property="complete_date"/>
+		<association property="saleDto" javaType="sale">
+			<result column="sale_content" property="sale_content"/>
+		</association>
+	</resultMap>
+	
  	
  </mapper>

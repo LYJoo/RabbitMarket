@@ -26,6 +26,7 @@ import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.BlockDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
+import com.market.rabbit.dto.ReportDTO;
 import com.market.rabbit.profile.dao.ProfileDAO2;
 
 @Service
@@ -227,7 +228,32 @@ public class ProfileService2 {
 		int start = end-(numPerPage-1);
 		
 		ArrayList<BlockDTO> blockList = dao.callBlockList(loginId, start, end);
+		map.put("path", "/myProfile/");
 		map.put("blockList", blockList);
+		return map;
+	}
+
+	public HashMap<String, Object> delBlock(int block_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		Boolean success = false;
+		if(dao.delBlock(block_idx) > 0) {
+			logger.info("삭제완료");
+			success = true;
+		}
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> callSaleReportList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		ArrayList<ReportDTO> saleReportList = dao.callSaleReportList(loginId, start, end);
+		
+		map.put("saleReportList", saleReportList);
 		return map;
 	}
 	

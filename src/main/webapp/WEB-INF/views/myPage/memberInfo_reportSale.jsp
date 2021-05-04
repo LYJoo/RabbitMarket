@@ -14,81 +14,61 @@
         <div id="main_content">
         	<jsp:include page="../include/myPageNavigation.jsp"></jsp:include> 
         	<table class="type04">
-        		<tr>
-					<th colspan="4"><span class="info_title">판매글 신고 내역</span><br>
-					<br></th>
-				</tr>
-                <tr>
-                    <th scope="row">제목</th>
-                    <th scope="row">사유</th>
-                    <th scope="row">처리상태</th>
-                    <th scope="row">신고일</th>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>커블팝니다.</td>
-                    <td>돈 보냈는데 먹튀당했어요.</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
+        		<thead>
+	        		<tr>
+						<th colspan="4"><span class="info_title">판매글 신고 내역</span><br>
+						<br></th>
+					</tr>
+	                <tr>
+	                    <th scope="row">제목</th>
+	                    <th scope="row">사유</th>
+	                    <th scope="row">처리상태</th>
+	                    <th scope="row">신고일</th>
+	                </tr>
+                </thead>
+                <tbody id="saleReportList">
+                
+                </tbody>
                 <tr>
                     <td colspan="4" id="paging">◁ 1 2 3 4 5 ▷</td>
                 </tr>
             </table>
         </div>
     </body>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+	    var showPage = 1;
+		listCall(showPage);
+		
+		function listCall(reqPage){
+			$.ajax({
+				url:'./saleReportList/'+reqPage,
+				type:'GET',
+				data:{},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data.saleReportList);
+					printSaleReportList(data.saleReportList);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}
+		
+		function printSaleReportList(list){
+			var content="";
+			
+			for(var i=0; i<list.length; i++){
+				content += "<tr>";
+				content += "<td>"+list[i].saleDto.sale_content+"</td>";
+				content += "<td>"+list[i].report_reason+"</td>"
+				content += "<td>"+list[i].report_state+"</td>"
+				content += "<td>"+list[i].reg_date+"</td>"
+				content += "</tr>";
+				
+			}
+			$('#saleReportList').empty();
+			$('#saleReportList').append(content);
+		}
+    </script>
 </html>

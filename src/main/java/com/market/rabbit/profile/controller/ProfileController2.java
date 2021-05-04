@@ -123,10 +123,23 @@ public class ProfileController2 {
 		return service.callBlockList(page);
 	}
 	
+	@RequestMapping(value = "myPage/delBlock/{block_idx}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> delBlock(@PathVariable int block_idx) {
+		
+		logger.info("{}번 차단 삭제 요청", block_idx);
+		return service.delBlock(block_idx);
+	}
+	
 	@RequestMapping(value = "myPage/saleReportList", method = RequestMethod.GET)
-	public String callMemberSaleReportList(Model model) {
-		logger.info("마이페이지-판매글신고리스트페이지요청");
+	public String callSaleReportListForm(Model model) {
+		logger.info("마이페이지-판매글 신고리스트페이지요청");
 		return "myPage/memberInfo_reportSale";
+	}
+	
+	@RequestMapping(value = "myPage/saleReportList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callSaleReportList(@PathVariable int page) {
+		logger.info("마이페이지-판매글 신고리스트 요청");
+		return service.callSaleReportList(page);
 	}
 	
 	@RequestMapping(value = "myPage/commentReportList", method = RequestMethod.GET)

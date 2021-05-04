@@ -17,6 +17,16 @@ public class ReportDTO {
 	private String code_content; //코드 내용
 	//
 	
+	private SaleDTO saleDto;
+	
+	
+	
+	public SaleDTO getSaleDto() {
+		return saleDto;
+	}
+	public void setSaleDto(SaleDTO saleDto) {
+		this.saleDto = saleDto;
+	}
 	public int getReport_idx() {
 		return report_idx;
 	}
