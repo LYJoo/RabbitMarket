@@ -1,5 +1,7 @@
 package com.market.rabbit.help.controller;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.market.rabbit.dto.NoticeDTO;
@@ -36,19 +39,12 @@ public class HelpController {
 		logger.info("고객센터 요청");
 		return "help/noticeMain";
 	}
-
-
-	@RequestMapping(value = "/help/helpNoticeDetail/{notice_idx}", method = RequestMethod.GET)
-	public ModelAndView help_detailNotice(@PathVariable int notice_idx) {
-		logger.info("공지사항 상세보기 요청 idx : " +notice_idx);
-		ModelAndView mav = new ModelAndView();
-		String page = "redirect:/help/noticeMain";//실패 : 리스트
-		NoticeDTO dto = service.detailNotice(notice_idx);
-		if(dto != null) {//성공 : 상세보기
-			page = "help/helpNoticeDetail";
-			mav.addObject("list", dto);
-		}
-		mav.setViewName(page);
-		return mav;
+	
+	@RequestMapping(value = "/help/noticeMain/{pagePerCnt}/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> noticeMain(@PathVariable int pagePerCnt, @PathVariable int page) {
+		logger.info("공지사항 리스트 요청 pagePerCnt: {}, page: {}",pagePerCnt,page);
+		return service.noticeMain(page,pagePerCnt);
 	}
+
+	
 }
