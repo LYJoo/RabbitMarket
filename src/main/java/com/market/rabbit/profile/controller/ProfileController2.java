@@ -138,20 +138,32 @@ public class ProfileController2 {
 	
 	@RequestMapping(value = "myPage/saleReportList/{page}", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> callSaleReportList(@PathVariable int page) {
-		logger.info("마이페이지-판매글 신고리스트 요청");
+		logger.info("마이페이지-판매글 신고 리스트 요청");
 		return service.callSaleReportList(page);
 	}
 	
 	@RequestMapping(value = "myPage/commentReportList", method = RequestMethod.GET)
-	public String callMemberCommentReportList(Model model) {
-		logger.info("마이페이지-댓글신고리스트페이지요청");
+	public String callCommentReportListForm(Model model) {
+		logger.info("마이페이지-댓글 신고 리스트 페이지 요청");
 		return "myPage/memberInfo_reportComment";
 	}
 	
+	@RequestMapping(value = "myPage/commentReportList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callCommentReportList(@PathVariable int page) {
+		logger.info("마이페이지-댓글 신고 리스트 요청");
+		return service.callCommentReportList(page);
+	}
+	
 	@RequestMapping(value = "myPage/cocommentReportList", method = RequestMethod.GET)
-	public String callMemberCocommentReportList(Model model) {
-		logger.info("마이페이지-대댓글신고리스트페이지요청");
+	public String callCocommentReportListForm(Model model) {
+		logger.info("마이페이지-대댓글 신고 리스트 페이지요청");
 		return "myPage/memberInfo_reportCocomment";
+	}
+	
+	@RequestMapping(value = "myPage/cocommentReportList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callCocommentReportList(@PathVariable int page) {
+		logger.info("마이페이지-대댓글 신고 리스트 요청");
+		return service.callCocommentReportList(page);
 	}
 	
 	@RequestMapping(value = "myPage/questionList", method = RequestMethod.GET)

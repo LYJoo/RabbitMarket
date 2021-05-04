@@ -87,7 +87,6 @@
 		    )
 		WHERE rnum BETWEEN #{param2} AND #{param3}
 	</select>
-	
 	<resultMap type="report" id="callSaleReportListAfterJoin">
 		<id column="report_idx" property="report_idx"/>
 		<result column="target_idx" property="target_idx"/>
@@ -101,6 +100,53 @@
 			<result column="sale_content" property="sale_content"/>
 		</association>
 	</resultMap>
+	
+	<select id="callCommentReportList" resultMap="callCommentReportListAfterJoin">
+		SELECT *
+		FROM (
+		    SELECT r.report_idx, r.target_idx, r.reporter, r.target, r.report_reason, r.report_state, r.reg_date, r.complete_date, ROW_NUMBER() OVER(ORDER BY r.reg_date DESC) AS rnum, c.comment_content
+		    FROM report r, comments c
+		    WHERE r.target_idx = c.comment_idx AND r.code_num = '1002' AND r.reporter = #{param1}
+		    )
+		WHERE rnum BETWEEN #{param2} AND #{param3}
+	</select>
+	<resultMap type="report" id="callCommentReportListAfterJoin">
+		<id column="report_idx" property="report_idx"/>
+		<result column="target_idx" property="target_idx"/>
+		<result column="reporter" property="reporter"/>
+		<result column="target" property="target"/>
+		<result column="report_reason" property="report_reason"/>
+		<result column="report_state" property="report_state"/>
+		<result column="reg_date" property="reg_date"/>
+		<result column="complete_date" property="complete_date"/>
+		<association property="commentsDTO" javaType="comments">
+			<result column="comment_content" property="comment_content"/>
+		</association>
+	</resultMap>
+	
+	<select id="callCocommentReportList" resultMap="callCocommentReportListAfterJoin">
+		SELECT *
+		FROM (
+		    SELECT r.report_idx, r.target_idx, r.reporter, r.target, r.report_reason, r.report_state, r.reg_date, r.complete_date, ROW_NUMBER() OVER(ORDER BY r.reg_date DESC) AS rnum, c.cocomment_content
+		    FROM report r, cocomment c
+		    WHERE r.target_idx = c.cocomment_idx AND r.code_num = '1003' AND r.reporter = #{param1}
+		    )
+		WHERE rnum BETWEEN #{param2} AND #{param3}
+	</select>
+	<resultMap type="report" id="callCocommentReportListAfterJoin">
+		<id column="report_idx" property="report_idx"/>
+		<result column="target_idx" property="target_idx"/>
+		<result column="reporter" property="reporter"/>
+		<result column="target" property="target"/>
+		<result column="report_reason" property="report_reason"/>
+		<result column="report_state" property="report_state"/>
+		<result column="reg_date" property="reg_date"/>
+		<result column="complete_date" property="complete_date"/>
+		<association property="coCommentDTO" javaType="coComent">
+			<result column="cocomment_content" property="cocomment_content"/>
+		</association>
+	</resultMap>
+	
 	
  	
  </mapper>

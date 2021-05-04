@@ -36,4 +36,8 @@ public interface ProfileDAO2 {
 
 	ArrayList<ReportDTO> callSaleReportList(String loginId, int start, int end);
 
+	ArrayList<ReportDTO> callCommentReportList(String loginId, int start, int end);
+
+	ArrayList<ReportDTO> callCocommentReportList(String loginId, int start, int end);
+
 }

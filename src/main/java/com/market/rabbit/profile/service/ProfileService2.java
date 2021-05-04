@@ -256,6 +256,30 @@ public class ProfileService2 {
 		map.put("saleReportList", saleReportList);
 		return map;
 	}
+
+	public HashMap<String, Object> callCommentReportList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		ArrayList<ReportDTO> commentReportList = dao.callCommentReportList(loginId, start, end);
+		
+		map.put("commentReportList", commentReportList);
+		return map;
+	}
+
+	public HashMap<String, Object> callCocommentReportList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		ArrayList<ReportDTO> cocommentReportList = dao.callCocommentReportList(loginId, start, end);
+		
+		map.put("cocommentReportList", cocommentReportList);
+		return map;
+	}
 	
 
 	
