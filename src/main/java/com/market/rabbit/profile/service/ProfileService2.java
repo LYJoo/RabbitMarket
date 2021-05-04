@@ -227,7 +227,20 @@ public class ProfileService2 {
 		int start = end-(numPerPage-1);
 		
 		ArrayList<BlockDTO> blockList = dao.callBlockList(loginId, start, end);
+		map.put("path", "/myProfile/");
 		map.put("blockList", blockList);
+		return map;
+	}
+
+	public HashMap<String, Object> delBlock(int block_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		Boolean success = false;
+		if(dao.delBlock(block_idx) > 0) {
+			logger.info("삭제완료");
+			success = true;
+		}
+		
+		map.put("success", success);
 		return map;
 	}
 	

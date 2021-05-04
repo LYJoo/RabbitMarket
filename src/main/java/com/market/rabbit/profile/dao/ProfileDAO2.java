@@ -31,4 +31,6 @@ public interface ProfileDAO2 {
 
 	ArrayList<BlockDTO> callBlockList(String loginId, int start, int end);
 
+	int delBlock(int block_idx);
+
 }

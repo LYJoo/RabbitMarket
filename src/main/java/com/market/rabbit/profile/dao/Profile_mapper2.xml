@@ -74,5 +74,9 @@
 		</association>
 	</resultMap>
 	
+	<delete id="delBlock">
+		DELETE FROM block WHERE block_idx=#{param1}
+	</delete>
+	
  	
  </mapper>
