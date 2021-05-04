@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>admin_notice</title>
+    <title>help_noticeMain</title>
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- 반응형 디자인을 위한 css/js 라이브러리 -->
@@ -15,23 +15,17 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 <style type="text/css">
 	table{
-		text-align: center;
-		table-layout:fixed;
+		width: 65em;
+		
 	}
 	
-	#w{
-		word-break:break-all;
-		white-space:pre-wrap;
-	}
-	
-	#e{
-		white-space: nowrap;
-	}
 </style>
 </head>
 <body>
 	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+	 <jsp:include page="../include/helpNavigation.jsp" flush="true"></jsp:include>
     <div id="list_content">
+        <br/><br/>
         <div class="flex_box btn_flex">
             <h2>공지사항</h2>
         </div>
@@ -39,8 +33,8 @@
             <thead>
                 <tr>
                     <th>글번호</th>
-                    <th id="list_subject">제목</th>
-                    <th colspan="2">작성자</th>
+                    <th id="list_subject" colspan="2">제목</th>
+                    <th>작성자</th>
                     <th>공지날짜</th>
                 </tr>
             </thead>

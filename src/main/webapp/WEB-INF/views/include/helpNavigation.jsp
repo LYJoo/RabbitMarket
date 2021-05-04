@@ -17,6 +17,7 @@
     }
     .helpPage_nav_title{
         cursor: pointer;
+        font-size: 17px;
     }
     .helpPage_left_nav li span{
         color: #F79646;
@@ -40,6 +41,8 @@
     	position: relative; 
     	float: left; 
     	width: 20%;
+    	margin-left: 50px; 
+    	margin-top: 120px; 
     }
 </style>
 
@@ -48,7 +51,7 @@
     <div class="helpPage_left_nav_group">
     <ul class="helpPage_left_nav">
         <li>
-            <a href="#">
+            <a href="/help/noticeMain">
                 <span class="helpPage_nav_title" onclick="nav_textBold(this)">공지사항</span>
             </a>
         </li>
@@ -67,7 +70,8 @@
     </div>
     </div>
 </body>
-<script>
+<script type="text/javascript">
+jQuery.noConflict();
     $(".mypage_nav_title").click(function(){
         var submenu = $(this).next("ul");
         var other_submenu = $('.helpPage_nav_title');

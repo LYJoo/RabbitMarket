@@ -198,6 +198,7 @@
     
 </body>
 <script>
+jQuery.noConflict();
     var flag = 0;
     var logout_visibility = ['visible','hidden'];
     
