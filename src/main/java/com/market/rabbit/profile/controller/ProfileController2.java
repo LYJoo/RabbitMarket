@@ -132,8 +132,14 @@ public class ProfileController2 {
 	
 	@RequestMapping(value = "myPage/saleReportList", method = RequestMethod.GET)
 	public String callSaleReportListForm(Model model) {
-		logger.info("마이페이지-판매글신고리스트페이지요청");
+		logger.info("마이페이지-판매글 신고리스트페이지요청");
 		return "myPage/memberInfo_reportSale";
+	}
+	
+	@RequestMapping(value = "myPage/saleReportList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callSaleReportList(@PathVariable int page) {
+		logger.info("마이페이지-판매글 신고리스트 요청");
+		return service.callSaleReportList(page);
 	}
 	
 	@RequestMapping(value = "myPage/commentReportList", method = RequestMethod.GET)
