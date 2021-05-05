@@ -7,17 +7,17 @@
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
  <mapper namespace="com.market.rabbit.profile.dao.ProfileDAO1">
  
-<!-- 	<select id="wishlist" resultType="wish">
+	<select id="wishlist" resultType="wish">
  		SELECT wish_idx,member_id,product_idx FROM WISH ORDER BY wish_idx DESC
- 	</select> -->
+ 	</select>
  	
- 	<select id="sale" resultType="sale">
+<!--  	<select id="sale" resultType="sale">
  		SELECT sale_subject,reg_date FROM sale ORDER BY reg_date DESC
  	</select>
  	
  	<select id="saleFile" resultType="saleFile">
  		SELECT * FROM sale_file WHERE newFileName=#{param1}
- 	</select>
+ 	</select> -->
  	
  	<delete id="wishdelete">
  		DELETE FROM WISH WHERE wish_idx=#{param1}
@@ -29,6 +29,30 @@
  	
  	<select id="fileList" resultType="profileFile">
  		SELECT * FROM PROFILEFILE WHERE member_id=#{param1}
+ 	</select>
+ 	
+ 	<select id="sale" resultType="sale">
+ 		SELECT sale_subject WHERE sale sale_subject={param1}
+ 	</select>
+ 	
+ 	<select id="review" resultType="review">
+ 		SELECT member_id,reg_date,review_content WHERE review member_id={param1}
+ 	</select>
+ 	
+ 	<select id="mysale" resultType="sale">
+ 		SELECT sale_subject,price FROM sale sale_subject=#{param1}
+ 	</select>
+ 	
+ 	<select id="salefile" resultType="saleFile">
+ 		SELECT newFileName FROM sale_file newFileName=#{newFileName}
+ 	</select>
+ 	
+ 	<select id="salelistFile" resultType="saleFile">
+ 		SELECT newFileName FROM sale_file newFileName=#{newFileName}
+ 	</select>
+ 	
+ 	<select id="salelistlist" resultType="sale">
+ 		SELECT sale_subject,code_num,reg_date FROM sale sale_subject=#{param1}
  	</select>
  	
  </mapper>

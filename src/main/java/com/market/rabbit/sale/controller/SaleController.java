@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.CoCommentDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
@@ -119,10 +120,15 @@ public class SaleController {
 	}
 	
 	@RequestMapping(value = "/sale/detail", method = RequestMethod.GET)
-	public String detail(Model model, @RequestParam int product_idx) {
+	public String detail(Model model, @RequestParam int product_idx, HttpSession session) {
 		logger.info("받아온 파라메터 값" + product_idx);
+		String loginId = (String) session.getAttribute("loginId");
 		
 		service.detail(product_idx, model);
+		
+		if(loginId != null) {			
+			service.chWish(loginId, product_idx,  model);
+		}
 		
 		return "/sale/productDetail";
 	}
@@ -143,4 +149,154 @@ public class SaleController {
 		return map;
 	}
 	
+	@RequestMapping(value = "/sale/commentWrite", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> commentWrite(@RequestParam int product_idx, @RequestParam String comment_content ,HttpSession session) {
+		logger.info("받아온 파라메터 값"+ comment_content);
+		String loginId = (String) session.getAttribute("loginId");
+
+		return service.commentWrite(product_idx, comment_content, loginId);
+	}
+	
+	@RequestMapping(value = "/sale/cocommentWrite", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> cocommentWrite(@RequestParam int comment_idx, @RequestParam String cocomment_content ,HttpSession session) {
+		logger.info("받아온 파라메터 값"+ comment_idx + cocomment_content);
+		String loginId = (String) session.getAttribute("loginId");
+
+		return service.cocommentWrite(comment_idx, cocomment_content, loginId);
+	}
+	
+	@RequestMapping(value = "/sale/reportForm", method = RequestMethod.GET)
+	public String reportForm(Model model,@RequestParam int idx, @RequestParam int codeNum, @RequestParam String target,HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		int chReport  = 0;
+		int reporter = service.chReport(idx,codeNum,loginId);
+		if(reporter == 1) {
+			chReport = 1;
+		}
+		System.out.println(chReport);
+		if(chReport == 0) {
+			model.addAttribute("chReport", chReport);
+			model.addAttribute("idx", idx);
+			model.addAttribute("codeNum", codeNum);
+			model.addAttribute("target", target);
+		}else {
+			model.addAttribute("chReport", chReport);
+		}
+
+		return "/sale/reportForm";
+	}
+	
+	@RequestMapping(value = "/sale/cocoReportForm", method = RequestMethod.GET)
+	public String cocoReportForm(Model model,@RequestParam int idx, @RequestParam int codeNum,HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		
+		System.out.println(idx + " ./ "+codeNum);
+		
+		String target = service.getTarget(idx, codeNum);
+		System.out.println("타켓: "+target);
+		int chReport  = 0;
+		int reporter = service.chReport(idx,codeNum,loginId);
+		if(reporter == 1) {
+			chReport = 1;
+		}
+		System.out.println(chReport);
+		if(chReport == 0) {
+			model.addAttribute("chReport", chReport);
+			model.addAttribute("idx", idx);
+			model.addAttribute("codeNum", codeNum);
+			model.addAttribute("target", target);
+		}else {
+			model.addAttribute("chReport", chReport);
+		}
+		return "/sale/reportForm";
+	}
+	
+	@RequestMapping(value = "/sale/report", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> report(@RequestParam int idx, @RequestParam int codeNum, @RequestParam String target, @RequestParam String report_reason ,HttpSession session) {
+		logger.info("받아온 파라메터 값"+ idx + codeNum + target + report_reason);
+		String loginId = (String) session.getAttribute("loginId");
+
+		return service.report(idx, codeNum, target, report_reason, loginId);
+	}
+	
+	@RequestMapping(value = "/sale/pDel", method = RequestMethod.GET)
+	public String pDel(RedirectAttributes rAttr, @RequestParam int idx) {
+		System.out.println(idx);
+		String msg = "";
+		int success = service.pDel(idx);
+		System.out.println("삭제 성공? "+success);
+		
+		if(success > 0 ) {
+			msg = "상품을 삭제했습니다.";
+			rAttr.addFlashAttribute("msg", msg);
+			return "redirect:/sale/main";
+		}else {
+			msg = "상품 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.";
+			rAttr.addFlashAttribute("msg", msg);
+			return "redirect:/sale/detail?product_idx="+idx;
+		}
+	}
+	
+	@RequestMapping(value = "/sale/cDel", method = RequestMethod.GET)
+	public String cDel( RedirectAttributes rAttr, @RequestParam int idx, @RequestParam int product_idx) {
+		System.out.println(idx + "/"+product_idx);
+		String msg = "";
+		int success = service.cDel(idx);
+		System.out.println("삭제 성공? "+success);
+		
+		if(success > 0 ) {
+			msg = "댓글을 삭제했습니다.";
+		}else {
+			msg = "댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		return "redirect:/sale/detail?product_idx="+product_idx;
+	}
+	
+	@RequestMapping(value = "/sale/ccDel", method = RequestMethod.GET)
+	public String ccDel( RedirectAttributes rAttr, @RequestParam int idx, @RequestParam int product_idx) {
+		System.out.println(idx + "/"+product_idx);
+		String msg = "";
+		int success = service.ccDel(idx);
+		
+		System.out.println("삭제 성공? "+success);
+		
+		if(success > 0 ) {
+			msg = "대댓글을 삭제했습니다.";
+		}else {
+			msg = "대댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		return "redirect:/sale/detail?product_idx="+product_idx;
+	}
+	
+	@RequestMapping(value = "/sale/wishPlus1", method = RequestMethod.GET)
+	public String wishPlus1(@RequestParam int idx,HttpSession session) {//insert
+		String loginId = (String) session.getAttribute("loginId");
+		int success = service.wishPlus1(idx, loginId);
+		
+		System.out.println("성공? "+success);
+
+		return "redirect:/sale/detail?product_idx="+idx;
+	}	
+	
+	@RequestMapping(value = "/sale/wishPlus2", method = RequestMethod.GET)
+	public String wishPlus2(@RequestParam int idx,HttpSession session) {//update isDelete = 0;
+		String loginId = (String) session.getAttribute("loginId");
+		int success = service.wishPlus2(idx,loginId);
+		
+		System.out.println("성공? "+success);
+		
+		return "redirect:/sale/detail?product_idx="+idx;
+	}	
+	
+	@RequestMapping(value = "/sale/wishMinus", method = RequestMethod.GET)
+	public String wishMinus(@RequestParam int idx,HttpSession session) {//update isDelete = 1;
+		String loginId = (String) session.getAttribute("loginId");
+		int success = service.wishMinus(idx,loginId);
+		
+		System.out.println("성공? "+success);
+		
+		return "redirect:/sale/detail?product_idx="+idx;
+	}	
 }

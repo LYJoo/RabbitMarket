@@ -82,14 +82,28 @@ public class ProfileController1 {
 	}
 	
 	//프로필 - 해당사용자가 판매중인 판매게시글 불러오기
+	@RequestMapping(value = "myPage/saleboard", method = RequestMethod.GET)
+	public ModelAndView mySaleBoard(Model model, HttpSession session) {
+		logger.info("회원의 판매게시글 요청");
+		
+		return service.mySaleBoard(session);
+	}
 	
 	//프로필 - 해당 사용자에 대한 후기 불러오기
 	@RequestMapping(value = "myPage/review", method = RequestMethod.GET)
-	public String review(Model model) {
+	public ModelAndView review(Model model, HttpSession session) {
 		logger.info("후기 요청");
-		service.review(model);
 		
-		return "myPage/wishlist";
+		return service.review(session);
 	}
 	
+	//프로필 - 차단하기
+	
+	//판매내역리스트
+	@RequestMapping(value = "myPage/salelist", method = RequestMethod.GET)
+	public ModelAndView salelist(Model model, HttpSession session) {
+		logger.info("판매내역 요청");
+		
+		return service.salelist(session);
+	}
 }

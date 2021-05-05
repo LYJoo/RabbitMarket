@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
+import com.market.rabbit.dto.ReviewDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.dto.SaleFileDTO;
 import com.market.rabbit.dto.WishDTO;
@@ -27,27 +28,27 @@ public class ProfileService1 {
 	
 	@Autowired ProfileDAO1 dao;
 
-//	public void wishlist(Model model) {
-//		logger.info("위시리스트 보이기 처리");
-//		ArrayList<WishDTO> wishlist = dao.wishlist();
-//		
-//		model.addAttribute("wishlist", wishlist);
-//	}
-	@Transactional
-	public ModelAndView wishlist(HttpSession session) {
-		logger.info("위시리스트 요청");
-		ModelAndView mav = new ModelAndView();
-		String page = "myPage/wishlist";
-		String loginId="";
+	public void wishlist(Model model) {
+		logger.info("위시리스트 보이기 처리");
+		ArrayList<WishDTO> wishlist = dao.wishlist();
 		
-		SaleDTO sale = dao.sale(loginId);
-		SaleFileDTO salefile = dao.salefile(loginId);
-		
-		mav.addObject("sale", sale);
-		mav.addObject("salefile", salefile);
-		mav.setViewName(page);
-		return mav;
+		model.addAttribute("wishlist", wishlist);
 	}
+//	@Transactional
+//	public ModelAndView wishlist(HttpSession session) {
+//		logger.info("위시리스트 요청");
+//		ModelAndView mav = new ModelAndView();
+//		String page = "myPage/wishlist";
+//		String loginId="";
+//		
+//		SaleDTO sale = dao.sale(loginId);
+//		SaleFileDTO salefile = dao.salefile(loginId);
+//		
+//		mav.addObject("sale", sale);
+//		mav.addObject("salefile", salefile);
+//		mav.setViewName(page);
+//		return mav;
+//	}
 
 	public ModelAndView wishdelete(String wish_idx) {
 		ModelAndView mav = new ModelAndView();
@@ -106,6 +107,57 @@ public class ProfileService1 {
 		mav.setViewName(page);
 		return mav;
 	}
+
+	@Transactional
+	public ModelAndView review(HttpSession session) {
+		logger.info("후기 요청");
+		ModelAndView mav = new ModelAndView();
+		String page="myPage/profile";
+		String loginId="";
+		
+		SaleDTO sale = dao.sale(loginId);
+		ReviewDTO review = dao.review(loginId);
+		
+		mav.addObject("sale", sale);
+		mav.addObject("review", review);
+		mav.setViewName(page);
+		return mav;
+	}
+
+	@Transactional
+	public ModelAndView mySaleBoard(HttpSession session) {
+		logger.info("판매게시글 요청");
+		ModelAndView mav = new ModelAndView();
+		String page="myPage/profile";
+		String loginId="";
+		
+		SaleDTO mysale = dao.mysale(loginId);
+		SaleFileDTO salefile = dao.salefile(loginId);
+		
+		mav.addObject("mysale", mysale);
+		mav.addObject("salefile", salefile);
+		mav.setViewName(page);
+		return mav;
+	}
+
+	@Transactional
+	public ModelAndView salelist(HttpSession session) {
+		logger.info("판매내역 요청");
+		ModelAndView mav = new ModelAndView();
+		String page = "myPage/salelist";
+		String loginId = "";
+		
+		SaleFileDTO salelistFile = dao.salelistFile(loginId);
+		SaleDTO salelistlist = dao.salelistlist(loginId);
+//		logger.info("profile : "+profileDto.getOriFileName());
+		
+		mav.addObject("salelistFile", salelistFile);
+		mav.addObject("salelistlist", salelistlist);
+		mav.addObject("path", "/sale/"+salelistFile.getNewFileName());
+		mav.setViewName(page);
+		return mav;
+	}
+
 
 
 

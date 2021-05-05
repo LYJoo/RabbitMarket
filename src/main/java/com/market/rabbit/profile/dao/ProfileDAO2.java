@@ -6,6 +6,7 @@ import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.BlockDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
+import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.dto.ReportDTO;
 
 public interface ProfileDAO2 {
@@ -35,5 +36,13 @@ public interface ProfileDAO2 {
 	int delBlock(int block_idx);
 
 	ArrayList<ReportDTO> callSaleReportList(String loginId, int start, int end);
+
+	ArrayList<ReportDTO> callCommentReportList(String loginId, int start, int end);
+
+	ArrayList<ReportDTO> callCocommentReportList(String loginId, int start, int end);
+
+	ArrayList<QuestionDTO> callQuestionList(String loginId, int start, int end);
+
+	int countQuestionList(String loginId);
 
 }

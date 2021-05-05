@@ -14,81 +14,63 @@
         <div id="main_content">
         	<jsp:include page="../include/myPageNavigation.jsp"></jsp:include> 
         	<table class="type04">
-        		<tr>
-					<th colspan="4"><span class="info_title">대댓글 신고 내역</span><br>
-					<br></th>
-				</tr>
-				<tr>
-                    <th scope="row">내용</th>
-                    <th scope="row">사유</th>
-                    <th scope="row">처리상태</th>
-                    <th scope="row">신고일</th>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
-                <tr>
-                    <td>수발 왜 벌써 팔림?</td>
-                    <td>욕설</td>
-                    <td>처리중</td>
-                    <td>2021.04.19</td>
-                </tr>
+        		<thead>
+	        		<tr>
+						<th colspan="4"><span class="info_title">대댓글 신고 내역</span><br>
+						<br></th>
+					</tr>
+					<tr>
+	                    <th scope="row">내용</th>
+	                    <th scope="row">사유</th>
+	                    <th scope="row">처리상태</th>
+	                    <th scope="row">신고일</th>
+	                </tr>
+                </thead>
+                <tbody id="cocomentReportList">
+                
+                </tbody>
                 <tr>
                     <td colspan="4" id="paging">◁ 1 2 3 4 5 ▷</td>
                 </tr>
             </table>
         </div>
     </body>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">                
+		var showPage = 1;
+		listCall(showPage);
+		
+		function listCall(reqPage){
+			$.ajax({
+				url:'./cocommentReportList/'+reqPage,
+				type:'GET',
+				data:{},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data.cocommentReportList);
+					printCocommentReportList(data.cocommentReportList);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}
+		
+		
+		function printCocommentReportList(list){
+			var content="";
+			
+			for(var i=0; i<list.length; i++){
+				content += "<tr>";
+				content += "<td>"+list[i].coCommentDTO.cocomment_content+"</td>";
+				content += "<td>"+list[i].report_reason+"</td>"
+				content += "<td>"+list[i].report_state+"</td>"
+				content += "<td>"+list[i].reg_date+"</td>"
+				content += "</tr>";
+				
+			}
+			$('#cocomentReportList').empty();
+			$('#cocomentReportList').append(content);
+		}
+    
+    </script>
 </html>

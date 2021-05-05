@@ -138,26 +138,53 @@ public class ProfileController2 {
 	
 	@RequestMapping(value = "myPage/saleReportList/{page}", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> callSaleReportList(@PathVariable int page) {
-		logger.info("마이페이지-판매글 신고리스트 요청");
+		logger.info("마이페이지-판매글 신고 리스트 요청");
 		return service.callSaleReportList(page);
 	}
 	
 	@RequestMapping(value = "myPage/commentReportList", method = RequestMethod.GET)
-	public String callMemberCommentReportList(Model model) {
-		logger.info("마이페이지-댓글신고리스트페이지요청");
+	public String callCommentReportListForm(Model model) {
+		logger.info("마이페이지-댓글 신고 리스트 페이지 요청");
 		return "myPage/memberInfo_reportComment";
 	}
 	
+	@RequestMapping(value = "myPage/commentReportList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callCommentReportList(@PathVariable int page) {
+		logger.info("마이페이지-댓글 신고 리스트 요청");
+		return service.callCommentReportList(page);
+	}
+	
 	@RequestMapping(value = "myPage/cocommentReportList", method = RequestMethod.GET)
-	public String callMemberCocommentReportList(Model model) {
-		logger.info("마이페이지-대댓글신고리스트페이지요청");
+	public String callCocommentReportListForm(Model model) {
+		logger.info("마이페이지-대댓글 신고 리스트 페이지요청");
 		return "myPage/memberInfo_reportCocomment";
 	}
 	
+	@RequestMapping(value = "myPage/cocommentReportList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callCocommentReportList(@PathVariable int page) {
+		logger.info("마이페이지-대댓글 신고 리스트 요청");
+		return service.callCocommentReportList(page);
+	}
+	
 	@RequestMapping(value = "myPage/questionList", method = RequestMethod.GET)
-	public String callMemberQuestionList(Model model) {
+	public String callMemberQuestionListForm(Model model) {
 		logger.info("마이페이지-대댓글신고리스트페이지요청");
 		return "myPage/memberInfo_question";
+	}
+	
+	@RequestMapping(value = "myPage/questionList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callMemberQuestionList(@PathVariable int page) {
+		logger.info("마이페이지-내 1:1 문의 리스트요청");
+		return service.callQuestionList(page);
+	}
+	
+	
+	//키워드
+	@RequestMapping(value = "/myPage/keyword", method = RequestMethod.POST)
+	public ModelAndView keyword(@RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("키워드 요청 : "+params);
+		
+		return service.keyword(params,session);
 	}
 	
 }

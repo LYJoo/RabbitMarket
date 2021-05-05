@@ -26,6 +26,7 @@ import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.BlockDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
+import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.dto.ReportDTO;
 import com.market.rabbit.profile.dao.ProfileDAO2;
 
@@ -254,6 +255,47 @@ public class ProfileService2 {
 		ArrayList<ReportDTO> saleReportList = dao.callSaleReportList(loginId, start, end);
 		
 		map.put("saleReportList", saleReportList);
+		return map;
+	}
+
+	public HashMap<String, Object> callCommentReportList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		ArrayList<ReportDTO> commentReportList = dao.callCommentReportList(loginId, start, end);
+		
+		map.put("commentReportList", commentReportList);
+		return map;
+	}
+
+	public HashMap<String, Object> callCocommentReportList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		ArrayList<ReportDTO> cocommentReportList = dao.callCocommentReportList(loginId, start, end);
+		
+		map.put("cocommentReportList", cocommentReportList);
+		return map;
+	}
+
+	public HashMap<String, Object> callQuestionList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = "hwi";
+		
+		int allCnt = dao.countQuestionList(loginId);	//전체 개수
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
+		ArrayList<QuestionDTO> questionList = dao.callQuestionList(loginId, start, end);
+		
+		map.put("range", range);
+		map.put("currPage", page);
+		map.put("questionList", questionList);
 		return map;
 	}
 	

@@ -16,7 +16,15 @@ public class MannerQuestionDTO {
 	private String manner_content;
 	private String target;
 	private String trade_type;
+	private int look_order;
 	
+	
+	public int getLook_order() {
+		return look_order;
+	}
+	public void setLook_order(int look_order) {
+		this.look_order = look_order;
+	}
 	public int getManner_idx() {
 		return manner_idx;
 	}

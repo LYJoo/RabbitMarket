@@ -18,9 +18,22 @@ public class ReportDTO {
 	//
 	
 	private SaleDTO saleDto;
+	private CommentsDTO commentsDTO;
+	private CoCommentDTO coCommentDTO;
 	
 	
-	
+	public CoCommentDTO getCoCommentDTO() {
+		return coCommentDTO;
+	}
+	public void setCoCommentDTO(CoCommentDTO coCommentDTO) {
+		this.coCommentDTO = coCommentDTO;
+	}
+	public CommentsDTO getCommentsDTO() {
+		return commentsDTO;
+	}
+	public void setCommentsDTO(CommentsDTO commentsDTO) {
+		this.commentsDTO = commentsDTO;
+	}
 	public SaleDTO getSaleDto() {
 		return saleDto;
 	}

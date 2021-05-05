@@ -86,25 +86,33 @@
     </style>
 </head>
 <body>
+	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+
+	<div class="our_content_area">
     <div id="content">
         <span>내 프로필</span>
 
-        </div>
         <table id="profile">
+        <!-- 이부분 사진경로 설정 -->
         	<tr>
             	<td colspan="2"><p><img src="${path }" alt="" style="width: 150px; height: 150px;"></p></td>
             </tr>
             <tr>
-            	<th>매너지수 들어가야함</th>
+            	<th>매너지수</th>
                 <td>${member.manner_percent}</td>
             </tr>
             <tr>
-            	<th>아이디 들어가야함</th>
+            	<th>아이디</th>
                 <td>${member.member_id}</td>
             </tr>
             <tr>
-            	<th>주소 들어가야함</th>
+            	<th>주소</th>
                 <td>${member.address}</td>
+            </tr>
+            <tr>
+            	<td>
+            		<input type="button" value="차단하기"/>
+            	</td>
             </tr>
         </table>
     </div>
@@ -121,19 +129,14 @@
         <div id="tab-1" class="tab-content current">
             <table class="type04">
                 <tr>
-                    <td>내용</td>
-                    <td>ID</td>
-                    <td>받은날짜</td>
+                    <td>상품사진</td>
+                    <td>게시글제목</td>
+                    <td>가격</td>
                 </tr>
                 <tr>
-                  <th scope="row">항목명</th>
-                  <td>내용이 들어갑니다.</td>
-                  <td>내용이 들어갑니다.</td>
-                </tr>
-                <tr>
-                  <th scope="row">항목명</th>
-                  <td>내용이 들어갑니다.</td>
-                  <td>내용이 들어갑니다.</td>
+                  <td><p><img src="${salefile.newFileName}" alt="" style="width: 150px; height: 150px;" onclick="#"></p></td>
+                  <td>${mysale.sale_subject}</td>
+                  <td>${mysale.price}</td>
                 </tr>
               </table>
               <!-- 페이지 -->
@@ -144,20 +147,21 @@
                 <tr>
                     <td>게시글제목</td>
                     <td>아이디</td>
-                    <td>주소</td>
                     <td>작성일</td>
+                    <td>내용</td>
                 </tr>
                 <tr>
                   <th scope="row">${sale.sale_subject}</th>
-                  <td>${sale.seller_id}</td>
-                  <td>으앙</td>
-                  <td>으엉</td>
+                  <td>${review.member_id}</td>
+                  <td>${review.reg_date}</td>
+                  <td>${review.review_content}</td>
                 </tr>
               </table>
               <!-- 페이지 -->
               <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
         </div>
     </div>
+	</div>
 </body>
 <script>
     $(document).ready(function(){

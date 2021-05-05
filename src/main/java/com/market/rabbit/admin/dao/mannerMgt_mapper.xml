@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+ >
+ 
+ <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
+ <mapper namespace="com.market.rabbit.admin.dao.MannerMgtDAO">
+ 	
+ 	<!-- 리스트 -->
+ 	<select id="mannerQList" resultType="mannerQuestion" parameterType="mannerQuestion">
+ 		SELECT manner_idx, manner_content, target, trade_type, look_order
+    		FROM MannerQuestion 
+    		WHERE target=#{target} AND trade_type=#{trade_type} 
+    		ORDER BY look_order ASC
+ 	</select>
+ 	
+ 	<!-- 등록 : 수체크/ 등록 -->
+ 	<select id="countMannerQ" resultType="int" parameterType="mannerQuestion">
+ 		SELECT COUNT(*) cnt FROM MannerQuestion 
+ 			WHERE target=#{target} AND trade_type=#{trade_type}
+ 	</select>
+ 	
+ 	<insert id="writeMannerQ" parameterType="mannerQuestion">
+ 		INSERT INTO MannerQuestion(manner_idx, manner_content, target, trade_type, look_order)
+    		VALUES (seq_MannerQuestion.NEXTVAL, #{manner_content}, #{target},#{trade_type},seq_MannerQuestion.NEXTVAL)
+ 	</insert>
+ 	
+ 	<!-- 수정 -->
+ 	<update id="updateMannerQ" parameterType="mannerQuestion">
+ 		UPDATE MannerQuestion 
+		<set>
+			<if test="manner_content != null">manner_content=#{manner_content}, </if>
+			<if test="target != null">target=#{target}, </if>
+			<if test="trade_type != null">trade_type=#{trade_type}, </if>
+			<if test="look_order != null">look_order=#{look_order} </if>
+		</set>
+		WHERE manner_idx=#{manner_idx}
+ 	</update>
+ 	
+ 	<!-- 삭제 -->
+	<delete id="delMannerQ">
+		DELETE FROM MannerQuestion WHERE manner_idx=#{param1}
+	</delete>
+ 	
+ </mapper>

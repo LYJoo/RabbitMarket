@@ -313,8 +313,16 @@
                 <div style="display: flex; align-items: center;">
                     <div style="padding-right: 5px;">${detail.sale_subject}</div>
                     <div>
-                    <c:if test="${sessionScope.loginId ne null}">
-                    <i class="far fa-heart"></i>
+                    <c:if test="${sessionScope.loginId ne null && sessionScope.loginId ne detail.seller_id}">
+	                    <c:if test="${chWish eq 0}"> <!-- 위시리스트에 전혀 존재하지 않는상태 / 빈하트-->
+	                    	<i class="far fa-heart" onclick="wishPlus1(${detail.product_idx})"></i>
+	                    </c:if>
+	                    <c:if test="${chWish eq 1 && chWishDel eq 1}"> <!-- 위시리스트에 존재하지만 삭제된 상태  / 빈하트-->
+	                    	<i class="far fa-heart" onclick="wishPlus2(${detail.product_idx})"></i>
+	                    </c:if>
+	                    <c:if test="${chWish eq 1 && chWishDel eq 0}"> <!-- 위시리스트에 존재하고 삭제되지 않은 상태 / 색칠 하트 -->
+	                    	<i class="fas fa-heart" onclick="wishMinus(${detail.product_idx})"></i>
+	                    </c:if>
                     </c:if>
                     </div>
                 </div>
@@ -426,10 +434,10 @@
         </div>
         <div class="product_update">
         	<c:if test="${detail.seller_id eq sessionScope.loginId}">
-        		<a href="#">수정</a> <a href="#">삭제</a>
+        		<a href="#">수정</a> <a style="cursor: pointer;" onclick="pDel(${detail.product_idx})">삭제</a>
         	</c:if>
-        	<c:if test="${detail.seller_id ne sessionScope.loginId}">
-        		 <a href="#">신고</a>
+        	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
+        		 <a style="cursor: pointer;"  onclick="report(${detail.product_idx},1001,'${detail.seller_id}')">신고</a>
         	</c:if>
         </div>
     </div>
@@ -448,10 +456,10 @@
         </tr>
         <tr>
             <td colspan="3" style="padding: 30px 0;">
-            <input type="text" class="underline" placeholder="댓글 내용"/>
+            <input id="comment_content" type="text" class="underline" name="comment_content" placeholder="댓글 내용"/>
             </td>
             <td class="comment_write_btn_td">
-                <div class="comment_write_btn">
+                <div class="comment_write_btn" onclick="commentWrite(${detail.product_idx})">
                     작성
                 </div>
             </td>
@@ -471,7 +479,12 @@
                 ${list.member_id} ${list.reg_date}
             </td>
             <td rowspan="2" class="comment_update_btn">
-                <a href="#">수정</a> <a href="#">삭제</a> <a href="#">신고</a>
+	        	<c:if test="${detail.seller_id eq sessionScope.loginId}">
+	        		<a href="#">수정</a> <a style="cursor: pointer;" onclick="cDel(${list.comment_idx},${detail.product_idx})">삭제</a>
+	        	</c:if>
+	        	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
+	        		 <a style="cursor: pointer;"  onclick="report(${list.comment_idx},1002,'${list.member_id}')">신고</a>
+	        	</c:if>
             </td>
         </tr>
         <tr>
@@ -480,11 +493,11 @@
         <tr id="cocoment_write_${list.comment_idx}" style="display: none;">
             <td></td>
             <td colspan="2">
-                <input type="text" class="underline" placeholder="답글 내용"/>
+                <input id="cocomment_content_${list.comment_idx}" type="text" class="underline" name="cocomment_content" placeholder="답글 내용"/>
             </td>
             <td class="comment_write_btn_td">
-                <div class="comment_write_btn">
-                작성
+                <div  id="comment_write_btn_${list.comment_idx}"  class="comment_write_btn" onclick="cocommentWrite(${detail.product_idx},${list.comment_idx})">
+               	 작성
                 </div>
             </td>
         </tr>
@@ -511,7 +524,12 @@
 <script>
 	jQuery.noConflict();
     $(".trade_state_select_box").select2();
-
+	
+    var msg = "${msg}";
+    if(msg != ""){
+    	alert(msg);
+    }
+    
     function value2(elem,e,div) {
         if(e = '거래중'){
             elem.innerHTML="<option value='거래완료'>거래완료</option><option value='거래취소'>거래취소</option>";
@@ -582,6 +600,7 @@
     }
     
     function drawCocomment(data){
+    	loginId = "${sessionScope.loginId}";
     	for (var i = 0; i < data.length; i++) {
     		var content = "";
         	
@@ -596,7 +615,12 @@
         	content += "</td>";
         	content += "<td class='comment_writer_id'>"+data[i].member_id +"  "+ data[i].reg_date+"</td>";
         	content += "<td rowspan='2' class='comment_update_btn'>";
-        	content += "<a href='#'>수정</a> <a href='#'>삭제</a> <a href='#'>신고</a>";
+        	if(data[i].member_id == loginId){
+        		content += "<a href='#'>수정</a> <a style='cursor: pointer;' onclick='ccDel("+data[i].cocomment_idx+","+${detail.product_idx}+")'>삭제</a>";
+        	}else if(data[i].member_id != loginId && loginId != null){
+        		content += "<a style='cursor: pointer;'  onclick='cocoReport("+data[i].cocomment_idx+",1003)'>신고</a>";
+        
+        	}
         	content += "</td>";
         	content += "</tr>";
         	content += "<tr class='deleteCocomment'>";
@@ -618,4 +642,85 @@
     	$('#cocoment_btn_'+num).css({'display':''});
     	$('#unCocoment_btn_'+num).css({'display':'none'});	
     }
+    
+    function commentWrite(product_idx){
+    	var chLogin = "${sessionScope.loginId}";
+    	if(chLogin == ""){
+    		alert('로그인해주세요.');
+    		location.href='/sale/main';
+    	}else{
+	    	var comment_content = $('#comment_content').val();
+	    	console.log(comment_content);
+	    	   	$.ajax({
+				url:'/sale/commentWrite'
+				,type: 'POST'
+				,data:{"product_idx" : product_idx,
+					"comment_content": comment_content}
+				,success:function(data){
+					alert('댓글이 등록되었습니다.');
+					location.href='/sale/detail?product_idx='+product_idx;
+				},
+				error: function(error){
+					console.log(error);
+				}
+			});  	
+    	}
+    }
+    
+    function cocommentWrite(product_idx, comment_idx){
+    	var chLogin = "${sessionScope.loginId}";
+    	if(chLogin == ""){
+    		alert('로그인해주세요.');
+    		location.href='/sale/main';
+    	}else{
+	    	var cocomment_content = $('#cocomment_content_'+comment_idx).val();
+	    	console.log(comment_content);
+	    	   	$.ajax({
+				url:'/sale/cocommentWrite'
+				,type: 'POST'
+				,data:{"comment_idx" : comment_idx,
+					"cocomment_content": cocomment_content}
+				,success:function(data){
+					if(data.success == 1){
+						alert('대댓글이 등록되었습니다.');
+						location.href='/sale/detail?product_idx='+product_idx;
+					}
+				},
+				error: function(error){
+					console.log(error);
+				}
+			});  	
+    	}
+    }
+    
+    function report(idx, codeNum, target){
+    	window.open('/sale/reportForm?idx='+idx+'&codeNum='+codeNum+'&target='+target,'report','width=500, height=500, top=300, left=500');
+    }
+    function cocoReport(idx, codeNum){
+    	window.open('/sale/cocoReportForm?idx='+idx+'&codeNum='+codeNum,'cocoReport','width=500, height=500, top=300, left=500');
+    }
+    
+    function pDel(idx){
+    	location.href='/sale/pDel?idx='+idx;
+    }
+    
+	function cDel(idx, product_idx){
+		location.href='/sale/cDel?idx='+idx+'&product_idx='+product_idx;
+    }
+	
+	function ccDel(idx, product_idx){
+		location.href='/sale/ccDel?idx='+idx+'&product_idx='+product_idx;
+    }
+	
+	function wishPlus1(idx){ // 위시리스트에 전혀 존재하지 않는상태 / 빈하트
+		location.href="/sale/wishPlus1?idx="+idx;
+	}
+	
+	function wishPlus2(idx){ //위시리스트에 존재하지만 삭제된 상태  / 빈하트
+		location.href="/sale/wishPlus2?idx="+idx;
+	}
+	
+	function wishMinus(idx){ //위시리스트에 존재하고 삭제되지 않은 상태  / 색칠하트
+		location.href="/sale/wishMinus?idx="+idx;
+	}
 </script>
