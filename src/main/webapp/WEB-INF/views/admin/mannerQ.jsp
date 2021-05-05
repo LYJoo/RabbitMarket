@@ -22,7 +22,7 @@
                 </tr>
     	       <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
 	        	    <c:forEach items="${directBuyerList}" var="list" varStatus="status">
-	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${status.count}">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
 	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
 	                    </tr>
 	                </c:forEach>
@@ -46,7 +46,7 @@
                 </tr>
                 <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
 	        	    <c:forEach items="${deliveryBuyerList}" var="list" varStatus="status">
-	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${status.count}">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
 	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
 	                    </tr>
 	                </c:forEach>
