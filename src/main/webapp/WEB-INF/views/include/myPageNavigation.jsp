@@ -115,6 +115,8 @@
     </div>
 </body>
 <script>
+jQuery.noConflict();
+
     $(".myPage_nav_title").click(function(){
         var submenu = $(this).next("ul");
         var other_submenu = $('.myPage_nav_title');

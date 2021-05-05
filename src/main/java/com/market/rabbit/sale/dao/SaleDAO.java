@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.market.rabbit.dto.CoCommentDTO;
 import com.market.rabbit.dto.CommentsDTO;
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.dto.SaleFileDTO;
@@ -106,5 +107,19 @@ public interface SaleDAO {
 	int setTradeEnd(int trade_idx, Date date);
 
 	int setTradeEnd2(int product_idx);
+
+	ArrayList<MannerQuestionDTO> getMannerQuestion();
+
+	int setTrading(int trade_idx);
+
+	String getMannerBuyerId(int trade_idx);
+
+	int setMemberManner(String buyer_id, int point);
+
+	int setMemberMannerCnt(String buyer_id);
+
+	void setMannerPercent(String buyer_id, double mannerPercent);
+
+	int getmannerScore(String buyer_id);
 
 }

@@ -40,6 +40,14 @@ public class MemberDTO {
 	private int manner_cnt;
 	private boolean isBlack;
 	private boolean withdraw;
+	private int manner_score;
+	
+	public int getManner_score() {
+		return manner_score;
+	}
+	public void setManner_score(int manner_score) {
+		this.manner_score = manner_score;
+	}
 	public String getMember_id() {
 		return member_id;
 	}
