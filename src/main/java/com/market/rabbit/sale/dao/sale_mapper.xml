@@ -298,8 +298,24 @@
  		UPDATE comments SET isDelete = 1 WHERE comment_idx = #{param}
  	</update>
  	
- 	<update id="ccDel">
- 		UPDATE cocomment SET isDelete = 1 WHERE cocomment_idx = #{param}
+ 	<select id="chWish" resultType="int">
+ 		SELECT COUNT(wish_idx) FROM wish WHERE member_id= #{param1} AND product_idx= #{param2}
+ 	</select>
+ 	
+ 	<select id="chWishDel" resultType="int">
+ 		SELECT isDelete FROM wish WHERE member_id= #{param1} AND product_idx= #{param2}
+ 	</select>
+ 	
+ 	<insert id="wishPlus1">
+ 		INSERT INTO wish(wish_idx, member_id, product_idx) VALUES(seq_wish.NEXTVAL, #{param2}, #{param1})
+ 	</insert>
+ 	
+ 	<update id="wishPlus2">
+ 		UPDATE wish SET isDelete = 0 WHERE product_idx = #{param1} AND member_id = #{param2}
+ 	</update>
+ 	
+ 	<update id="wishMinus">
+ 		UPDATE wish SET isDelete = 1 WHERE product_idx = #{param1} AND  member_id = #{param2}
  	</update>
  	
  </mapper>

@@ -120,10 +120,15 @@ public class SaleController {
 	}
 	
 	@RequestMapping(value = "/sale/detail", method = RequestMethod.GET)
-	public String detail(Model model, @RequestParam int product_idx) {
+	public String detail(Model model, @RequestParam int product_idx, HttpSession session) {
 		logger.info("받아온 파라메터 값" + product_idx);
+		String loginId = (String) session.getAttribute("loginId");
 		
 		service.detail(product_idx, model);
+		
+		if(loginId != null) {			
+			service.chWish(loginId, product_idx,  model);
+		}
 		
 		return "/sale/productDetail";
 	}
@@ -263,5 +268,35 @@ public class SaleController {
 		}
 		rAttr.addFlashAttribute("msg", msg);
 		return "redirect:/sale/detail?product_idx="+product_idx;
+	}
+	
+	@RequestMapping(value = "/sale/wishPlus1", method = RequestMethod.GET)
+	public String wishPlus1(@RequestParam int idx,HttpSession session) {//insert
+		String loginId = (String) session.getAttribute("loginId");
+		int success = service.wishPlus1(idx, loginId);
+		
+		System.out.println("성공? "+success);
+
+		return "redirect:/sale/detail?product_idx="+idx;
+	}	
+	
+	@RequestMapping(value = "/sale/wishPlus2", method = RequestMethod.GET)
+	public String wishPlus2(@RequestParam int idx,HttpSession session) {//update isDelete = 0;
+		String loginId = (String) session.getAttribute("loginId");
+		int success = service.wishPlus2(idx,loginId);
+		
+		System.out.println("성공? "+success);
+		
+		return "redirect:/sale/detail?product_idx="+idx;
+	}	
+	
+	@RequestMapping(value = "/sale/wishMinus", method = RequestMethod.GET)
+	public String wishMinus(@RequestParam int idx,HttpSession session) {//update isDelete = 1;
+		String loginId = (String) session.getAttribute("loginId");
+		int success = service.wishMinus(idx,loginId);
+		
+		System.out.println("성공? "+success);
+		
+		return "redirect:/sale/detail?product_idx="+idx;
 	}	
 }

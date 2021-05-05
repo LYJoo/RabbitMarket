@@ -467,4 +467,31 @@ public class SaleService {
 	public int ccDel(int idx) {
 		return dao.ccDel(idx);
 	}
+
+
+	public void chWish(String loginId, int product_idx, Model model) {
+		int chWish = dao.chWish(loginId, product_idx);//위시리스트에 있느냐? 있으면 1 없으면 0
+		int chWishDel = 0;
+		if(chWish == 1) { //위시리스트에 있었으면 삭제되었는가?? 삭제되었으면 1 위시리스트에 존재하면 0 
+			chWishDel = dao.chWishDel(loginId,product_idx);
+		}
+		model.addAttribute("chWishDel", chWishDel);
+		model.addAttribute("chWish", chWish);
+	}
+
+	public int wishPlus1(int idx, String loginId) {
+		
+		return dao.wishPlus1(idx, loginId);
+	}
+
+	public int wishPlus2(int idx, String loginId) {
+		
+		return dao.wishPlus2(idx, loginId);
+	}
+
+	public int wishMinus(int idx, String loginId) {
+		
+		return dao.wishMinus(idx, loginId);
+	}
+
 }

@@ -313,8 +313,16 @@
                 <div style="display: flex; align-items: center;">
                     <div style="padding-right: 5px;">${detail.sale_subject}</div>
                     <div>
-                    <c:if test="${sessionScope.loginId ne null}">
-                    <i class="far fa-heart"></i>
+                    <c:if test="${sessionScope.loginId ne null && sessionScope.loginId ne detail.seller_id}">
+	                    <c:if test="${chWish eq 0}"> <!-- 위시리스트에 전혀 존재하지 않는상태 / 빈하트-->
+	                    	<i class="far fa-heart" onclick="wishPlus1(${detail.product_idx})"></i>
+	                    </c:if>
+	                    <c:if test="${chWish eq 1 && chWishDel eq 1}"> <!-- 위시리스트에 존재하지만 삭제된 상태  / 빈하트-->
+	                    	<i class="far fa-heart" onclick="wishPlus2(${detail.product_idx})"></i>
+	                    </c:if>
+	                    <c:if test="${chWish eq 1 && chWishDel eq 0}"> <!-- 위시리스트에 존재하고 삭제되지 않은 상태 / 색칠 하트 -->
+	                    	<i class="fas fa-heart" onclick="wishMinus(${detail.product_idx})"></i>
+	                    </c:if>
                     </c:if>
                     </div>
                 </div>
@@ -703,4 +711,16 @@
 	function ccDel(idx, product_idx){
 		location.href='/sale/ccDel?idx='+idx+'&product_idx='+product_idx;
     }
+	
+	function wishPlus1(idx){ // 위시리스트에 전혀 존재하지 않는상태 / 빈하트
+		location.href="/sale/wishPlus1?idx="+idx;
+	}
+	
+	function wishPlus2(idx){ //위시리스트에 존재하지만 삭제된 상태  / 빈하트
+		location.href="/sale/wishPlus2?idx="+idx;
+	}
+	
+	function wishMinus(idx){ //위시리스트에 존재하고 삭제되지 않은 상태  / 색칠하트
+		location.href="/sale/wishMinus?idx="+idx;
+	}
 </script>

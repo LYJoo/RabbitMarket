@@ -70,4 +70,14 @@ public interface SaleDAO {
 
 	int ccDel(int idx);
 
+	int chWish(String loginId, int product_idx);
+
+	int chWishDel(String loginId, int product_idx);
+
+	int wishPlus1(int idx, String loginId);
+
+	int wishPlus2(int idx, String loginId);
+
+	int wishMinus(int idx, String loginId);
+
 }
