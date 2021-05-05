@@ -87,41 +87,41 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="/admin/callSaleCategory">
                 <span class="adminPage_nav_title" onclick="nav_textBold2(this, $('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide2'),$('#adminPage_nav_bar_hide3'),$('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide5'),$('#adminPage_nav_bar_hide6'),$('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide8'),$('#adminPage_nav_bar_hide9'))">카테고리 관리</span>
             </a>
         </li>
        
         <li class="adminPage_nav_bar">
             <span class="adminPage_nav_title" onclick="nav_textBold(this, $('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide2'),$('#adminPage_nav_bar_hide3'),$('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide5'),$('#adminPage_nav_bar_hide6'),$('#adminPage_nav_bar_hide8'),$('#adminPage_nav_bar_hide9'))">
-                <a href="#">고객센터 관리</a>
+                고객센터 관리
             </span>
             <ul class="adminPage_nav_bar_hide">
                 <li id="adminPage_nav_bar_hide7" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide8'),$('#adminPage_nav_bar_hide9'))">
-                	<a href="#">공지사항</a>
+                	<a href="/admin/callNoticeList">공지사항</a>
                 </li>
                 <li id="adminPage_nav_bar_hide8" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide9'))">
-                	<a href="#">자주묻는질문</a>
+                	<a href="/admin/callFaqList">자주묻는질문</a>
                 </li>
                 <li id="adminPage_nav_bar_hide9" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide8'))">
-                	<a href="#">1:1문의</a>
+                	<a href="/admin/callQList">1:1문의</a>
                 </li>
             </ul>
         </li>
 
         <li>
-            <a href="#">
+            <a href="/admin/callPopupList">
                 <span class="adminPage_nav_title" onclick="nav_textBold2(this, $('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide2'),$('#adminPage_nav_bar_hide3'),$('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide5'),$('#adminPage_nav_bar_hide6'),$('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide8'),$('#adminPage_nav_bar_hide9'))">팝업관리</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/admin/callMannerQ">
                 <span class="adminPage_nav_title" onclick="nav_textBold2(this, $('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide2'),$('#adminPage_nav_bar_hide3'),$('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide5'),$('#adminPage_nav_bar_hide6'),$('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide8'),$('#adminPage_nav_bar_hide9'))">매너질문관리</span>
             </a>
         </li>
        
         <li>
-            <a href="#">
+            <a href="/admin/callSaleCategory">
                 <span class="adminPage_nav_title" onclick="nav_textBold2(this, $('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide2'),$('#adminPage_nav_bar_hide3'),$('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide5'),$('#adminPage_nav_bar_hide6'),$('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide8'),$('#adminPage_nav_bar_hide9'))">관리자관리</span>
             </a>
         </li>
@@ -130,7 +130,9 @@
     </div>
 </body>
 <script>
-    $(".adminPage_nav_title").click(function(){
+	jQuery.noConflict();
+    
+	$(".adminPage_nav_title").click(function(){
         var submenu = $(this).next("ul");
         var other_submenu = $('.adminPage_nav_title');
 

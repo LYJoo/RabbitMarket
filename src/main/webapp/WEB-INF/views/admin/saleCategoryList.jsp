@@ -11,15 +11,22 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 </head>
 <body>
+	<div id="top_navi_contain_box">
+		<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+	</div>
+	<div id="side_bar_contain_box">
+	<div style="display: contents;">
+		<jsp:include page="../include/adminNavigation.jsp"></jsp:include>
+	</div>
     <div id="list_content">
         <div class="flex_box">
             <h2>판매 카테고리 관리</h2>
         </div>
         <div id="category_list_box">
-        	<p style="color: lightcoral;"> &nbsp;번호 | 카테고리명 | 삭제</p>
+        	<p style="color: lightcoral;"> &nbsp;번호 | 카테고리명(수정) | 삭제</p>
        	    <c:forEach items="${saleCategoryList}" var="list" varStatus="status">
 	            <div class="category_box">
-	            	&nbsp;${list.s_category_idx}
+	            	&nbsp;&nbsp;${list.s_category_idx}
 	                |
 	                <input type="text" class="s_category_name" id="idx${list.s_category_idx}"
 	                    name="s_category_name" value="${list.s_category_name}"/>
@@ -40,6 +47,7 @@
                 <button>등록</button>
             </form>
         </div>
+    </div>
     </div>
 </body>
 </html>
