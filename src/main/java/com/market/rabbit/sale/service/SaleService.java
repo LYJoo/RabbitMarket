@@ -493,5 +493,78 @@ public class SaleService {
 		
 		return dao.wishMinus(idx, loginId);
 	}
+	
+	@Transactional
+	public HashMap<String, Object> changeIng(int idx, String id, String trade_type, String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		int existId = 0;
+		int trade_idx = 0;
+		
+		//아이디 있는지 확인
+		existId = dao.existId(id);
+		
+		if(existId >0) { //존재하는 아이디면
+			success = dao.changeIng(idx, id, trade_type, loginId);
+			if(success > 0) {
+				dao.changeIng2(idx);
+				trade_idx = dao.getTardeIdx(idx, id);
+			}
+		}
+		
+		map.put("existId", existId);
+		map.put("success", success);
+		map.put("trade_idx", trade_idx);
+		return map;
+	}
+
+	public HashMap<String, Object> setMeetDate(int trade_idx, String meetDate) {	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		try {
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date date = transFormat.parse(meetDate);
+			success = dao.setMeetDate(trade_idx, date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> getBuyerId(int product_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String buyer_id = dao.getBuyerId(product_idx);
+		
+		map.put("buyer_id", buyer_id);
+		return map;
+	}
+
+	public int getTradeIdx(int product_idx) {
+		return dao.getTradeIdx(product_idx);
+	}
+
+	public HashMap<String, Object> saveCancelReason(int product_idx, int trade_idx, String cancel_reason) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		Date date = null;
+		try {
+			SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");		
+			String format_time = format.format (System.currentTimeMillis());
+			date = format.parse(format_time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		int check1 = dao.setCancelReason(trade_idx, cancel_reason, date);
+		int check2 = dao.setCodeNum(product_idx);
+		
+		if(check1==1 && check2==1) {
+			success = 1;
+		}
+		map.put("success", success);
+		return map;
+	}
 
 }

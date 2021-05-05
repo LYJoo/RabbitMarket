@@ -315,7 +315,43 @@
  	</update>
  	
  	<update id="wishMinus">
- 		UPDATE wish SET isDelete = 1 WHERE product_idx = #{param1} AND  member_id = #{param2}
+ 		UPDATE wish SET isDelete = 1 WHERE product_idx = #{param1} AND member_id = #{param2}
+ 	</update>
+ 	
+ 	<select id="existId" resultType="int">
+ 		SELECT count(member_id) FROM member WHERE member_id = #{param1}
+ 	</select>
+ 	
+ 	<insert id="changeIng">
+ 		INSERT INTO trading(trade_idx, product_idx, seller_id, buyer_id, trade_type, trade_state) VALUES(seq_trading.NEXTVAL, #{param1}, #{param4}, #{param2}, #{param3},'거래중')
+ 	</insert>
+ 	
+ 	<update id="changeIng2">
+ 		UPDATE sale SET code_num = 3002 WHERE product_idx = #{param}
+ 	</update>
+ 	
+ 	<select id="getTardeIdx" resultType="int">
+ 		select trade_idx from (SELECT trade_idx, trade_start_date FROM trading WHERE product_idx=#{param1} AND buyer_id =#{param2} ORDER BY TRADE_START_DATE DESC) where rownum = 1
+ 	</select>
+ 	
+ 	<update id="setMeetDate">
+ 		UPDATE trading SET TRADE_TIME=#{param2} WHERE trade_idx=#{param1}
+ 	</update>
+ 	
+ 	<select id="getBuyerId" resultType="String">
+ 		select buyer_id from (SELECT * FROM trading WHERE product_idx=#{param} ORDER BY TRADE_START_DATE DESC)where rownum = 1
+ 	</select>
+ 	
+ 	<select id="getTradeIdx" resultType="int">
+ 		select trade_idx from (SELECT * FROM trading WHERE product_idx=#{param} ORDER BY TRADE_START_DATE DESC)where rownum = 1
+ 	</select>
+ 	
+ 	<update id="setCancelReason">
+ 		UPDATE trading SET cancel_reason=#{param2}, trade_end_date=#{param3}  WHERE trade_idx=#{param1}
+ 	</update>
+ 	
+ 	<update id="setCodeNum">
+ 		UPDATE sale SET code_num=3001 WHERE product_idx=#{param}
  	</update>
  	
  </mapper>

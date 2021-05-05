@@ -1,6 +1,7 @@
 package com.market.rabbit.sale.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.market.rabbit.dto.CoCommentDTO;
 import com.market.rabbit.dto.CommentsDTO;
@@ -79,5 +80,23 @@ public interface SaleDAO {
 	int wishPlus2(int idx, String loginId);
 
 	int wishMinus(int idx, String loginId);
+
+	int existId(String id);
+
+	int changeIng(int idx, String id, String trade_type, String loginId);
+
+	void changeIng2(int idx);
+
+	int getTardeIdx(int idx, String id);
+
+	int setMeetDate(int trade_idx, Date date);
+
+	String getBuyerId(int product_idx);
+
+	int getTradeIdx(int product_idx);
+
+	int setCancelReason(int trade_idx, String cancel_reason, Date date);
+
+	int setCodeNum(int product_idx);
 
 }

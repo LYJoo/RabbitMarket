@@ -94,7 +94,9 @@
     function enterMeetTime() {
         var date = $('#date').val();
         var time = $('#time').val();
-
+		var meetDate2 = date + " " +  time;
+		console.log(meetDate2);
+        
         if(date == '' || time == ''){
             alert('날짜와 시간 모두 입력해주세요.')
         }else{
@@ -107,7 +109,28 @@
             if(nowDate.getTime() > meetDate.getTime()){
                 alert('현재 시간보다 이후를 지정해주세요.');
             }else{
-                confirm(meetDate+" 해당시각으로 등록하시겠습니까?");
+                var ok = confirm(meetDate+" 해당시각으로 등록하시겠습니까?");
+                if(ok){
+                	var trade_idx = "${trade_idx}";
+                	$.ajax({
+            			url:'/sale/setMeetDate'
+            			,type: 'POST'
+            			,data:{"trade_idx": trade_idx
+            				,"meetDate":meetDate2}
+            			,success:function(data){
+            				if(data.success == 1){
+            					alert('직거래시간이 등록되었습니다.');
+            					opener.parent.parent.location.reload();
+            					self.close();
+            				}else{
+            					alert('직거래 시간등록에 실패했습니다. 잠시후 다시 시도해주세요.');
+            				}
+            			},
+            			error: function(error){
+            				
+            			}
+            		});
+                }
             }
         }    
     }
