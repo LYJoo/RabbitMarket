@@ -160,5 +160,17 @@
 	<select id="countQuestionList" resultType="INTEGER">
 		SELECT count(question_idx) FROM question WHERE member_id=#{param1}
 	</select>
+	
+	<select id="callKeywords" resultType="keyword">
+		SELECT * FROM keyword WHERE member_id=#{param1} ORDER BY keyword_idx
+	</select>
+	
+	<delete id="delKeyword">
+		DELETE FROM keyword WHERE member_id=#{param1} AND keyword_idx=#{param2}
+	</delete>
+	
+	<insert id="writeKeyword">
+		INSERT INTO keyword (keyword_idx, member_id, keyword) VALUES (seq_keyword.nextval, #{param1}, #{param2})
+	</insert>
  	
  </mapper>

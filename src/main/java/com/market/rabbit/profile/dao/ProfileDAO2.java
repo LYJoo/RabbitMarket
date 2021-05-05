@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.BlockDTO;
+import com.market.rabbit.dto.KeywordDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.QuestionDTO;
@@ -44,5 +45,11 @@ public interface ProfileDAO2 {
 	ArrayList<QuestionDTO> callQuestionList(String loginId, int start, int end);
 
 	int countQuestionList(String loginId);
+
+	ArrayList<KeywordDTO> callKeywords(String loginId);
+
+	int delKeyword(String loginId, int keyword_idx);
+
+	int writeKeyword(String loginId, String keyword);
 
 }
