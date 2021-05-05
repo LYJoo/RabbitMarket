@@ -42,7 +42,7 @@
     	float: left; 
     	width: 20%;
     	margin-left: 50px; 
-    	margin-top: 120px; 
+    	margin-top: 80px; 
     }
 </style>
 
@@ -56,12 +56,12 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/help/helpFrequentlyMain">
                 <span  class="helpPage_nav_title" onclick="nav_textBold(this)">자주묻는질문</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/help/helpQuestionMain">
                 <span  class="helpPage_nav_title" onclick="nav_textBold(this)">1:1문의</span>
             </a>
         </li>

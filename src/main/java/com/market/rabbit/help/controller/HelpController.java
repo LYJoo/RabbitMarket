@@ -2,6 +2,8 @@ package com.market.rabbit.help.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.market.rabbit.dto.NoticeDTO;
+import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.help.service.HelpService;
 
 
@@ -31,20 +34,80 @@ public class HelpController {
 	 	위 기능들은 서비스에서는 값만 보내 주게끔 되어 있으므로, 
 	 	확인 후 고객센터에 맞는 !페이지! 분기 및 기타 작업들을 본 컨트롤러에서 해 줄 것.
 	 */
+	
+	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired HelpService service;
+	
 	
 	@RequestMapping(value = "/help/noticeMain", method = RequestMethod.GET)
 	public String help_noticeMain(Model model) {
 		logger.info("고객센터 요청");
 		return "help/noticeMain";
 	}
+	@RequestMapping(value = "/help/help_QAnswer", method = RequestMethod.GET)
+	public String help_QAnswer(Model model) {
+		logger.info("1대1 문의글 등록 요청");
+		return "help/help_QAnswer";
+	}
+
+	//1:1문의하기 상세보기
+		@RequestMapping(value = "/help/helpQuestionDetail/{question_idx}", method = RequestMethod.GET)
+		public ModelAndView helpQuestionDetail(@PathVariable int question_idx) {
+			logger.info("1:1문의하기 상세보기 요청 idx : " +question_idx);
+			ModelAndView mav = new ModelAndView();
+			String page = "redirect:/help/helpQuestionMain";//실패 : 리스트
+			QuestionDTO dto = service.detailQ(question_idx);
+			if(dto != null) {//성공 : 상세보기
+				page = "help/helpQuestionDetail";
+				mav.addObject("dto", dto);
+			}
+			mav.setViewName(page);
+			return mav;
+		}
+	@RequestMapping(value = "/help/helpQuestionMain", method = RequestMethod.GET)
+	public String helpQuestionMain(Model model) {
+		logger.info("1대1문의 요청");
+		return "help/helpQuestionMain";
+	}
+	
+	@RequestMapping(value = "/help/helpQuestionMain/{pagePerCnt}/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> helpQuestionMain(@PathVariable int pagePerCnt, @PathVariable int page) {
+		logger.info("1:1문의하기 리스트 요청 pagePerCnt: {}, page: {}",pagePerCnt,page);
+		return service.QList(page,pagePerCnt);
+	}
+	
+	@RequestMapping(value = "/help/helpNoticeDetail/{notice_idx}", method = RequestMethod.GET)
+	public ModelAndView help_detailNotice(@PathVariable int notice_idx) {
+		logger.info("공지사항 상세보기 요청 idx : " +notice_idx);
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/help/noticeMain";//실패 : 리스트
+		NoticeDTO dto = service.detailNotice(notice_idx);
+		if(dto != null) {//성공 : 상세보기
+			page = "help/helpNoticeDetail";
+			mav.addObject("dto", dto);
+		}
+		mav.setViewName(page);
+		return mav;
+	}
 	
 	@RequestMapping(value = "/help/noticeMain/{pagePerCnt}/{page}", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> noticeMain(@PathVariable int pagePerCnt, @PathVariable int page) {
 		logger.info("공지사항 리스트 요청 pagePerCnt: {}, page: {}",pagePerCnt,page);
-		return service.noticeMain(page,pagePerCnt);
+		return service.noticeList(page,pagePerCnt);
 	}
+	
+	//자주묻는질문 
+		@RequestMapping(value = "/help/helpFrequentlyMain", method = RequestMethod.GET)
+		public String helpFrequentlyMain(HttpSession session) {
+			logger.info("자주묻는질문 관리 리스트 페이지 요청");
+			return "help/helpFrequentlyMain";
+		}
 
+		@RequestMapping(value = "/help/helpFrequentlyMain/{pagePerCnt}/{page}", method = RequestMethod.GET)
+		public @ResponseBody HashMap<String, Object> helpFrequentlyMain(@PathVariable int pagePerCnt, @PathVariable int page) {
+			logger.info("자주묻는질문 리스트 요청 pagePerCnt: {}, page: {}",pagePerCnt,page);
+			return service.faqList(page,pagePerCnt);
+		}
 	
 }

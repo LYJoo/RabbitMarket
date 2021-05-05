@@ -3,7 +3,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>help_noticeMain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>help_faq</title>
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- 반응형 디자인을 위한 css/js 라이브러리 -->
@@ -13,29 +14,39 @@
     <script src="/resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
     <!-- lyj_style -->
     <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
-<style type="text/css">
-	table{
-		width: 65em;
+    <style type="text/css">
+    	#body_content{
+    		padding-top: 60px;
+    	}
+    	table{
+			width: 65em;
+		}
+		.answer{
+			text-align: center;
+			padding : 20px;
+			display: none;
+		}
 		
-	}
-	
-</style>
+
+		
+    </style>
 </head>
+
 <body>
 	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
-	 <jsp:include page="../include/helpNavigation.jsp" flush="true"></jsp:include>
+	<jsp:include page="../include/helpNavigation.jsp" flush="true"></jsp:include>
     <div id="list_content">
-        <br/><br/>
+         <br/><br/>
         <div class="flex_box btn_flex">
-            <h2>공지사항</h2>
+            <h2>자주묻는질문</h2>
         </div>
         <table id="list_table">
             <thead>
                 <tr>
-                    <th>글번호</th>
+                    <th>질문번호</th>
                     <th id="list_subject" colspan="2">제목</th>
                     <th>작성자</th>
-                    <th>공지날짜</th>
+                    <th>작성일</th>
                 </tr>
             </thead>
             <tbody id="list">
@@ -43,10 +54,11 @@
                 <tr>
                     <td>00</td>
                     <td><a href="">로드중...</a></td>
-                    <td  colspan="2">토끼마켓</td>
+                    <td colspan="2">토끼마켓</td>
                     <td>0000-00-00</td>
                 </tr>
             </tbody>
+          
             <tr>
 				<td id="paging" colspan="5">  
 					<!-- 플러그인 사용 -->
@@ -71,7 +83,7 @@
     listCall(showPage);//시작하자 마자 이 함수를 호출
     
     function listCall(reqPage){	//페이지 요청 함수
-        var reqUrl ='/admin/noticeList/'+pagePerNum+'/'+reqPage; // /list/보여줄갯수/페이지
+        var reqUrl ='./helpFrequentlyMain/'+pagePerNum+"/"+reqPage; //restful 로 요청 -> /list/보여줄갯수/페이지
         $.ajax({
             url:reqUrl
             ,type:'get'
@@ -100,20 +112,36 @@
     //리스트 그리긔
     function listPrint(list){
         var content="";
+       
         for(var i=0;i<list.length;i++){
             content +="<tr>";
-            content +="<td >"+list[i].notice_idx+"</td>";
-            content +="<td id='w' colspan='2' ><a href='./helpNoticeDetail/"+list[i].notice_idx+"'>"+list[i].subject+"</a></td>";
-            content +="<td id='e'>"+list[i].admin_id+"</td>";
+            content +="<td>"+list[i].frequently_idx+"</td>";
+            content +="<td colspan='2' click='click("+i+")' class='question' " + i +">"+list[i].fq_question+"</td>";
+            content +="<td>"+list[i].admin_id+"</td>";
             
             //java 에서 가끔 날짜가 milliseconds 로 나올 경우...
             var date = new Date(list[i].reg_date);
             content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
             
             content +="</tr>";
+            content +="<tr class='answer' name='one'" + i +">";
+            content +="<td colspan='5' class='answer'>"+list[i].fq_answer+"</td>";
+            content +="</tr>";
         }
         $('#list').empty();//원래 있던 리스트들을 비워준다.
         $('#list').append(content);
-    }
+       
+        
+         $(document).ready(function(){
+        	  $('.question').click(function(i) {
+        	   $('.answer').toggle(i);
+        }); 
+        });
+     
+       
+    	};
+
+
+
 </script>
 </html>
