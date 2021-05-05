@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+ >
+ 
+ <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
+ <mapper namespace="com.market.rabbit.admin.dao.ReportMgtDAO">
+ 	<select id="callSaleReportList" resultType="report">
+ 		SELECT *
+		FROM (
+		    SELECT report_idx, target_idx, code_num, reporter, target, report_reason, report_state, to_char(reg_date, 'yyyy-mm-dd') as reg_date, to_char(complete_date, 'yyyy-mm-dd') as complete_date, ROW_NUMBER() OVER(ORDER BY reg_date DESC) AS rnum
+		    FROM report 
+		    WHERE code_num=1001
+		    )
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+ 	</select>
+ 	
+ 	<select id="callCntSaleReport" resultType="INTEGER">
+ 		SELECT COUNT(report_idx) FROM report WHERE code_num=1001
+ 	</select>
+ 	
+ 	<update id="updateMemberReportCnt">
+ 		UPDATE member SET REPORT_CNT = REPORT_CNT+1 WHERE member_id = #{param1}
+ 	</update>
+ 	
+ 	<update id="updateReportState">
+ 		UPDATE report SET REPORT_STATE = '처리완료', COMPLETE_DATE = sysdate WHERE report_idx = #{param1}
+ 	</update>
+ 	
+ 	<select id="callReport" resultType="report">
+ 		SELECT * FROM report WHERE report_idx=#{param1}
+ 	</select>
+ 	
+ 	<select id="callSaleProduct" resultType="sale">
+ 		SELECT * FROM sale WHERE product_idx = #{param1}
+ 	</select>
+ 	
+ 	<select id="callSaleProductFile" resultType="saleFile">
+ 		SELECT *
+		FROM (
+		    SELECT orifilename, newfilename, product_idx, file_idx, ROW_NUMBER() OVER(PARTITION BY product_idx ORDER BY product_idx DESC) as rnum
+		    FROM sale_file
+		    WHERE product_idx=#{param1}
+		    )
+		WHERE rnum = 1
+ 	</select>
+ 	
+ 	<update id="updateSaleSetBlind">
+ 		UPDATE sale SET isblind = 1 WHERE product_idx=#{param1}
+ 	</update>
+ 	
+ 	<update id="updateSaleSetUnBlind">
+ 		UPDATE sale SET isblind = 0 WHERE product_idx=#{param1}
+ 	</update>
+
+	<select id="callCommentReportList" resultType="report">
+ 		SELECT *
+		FROM (
+		    SELECT report_idx, target_idx, code_num, reporter, target, report_reason, report_state, to_char(reg_date, 'yyyy-mm-dd') as reg_date, to_char(complete_date, 'yyyy-mm-dd') as complete_date, ROW_NUMBER() OVER(ORDER BY reg_date DESC) AS rnum
+		    FROM report 
+		    WHERE code_num=1002
+		    )
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+ 	</select>
+ 	
+ 	<select id="callCntCommentReport" resultType="INTEGER">
+ 		SELECT COUNT(report_idx) FROM report WHERE code_num=1002
+ 	</select>
+ 	
+ 	<select id="callComment" resultType="comments">
+ 		SELECT * FROM comments WHERE comment_idx=#{param1}
+ 	</select>
+ 	
+ 	<update id="updateCommentSetBlind">
+ 		UPDATE comments SET isblind = 1 WHERE comment_idx=#{param1}
+ 	</update>
+ 	
+ 	<update id="updateCommentSetUnBlind">
+ 		UPDATE comments SET isblind = 0 WHERE comment_idx=#{param1}
+ 	</update>
+ 	
+ </mapper>

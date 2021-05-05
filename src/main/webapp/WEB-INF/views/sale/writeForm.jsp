@@ -434,7 +434,7 @@
 					formData.append('sale_file', files[i]);
 				}
 			}else{
-				alert(".jpg, .png, .mp4 파일만 업로드 가능합니다.");
+				alert(".jpg, .mp4 파일만 업로드 가능합니다.");
 				return;
 			}
 		}

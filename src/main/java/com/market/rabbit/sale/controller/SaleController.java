@@ -2,7 +2,6 @@ package com.market.rabbit.sale.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,18 +10,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.CoCommentDTO;
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.sale.service.SaleService;
@@ -298,5 +296,87 @@ public class SaleController {
 		System.out.println("성공? "+success);
 		
 		return "redirect:/sale/detail?product_idx="+idx;
-	}	
+	}
+	
+	@RequestMapping(value = "/sale/chTradeStateForm", method = RequestMethod.GET)
+	public String chTradeStateForm(Model model, @RequestParam int idx,HttpSession session) {
+		model.addAttribute("idx", idx);
+		return "/sale/chTradeStateForm";
+	}
+	
+	@RequestMapping(value = "/sale/changeIng", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> changeIng(@RequestParam int idx,@RequestParam String id,@RequestParam String trade_type, HttpSession session) {
+		logger.info("받아온 파라메터 값"+ idx + id + trade_type);
+		String loginId = (String) session.getAttribute("loginId");
+		
+		return service.changeIng(idx, id, trade_type, loginId);
+	}
+	
+	@RequestMapping(value = "/sale/enterMeetDate", method = RequestMethod.GET)
+	public String enterMeetDate(@RequestParam int trade_idx, Model model) {
+		logger.info("받아온 파라메터 값"+ trade_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "/sale/enterMeetDate";
+	}
+	
+	@RequestMapping(value = "/sale/packageAlarm", method = RequestMethod.GET)
+	public String packageAlarm() {
+		
+		return "/sale/packageAlarm";
+	}
+	
+	@RequestMapping(value = "/sale/setMeetDate", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> setMeetDate(@RequestParam int trade_idx, @RequestParam String meetDate) {
+		logger.info("받아온 파라메터 값"+ trade_idx + meetDate);
+		
+		return service.setMeetDate(trade_idx, meetDate);
+	}
+	
+	@RequestMapping(value = "/sale/tradeCancel", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> tradeCancel(@RequestParam int product_idx) {
+		logger.info("받아온 파라메터 값"+ product_idx);
+		
+		return service.getBuyerId(product_idx);
+	}
+	
+	@RequestMapping(value = "/sale/tradeCancelReason", method = RequestMethod.GET)
+	public String tradeCancelReason(Model model, @RequestParam int product_idx) {
+		int trade_idx = service.getTradeIdx(product_idx);
+		
+		model.addAttribute("product_idx", product_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "/sale/tradeCancelReason";
+	}
+	
+	@RequestMapping(value = "/sale/saveCancelReason", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> saveCancelReason(@RequestParam int product_idx, @RequestParam int trade_idx, @RequestParam String cancel_reason) {
+		logger.info("받아온 파라메터 값"+ product_idx + trade_idx + cancel_reason);
+		
+		return service.saveCancelReason(product_idx, trade_idx, cancel_reason);
+	}
+	
+	@RequestMapping(value = "/sale/tradeEnd", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx) {
+		logger.info("받아온 파라메터 값"+ product_idx);
+		
+		return service.tradeEnd(product_idx);
+	}
+	
+	@RequestMapping(value = "/sale/directBuyerEstimation", method = RequestMethod.GET)
+	public String directBuyerEstimation(Model model, @RequestParam int product_idx, @RequestParam int trade_idx) {
+		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
+		
+		dto = service.getMannerQuestion();
+		model.addAttribute("dto", dto);
+		model.addAttribute("product_idx", product_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "/sale/directBuyerEstimation";
+	}
+	
+	@RequestMapping(value = "/sale/saveDirectBuyerEstimation", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> saveDirectBuyerEstimation(@RequestParam int trade_idx, @RequestParam int point) {
+		logger.info("받아온 파라메터 값"+ trade_idx + point);
+		
+		return service.saveDirectBuyerEstimation(trade_idx, point);
+	}
 }

@@ -3,8 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>admin_question</title>
+    <title>admin_notice</title>
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- 반응형 디자인을 위한 css/js 라이브러리 -->
@@ -16,41 +15,30 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 </head>
 <body>
-	<div id="top_navi_contain_box">
-		<jsp:include page="../include/topNavigation.jsp"></jsp:include>
-	</div>
-	<div id="side_bar_contain_box">
-	<div style="display: contents;">
-		<jsp:include page="../include/adminNavigation.jsp"></jsp:include>
-	</div>
+	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
     <div id="list_content">
         <div class="flex_box btn_flex">
-            <h2>1:1문의하기</h2>
+            <h2>글신고목록</h2>
+            <button onclick="location.href='./writeFormNotice'" class="list_btn">글신고목록</button>
         </div>
         <table id="list_table">
             <thead>
                 <tr>
-                    <th>질문번호</th>
-                    <th>카테고리</th>
-                    <th id="list_subject">제목</th>
-                    <th>작성자</th>
-                    <th style="width: 14%;max-width: 105px;">문의날짜</th>
-                    <th>문의상태</th>
+                    <th>신고번호</th>
+                    <th>신고댓글</th>
+                    <th>작성자ID</th>
+                    <th>신고자ID</th>
+                    <th>처리상태</th>
+                    <th>신고날짜</th>
+                    <th>처리완료날짜</th>
                 </tr>
             </thead>
-            <tbody id="list">
+            <tbody id="commentReportList">
                 <!-- 불러온 데이터 뿌리는 영역 -->
-                <tr>
-                    <td>00</td>
-                    <td>너차단</td>
-                    <td><a href="">로드중...</a></td>
-                    <td>토끼마켓</td>
-                    <td>0000-00-00</td>
-                    <td>답변중</td>
-                </tr>
+
             </tbody>
             <tr>
-				<td id="paging" colspan="6">  
+				<td id="paging" colspan="5">  
 					<!-- 플러그인 사용 -->
 					<div class="container">
 						<nav aria-label="page navigation" style="text-align:center">
@@ -62,26 +50,24 @@
 			</tr>
         </table>
     </div>
-    </div>
 </body>
 <script>
-    var showPage = 1;//첫시작시에 보여줄 페이지 1
-    var pagePerNum = 10;//보여줄갯수
-
-    //몇개를 보여줄 것인지/몇페이지
-    listCall(showPage);//시작하자 마자 이 함수를 호출
+	//jQuery.noConflict();
+	
+    var showPage = 1;
+    listCall(showPage);
     
     function listCall(reqPage){	//페이지 요청 함수
-        var reqUrl ='./QList/'+pagePerNum+"/"+reqPage; //restful 로 요청 -> /list/보여줄갯수/페이지
         $.ajax({
-            url:reqUrl
+            url:'./commentReportList/'+reqPage
             ,type:'get'
             ,data:{}
             ,dataType:'JSON'
             ,success:function(data){
                 console.log(data);
                 showPage = data.currPage;//보여줄 페이지 = 현재페이지
-                listPrint(data.list);//리스트 그리기
+                listPrint(data.commentReportList);//리스트 그리기
+                console.log(data.commentReportList)
                 //플러그인 사용
                 $("#pagination").twbsPagination({
                     startPage:data.currPage,//시작페이지
@@ -101,30 +87,48 @@
     //리스트 그리긔
     function listPrint(list){
         var content="";
+
         for(var i=0;i<list.length;i++){
             content +="<tr>";
-            content +="<td>"+list[i].question_idx+"</td>";
-            content +="<td>"+list[i].q_category_name+"</td>";
-            if(list[i].state == 1 ){//답변이 있을경우
-	           content +="<td><a href='/admin/detailQ/"+list[i].question_idx+"'>"+list[i].subject+"</a></td>";            	
-            } else{//답변이 없을 경우 
-           	   content +="<td><a href='/admin/anwerQFrom/"+list[i].question_idx+"'>"+list[i].subject+"</a></td>";    
+            content += "<td>"+list[i].report_idx+"</td>";
+            content += "<td><a onclick='openCommentManage(this)' id='"+list[i].target_idx+"' class='"+list[i].report_idx+"' style='cursor:pointer;' >"+list[i].report_reason+"</a></td>";
+            content += "<td>"+list[i].reporter+"</td>";
+            content += "<td>"+list[i].target+"</td>";
+            content += "<td>"+list[i].report_state+"</td>";
+            content += "<td>"+list[i].reg_date+"</td>";
+            if(list[i].report_state == "처리완료"){
+            	content += "<td>"+list[i].complete_date+"</td>";            	
+            }else{
+            	content += "<td><a onclick='updateReportState(this)'id='"+list[i].report_idx+"/"+list[i].target+"' style='cursor:pointer;'>처리완료하기</a></td>";
             }
-            content +="<td>"+list[i].member_id+"</td>";
-            
-            //java 에서 가끔 날짜가 milliseconds 로 나올 경우...
-            var date = new Date(list[i].reg_date);
-            content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
-            
-            if(list[i].state == 1 ){//답변이 있을경우
-            	content +="<td>답변완료</td>";
- 	        } else{//답변이 없을 경우 
-                content +="<td>답변중</td>";            	
- 	        }
             content +="</tr>";
         }
-        $('#list').empty();//원래 있던 리스트들을 비워준다.
-        $('#list').append(content);
+        $('#commentReportList').empty();//원래 있던 리스트들을 비워준다.
+        $('#commentReportList').append(content);
     }
+    
+    function updateReportState(elem){
+    	var elem_str = elem.getAttribute('id');
+    	var report_idx = elem_str.split('/')[0];
+    	var target = elem_str.split('/')[1];
+
+    	$.ajax({
+			url:'./updateCommentReportState',
+			type:'POST',
+			data:{"report_idx":report_idx, "target":target},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data.success);
+				listCall(1);
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+    }
+    
+    function openCommentManage(elem) {
+		window.open('./commentBlindManage/'+elem.getAttribute('id')+'/'+elem.getAttribute('class'), 'commentBlindManage', 'width=600, height=800');
+	}
 </script>
 </html>
