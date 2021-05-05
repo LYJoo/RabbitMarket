@@ -30,22 +30,20 @@
 	            </div>
 	            <div class="msg-detail-info">
 	                <span class="msg-detail-info-span">신고사유 : ${report.report_reason}</span>
-	                <span class="msg-detail-info-span">판매글번호 : ${product.product_idx}</span>
+	                <span class="msg-detail-info-span">댓글번호 : ${comment.comment_idx}</span>
 	            </div>
 	            <p>게시글 내용</p>
 	            <div class="msg-detail-content">
-	            	글제목 : ${product.sale_subject }
+	            	댓글내용 : ${comment.comment_content }
 	            	<br><br>
-	            	<img alt="" src="${path }">
-	            	<br><br>
-	            	내용 : ${product.sale_content }
+	            	작성자 : ${comment.member_id }
 				</div>
 	            <div class="msg-detail-btn">
-	            	<c:if test="${product.isBlind eq false }">
-	            		<button class="msg-btn" onclick="setBlind(${product.product_idx})">블라인드</button>
+	            	<c:if test="${comment.isBlind eq false }">
+	            		<button class="msg-btn" onclick="setBlind(${comment.comment_idx})">블라인드</button>
 	            	</c:if>
-	            	<c:if test="${product.isBlind eq true }">
-	            		<button class="msg-btn" onclick="setUnBlind(${product.product_idx })" >블라인드취소</button>
+	            	<c:if test="${comment.isBlind eq true }">
+	            		<button class="msg-btn" onclick="setUnBlind(${comment.comment_idx })" >블라인드취소</button>
 	            	</c:if>
 	               <button class="msg-btn" onclick="self.close()">닫기</button>
 	            </div>
@@ -53,9 +51,9 @@
 	    </div>
     </body>
     <script type="text/javascript">
-    	function setBlind(product_idx) {
+    	function setBlind(comment_idx) {
     		$.ajax({
-    			url:'/admin/updateSaleSetBlind/'+product_idx,
+    			url:'/admin/updateCommentSetBlind/'+comment_idx,
     			type:'GET',
     			data:{},
     			dataType:'JSON',
@@ -69,9 +67,9 @@
     		});
 		}
     	
-    	function setUnBlind(product_idx) {
+    	function setUnBlind(comment_idx) {
     		$.ajax({
-    			url:'/admin/updateSaleSetUnBlind/'+product_idx,
+    			url:'/admin/updateCommentSetUnBlind/'+comment_idx,
     			type:'GET',
     			data:{},
     			dataType:'JSON',

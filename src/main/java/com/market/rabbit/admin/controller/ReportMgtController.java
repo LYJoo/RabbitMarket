@@ -49,15 +49,52 @@ public class ReportMgtController {
 		return service.callSaleBlindManage(product_idx, report_idx);
 	}
 	
-	@RequestMapping(value = "/admin/updateSetBlind/{product_idx}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/updateSaleSetBlind/{product_idx}", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> updateSetBlind(@PathVariable int product_idx) {
 		logger.info("관리자 / {}번 판매글 블라인드 처리", product_idx);
-		return service.updateSetBlind(product_idx);
+		return service.updateSaleSetBlind(product_idx);
 	}
 	
-	@RequestMapping(value = "/admin/updateSetUnBlind/{product_idx}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> updateSetUnBlind(@PathVariable int product_idx) {
+	@RequestMapping(value = "/admin/updateSaleSetUnBlind/{product_idx}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> updateSaleSetUnBlind(@PathVariable int product_idx) {
 		logger.info("관리자 / {}번 판매글 블라인드 해제 처리", product_idx);
-		return service.updateSetUnBlind(product_idx);
+		return service.updateSaleSetUnBlind(product_idx);
+	}
+	
+	@RequestMapping(value = "/admin/commentReportList", method = RequestMethod.GET)
+	public String callCommentReportListForm() {
+		logger.info("관리자 / 댓글 신고 목록 페이지 불러오기");
+		return "admin/commentReportList";
+	}
+	
+	@RequestMapping(value = "/admin/commentReportList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callCommentReportList(@PathVariable int page) {
+		logger.info("관리자 / {} 페이지 댓글 신고 목록 불러오기", page);
+		return service.callCommentReportList(page);
+	}
+	
+	@RequestMapping(value = "/admin/updateCommentReportState", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> updateCommentReportState(@RequestParam int report_idx, @RequestParam String target) {
+		logger.info("관리자 / 댓글 신고 상태 수정하기");
+		logger.info("타갯 : {}, 신고번호 : {}", target, report_idx);
+		return service.updateCommentReportState(report_idx, target);
+	}
+	
+	@RequestMapping(value = "/admin/commentBlindManage/{comment_idx}/{report_idx}", method = RequestMethod.GET)
+	public ModelAndView callCommentBlindManage(@PathVariable int comment_idx, @PathVariable int report_idx) {
+		logger.info("관리자 / {}번 댓글 {}번 신고 블라인드 관리 페이지 불러오기", comment_idx, report_idx);
+		return service.callCommentBlindManage(comment_idx, report_idx);
+	}
+	
+	@RequestMapping(value = "/admin/updateCommentSetBlind/{comment_idx}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> updateCommentSetBlind(@PathVariable int comment_idx) {
+		logger.info("관리자 / {}번 댓글 블라인드 처리", comment_idx);
+		return service.updateCommentSetBlind(comment_idx);
+	}
+	
+	@RequestMapping(value = "/admin/updateCommentSetUnBlind/{comment_idx}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> updateCommentSetUnBlind(@PathVariable int comment_idx) {
+		logger.info("관리자 / {}번 댓글 블라인드 해제 처리", comment_idx);
+		return service.updateCommentSetUnBlind(comment_idx);
 	}
 }
