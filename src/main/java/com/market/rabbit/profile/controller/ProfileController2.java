@@ -178,4 +178,13 @@ public class ProfileController2 {
 		return service.callQuestionList(page);
 	}
 	
+	
+	//키워드
+	@RequestMapping(value = "/myPage/keyword", method = RequestMethod.POST)
+	public ModelAndView keyword(@RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("키워드 요청 : "+params);
+		
+		return service.keyword(params,session);
+	}
+	
 }
