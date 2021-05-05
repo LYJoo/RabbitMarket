@@ -358,4 +358,19 @@ public class SaleController {
 		return service.saveCancelReason(product_idx, trade_idx, cancel_reason);
 	}
 	
+	@RequestMapping(value = "/sale/tradeEnd", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx) {
+		logger.info("받아온 파라메터 값"+ product_idx);
+		
+		return service.tradeEnd(product_idx);
+	}
+	
+	@RequestMapping(value = "/sale/directBuyerEstimation", method = RequestMethod.GET)
+	public String directBuyerEstimation(Model model, @RequestParam int product_idx) {
+		int trade_idx = service.getTradeIdx(product_idx);
+		
+		model.addAttribute("product_idx", product_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "/sale/directBuyerEstimation";
+	}
 }

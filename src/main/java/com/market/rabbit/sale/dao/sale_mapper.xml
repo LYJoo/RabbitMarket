@@ -347,11 +347,27 @@
  	</select>
  	
  	<update id="setCancelReason">
- 		UPDATE trading SET cancel_reason=#{param2}, trade_end_date=#{param3}  WHERE trade_idx=#{param1}
+ 		UPDATE trading SET cancel_reason=#{param2}, trade_end_date=#{param3}, trade_state='거래취소'  WHERE trade_idx=#{param1}
  	</update>
  	
  	<update id="setCodeNum">
  		UPDATE sale SET code_num=3001 WHERE product_idx=#{param}
+ 	</update>
+ 	
+ 	<select id="getTradeType" resultType="String">
+ 		select trade_type from trading where trade_idx = #{param}
+ 	</select>
+ 	
+ 	<select id="getTracking_Number" resultType="int">
+ 		select tracking_number from trading where trade_idx = #{param}
+ 	</select>
+ 	
+ 	<update id="setTradeEnd">
+ 		UPDATE trading SET trade_end_date=#{param2}, trade_state='거래완료'  WHERE trade_idx=#{param1}
+ 	</update>
+ 	
+ 	<update id="setTradeEnd2">
+ 		UPDATE sale SET code_num=3003 WHERE product_idx=#{param1}
  	</update>
  	
  </mapper>

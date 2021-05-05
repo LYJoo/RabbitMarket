@@ -99,4 +99,12 @@ public interface SaleDAO {
 
 	int setCodeNum(int product_idx);
 
+	String getTradeType(int product_idx);
+
+	int getTracking_Number(int product_idx);
+
+	int setTradeEnd(int trade_idx, Date date);
+
+	int setTradeEnd2(int product_idx);
+
 }

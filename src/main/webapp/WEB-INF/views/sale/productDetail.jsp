@@ -547,6 +547,8 @@
     				var ok = confirm(data.buyer_id+'님과의 거래를 취소하시겠습니까?');
     				if(ok){
     					window.open('/sale/tradeCancelReason?product_idx='+idx,'tradeCancel','width=550, height=550, top=100, left=500');
+    				}else{
+    					window.location.reload();
     				}
     			},
     			error: function(error){
@@ -556,12 +558,20 @@
         }
         else if(e == '거래완료'){
         	$.ajax({
-    			url:'/sale/tradeCancel'
+    			url:'/sale/tradeEnd'
     			,type: 'POST'
-    			,data:{"comment_idx": num}
+    			,data:{"product_idx": idx}
     			,success:function(data){
-    				console.log(data.list);
-    				drawCocomment(data.list);
+    				var msg = data.msg;
+    				if(msg != ""){
+    					alert(msg);
+    					window.location.reload();
+    				}
+    				if(data.success == 1){
+    					alert('거래가 완료되었습니다.');
+    					window.location.reload();
+    					window.open('/sale/directBuyerEstimation?product_idx='+idx,'directBuyerEstimation','width=550, height=550, top=100, left=500');
+    				}
     			},
     			error: function(error){
     				console.log(error);
