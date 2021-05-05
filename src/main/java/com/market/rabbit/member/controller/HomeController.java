@@ -40,7 +40,7 @@ public class HomeController {
 	@RequestMapping(value = "/member/memberLogin",  method = RequestMethod.GET)
 	public String memberLogin( Model model) {
 
-		return "member/memberLogin";
+		return "member/MemberLogin";
 	}
 	@RequestMapping(value = "/sale/mainPage",  method = RequestMethod.GET)
 	public String mainPage( Model model) {
