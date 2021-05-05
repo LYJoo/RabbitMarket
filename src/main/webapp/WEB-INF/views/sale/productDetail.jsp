@@ -283,7 +283,7 @@
         <tr>
             <td rowspan="2" style="width: 100px;">
             	<c:if test="${detail.profileFileDto.newFileName ne null}">
-            		<img src="/photo/${detail.profileFileDto.newFileName}" style="width: 100px; height: 100px;"/>
+            		<img src="/myProfile/${detail.profileFileDto.newFileName}" style="width: 100px; height: 100px;"/>
             	</c:if>
             	<c:if test="${detail.profileFileDto.newFileName eq null}">
             		<img src="/resources/img/default_profile.png" style="width: 100px; height: 100px;"/>
@@ -469,7 +469,7 @@
 			<tr>
             <td rowspan="2" class="comment_profile">
             	<c:if test="${list.profileFileDto.newFileName ne null}">
-                	<img class="comment_profile" src="/photo/${list.profileFileDto.newFileName}"/>
+                	<img class="comment_profile" src="/myProfile/${list.profileFileDto.newFileName}"/>
             	</c:if>
             	<c:if test="${list.profileFileDto.newFileName eq null}">
                 	<img class="comment_profile" src="/resources/img/default_profile.png"/>
@@ -568,9 +568,10 @@
     					window.location.reload();
     				}
     				if(data.success == 1){
+    					var trade_idx = data.trade_idx;
     					alert('거래가 완료되었습니다.');
+    					window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
     					window.location.reload();
-    					window.open('/sale/directBuyerEstimation?product_idx='+idx,'directBuyerEstimation','width=550, height=550, top=100, left=500');
     				}
     			},
     			error: function(error){
@@ -647,7 +648,7 @@
         	if(data[i].profileFileDto == null){
         		content += "<img class='comment_profile' src='/resources/img/default_profile.png'>";
         	}else if(data[i].profileFileDto != null){
-        		content += "<img class='comment_profile' src='/photo/"+data[i].profileFileDto.newFileName+"'/>";
+        		content += "<img class='comment_profile' src='/myProfile/"+data[i].profileFileDto.newFileName+"'/>";
         	}
         	content += "</td>";
         	content += "<td class='comment_writer_id'>"+data[i].member_id +"  "+ data[i].reg_date+"</td>";

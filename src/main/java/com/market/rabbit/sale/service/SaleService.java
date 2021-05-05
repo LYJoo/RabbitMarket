@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.market.rabbit.dto.CoCommentDTO;
 import com.market.rabbit.dto.CommentsDTO;
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.dto.SaleFileDTO;
@@ -607,8 +608,44 @@ public class SaleService {
 		if(check1 == 1 && check2 ==1) {
 			success = 1;
 		}
+		map.put("trade_idx", trade_idx);
 		map.put("success", success);
 		map.put("msg", msg);
+		return map;
+	}
+
+	public ArrayList<MannerQuestionDTO> getMannerQuestion() {
+		
+		return dao.getMannerQuestion();
+	}
+
+	public HashMap<String, Object> saveDirectBuyerEstimation(int trade_idx, int point) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int check1 = 0;
+		int check2 = 0;
+		int success = 0;
+		//거래 테이블 셋팅
+		check1 = dao.setTrading(trade_idx);
+		
+		//해당 거래한 구매자 멤버테이블 셋팅
+		String buyer_id = dao.getMannerBuyerId(trade_idx);
+		check2 = dao.setMemberManner(buyer_id, point);
+		
+		//5회 이상의 거래면 매너 퍼센트 셋팅해놓기
+		int manner_cnt = dao.setMemberMannerCnt(buyer_id);
+		if(manner_cnt>=5) {
+			int mannerScore = dao.getmannerScore(buyer_id);
+			System.out.println("매너 점수"+mannerScore);
+			System.out.println("매너 횟수 "+manner_cnt);
+			double mannerPercent = ((double)mannerScore/((double)manner_cnt*5))*100;
+			System.out.println("매너 퍼센트 "+mannerPercent);
+			dao.setMannerPercent(buyer_id, mannerPercent);
+		}
+		
+		if(check1 == 1 && check2 == 1) {
+			success = 1;
+		}
+		map.put("success", success);
 		return map;
 	}
 

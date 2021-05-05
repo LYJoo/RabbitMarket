@@ -370,4 +370,32 @@
  		UPDATE sale SET code_num=3003 WHERE product_idx=#{param1}
  	</update>
  	
+ 	<select id="getMannerQuestion" resultType="mannerQuestion">
+ 		SELECT * FROM mannerQuestion WHERE trade_type='직거래' AND target='구매자' ORDER BY look_order ASC
+ 	</select>
+ 	
+ 	<update id="setTrading">
+ 		UPDATE trading SET seller_manner=1 WHERE trade_idx=#{param}
+ 	</update>
+ 	
+ 	<select id="getMannerBuyerId" resultType="String">
+ 		SELECT buyer_id FROM trading WHERE trade_idx=#{param}
+ 	</select>
+ 	
+ 	<update id="setMemberManner">
+ 		UPDATE member SET manner_score=manner_score+#{param2}, manner_cnt=manner_cnt+1 WHERE member_id = #{param1}
+ 	</update>
+ 	
+ 	<select id="setMemberMannerCnt" resultType="int">
+ 		SELECT manner_cnt FROM member WHERE member_id=#{param}
+ 	</select>
+ 	
+ 	<update id="setMannerPercent">
+ 		UPDATE member SET manner_percent = #{param2} WHERE member_id = #{param1}
+ 	</update>
+ 	
+ 	<select id="getmannerScore" resultType="int">
+ 		SELECT manner_score FROM member WHERE member_id=#{param}
+ 	</select>
+ 	
  </mapper>

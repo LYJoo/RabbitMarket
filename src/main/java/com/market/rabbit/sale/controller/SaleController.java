@@ -1,9 +1,7 @@
 package com.market.rabbit.sale.controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,18 +10,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.CoCommentDTO;
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.sale.service.SaleService;
@@ -366,11 +363,20 @@ public class SaleController {
 	}
 	
 	@RequestMapping(value = "/sale/directBuyerEstimation", method = RequestMethod.GET)
-	public String directBuyerEstimation(Model model, @RequestParam int product_idx) {
-		int trade_idx = service.getTradeIdx(product_idx);
+	public String directBuyerEstimation(Model model, @RequestParam int product_idx, @RequestParam int trade_idx) {
+		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
 		
+		dto = service.getMannerQuestion();
+		model.addAttribute("dto", dto);
 		model.addAttribute("product_idx", product_idx);
 		model.addAttribute("trade_idx", trade_idx);
 		return "/sale/directBuyerEstimation";
+	}
+	
+	@RequestMapping(value = "/sale/saveDirectBuyerEstimation", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> saveDirectBuyerEstimation(@RequestParam int trade_idx, @RequestParam int point) {
+		logger.info("받아온 파라메터 값"+ trade_idx + point);
+		
+		return service.saveDirectBuyerEstimation(trade_idx, point);
 	}
 }
