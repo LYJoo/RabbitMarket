@@ -208,6 +208,14 @@ td input[type='text']:focus
 .mannerq_table>tbody>tr>td>a:hover{
     color: coral;
 }
+.mannerq_table>tbody>tr>td>input[type='text']{
+    width: 85%;
+    border: none;
+}
+.mannerq_table>tbody>tr>td>input[type='text']:focus{
+    outline: none;
+    box-shadow: 1px 1px 8px gray;
+}
 #mannerq_input_box{
     border: 2px solid coral;
     border-radius: 4px;
@@ -250,4 +258,43 @@ button:hover,input[type='submit']:hover{
 .btn{
     width: 30%;
     min-width: 200px;
+}
+
+
+/*카테고리*/
+.category_box{
+    display: inline-block;
+    padding: 5px;
+    margin-bottom: 10px;
+    color: white;
+    background-color: sandybrown;
+    border: 1px solid sandybrown;
+    border-radius: 50px;
+}
+.category_box>input[type='text']{
+    border: none;
+    color: white;
+    text-align: center;
+    padding: 3px;
+    background-color: rgba( 255, 255, 255, 0);
+}
+.category_box>input[type='text']:focus{
+    outline: none;
+    background-color: rgba( 255, 255, 255, 0.2);
+}
+.category_box:hover{
+    border: 2px solid sienna;
+}
+.category_box>a{
+    font-size: 0.9em;
+    color:white;
+    text-decoration: none;
+}
+#s_category_idx{
+    width: 100px;
+    text-align: center;
+}
+#s_category_name{
+    width: 200px;
+    text-align: center;
 }

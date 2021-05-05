@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+ >
+ 
+ <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
+ <mapper namespace="com.market.rabbit.admin.dao.SaleCategoryMgtDAO">
+ 	
+ 	<!-- 리스트 -->
+ 	<select id="saleCategoryList" resultType="saleCategory">
+ 		SELECT s_category_idx, s_category_name
+    		FROM sale_category
+    		ORDER BY s_category_idx ASC
+ 	</select>
+ 	
+ 	<!-- 등록 -->
+ 	<insert id="writeSaleCategory" parameterType="saleCategory">
+ 		INSERT INTO sale_category(s_category_idx, s_category_name)
+    		VALUES (#{s_category_idx}, #{s_category_name})
+ 	</insert>
+ 	
+ 	<!-- 수정 -->
+ 	<update id="updateSaleCategory" parameterType="saleCategory">
+ 		UPDATE sale_category SET s_category_name=#{s_category_name}
+			WHERE s_category_idx=#{s_category_idx}
+ 	</update>
+ 	
+ 	<!-- 삭제 -->
+	<delete id="delSaleCategory">
+		DELETE FROM sale_category WHERE s_category_idx=#{param1}
+	</delete>
+ 	
+ </mapper>
