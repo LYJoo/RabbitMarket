@@ -44,6 +44,19 @@
 </body>
 </html>
 <script>
+	/*input박스 사이즈 조정*/
+	for(i=0;i<$(".s_category_name").length;i++){
+	    var resize = 2 + $(".s_category_name")[i].value.length;
+	    $(".s_category_name")[i].setAttribute('size',resize);
+	}
+	$(".s_category_name").on('keyup keydown',function(){
+	    checkInputSize($(this));
+	});
+	function checkInputSize(obj){
+	    var textObj = obj;
+	    var resize = 2 + textObj.val().length;
+	    textObj.attr('size',resize);
+	}
     /*form submit 제어*/
     function check(){
         if($('#s_category_idx').val().trim()==""){

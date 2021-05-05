@@ -34,7 +34,7 @@
                 </tr>
                 <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
 	        	    <c:forEach items="${directSellerList}" var="list" varStatus="status">
-	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${status.count}">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
 	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
 	                    </tr>
 	                </c:forEach>
@@ -58,7 +58,7 @@
                 </tr>
                 <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
 	        	    <c:forEach items="${deliverySellerList}" var="list" varStatus="status">
-	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${status.count}">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
 	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
 	                    </tr>
 	                </c:forEach>
@@ -203,11 +203,13 @@
         //필요한정보??? -> 어떤 컬럼을 어떤 값으로 변경?
         var manner_idx = elem.closest('tr').id.substring(3);
         var val = elem.value;
+        var look_order = elem.closest('tr').className.substring(5);
         console.log("변경 : "+manner_idx+"/"+val);
         
         var params = {
 			                "manner_idx":manner_idx
 			                ,"manner_content":val
+			                ,"look_order":look_order
 							}
         
         $.ajax({
