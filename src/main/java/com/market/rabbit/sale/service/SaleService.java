@@ -437,6 +437,15 @@ public class SaleService {
 		map.put("success", success);
 		return map;
 	}
+	
+	//댓글 수정
+	public HashMap<String, Object> commentUpdate(int comment_idx, String comment_content) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = dao.commentUpdate(comment_idx, comment_content);
+
+		map.put("success", success);
+		return map;
+	}
 
 	public HashMap<String, Object> report(int idx, int codeNum, String target, String report_reason, String loginId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -648,5 +657,7 @@ public class SaleService {
 		map.put("success", success);
 		return map;
 	}
+
+
 
 }

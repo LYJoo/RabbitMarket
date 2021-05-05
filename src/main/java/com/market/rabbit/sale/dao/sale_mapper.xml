@@ -398,4 +398,9 @@
  		SELECT manner_score FROM member WHERE member_id=#{param}
  	</select>
  	
+ 	<!-- 댓글 수정 -->
+ 	<update id="commentUpdate">
+ 		UPDATE comments SET comment_content=#{param2} WHERE comment_idx=#{param1}
+ 	</update>
+ 	
  </mapper>

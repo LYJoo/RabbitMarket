@@ -480,6 +480,7 @@
             </td>
             <td rowspan="2" class="comment_update_btn">
 	        	<c:if test="${detail.seller_id eq sessionScope.loginId}">
+	        		<a style="cursor: pointer;" onclick="cUpdateForm(${list.comment_idx})">수정</a> |
 	        		<a style="cursor: pointer;" onclick="cDel(${list.comment_idx},${detail.product_idx})">삭제</a>
 	        	</c:if>
 	        	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
@@ -488,7 +489,18 @@
             </td>
         </tr>
         <tr>
-           <td class="comment_content" colspan="2">${list.comment_content}<span class="cocoment_write_btn" onclick="cocoment_write_input(${list.comment_idx})"> 답글</span></td> 
+           <td class="comment_content" colspan="2">
+           		<span id="comment_content_value_${list.comment_idx}">${list.comment_content}</span>
+           		<!-- 수정폼-->
+           		<span id="comment_updateForm_${list.comment_idx}" style="align-items: center;display:none;">
+           			<input type="text" id="comment_content_input_${list.comment_idx}"
+           				name="comment_content" value="${list.comment_content}" 
+           				style="width:80%;border:none;background-color:lightgray;"/>
+           			&nbsp;
+           			<a style="cursor: pointer;" onclick="cUpdate(${list.comment_idx},${detail.product_idx})">수정하기</a>
+           		</span>
+           		<div class="cocoment_write_btn" onclick="cocoment_write_input(${list.comment_idx})"> 답글</div>
+           </td> 
         </tr>
         <tr id="cocoment_write_${list.comment_idx}" style="display: none;">
             <td></td>
@@ -748,6 +760,35 @@
 	
 	function ccDel(idx, product_idx){
 		location.href='/sale/ccDel?idx='+idx+'&product_idx='+product_idx;
+    }
+	
+	function cUpdateForm(idx){
+		$('#comment_content_value_'+idx).css({'display':'none'});
+		$('#comment_updateForm_'+idx).css({'display':'flex'});
+    }
+	
+	function cUpdate(idx){
+		var comment_idx = idx;
+		var comment_content = $('#comment_content_input_'+idx).val();
+		
+	   	$.ajax({
+			url:'/sale/commentUpdate'
+			,type: 'POST'
+			,data:{"comment_idx" : comment_idx,
+				"comment_content": comment_content}
+			,success:function(data){
+				if(data.success == 1){
+					alert('댓글이 수정되었습니다.');
+					$('#comment_content_value_'+idx).html(comment_content);
+					$('#comment_content_value_'+idx).css({'display':''});
+					$('#comment_updateForm_'+idx).css({'display':'none'});
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+		
     }
 	
 	function wishPlus1(idx){ // 위시리스트에 전혀 존재하지 않는상태 / 빈하트

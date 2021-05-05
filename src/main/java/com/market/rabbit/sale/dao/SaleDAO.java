@@ -122,4 +122,6 @@ public interface SaleDAO {
 
 	int getmannerScore(String buyer_id);
 
+	int commentUpdate(int comment_idx, String comment_content);
+
 }
