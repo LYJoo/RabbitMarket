@@ -493,5 +493,123 @@ public class SaleService {
 		
 		return dao.wishMinus(idx, loginId);
 	}
+	
+	@Transactional
+	public HashMap<String, Object> changeIng(int idx, String id, String trade_type, String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		int existId = 0;
+		int trade_idx = 0;
+		
+		//아이디 있는지 확인
+		existId = dao.existId(id);
+		
+		if(existId >0) { //존재하는 아이디면
+			success = dao.changeIng(idx, id, trade_type, loginId);
+			if(success > 0) {
+				dao.changeIng2(idx);
+				trade_idx = dao.getTardeIdx(idx, id);
+			}
+		}
+		
+		map.put("existId", existId);
+		map.put("success", success);
+		map.put("trade_idx", trade_idx);
+		return map;
+	}
+
+	public HashMap<String, Object> setMeetDate(int trade_idx, String meetDate) {	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		try {
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date date = transFormat.parse(meetDate);
+			success = dao.setMeetDate(trade_idx, date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> getBuyerId(int product_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String buyer_id = dao.getBuyerId(product_idx);
+		
+		map.put("buyer_id", buyer_id);
+		return map;
+	}
+
+	public int getTradeIdx(int product_idx) {
+		return dao.getTradeIdx(product_idx);
+	}
+
+	public HashMap<String, Object> saveCancelReason(int product_idx, int trade_idx, String cancel_reason) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		Date date = null;
+		try {
+			SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");		
+			String format_time = format.format (System.currentTimeMillis());
+			date = format.parse(format_time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		int check1 = dao.setCancelReason(trade_idx, cancel_reason, date);
+		int check2 = dao.setCodeNum(product_idx);
+		
+		if(check1==1 && check2==1) {
+			success = 1;
+		}
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> tradeEnd(int product_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String msg = "";
+		int success = 0;
+		int check1 = 0;
+		int check2 = 0;
+		int tracking_number = 0;
+		
+		int trade_idx = dao.getTradeIdx(product_idx);
+		
+		//택배인지 직거래인지 확인하고
+		String trade_type = dao.getTradeType(trade_idx);
+		
+		//택배면 직거래의 경우에만 판매자가 완료가능
+		//운송장 번호 입력했는지 확인
+		//입력했으면 사용자측에서만 거래완료 가능
+		if(trade_type.equals("택배")) {
+			tracking_number = dao.getTracking_Number(trade_idx);
+			if(tracking_number != 0) {
+				msg = "택배거래는 구매자 측에서만 거래 완료를 누를 수 있습니다.";
+			}else {
+				msg = "운송장 번호를 입력하지 않았습니다. 마이페이지에서 입력해주세요.";
+			}
+		}else {
+			Date date = null;
+			try {
+				SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");		
+				String format_time = format.format (System.currentTimeMillis());
+				date = format.parse(format_time);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			check1 = dao.setTradeEnd(trade_idx,date);
+			check2 = dao.setTradeEnd2(product_idx);
+		}
+		
+		if(check1 == 1 && check2 ==1) {
+			success = 1;
+		}
+		map.put("success", success);
+		map.put("msg", msg);
+		return map;
+	}
 
 }

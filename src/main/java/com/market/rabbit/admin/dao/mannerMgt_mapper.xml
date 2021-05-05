@@ -30,10 +30,10 @@
  	<update id="updateMannerQ" parameterType="mannerQuestion">
  		UPDATE MannerQuestion 
 		<set>
-			<if test="manner_content != null">manner_content=#{manner_content}, </if>
-			<if test="target != null">target=#{target}, </if>
-			<if test="trade_type != null">trade_type=#{trade_type}, </if>
-			<if test="look_order != null">look_order=#{look_order} </if>
+			<if test="manner_content!=null and !manner_content.equals('')">manner_content=#{manner_content}, </if>
+			<if test="target!=null and !target.equals('')">target=#{target}, </if>
+			<if test="trade_type!=null and !trade_type.equals('')">trade_type=#{trade_type}, </if>
+			<if test="look_order!=null and !look_order.equals('')">look_order=#{look_order} </if>
 		</set>
 		WHERE manner_idx=#{manner_idx}
  	</update>
