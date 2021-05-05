@@ -45,6 +45,14 @@
 		    )
 		WHERE rnum = 1
  	</select>
+ 	
+ 	<update id="updateSetBlind">
+ 		UPDATE sale SET isblind = 1 WHERE product_idx=#{param1}
+ 	</update>
+ 	
+ 	<update id="updateSetUnBlind">
+ 		UPDATE sale SET isblind = 0 WHERE product_idx=#{param1}
+ 	</update>
 
  	
  </mapper>

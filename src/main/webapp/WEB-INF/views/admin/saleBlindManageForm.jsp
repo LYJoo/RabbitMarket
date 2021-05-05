@@ -41,22 +41,43 @@
 	            	내용 : ${product.sale_content }
 				</div>
 	            <div class="msg-detail-btn">
-	            	${product.isBlind}
-	            	
+	            	<c:if test="${product.isBlind eq false }">
+	            		<button class="msg-btn" onclick="setBlind(${product.product_idx})">블라인드</button>
+	            	</c:if>
+	            	<c:if test="${product.isBlind eq true }">
+	            		<button class="msg-btn" onclick="setUnBlind(${product.product_idx })" >블라인드취소</button>
+	            	</c:if>
 	               <button class="msg-btn" onclick="self.close()">닫기</button>
 	            </div>
 	        </div>
 	    </div>
     </body>
     <script type="text/javascript">
-    	function setBlind(elem) {
+    	function setBlind(product_idx) {
     		$.ajax({
-    			url:'./updateSetBlind/'+elem.getAttribute('id'),
+    			url:'/admin/updateSetBlind/'+product_idx,
     			type:'GET',
     			data:{},
     			dataType:'JSON',
     			success:function(data){
     				console.log(data.success);
+    				window.location.reload();
+    			},
+    			error:function(e){
+    				console.log(e);
+    			}
+    		});
+		}
+    	
+    	function setUnBlind(product_idx) {
+    		$.ajax({
+    			url:'/admin/updateSetUnBlind/'+product_idx,
+    			type:'GET',
+    			data:{},
+    			dataType:'JSON',
+    			success:function(data){
+    				console.log(data.success);
+    				window.location.reload();
     			},
     			error:function(e){
     				console.log(e);

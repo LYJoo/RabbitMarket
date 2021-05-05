@@ -89,7 +89,7 @@ p{
 
 .msg-btn{
     float: right;
-    width: 100px;
+    width: 120px;
     height: 40px;
     margin: 10px;
 }
@@ -211,7 +211,7 @@ p{
 }
 .msg-btn{
     margin: 5px 10px;
-    width: 100px;
+    width: 120px;
     height: 40px;
     cursor: pointer;
     font-size: 17px;

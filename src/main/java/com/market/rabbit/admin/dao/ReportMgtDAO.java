@@ -22,4 +22,8 @@ public interface ReportMgtDAO {
 
 	SaleFileDTO callSaleProductFile(int product_idx);
 
+	int updateSetBlind(int product_idx);
+
+	int updateSetUnBlind(int product_idx);
+
 }

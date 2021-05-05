@@ -70,4 +70,24 @@ public class ReportMgtService {
 		return mav;
 	}
 
+	public HashMap<String, Object> updateSetBlind(int product_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean success = false;
+		if(dao.updateSetBlind(product_idx) > 0) {
+			success = true;
+		}
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> updateSetUnBlind(int product_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean success = false;
+		if(dao.updateSetUnBlind(product_idx) > 0) {
+			success = true;
+		}
+		map.put("success", success);
+		return map;
+	}
+
 }

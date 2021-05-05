@@ -50,9 +50,14 @@ public class ReportMgtController {
 	}
 	
 	@RequestMapping(value = "/admin/updateSetBlind/{product_idx}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> updateSetBlind(@RequestParam int report_idx) {
-		logger.info("관리자 / {}번 판매글 블라인드 처리", report_idx);
-		//return service.updateSetBlind(report_idx);
-		return null;
+	public @ResponseBody HashMap<String, Object> updateSetBlind(@PathVariable int product_idx) {
+		logger.info("관리자 / {}번 판매글 블라인드 처리", product_idx);
+		return service.updateSetBlind(product_idx);
+	}
+	
+	@RequestMapping(value = "/admin/updateSetUnBlind/{product_idx}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> updateSetUnBlind(@PathVariable int product_idx) {
+		logger.info("관리자 / {}번 판매글 블라인드 해제 처리", product_idx);
+		return service.updateSetUnBlind(product_idx);
 	}
 }
