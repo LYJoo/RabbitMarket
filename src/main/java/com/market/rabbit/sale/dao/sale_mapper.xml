@@ -290,4 +290,16 @@
  		SELECT member_id FROM cocomment WHERE cocomment_idx=#{param1}
  	</select>
  	
+ 	<update id="pDel">
+ 		UPDATE sale SET isDelete = 1 WHERE product_idx = #{param}
+ 	</update>
+ 	
+ 	<update id="cDel">
+ 		UPDATE comments SET isDelete = 1 WHERE comment_idx = #{param}
+ 	</update>
+ 	
+ 	<update id="ccDel">
+ 		UPDATE cocomment SET isDelete = 1 WHERE cocomment_idx = #{param}
+ 	</update>
+ 	
  </mapper>

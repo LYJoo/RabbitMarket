@@ -426,7 +426,7 @@
         </div>
         <div class="product_update">
         	<c:if test="${detail.seller_id eq sessionScope.loginId}">
-        		<a href="#">수정</a> <a href="#">삭제</a>
+        		<a href="#">수정</a> <a style="cursor: pointer;" onclick="pDel(${detail.product_idx})">삭제</a>
         	</c:if>
         	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
         		 <a style="cursor: pointer;"  onclick="report(${detail.product_idx},1001,'${detail.seller_id}')">신고</a>
@@ -472,7 +472,7 @@
             </td>
             <td rowspan="2" class="comment_update_btn">
 	        	<c:if test="${detail.seller_id eq sessionScope.loginId}">
-	        		<a href="#">수정</a> <a href="#">삭제</a>
+	        		<a href="#">수정</a> <a style="cursor: pointer;" onclick="cDel(${list.comment_idx},${detail.product_idx})">삭제</a>
 	        	</c:if>
 	        	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
 	        		 <a style="cursor: pointer;"  onclick="report(${list.comment_idx},1002,'${list.member_id}')">신고</a>
@@ -516,7 +516,12 @@
 <script>
 	jQuery.noConflict();
     $(".trade_state_select_box").select2();
-
+	
+    var msg = "${msg}";
+    if(msg != ""){
+    	alert(msg);
+    }
+    
     function value2(elem,e,div) {
         if(e = '거래중'){
             elem.innerHTML="<option value='거래완료'>거래완료</option><option value='거래취소'>거래취소</option>";
@@ -603,7 +608,7 @@
         	content += "<td class='comment_writer_id'>"+data[i].member_id +"  "+ data[i].reg_date+"</td>";
         	content += "<td rowspan='2' class='comment_update_btn'>";
         	if(data[i].member_id == loginId){
-        		content += "<a href='#'>수정</a> <a href='#'>삭제</a>";
+        		content += "<a href='#'>수정</a> <a style='cursor: pointer;' onclick='ccDel("+data[i].cocomment_idx+","+${detail.product_idx}+")'>삭제</a>";
         	}else if(data[i].member_id != loginId && loginId != null){
         		content += "<a style='cursor: pointer;'  onclick='cocoReport("+data[i].cocomment_idx+",1003)'>신고</a>";
         
@@ -685,5 +690,17 @@
     }
     function cocoReport(idx, codeNum){
     	window.open('/sale/cocoReportForm?idx='+idx+'&codeNum='+codeNum,'cocoReport','width=500, height=500, top=300, left=500');
+    }
+    
+    function pDel(idx){
+    	location.href='/sale/pDel?idx='+idx;
+    }
+    
+	function cDel(idx, product_idx){
+		location.href='/sale/cDel?idx='+idx+'&product_idx='+product_idx;
+    }
+	
+	function ccDel(idx, product_idx){
+		location.href='/sale/ccDel?idx='+idx+'&product_idx='+product_idx;
     }
 </script>

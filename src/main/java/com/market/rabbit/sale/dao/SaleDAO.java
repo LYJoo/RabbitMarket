@@ -64,4 +64,10 @@ public interface SaleDAO {
 
 	String getTarget(int idx, int codeNum);
 
+	int pDel(int idx);
+
+	int cDel(int idx);
+
+	int ccDel(int idx);
+
 }

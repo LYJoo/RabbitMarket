@@ -455,4 +455,16 @@ public class SaleService {
 		
 		return dao.getTarget(idx, codeNum);
 	}
+
+	public int pDel(int idx) {
+		return dao.pDel(idx);
+	}
+
+	public int cDel(int idx) {
+		return dao.cDel(idx);
+	}
+
+	public int ccDel(int idx) {
+		return dao.ccDel(idx);
+	}
 }

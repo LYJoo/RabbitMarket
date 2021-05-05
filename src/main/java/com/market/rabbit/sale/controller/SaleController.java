@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.CoCommentDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
@@ -212,4 +213,55 @@ public class SaleController {
 
 		return service.report(idx, codeNum, target, report_reason, loginId);
 	}
+	
+	@RequestMapping(value = "/sale/pDel", method = RequestMethod.GET)
+	public String pDel(RedirectAttributes rAttr, @RequestParam int idx) {
+		System.out.println(idx);
+		String msg = "";
+		int success = service.pDel(idx);
+		System.out.println("삭제 성공? "+success);
+		
+		if(success > 0 ) {
+			msg = "상품을 삭제했습니다.";
+			rAttr.addFlashAttribute("msg", msg);
+			return "redirect:/sale/main";
+		}else {
+			msg = "상품 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.";
+			rAttr.addFlashAttribute("msg", msg);
+			return "redirect:/sale/detail?product_idx="+idx;
+		}
+	}
+	
+	@RequestMapping(value = "/sale/cDel", method = RequestMethod.GET)
+	public String cDel( RedirectAttributes rAttr, @RequestParam int idx, @RequestParam int product_idx) {
+		System.out.println(idx + "/"+product_idx);
+		String msg = "";
+		int success = service.cDel(idx);
+		System.out.println("삭제 성공? "+success);
+		
+		if(success > 0 ) {
+			msg = "댓글을 삭제했습니다.";
+		}else {
+			msg = "댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		return "redirect:/sale/detail?product_idx="+product_idx;
+	}
+	
+	@RequestMapping(value = "/sale/ccDel", method = RequestMethod.GET)
+	public String ccDel( RedirectAttributes rAttr, @RequestParam int idx, @RequestParam int product_idx) {
+		System.out.println(idx + "/"+product_idx);
+		String msg = "";
+		int success = service.ccDel(idx);
+		
+		System.out.println("삭제 성공? "+success);
+		
+		if(success > 0 ) {
+			msg = "대댓글을 삭제했습니다.";
+		}else {
+			msg = "대댓글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		return "redirect:/sale/detail?product_idx="+product_idx;
+	}	
 }
