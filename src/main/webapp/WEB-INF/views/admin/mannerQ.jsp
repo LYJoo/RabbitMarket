@@ -8,12 +8,16 @@
     <title>admin_mannerquestion</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- lyj_style -->
-    <link rel="stylesheet" href="lyj_css.css">
-    <style>
-        
-    </style>
+    <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 </head>
 <body>
+	<div id="top_navi_contain_box">
+		<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+	</div>
+	<div id="side_bar_contain_box">
+	<div style="display: contents;">
+		<jsp:include page="../include/adminNavigation.jsp"></jsp:include>
+	</div>
     <div id="list_content">
         <div class="flex_box">
             <h2>매너질문관리</h2>
@@ -23,27 +27,24 @@
                 <tr>
                     <th><div class="mannerq_type">직거래 | 구매자</div></th>
                 </tr>
-                <tr>
-                    <td>판매글을 꼼꼼히 읽은 뒤 문의했나요? <a href="">X</a></td>
-                </tr>
-                <tr>
-                    <td>판매글을 꼼꼼히 읽은 뒤 문의했나요 <a href="">X</a></td>
-                </tr>
+    	       <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
+	        	    <c:forEach items="${directBuyerList}" var="list" varStatus="status">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
+	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
+	                    </tr>
+	                </c:forEach>
+                </tbody>
             </table>
             <table id="직거래/판매자" class="mannerq_table">
                 <tr>
                     <th><div class="mannerq_type">직거래 | 판매자</div></th>
                 </tr>
                 <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
-                    <tr draggable="true" ondragstart="drag(event)" id="idx1" class="order1">
-                        <td><input type="text" value="질문1"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx2" class="order2">
-                        <td><input type="text" value="질문2"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx3" class="order3">
-                        <td><input type="text" value="질문3"/> <a href="">X</a></td>
-                    </tr>
+	        	    <c:forEach items="${directSellerList}" var="list" varStatus="status">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
+	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
+	                    </tr>
+	                </c:forEach>
                 </tbody>
             </table>
             <table id="택배/구매자" class="mannerq_table">
@@ -51,21 +52,11 @@
                     <th><div class="mannerq_type">택배 | 구매자</div></th>
                 </tr>
                 <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
-                    <tr draggable="true" ondragstart="drag(event)" id="idx4" class="order1">
-                        <td><input type="text" value="질문1"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx5" class="order2">
-                        <td><input type="text" value="질문2"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx6" class="order3">
-                        <td><input type="text" value="질문3"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx7" class="order4">
-                        <td><input type="text" value="질문4"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx8" class="order5">
-                        <td><input type="text" value="질문5"/> <a href="">X</a></td>
-                    </tr>
+	        	    <c:forEach items="${deliveryBuyerList}" var="list" varStatus="status">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
+	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
+	                    </tr>
+	                </c:forEach>
                 </tbody>
             </table>
             <table id="택배/판매자" class="mannerq_table">
@@ -73,27 +64,17 @@
                     <th><div class="mannerq_type">택배 | 판매자</div></th>
                 </tr>
                 <tbody ondrop="drop(event)" ondragover="dragEnter(event)">
-                    <tr draggable="true" ondragstart="drag(event)" id="idx9" class="order1">
-                        <td><input type="text" value="질문1"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx10" class="order2">
-                        <td><input type="text" value="질문2"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx11" class="order3">
-                        <td><input type="text" value="질문3"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx12" class="order4">
-                        <td><input type="text" value="질문4"/> <a href="">X</a></td>
-                    </tr>
-                    <tr draggable="true" ondragstart="drag(event)" id="idx13" class="order5">
-                        <td><input type="text" value="질문5"/> <a href="">X</a></td>
-                    </tr>
+	        	    <c:forEach items="${deliverySellerList}" var="list" varStatus="status">
+	                    <tr draggable="true" ondragstart="drag(event)" id="idx${list.manner_idx}" class="order${list.look_order}">
+	                        <td><input type="text" value="${list.manner_content}"/> <a href="./delMannerQ/${list.manner_idx}">X</a></td>
+	                    </tr>
+	                </c:forEach>
                 </tbody>
             </table>
         </div>
         <div id="mannerq_input_box">
             <p>질문 등록하기(각 항목 당 5개 까지만 가능합니다!)</p>
-            <form action="" method="post" onsubmit="return check()">
+            <form action="./writeMannerQ" method="post" onsubmit="return check()">
                 <select name="trade_type" id="trade_type">
                     <option value="">거래방법</option>
                     <option value="직거래">직거래</option>
@@ -109,6 +90,7 @@
                 <button>등록</button>
             </form>
         </div>
+    </div>
     </div>
 </body>
 </html>
@@ -196,8 +178,9 @@
 				                    }
                 $.ajax({
                     url:'./updateMannerQ'
+                    ,contentType: "application/json; charset=UTF-8"
                     ,type:'post'
-                    ,data:JSPN.stringify(params)
+                    ,data:JSON.stringify(params)
                     ,dataType:'JSON'
                     ,success:function(data){
                         console.log(data);
@@ -228,14 +211,20 @@
         //필요한정보??? -> 어떤 컬럼을 어떤 값으로 변경?
         var manner_idx = elem.closest('tr').id.substring(3);
         var val = elem.value;
+        var look_order = elem.closest('tr').className.substring(5);
         console.log("변경 : "+manner_idx+"/"+val);
+        
+        var params = {
+			                "manner_idx":manner_idx
+			                ,"manner_content":val
+			                ,"look_order":look_order
+							}
+        
         $.ajax({
             url:'./updateMannerQ'
+            ,contentType: "application/json; charset=UTF-8"
             ,type:'post'
-            ,data:{
-                "manner_idx":manner_idx
-                ,"manner_content":val
-            }
+            ,data:JSON.stringify(params)
             ,dataType:'JSON'
             ,success:function(data){
                 console.log(data);

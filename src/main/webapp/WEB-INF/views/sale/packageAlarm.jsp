@@ -62,7 +62,7 @@
     <div class="outer_cover">
         <div class="tpackage_alarm_title_cover">
             <div class="package_alarm_title">
-                <img src="resources/img/rabbit_logo.png"/>
+                <img src="/resources/img/rabbit_logo.png"/>
             </div>
         </div>
         <div>
@@ -73,10 +73,16 @@
         </div>
     
         <div class="package_alarm_btn_cover">
-            <div class="package_alarm_btn">
+            <div class="package_alarm_btn" onclick="ok()">
             확인
             </div>
         </div>  
     </div>
 </body>
+<script>
+	function ok(){
+		opener.parent.parent.location.reload();
+		self.close();
+	}
+</script>
 </html>

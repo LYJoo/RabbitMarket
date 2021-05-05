@@ -178,13 +178,28 @@ public class ProfileController2 {
 		return service.callQuestionList(page);
 	}
 	
+	@RequestMapping(value = "myPage/keywordList", method = RequestMethod.GET)
+	public String callKeywordListForm(Model model) {
+		logger.info("마이페이지-키워드 리스트 페이지 요청");
+		return "myPage/memberInfo_keyword";
+	}
 	
-	//키워드
-	@RequestMapping(value = "/myPage/keyword", method = RequestMethod.POST)
-	public ModelAndView keyword(@RequestParam HashMap<String, String> params, HttpSession session) {
-		logger.info("키워드 요청 : "+params);
-		
-		return service.keyword(params,session);
+	@RequestMapping(value = "myPage/callKeywords", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callKeywords() {
+		logger.info("마이페이지-키워드 요청");
+		return service.callKeywords();
+	}
+	
+	@RequestMapping(value = "myPage/delKeyword/{keyword_idx}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> delKeyword(@PathVariable int keyword_idx) {
+		logger.info("마이페이지-{}번 키워드 삭제 요청", keyword_idx);
+		return service.delKeyword(keyword_idx);
+	}
+	
+	@RequestMapping(value = "myPage/writeKeyword/{keyword}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> writeKeyword(@PathVariable String keyword) {
+		logger.info("마이페이지-{} 키워드 등록 요청", keyword);
+		return service.writeKeyword(keyword);
 	}
 	
 }

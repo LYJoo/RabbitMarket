@@ -103,7 +103,7 @@
         for(var i=0;i<list.length;i++){
             content +="<tr>";
             content +="<td >"+list[i].notice_idx+"</td>";
-            content +="<td id='w' colspan='2' ><a href='./detailNotice/"+list[i].notice_idx+"'>"+list[i].subject+"</a></td>";
+            content +="<td id='w' colspan='2' ><a href='./helpNoticeDetail/"+list[i].notice_idx+"'>"+list[i].subject+"</a></td>";
             content +="<td id='e'>"+list[i].admin_id+"</td>";
             
             //java 에서 가끔 날짜가 milliseconds 로 나올 경우...

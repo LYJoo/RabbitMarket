@@ -12,6 +12,13 @@
     </style>
 </head>
 <body>
+	<div id="top_navi_contain_box">
+		<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+	</div>
+	<div id="side_bar_contain_box">
+	<div style="display: contents;">
+		<jsp:include page="../include/adminNavigation.jsp"></jsp:include>
+	</div>
     <div id="body_content">
         <div class="flex_box">
             <h2>자주묻는질문</h2>
@@ -47,6 +54,7 @@
                 </tr>
             </table>
         </form>
+    </div>
     </div>
 </body>
 </html>

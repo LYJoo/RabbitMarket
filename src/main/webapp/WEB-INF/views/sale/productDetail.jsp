@@ -283,7 +283,7 @@
         <tr>
             <td rowspan="2" style="width: 100px;">
             	<c:if test="${detail.profileFileDto.newFileName ne null}">
-            		<img src="/photo/${detail.profileFileDto.newFileName}" style="width: 100px; height: 100px;"/>
+            		<img src="/myProfile/${detail.profileFileDto.newFileName}" style="width: 100px; height: 100px;"/>
             	</c:if>
             	<c:if test="${detail.profileFileDto.newFileName eq null}">
             		<img src="/resources/img/default_profile.png" style="width: 100px; height: 100px;"/>
@@ -332,13 +332,13 @@
                 <div class="select_box_cover">
                 	<c:if test="${detail.seller_id eq sessionScope.loginId}">
 	                	<c:if test="${detail.code_num eq 3001}">
-	                		<select class="trade_state_select_box" onchange="value2(this,this.value,$('.select_box_cover'))">
+	                		<select id="trade_state_select_box1" class="trade_state_select_box" onchange="value2(this.value,${detail.product_idx})">
 		                        <option value="판매중">판매중</option>
 		                        <option value="거래중">거래중</option>
 		                    </select>
 	                	</c:if>
                 		<c:if test="${detail.code_num eq 3002}">
-	                		<select class="trade_state_select_box" onchange="value2(this,this.value,$('.select_box_cover'))">
+	                		<select id="trade_state_select_box2" class="trade_state_select_box" onchange="value3(this.value,${detail.product_idx})">
 		                        <option value="거래중">거래중</option>
 		                        <option value="거래취소">거래취소</option>
 		                        <option value="거래완료">거래완료</option>
@@ -429,12 +429,12 @@
     <div class="product_update_cover">
         <div class="product_update">
         	<c:if test="${detail.seller_id eq sessionScope.loginId and detail.pull_up eq false}">
-        		<a href="#">끌어올리기</a> 
+        		
         	</c:if>
         </div>
         <div class="product_update">
         	<c:if test="${detail.seller_id eq sessionScope.loginId}">
-        		<a href="#">수정</a> <a style="cursor: pointer;" onclick="pDel(${detail.product_idx})">삭제</a>
+        		<a style="cursor: pointer;" onclick="pDel(${detail.product_idx})">삭제</a>
         	</c:if>
         	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
         		 <a style="cursor: pointer;"  onclick="report(${detail.product_idx},1001,'${detail.seller_id}')">신고</a>
@@ -469,7 +469,7 @@
 			<tr>
             <td rowspan="2" class="comment_profile">
             	<c:if test="${list.profileFileDto.newFileName ne null}">
-                	<img class="comment_profile" src="/photo/${list.profileFileDto.newFileName}"/>
+                	<img class="comment_profile" src="/myProfile/${list.profileFileDto.newFileName}"/>
             	</c:if>
             	<c:if test="${list.profileFileDto.newFileName eq null}">
                 	<img class="comment_profile" src="/resources/img/default_profile.png"/>
@@ -480,7 +480,8 @@
             </td>
             <td rowspan="2" class="comment_update_btn">
 	        	<c:if test="${detail.seller_id eq sessionScope.loginId}">
-	        		<a href="#">수정</a> <a style="cursor: pointer;" onclick="cDel(${list.comment_idx},${detail.product_idx})">삭제</a>
+	        		<a style="cursor: pointer;" onclick="cUpdateForm(${list.comment_idx})">수정</a> |
+	        		<a style="cursor: pointer;" onclick="cDel(${list.comment_idx},${detail.product_idx})">삭제</a>
 	        	</c:if>
 	        	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
 	        		 <a style="cursor: pointer;"  onclick="report(${list.comment_idx},1002,'${list.member_id}')">신고</a>
@@ -488,7 +489,18 @@
             </td>
         </tr>
         <tr>
-           <td class="comment_content" colspan="2">${list.comment_content}<span class="cocoment_write_btn" onclick="cocoment_write_input(${list.comment_idx})"> 답글</span></td> 
+           <td class="comment_content" colspan="2">
+           		<span id="comment_content_value_${list.comment_idx}">${list.comment_content}</span>
+           		<!-- 수정폼-->
+           		<span id="comment_updateForm_${list.comment_idx}" style="align-items: center;display:none;">
+           			<input type="text" id="comment_content_input_${list.comment_idx}"
+           				name="comment_content" value="${list.comment_content}" 
+           				style="width:80%;border:none;background-color:lightgray;"/>
+           			&nbsp;
+           			<a style="cursor: pointer;" onclick="cUpdate(${list.comment_idx},${detail.product_idx})">수정하기</a>
+           		</span>
+           		<div class="cocoment_write_btn" onclick="cocoment_write_input(${list.comment_idx})"> 답글</div>
+           </td> 
         </tr>
         <tr id="cocoment_write_${list.comment_idx}" style="display: none;">
             <td></td>
@@ -530,18 +542,56 @@
     	alert(msg);
     }
     
-    function value2(elem,e,div) {
-        if(e = '거래중'){
-            elem.innerHTML="<option value='거래완료'>거래완료</option><option value='거래취소'>거래취소</option>";
-        }else if(e = '거래완료'){
-            div.innerHTML = "거래완료";
-            elem.remove();
-        }
-        else if(e = '거래취소'){
-            elem.innerHTML="<option value='판매중'>판매중</option><option value='거래중'>거래중</option>";
+    function value2(e, idx) {
+    	console.log(e);
+        if(e == '거래중'){
+        	window.open('/sale/chTradeStateForm?idx='+idx,'chTradeStateForm','width=550, height=550, top=100, left=500');
         }
     }
     
+    function value3(e,idx) {
+    	if(e == '거래취소'){
+    		$.ajax({
+    			url:'/sale/tradeCancel'
+    			,type: 'GET'
+    			,data:{"product_idx": idx}
+    			,success:function(data){
+    				var ok = confirm(data.buyer_id+'님과의 거래를 취소하시겠습니까?');
+    				if(ok){
+    					window.open('/sale/tradeCancelReason?product_idx='+idx,'tradeCancel','width=550, height=550, top=100, left=500');
+    				}else{
+    					window.location.reload();
+    				}
+    			},
+    			error: function(error){
+    				console.log(error);
+    			}
+    		});
+        }
+        else if(e == '거래완료'){
+        	$.ajax({
+    			url:'/sale/tradeEnd'
+    			,type: 'POST'
+    			,data:{"product_idx": idx}
+    			,success:function(data){
+    				var msg = data.msg;
+    				if(msg != ""){
+    					alert(msg);
+    					window.location.reload();
+    				}
+    				if(data.success == 1){
+    					var trade_idx = data.trade_idx;
+    					alert('거래가 완료되었습니다.');
+    					window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					window.location.reload();
+    				}
+    			},
+    			error: function(error){
+    				console.log(error);
+    			}
+    		});
+        }
+    }
 
     var slideIndex = 1;
     showSlides(slideIndex);
@@ -610,13 +660,13 @@
         	if(data[i].profileFileDto == null){
         		content += "<img class='comment_profile' src='/resources/img/default_profile.png'>";
         	}else if(data[i].profileFileDto != null){
-        		content += "<img class='comment_profile' src='/photo/"+data[i].profileFileDto.newFileName+"'/>";
+        		content += "<img class='comment_profile' src='/myProfile/"+data[i].profileFileDto.newFileName+"'/>";
         	}
         	content += "</td>";
         	content += "<td class='comment_writer_id'>"+data[i].member_id +"  "+ data[i].reg_date+"</td>";
         	content += "<td rowspan='2' class='comment_update_btn'>";
         	if(data[i].member_id == loginId){
-        		content += "<a href='#'>수정</a> <a style='cursor: pointer;' onclick='ccDel("+data[i].cocomment_idx+","+${detail.product_idx}+")'>삭제</a>";
+        		content += "<a style='cursor: pointer;' onclick='ccDel("+data[i].cocomment_idx+","+${detail.product_idx}+")'>삭제</a>";
         	}else if(data[i].member_id != loginId && loginId != null){
         		content += "<a style='cursor: pointer;'  onclick='cocoReport("+data[i].cocomment_idx+",1003)'>신고</a>";
         
@@ -710,6 +760,35 @@
 	
 	function ccDel(idx, product_idx){
 		location.href='/sale/ccDel?idx='+idx+'&product_idx='+product_idx;
+    }
+	
+	function cUpdateForm(idx){
+		$('#comment_content_value_'+idx).css({'display':'none'});
+		$('#comment_updateForm_'+idx).css({'display':'flex'});
+    }
+	
+	function cUpdate(idx){
+		var comment_idx = idx;
+		var comment_content = $('#comment_content_input_'+idx).val();
+		
+	   	$.ajax({
+			url:'/sale/commentUpdate'
+			,type: 'POST'
+			,data:{"comment_idx" : comment_idx,
+				"comment_content": comment_content}
+			,success:function(data){
+				if(data.success == 1){
+					alert('댓글이 수정되었습니다.');
+					$('#comment_content_value_'+idx).html(comment_content);
+					$('#comment_content_value_'+idx).css({'display':''});
+					$('#comment_updateForm_'+idx).css({'display':'none'});
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+		
     }
 	
 	function wishPlus1(idx){ // 위시리스트에 전혀 존재하지 않는상태 / 빈하트

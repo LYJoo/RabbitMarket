@@ -33,16 +33,16 @@ public class CommentsDTO {
 	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
-	public boolean isBlind() {
+	public boolean isIsBlind() {
 		return isBlind;
 	}
-	public void setBlind(boolean isBlind) {
+	public void setIsBlind(boolean isBlind) {
 		this.isBlind = isBlind;
 	}
-	public boolean isDelete() {
+	public boolean isIsDelete() {
 		return isDelete;
 	}
-	public void setDelete(boolean isDelete) {
+	public void setIsDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
 	public String getMember_id() {

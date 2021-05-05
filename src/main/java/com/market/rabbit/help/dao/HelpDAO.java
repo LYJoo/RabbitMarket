@@ -42,6 +42,8 @@ public interface HelpDAO {
 	QuestionDTO detailQ(int question_idx);
 
 	int answerQ(QuestionDTO dto);
+
+	QuestionDTO quupdate(int question_idx);
 	
 	
 

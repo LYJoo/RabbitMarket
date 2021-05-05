@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.BlockDTO;
+import com.market.rabbit.dto.KeywordDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.QuestionDTO;
@@ -296,6 +297,43 @@ public class ProfileService2 {
 		map.put("range", range);
 		map.put("currPage", page);
 		map.put("questionList", questionList);
+		return map;
+	}
+
+	public HashMap<String, Object> callKeywords() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String loginId = "hwi";
+		
+		ArrayList<KeywordDTO> keywords = dao.callKeywords(loginId);
+		
+		map.put("keywords", keywords);
+		return map;
+	}
+
+	public HashMap<String, Object> delKeyword(int keyword_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String loginId = "hwi";
+		boolean success = false;
+		
+		if(dao.delKeyword(loginId, keyword_idx) > 0) {
+			success = true;
+		}
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> writeKeyword(String keyword) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String loginId = "hwi";
+		boolean success = false;
+		
+		if(dao.writeKeyword(loginId, keyword) > 0) {
+			success = true;
+		}
+		
+		map.put("success", success);
+		
 		return map;
 	}
 	

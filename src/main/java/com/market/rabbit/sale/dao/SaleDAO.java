@@ -1,9 +1,11 @@
 package com.market.rabbit.sale.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.market.rabbit.dto.CoCommentDTO;
 import com.market.rabbit.dto.CommentsDTO;
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.SaleCategoryDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.dto.SaleFileDTO;
@@ -79,5 +81,47 @@ public interface SaleDAO {
 	int wishPlus2(int idx, String loginId);
 
 	int wishMinus(int idx, String loginId);
+
+	int existId(String id);
+
+	int changeIng(int idx, String id, String trade_type, String loginId);
+
+	void changeIng2(int idx);
+
+	int getTardeIdx(int idx, String id);
+
+	int setMeetDate(int trade_idx, Date date);
+
+	String getBuyerId(int product_idx);
+
+	int getTradeIdx(int product_idx);
+
+	int setCancelReason(int trade_idx, String cancel_reason, Date date);
+
+	int setCodeNum(int product_idx);
+
+	String getTradeType(int product_idx);
+
+	int getTracking_Number(int product_idx);
+
+	int setTradeEnd(int trade_idx, Date date);
+
+	int setTradeEnd2(int product_idx);
+
+	ArrayList<MannerQuestionDTO> getMannerQuestion();
+
+	int setTrading(int trade_idx);
+
+	String getMannerBuyerId(int trade_idx);
+
+	int setMemberManner(String buyer_id, int point);
+
+	int setMemberMannerCnt(String buyer_id);
+
+	void setMannerPercent(String buyer_id, double mannerPercent);
+
+	int getmannerScore(String buyer_id);
+
+	int commentUpdate(int comment_idx, String comment_content);
 
 }

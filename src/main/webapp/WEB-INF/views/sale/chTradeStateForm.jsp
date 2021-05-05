@@ -122,40 +122,6 @@
 
     <span id="id_check_space"></span>
 
-    <p>최근 쪽지 받은 회원</p>
-    <table>
-    
-        <tr>
-            <th>순번</th>
-            <th>회원 ID</th>
-        </tr>
-        
-        <tr>
-	            <td>1</td>
-	            
-	             <td><a href="#">lololo</a></td>
-        </tr>
-        
-        <tr>
-	            <td>2</td>
-	            
-	            <td><a href="#">lololo</a></td>
-        </tr>
-        
-        <tr>
-            <td>3</td>
-             <td><a href="#">lololo</a></td>
-        </tr>
-        <tr>
-            <td>4</td>
-             <td><a href="#">lololo</a></td>
-        </tr>
-        <tr>
-            <td>5</td>
-             <td><a href="#">lololo</a></td>
-        </tr>
-    </table>
-
     <p>거래방식</p>
     <div>
         <input type="radio" name="trade_type" value="택배"/> 택배
@@ -163,13 +129,55 @@
     </div>
 
     <div class="trade_state_change_btn_cover">
-        <div class="trade_state_change_btn">
+        <div class="trade_state_change_btn" onclick="change()">
         변경
         </div>
-        <div class="trade_state_change_btn">
+        <div class="trade_state_change_btn" onclick="cancel()">
         취소
         </div>
     </div>  
 </div>
 </body>
+<script>
+function cancel(){
+	var cancelCheck = confirm('정말 취소하시겠습니까?');
+	if(cancelCheck){
+		opener.$("#trade_state_select_box1 option:eq(0)").prop('selected', 'selected').change();
+		self.close();
+	}
+}
+
+function change(){
+	var trade_type = $('input[name="trade_type"]:checked').val();
+	var id = $("#buyer_id").val();
+	var idx = "${idx}";
+	console.log(trade_type + id);
+	
+	if(id == "" || trade_type == null){
+		alert("빈칸없이 입력해주세요.");
+	}else{
+		$.ajax({
+			url:'/sale/changeIng'
+			,type: 'POST'
+			,data:{"trade_type": trade_type
+				,"id":id
+				,"idx": idx}
+			,success:function(data){
+				if(data.existId == 0){
+					$("#id_check_space").html('존재하지 않는 회원입니다.');
+				}else if(data.success == 1){
+					if(trade_type == '직거래'){
+						location.href='/sale/enterMeetDate?trade_idx='+data.trade_idx
+					}else{
+						location.href='/sale/packageAlarm'
+					}
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	}
+}
+</script>
 </html>
