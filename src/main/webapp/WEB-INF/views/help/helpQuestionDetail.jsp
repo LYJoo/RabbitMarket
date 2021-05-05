@@ -64,13 +64,13 @@
 		</tr>
 		<tr>
 			<td class="title">카테고리</td>
-			<td >신고</td>
+			<td >${dto.question_category}</td>
 			<td class="title">작성자</td>
 			<td>${dto.member_id}</td>
 		</tr>
 		<tr>
 			<td class="title">문의상태</td>
-			<td >답변완료</td>
+			<td>${msg}</td>
 			<td class="title">작성일</td>
 			<td>${dto.reg_date}</td>
 		</tr>
@@ -88,9 +88,9 @@
 		
 		<td>
 		<div class="up">
-		<button onclick="location.href = 'question_update?idx=${dto.question_idx}'">수정</button>
+		<button onclick="location.href = '/help/help_Question_Update?=idx${question_idx}'">수정</button>
 		 &nbsp;
-		<button onclick="location.href = 'question_delete?idx=${dto.question_idx}'">삭제</button>
+		<button onclick="location.href = '/help/help_Question_Delete/${question_idx}'">삭제</button>
 		</div>	
 		<br/>
 		</td>	
@@ -100,7 +100,7 @@
 			<td class="title">작성자</td>
 			<td >${dto.admin_id}</td>
 			<td class="title">작성일</td>
-			<td >2021.04.26</td>
+			<td >${dto.answer_date}</td>
 			
 		</tr>
 		<tr>
@@ -124,8 +124,6 @@
   
 </body>
 <script>
-
-
 
 </script>
 </html>

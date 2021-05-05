@@ -77,7 +77,7 @@ public class HelpService {
 		int end = page*pagePerCnt;
 		int start = end - pagePerCnt+1;
 		ArrayList<FrequentlyQuestionDTO> list = dao.faqList(start,end);	
-
+		
 		map.put("list", list);
 		map.put("range", range);
 		map.put("currPage", page);
@@ -127,6 +127,7 @@ public class HelpService {
 	
 	//1:1문의하기 상세보기
 	public QuestionDTO detailQ(int question_idx) {
+		
 		return dao.detailQ(question_idx);
 	}
 	
@@ -134,6 +135,7 @@ public class HelpService {
 	public int answerQ(QuestionDTO dto) {
 		return dao.answerQ(dto);
 	}
+
 	
 	
 	
