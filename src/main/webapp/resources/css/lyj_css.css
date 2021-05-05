@@ -1,8 +1,19 @@
+ /* 네비게이션 */
+ #top_navi_contain_box{
+	 max-width: 1260px;
+	 margin: 0 auto;
+ }
+ #side_bar_contain_box{
+ 	width: 99%;
+ 	max-width: 1260px;
+ 	margin: 20px auto;
+ 	display: flex;
+ }
+
 /*리스트 전체박스*/
 #list_content{
     width: 99%;
-    max-width: 800px;
-    margin-left: auto;
+    max-width: 900px;
     margin-right: auto;
     margin-top: 10px;
 }
@@ -11,7 +22,7 @@
 }
 /*본문전체박스 : 상세, 등록, 수정*/
 #body_content{
-    max-width: 700px;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -168,7 +179,6 @@ td input[type='text']:focus
     background-color: white;
 }
 #content_td{/*내용,textarea가 있는 td*/
-    height: 400px;
     white-space: pre-line;/*style="white-space: pre-line;"*/
 }
 
@@ -256,7 +266,7 @@ button:hover,input[type='submit']:hover{
 /*리스트 버튼 스타일*/
 /*상세 수정 등록 버튼 스타일*/
 .btn{
-    width: 30%;
+    width: 20%;
     min-width: 200px;
 }
 
@@ -266,7 +276,7 @@ button:hover,input[type='submit']:hover{
     display: inline-block;
     white-space:nowrap;
     padding: 5px;
-    margin-bottom: 10px;
+    margin: 0px 5px 15px 5px;
     color: white;
     background-color: sandybrown;
     border: 1px solid sandybrown;
