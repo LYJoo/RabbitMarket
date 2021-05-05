@@ -258,4 +258,36 @@
 		(select m.member_id, newFileName,withdraw,isblack from ((select * from member where withdraw=0 and isblack=0)m left outer join (select * from profileFile)f on m.member_id = f.member_id))mem on c.member_id = mem.member_id where comment_idx = #{param} ORDER BY reg_date ASC
  	</select>
  	
+ 	<insert id="commentWrite">
+ 		INSERT INTO comments(comment_idx, comment_content,member_id,product_idx) VALUES(seq_comment.NEXTVAL,#{param2},#{param3},#{param1})
+ 	</insert>
+ 	
+ 	<insert id="cocommentWrite">
+ 		insert into cocomment(cocomment_idx, cocomment_content,comment_idx,member_id) values(seq_cocomment.NEXTVAL,#{param2},#{param1},#{param3})
+ 	</insert>
+ 	
+ 	<select id="getSubject" resultType="String">
+ 		SELECT sale_subject FROM sale WHERE product_idx=#{param}
+ 	</select>
+ 	
+ 	<select id="getMember_id" resultType="String">
+ 		SELECT seller_id FROM sale WHERE product_idx=#{param}
+ 	</select>
+ 	
+ 	<insert id="sendAlarm">
+ 		INSERT INTO alarm(alarm_idx, alarm_content, member_id, code_num) VALUES(seq_alarm.NEXTVAL, #{param1},#{param2}, #{param3})
+ 	</insert>
+ 	
+ 	<insert id="report">
+ 		INSERT INTO report(report_idx, target_idx, code_num, reporter, target, report_reason, report_state) VALUES(seq_report.NEXTVAL, #{param1},#{param2}, #{param5}, #{param3},#{param4},'처리중')
+ 	</insert>
+ 	
+ 	<select id="chReport" resultType="int">
+ 		SELECT count(report_idx) FROM report WHERE target_idx=#{param1} AND code_num=#{param2} AND reporter=#{param3} 
+ 	</select>
+ 	
+ 	<select id="getTarget" resultType="String">
+ 		SELECT member_id FROM cocomment WHERE cocomment_idx=#{param1}
+ 	</select>
+ 	
  </mapper>

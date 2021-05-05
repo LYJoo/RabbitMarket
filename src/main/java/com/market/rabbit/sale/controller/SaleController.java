@@ -143,4 +143,73 @@ public class SaleController {
 		return map;
 	}
 	
+	@RequestMapping(value = "/sale/commentWrite", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> commentWrite(@RequestParam int product_idx, @RequestParam String comment_content ,HttpSession session) {
+		logger.info("받아온 파라메터 값"+ comment_content);
+		String loginId = (String) session.getAttribute("loginId");
+
+		return service.commentWrite(product_idx, comment_content, loginId);
+	}
+	
+	@RequestMapping(value = "/sale/cocommentWrite", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> cocommentWrite(@RequestParam int comment_idx, @RequestParam String cocomment_content ,HttpSession session) {
+		logger.info("받아온 파라메터 값"+ comment_idx + cocomment_content);
+		String loginId = (String) session.getAttribute("loginId");
+
+		return service.cocommentWrite(comment_idx, cocomment_content, loginId);
+	}
+	
+	@RequestMapping(value = "/sale/reportForm", method = RequestMethod.GET)
+	public String reportForm(Model model,@RequestParam int idx, @RequestParam int codeNum, @RequestParam String target,HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		int chReport  = 0;
+		int reporter = service.chReport(idx,codeNum,loginId);
+		if(reporter == 1) {
+			chReport = 1;
+		}
+		System.out.println(chReport);
+		if(chReport == 0) {
+			model.addAttribute("chReport", chReport);
+			model.addAttribute("idx", idx);
+			model.addAttribute("codeNum", codeNum);
+			model.addAttribute("target", target);
+		}else {
+			model.addAttribute("chReport", chReport);
+		}
+
+		return "/sale/reportForm";
+	}
+	
+	@RequestMapping(value = "/sale/cocoReportForm", method = RequestMethod.GET)
+	public String cocoReportForm(Model model,@RequestParam int idx, @RequestParam int codeNum,HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		
+		System.out.println(idx + " ./ "+codeNum);
+		
+		String target = service.getTarget(idx, codeNum);
+		System.out.println("타켓: "+target);
+		int chReport  = 0;
+		int reporter = service.chReport(idx,codeNum,loginId);
+		if(reporter == 1) {
+			chReport = 1;
+		}
+		System.out.println(chReport);
+		if(chReport == 0) {
+			model.addAttribute("chReport", chReport);
+			model.addAttribute("idx", idx);
+			model.addAttribute("codeNum", codeNum);
+			model.addAttribute("target", target);
+		}else {
+			model.addAttribute("chReport", chReport);
+		}
+		return "/sale/reportForm";
+	}
+	
+	@RequestMapping(value = "/sale/report", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> report(@RequestParam int idx, @RequestParam int codeNum, @RequestParam String target, @RequestParam String report_reason ,HttpSession session) {
+		logger.info("받아온 파라메터 값"+ idx + codeNum + target + report_reason);
+		String loginId = (String) session.getAttribute("loginId");
+
+		return service.report(idx, codeNum, target, report_reason, loginId);
+	}
 }

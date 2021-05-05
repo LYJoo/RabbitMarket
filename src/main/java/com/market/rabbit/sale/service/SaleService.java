@@ -413,4 +413,46 @@ public class SaleService {
 		}
 		
 	}
+
+	public HashMap<String, Object> commentWrite(int product_idx, String comment_content, String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = dao.commentWrite(product_idx, comment_content, loginId);
+		String member_id = dao.getMember_id(product_idx);
+		if(loginId.equals(member_id)) {
+		}else {
+			String product_subject = dao.getSubject(product_idx);
+			String msg = "["+loginId+"]님이 회원님의 게시글 ["+product_subject+"]에 댓글을 작성하셨습니다.";
+			dao.sendAlarm(msg,member_id ,2001);
+		}
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> cocommentWrite(int comment_idx, String cocomment_content, String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		int success = dao.cocommentWrite(comment_idx,cocomment_content,loginId);
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> report(int idx, int codeNum, String target, String report_reason, String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		success = dao.report(idx, codeNum, target, report_reason, loginId);
+		
+		map.put("success", success);
+		return map;
+	}
+
+	public int chReport(int idx, int codeNum, String loginId) {
+		
+		return dao.chReport(idx, codeNum, loginId);
+	}
+
+	public String getTarget(int idx, int codeNum) {
+		
+		return dao.getTarget(idx, codeNum);
+	}
 }

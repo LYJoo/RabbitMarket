@@ -60,12 +60,12 @@
         <div class="report_title"><img style="width: 100px;" src="/resources/img/rabbit.jpg"/></div>
     </div>
     <div class="report_new_window">
-        <textarea></textarea>
+        <textarea id="report_reason"></textarea>
         <div class="report_save_btn_cover">
-            <div class="report_save_btn">
+            <div class="report_save_btn" onclick="save()">
             저장
             </div>
-            <div class="report_save_btn">
+            <div class="report_save_btn" onclick="cancel()">
             취소
             </div>
         </div>  
@@ -74,6 +74,50 @@
 </div>
 </body>
 <script>
-
+	check()
+	function check(){
+		var chReport = "${chReport}";
+		if(chReport == 1){
+			alert('이미 신고한 글 입니다.');
+			self.close();
+		}
+	}
+	
+	function cancel(){
+		var cancelCheck = confirm('정말 취소하시겠습니까?');
+		if(cancelCheck){
+			self.close();
+		}
+	}
+	
+	function save(){
+		var idx = "${idx}";
+		var codeNum = "${codeNum}";
+		var target = "${target}";
+		var report_reason = $('#report_reason').val();
+		console.log(report_reason);
+		
+		$.ajax({
+			url: '/sale/report'
+			,type: 'post'
+			,data:{"idx": idx
+				,"codeNum" : codeNum
+				,"target" : target
+				,"report_reason" : report_reason}
+			,dataType: 'json'
+			,success: function(d){
+				console.log(d);
+				if(d.success == 1){
+					alert('신고되었습니다.');
+					self.close();
+				}else{
+					alert('신고가 정상적으로 처리되지 않았습니다. 잠시후 다시 시도해주세요.');
+				}
+			}
+			,error: function(e){
+				console.log(e);
+			}
+		});
+	}
 </script>
 </html>

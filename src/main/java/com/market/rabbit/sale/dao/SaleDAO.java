@@ -48,4 +48,20 @@ public interface SaleDAO {
 
 	ArrayList<CoCommentDTO> cocommentList(int comment_idx);
 
+	int commentWrite(int product_idx, String comment_content, String loginId);
+
+	int cocommentWrite(int comment_idx, String cocomment_content, String loginId);
+
+	String getSubject(int product_idx);
+
+	String getMember_id(int product_idx);
+
+	void sendAlarm(String msg, String member_id, int i);
+
+	int report(int idx, int codeNum, String target, String report_reason, String loginId);
+
+	int chReport(int idx, int codeNum, String loginId);
+
+	String getTarget(int idx, int codeNum);
+
 }
