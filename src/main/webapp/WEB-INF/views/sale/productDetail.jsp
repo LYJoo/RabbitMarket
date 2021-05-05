@@ -429,7 +429,7 @@
     <div class="product_update_cover">
         <div class="product_update">
         	<c:if test="${detail.seller_id eq sessionScope.loginId and detail.pull_up eq false}">
-        		<a href="#">끌어올리기</a> 
+        		
         	</c:if>
         </div>
         <div class="product_update">
