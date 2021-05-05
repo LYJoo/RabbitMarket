@@ -106,4 +106,7 @@ public class ProfileController1 {
 		
 		return service.salelist(session);
 	}
+	
+	//판매내역리스트 페이징처리
+	
 }
