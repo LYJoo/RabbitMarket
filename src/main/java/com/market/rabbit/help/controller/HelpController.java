@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.NoticeDTO;
 import com.market.rabbit.dto.QuestionDTO;
@@ -90,9 +91,12 @@ public class HelpController {
 		}
 		
 		//1대1 문의 삭제
-		@RequestMapping(value = "/help/help_Question_Delete/${question_idx}", method = RequestMethod.GET)
-		public String help_Question_Delete(Model model,@PathVariable int question_idx) {
-			return "help/help_Question_Delete";
+		@RequestMapping(value = "/help/help_Question_Delete", method = RequestMethod.GET)
+		public String remove(@RequestParam String question_idx, RedirectAttributes rttr) throws Exception{
+			logger.info("삭제 idx : "+question_idx);
+			int suc = service.helpDelete(question_idx);
+			rttr.addFlashAttribute("result","removeOK");
+			return "redirect:/help/helpQuestionDetail/{question_idx}";
 		}
 		
 		//1대1 문의글쓰기

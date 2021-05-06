@@ -131,6 +131,11 @@
 		VALUES(seq_question.NEXTVAL,#{subject},#{member_id},#{question_category},#{isPw},#{content})
 	</insert>
 	
+	 <!-- 1대1 문의글 삭제 -->
+ 	<delete id="helpDelete">
+ 		DELETE FROM question WHERE question_idx=#{question_idx}
+ 	</delete>
+	
 	<!-- 1대1문의글 수정 
  	<update id="quupdate" parameterType="question">
  		UPDATE question SET 
