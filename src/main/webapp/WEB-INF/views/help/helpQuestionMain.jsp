@@ -13,6 +13,7 @@
     <!-- 페이징 라이브러리(제이쿼리 반드시 필요, 버전도 맞아야 함) -->
     <script src="/resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
     <!-- lyj_style -->
+    <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
     
  <style type="text/css">
 	table{
@@ -76,11 +77,6 @@
     </div>
 </body>
 <script>
-//글 등록시 오는 경고창
-var check = "${help_write_msg}";
-if(check != ""){
-	alert(check);
-}
 	jQuery.noConflict();
     var showPage = 1;//첫시작시에 보여줄 페이지 1
     var pagePerNum = 10;//보여줄갯수

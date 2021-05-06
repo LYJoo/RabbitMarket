@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -80,27 +79,13 @@ public class HelpController {
 			return mav;
 		}
 		
-		//1대1 문의 수정페이지 이동
+		//1대1 문의 수정하기
 		@RequestMapping(value = "/help/help_Question_Update/${question_idx}", method = RequestMethod.GET)
 		public String help_Question_Update(Model model,@PathVariable int question_idx) {
 			logger.info("1대1문의 수정 요청"+question_idx);
 			QuestionDTO dto = service.detailQ(question_idx);
 			model.addAttribute("dto", dto);
 			return "help/help_Question_Update";
-		}
-		
-		@RequestMapping(value = "/help/helpwrite", method = RequestMethod.POST)
-		public String helpwrite(Model model, @ModelAttribute QuestionDTO dto) {
-			logger.info("1대1 문의 글 등록 :"+dto.getSubject()+"/"+dto.getMember_id()+"/"+dto.getQuestion_category()+"/"+dto.getIsPw()+"/"+dto.getContent());
-			int suc = service.helpwrite(dto);
-			String msg ="문의글 등록에 실패했으니 다시 시도해주세요";
-			String page = "redirect:/help/helpwrite";
-			if(suc != 0) {
-				msg ="등록 성공";
-				page ="/help/helpQuestionMain";
-			}
-			model.addAttribute("help_write_msg", msg);
-			return page;
 		}
 		
 		//1대1 문의 페이지 요청
