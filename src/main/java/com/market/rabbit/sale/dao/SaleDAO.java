@@ -128,4 +128,10 @@ public interface SaleDAO {
 
 	int alarmWaybillNumber(String loginId, String msg);
 
+	String findSellerThisTrade(int trade_idx);
+
+	String findBuyerThisTrade(int trade_idx);
+
+	int tradeEndAlarm(String member_id, String alarm_content);
+
 }

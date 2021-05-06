@@ -372,6 +372,7 @@ public class SaleController {
 		return service.saveCancelReason(product_idx, trade_idx, cancel_reason);
 	}
 	
+	//거래완료로 변경 요청
 	@RequestMapping(value = "/sale/tradeEnd", method = RequestMethod.POST)
 	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx) {
 		logger.info("받아온 파라메터 값"+ product_idx);

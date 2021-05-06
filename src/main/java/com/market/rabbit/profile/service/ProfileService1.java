@@ -18,6 +18,7 @@ import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.ReviewDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.dto.SaleFileDTO;
+import com.market.rabbit.dto.TradingDTO;
 import com.market.rabbit.dto.WishDTO;
 import com.market.rabbit.profile.dao.ProfileDAO1;
 
@@ -97,7 +98,7 @@ public class ProfileService1 {
 		logger.info("회원프로필 요청");
 		ModelAndView mav = new ModelAndView();
 		String page = "myPage/profile";
-		String loginId="";
+		String loginId="hwi";
 		
 		MemberDTO member = dao.profile(loginId);
 		ProfileFileDTO fileList = dao.fileList(loginId);
@@ -113,7 +114,7 @@ public class ProfileService1 {
 		logger.info("후기 요청");
 		ModelAndView mav = new ModelAndView();
 		String page="myPage/profile";
-		String loginId="";
+		String loginId="hwi";
 		
 		SaleDTO sale = dao.sale(loginId);
 		ReviewDTO review = dao.review(loginId);
@@ -129,7 +130,7 @@ public class ProfileService1 {
 		logger.info("판매게시글 요청");
 		ModelAndView mav = new ModelAndView();
 		String page="myPage/profile";
-		String loginId="";
+		String loginId="hwi";
 		
 		SaleDTO mysale = dao.mysale(loginId);
 		SaleFileDTO salefile = dao.salefile(loginId);
@@ -145,7 +146,10 @@ public class ProfileService1 {
 		logger.info("판매내역 요청");
 		ModelAndView mav = new ModelAndView();
 		String page = "myPage/salelist";
-		String loginId = "";
+		String loginId = "lalala";
+		
+//		ArrayList<SaleFileDTO> salelistFile = dao.salelistFile(loginId);
+//		ArrayList<SaleDTO> salelistlist = dao.salelistlist(loginId);
 		
 		SaleFileDTO salelistFile = dao.salelistFile(loginId);
 		SaleDTO salelistlist = dao.salelistlist(loginId);
@@ -153,11 +157,26 @@ public class ProfileService1 {
 		
 		mav.addObject("salelistFile", salelistFile);
 		mav.addObject("salelistlist", salelistlist);
-		mav.addObject("path", "/sale/"+salelistFile.getNewFileName());
+//		mav.addObject("path", "/sale/"+salelistFile.getNewFileName());
 		mav.setViewName(page);
 		return mav;
 	}
 
+	@Transactional
+	public ModelAndView salelistdetail(HttpSession session) {
+		logger.info("거래상세보기 요청");
+		ModelAndView mav = new ModelAndView();
+		String page = "myPage/salelistdetail";
+		String loginId = "lalala";
+		
+		SaleDTO saledetail = dao.saledetail(loginId);
+		TradingDTO tradedetail = dao.tradedetail(loginId);
+		
+		mav.addObject("saledetail", saledetail);
+		mav.addObject("tradedetail", tradedetail);
+		mav.setViewName(page);
+		return mav;
+	}
 
 
 
