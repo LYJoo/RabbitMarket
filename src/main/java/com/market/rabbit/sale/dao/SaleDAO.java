@@ -126,4 +126,6 @@ public interface SaleDAO {
 
 	int cocommentUpdate(int cocomment_idx, String cocomment_content);
 
+	int alarmWaybillNumber(String loginId, String msg);
+
 }

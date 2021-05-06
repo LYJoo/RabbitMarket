@@ -524,10 +524,17 @@ public class SaleService {
 		existId = dao.existId(id);
 		
 		if(existId >0) { //존재하는 아이디면
-			success = dao.changeIng(idx, id, trade_type, loginId);
+			success = dao.changeIng(idx, id, trade_type, loginId);//거래테이블에 삽입
 			if(success > 0) {
-				dao.changeIng2(idx);
-				trade_idx = dao.getTardeIdx(idx, id);
+				dao.changeIng2(idx);//판매테이블에 거래상태변경
+				trade_idx = dao.getTardeIdx(idx, id);//삽입한 거래테이블의 idx
+				if(trade_type.equals("택배")) {
+					//운송장번호 입력하라고 알림 보내기, 누구한테? loginId한테! 코드번호는? 2008 택배 운송장번호 입력!
+					//택배 운송장 알림 내용 : [id]님과의 거래에 운송장번호를 입력해 주세요!(거래번호:trade_idx)
+					String msg = "["+id+"] 님과의 거래에 운송장 번호를 입력 해 주세요! (거래번호 : "+trade_idx+")";
+					int alarm_success = dao.alarmWaybillNumber(loginId, msg);
+					logger.info("운송장 알림 성공 여부 : " +alarm_success);
+				}
 			}
 		}
 		

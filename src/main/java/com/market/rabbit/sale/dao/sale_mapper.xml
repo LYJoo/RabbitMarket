@@ -413,4 +413,12 @@
  		UPDATE cocomment SET cocomment_content=#{param2} WHERE cocomment_idx=#{param1}
  	</update>
  	
+ 	<!-- 운송장번호 알람 가라 -->
+	<insert id="alarmWaybillNumber">
+		INSERT INTO alarm(alarm_idx, alarm_content, member_id, code_num)
+			VALUES (seq_alarm.NEXTVAL, #{param2}, #{param1}, '2008') 
+	</insert>
+ 	
+ 	
+ 	
  </mapper>
