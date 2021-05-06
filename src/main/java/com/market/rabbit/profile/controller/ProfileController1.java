@@ -1,5 +1,6 @@
 package com.market.rabbit.profile.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.market.rabbit.dto.MemberDTO;
+import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.profile.service.ProfileService1;
 
 
@@ -107,6 +110,18 @@ public class ProfileController1 {
 		return service.salelist(session);
 	}
 	
+//	@RequestMapping(value = "myPage/salelist", method = RequestMethod.GET)
+//	public void salelist(Model model, HttpSession session) throws Exception {
+//		logger.info("판매내역 요청");
+//		
+//		MemberDTO member = (MemberDTO)session.getAttribute("member");
+//		String loginId = member.getMember_id();
+//		
+//		ArrayList<SaleDTO> salelist = service.salelist(loginId);
+//		
+//		model.addAttribute("salelist", salelist);
+//	}
+	
 	//판매내역리스트 페이징처리
 	
 	//거래상세보기
@@ -115,5 +130,13 @@ public class ProfileController1 {
 		logger.info("거래상세보기 요청");
 		
 		return service.salelistdetail(session);
+	}
+	
+	//운송장번호 입력
+	@RequestMapping(value = "myPage/tracking_number", method = RequestMethod.POST)
+	public ModelAndView tracking_number(HttpSession session) {
+		logger.info("운송장번호 입력 요청");
+		
+		return service.tracking_number(session);
 	}
 }
