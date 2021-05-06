@@ -7,6 +7,7 @@
  <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
  <mapper namespace="com.market.rabbit.profile.dao.ProfileDAO1">
  
+ 	<!-- 위시리스트 -->
 	<select id="wishlist" resultType="wish">
  		SELECT wish_idx,member_id,product_idx FROM WISH ORDER BY wish_idx DESC
  	</select>
@@ -19,40 +20,62 @@
  		SELECT * FROM sale_file WHERE newFileName=#{param1}
  	</select> -->
  	
+ 	<!-- 위시리스트 삭제 -->
  	<delete id="wishdelete">
  		DELETE FROM WISH WHERE wish_idx=#{param1}
  	</delete>
  	
+ 	<!-- 회원프로필 -->
  	<select id="profile" resultType="member">
  		SELECT member_id,address,manner_percent FROM MEMBER WHERE member_id=#{param1}
  	</select>
  	
+ 	<!-- 프로필사진 -->
  	<select id="fileList" resultType="profileFile">
  		SELECT * FROM PROFILEFILE WHERE member_id=#{param1}
  	</select>
  	
+ 	<!-- 프로필 -> 후기상품리스트 -->
  	<select id="sale" resultType="sale">
  		SELECT sale_subject WHERE sale sale_subject={param1}
  	</select>
  	
+ 	<!-- 프로필 -> 후기리스트 -->
  	<select id="review" resultType="review">
  		SELECT member_id,reg_date,review_content WHERE review member_id={param1}
  	</select>
  	
+ 	<!-- 프로필 -> 판매내역리스트 -->
  	<select id="mysale" resultType="sale">
- 		SELECT sale_subject,price FROM sale sale_subject=#{param1}
+ 		SELECT sale_subject,price FROM sale WHERE sale_subject=#{param1}
  	</select>
  	
+ 	<!-- 프로필 -> 판매내역상품사진 -->
  	<select id="salefile" resultType="saleFile">
- 		SELECT newFileName FROM sale_file newFileName=#{newFileName}
+ 		SELECT newFileName FROM sale_file WHERE newFileName=#{newFileName}
  	</select>
  	
+ 	<!-- 판매내역 상품사진 -->
  	<select id="salelistFile" resultType="saleFile">
- 		SELECT newFileName FROM sale_file newFileName=#{newFileName}
+ 		SELECT * FROM sale_file WHERE newFileName=#{param1}
  	</select>
  	
+ 	<!-- 판매내역리스트 -->
  	<select id="salelistlist" resultType="sale">
- 		SELECT sale_subject,code_num,reg_date FROM sale sale_subject=#{param1}
+ 		SELECT product_idx,sale_subject,code_num,reg_date FROM sale WHERE sale_subject=#{param1}
  	</select>
+ 	
+ 	<!-- 거래상세보기(sale) -->
+ 	<select id="saledetail" resultType="sale">
+ 		SELECT sale_subject,price FROM sale WHERE sale_subject=#{param1}
+ 	</select>
+ 	
+ 	<!-- 거래상세보기(trading) -->
+ 	<select id="tradedetail" resultType="trading">
+ 		SELECT trade_state,seller_id,buyer_id,trade_type,trade_time,tracking_number,trade_start_date,trade_end_date,seller_manner,buyer_manner
+ 		FROM trading WHERE trade_state=#{param1}
+ 	</select>
+ 	
+ 	<!-- 거래상세보기 사진 -->
  	
  </mapper>

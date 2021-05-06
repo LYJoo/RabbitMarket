@@ -109,4 +109,11 @@ public class ProfileController1 {
 	
 	//판매내역리스트 페이징처리
 	
+	//거래상세보기
+	@RequestMapping(value = "myPage/salelistdetail", method = RequestMethod.GET)
+	public ModelAndView salelistdetail(HttpSession session) {
+		logger.info("거래상세보기 요청");
+		
+		return service.salelistdetail(session);
+	}
 }
