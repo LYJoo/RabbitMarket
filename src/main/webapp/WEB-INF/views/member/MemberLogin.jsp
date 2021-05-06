@@ -90,8 +90,8 @@
           </div>
 		<div class="card-body">
   
-        <input type="text" name="LoginId" id="Id" class="form-control" placeholder="아이디" autofocus><BR>
-        <input type="password" name="LoginPw" id="Pw" class="form-control" placeholder="비밀번호" ><br>
+        <input type="text" name="LoginId" id="Id" class="form-control" placeholder="아이디" autofocus required><BR>
+        <input type="password" name="LoginPw" id="Pw" class="form-control" placeholder="비밀번호"  required><br>
          <p id="check" class="check">${login_msg}</p><br/>
         <input id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit" value="로 그 인">
       </form>

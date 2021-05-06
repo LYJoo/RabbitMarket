@@ -136,6 +136,20 @@ public class HelpService {
 		return dao.answerQ(dto);
 	}
 
+
+
+	public int helpwrite(QuestionDTO dto) {
+		return dao.helpwrite(dto);
+	}
+
+
+
+
+
+
+
+
+
 	
 	
 	

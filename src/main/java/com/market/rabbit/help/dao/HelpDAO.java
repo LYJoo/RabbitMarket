@@ -44,6 +44,10 @@ public interface HelpDAO {
 	int answerQ(QuestionDTO dto);
 
 	QuestionDTO quupdate(int question_idx);
+
+	
+	//1대1 문의글 등록
+	int helpwrite(QuestionDTO dto);
 	
 	
 

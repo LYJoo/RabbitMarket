@@ -10,10 +10,10 @@
 <title>Insert title here</title>
 <style>
 	table{
-		border-top: 3px solid black;
+		border-top: 2px solid black;
 		border-collapse: collapse;
 		width : 100%;
-		border-bottom: 3px solid black;
+		border-bottom: 2px solid black;
 	}
 	
    td{
@@ -90,7 +90,7 @@
 		<div class="up">
 		<button onclick="location.href = '/help/help_Question_Update?=idx${question_idx}'">수정</button>
 		 &nbsp;
-		<button onclick="location.href = '/help/help_Question_Delete/${question_idx}'">삭제</button>
+		<button onclick="location.href = '/help/help_Question_Delete?=idx${question_idx}'">삭제</button>
 		</div>	
 		<br/>
 		</td>	

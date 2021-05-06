@@ -153,7 +153,7 @@
     <div id="login_bar_unmember">
         <span id="login_bar_unmember_list">
             <a href="#"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
-            <a href="#">로그인</a>
+            <a href="/member/memberLogin">로그인</a>
         </span>
     </div>
     <div id="logout_div">

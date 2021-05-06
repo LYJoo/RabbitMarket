@@ -13,7 +13,6 @@
     <!-- 페이징 라이브러리(제이쿼리 반드시 필요, 버전도 맞아야 함) -->
     <script src="/resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
     <!-- lyj_style -->
-    <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
     <style type="text/css">
     	#body_content{
     		padding-top: 60px;
@@ -26,7 +25,36 @@
 			padding : 20px;
 			display: none;
 		}
+				table{
+		border-top: 2px solid black;
+		border-collapse: collapse;
+		width : 100px;
+		margin-top : 40px
 		
+		
+	}
+	th{
+		text-align: center;
+		padding : 10px;
+	}
+   td{
+	   	border-top: 1px solid black;
+	   	text-align: center;
+	   padding : 10px;
+   }
+	button{
+      color: white;
+      font-size: 15px;
+      background-color: #ff8e32;
+      width: 120px;
+      border-style: none;
+      height: 50px;
+     
+    }
+	div#btn{
+		text-align: right;
+		margin-top : 20px;
+	}
 
 		
     </style>

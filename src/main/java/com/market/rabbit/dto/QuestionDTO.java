@@ -14,9 +14,21 @@ public class QuestionDTO {
 	private String answer_date;
 	private String admin_id;
 	private String member_id;
-	private boolean isDelete;
-	private boolean isPw;
+	private String isDelete;
+	private String isPw;
 	
+	public String getIsDelete() {
+		return isDelete;
+	}
+	public void setIsDelete(String isDelete) {
+		this.isDelete = isDelete;
+	}
+	public String getIsPw() {
+		return isPw;
+	}
+	public void setIsPw(String isPw) {
+		this.isPw = isPw;
+	}
 	private int question_category;//카테고리번호-fk
 	private String q_category_name;//카테고리이름
 	
@@ -80,18 +92,7 @@ public class QuestionDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public boolean isDelete() {
-		return isDelete;
-	}
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-	public boolean isPw() {
-		return isPw;
-	}
-	public void setPw(boolean isPw) {
-		this.isPw = isPw;
-	}
+
 	public int getQuestion_category() {
 		return question_category;
 	}
