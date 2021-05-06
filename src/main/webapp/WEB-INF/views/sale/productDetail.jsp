@@ -666,6 +666,7 @@
         	content += "<td class='comment_writer_id'>"+data[i].member_id +"  "+ data[i].reg_date+"</td>";
         	content += "<td rowspan='2' class='comment_update_btn'>";
         	if(data[i].member_id == loginId){
+        		content += "<a style='cursor: pointer;' onclick='ccUpdateForm("+data[i].cocomment_idx+","+${detail.product_idx}+")'>수정</a> | ";
         		content += "<a style='cursor: pointer;' onclick='ccDel("+data[i].cocomment_idx+","+${detail.product_idx}+")'>삭제</a>";
         	}else if(data[i].member_id != loginId && loginId != null){
         		content += "<a style='cursor: pointer;'  onclick='cocoReport("+data[i].cocomment_idx+",1003)'>신고</a>";
@@ -675,7 +676,17 @@
         	content += "</tr>";
         	content += "<tr class='deleteCocomment'>";
         	content += "<td></td>";
-        	content += "<td class='comment_content'>"+data[i].cocomment_content+"</td>";
+        	content += "<td class='comment_content'><span id='cocomment_content_value_"+data[i].cocomment_idx+"'>"
+        																		+data[i].cocomment_content+"</span>"
+        						+"<span id='cocomment_updateForm_"+data[i].cocomment_idx+"' style='align-items:center;display:none;'>"
+        						+"<input type='text' id='cocomment_content_input_"+data[i].cocomment_idx
+        								+"' name='cocomment_content' value='"+data[i].cocomment_content
+        								+"' style='width:80%;border:none;background-color:lightgray;'/>"
+        								+"<a style='cursor: pointer;'  onclick='ccUpdate("+data[i].cocomment_idx+")'>수정하기</a>"
+        						+"</span>"
+        						+"</td>";
+        	
+        	
         	content += "</tr>";
         	
            	$('#cocommentList_'+data[i].comment_idx).after(content);
@@ -790,6 +801,38 @@
 		});
 		
     }
+	
+	//대댓글 수정
+	function ccUpdateForm(idx){
+		$('#cocomment_content_value_'+idx).css({'display':'none'});
+		$('#cocomment_updateForm_'+idx).css({'display':'flex'});
+    }
+	
+	function ccUpdate(idx){
+		var cocomment_idx = idx;
+		var cocomment_content = $('#cocomment_content_input_'+idx).val();
+		console.log(cocomment_idx+"/"+cocomment_content);
+		
+	   	$.ajax({
+			url:'/sale/cocommentUpdate'
+			,type: 'POST'
+			,data:{"cocomment_idx" : cocomment_idx,
+				"cocomment_content": cocomment_content}
+			,success:function(data){
+				if(data.success == 1){
+					alert('대댓글이 수정되었습니다.');
+					$('#cocomment_content_value_'+idx).html(cocomment_content);
+					$('#cocomment_content_value_'+idx).css({'display':''});
+					$('#cocomment_updateForm_'+idx).css({'display':'none'});
+				}
+			},
+			error: function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	       }
+		});
+		
+    }
+	
 	
 	function wishPlus1(idx){ // 위시리스트에 전혀 존재하지 않는상태 / 빈하트
 		location.href="/sale/wishPlus1?idx="+idx;
