@@ -12,13 +12,8 @@
     <!-- 페이징 라이브러리(제이쿼리 반드시 필요, 버전도 맞아야 함) -->
     <script src="/resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
     <!-- lyj_style -->
-    <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 <style type="text/css">
-	table{
-		width: 65em;
 		
-	}
-	
 </style>
 </head>
 <body>

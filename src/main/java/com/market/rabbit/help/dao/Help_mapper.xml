@@ -125,11 +125,19 @@
     		WHERE question_idx=#{question_idx}
 	</update>
 	
+	<!--1대1 문의글 등록 -->
+	<insert id="helpwrite" parameterType="question">
+		INSERT INTO question(question_idx,subject,member_id,question_category,isPw,content)
+		VALUES(seq_question.NEXTVAL,#{subject},#{member_id},#{question_category},#{isPw},#{content})
+	</insert>
+	
 	<!-- 1대1문의글 수정 
  	<update id="quupdate" parameterType="question">
  		UPDATE question SET 
 			
  			WHERE question_idx=#{question_idx}
  	</update>-->
+ 	
+ 	
  	
  </mapper>

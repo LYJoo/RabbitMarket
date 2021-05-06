@@ -10,10 +10,10 @@
 <title>Insert title here</title>
 <style>
 	table{
-		border-top: 3px solid black;
+		border-top: 2px solid black;
 		border-collapse: collapse;
 		width : 100%;
-		border-bottom: 3px solid black;
+		border-bottom: 2px solid black;
 	}
 	
    td{
