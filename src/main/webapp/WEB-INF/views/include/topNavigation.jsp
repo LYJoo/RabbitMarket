@@ -122,9 +122,9 @@
 <c:if test="${sessionScope.loginId ne null}">
 <div id="login_bar">
     <span id="login_bar_list">
-        <a href="#"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
-        <a href="#"><img style="margin-right: 30px" src="/resources/img/message.png" alt="쪽지"></a> 
-        <a href="#"><img style="margin-right: 30px" src="/resources/img/bell.png" alt="알림"></a>
+        <a href="/help/noticeMain"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
+        <a href="/message/mainPage"><img style="margin-right: 30px" src="/resources/img/message.png" alt="쪽지"></a> 
+        <a href="/myPage/alarmList"><img style="margin-right: 30px" src="/resources/img/bell.png" alt="알림"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
         	<img id="profile_img"src="/resources/img/dog.jpg" alt="프로필사진"><!-- 나중에 프로필 사진 가져오기 -->
@@ -135,13 +135,13 @@
 <div id="logout_div">
     <div id="logout_div_cover">
         <div class="top_down_menu" onmouseover="logout_link_color(this,$('.top_down_a_tag')[0])" onmouseout="logout_link_uncolor(this,$('.top_down_a_tag')[0])">
-            <a class="top_down_a_tag" href="#">
+            <a class="top_down_a_tag" href="/myPage/memberInfo">
                 마이페이지
             </a>
         </div>
         
         <div class="top_down_menu" onmouseover="logout_link_color(this,$('.top_down_a_tag')[1])" onmouseout="logout_link_uncolor(this,$('.top_down_a_tag')[1])">
-            <a class="top_down_a_tag" href="#">
+            <a class="top_down_a_tag" href="/member/logout">
                 로그아웃
             </a>
         </div>
@@ -163,7 +163,7 @@
 <c:if test="${sessionScope.loginId eq null && sessionScope.adminId ne null}">
 <div id="login_bar">
     <span id="login_bar_list">
-        <a href="#"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
+        <a href="/help/noticeMain"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
             <img id="profile_img"src="/resources/img/default_profile.png" alt="프로필사진"> <!-- 관리자는 기본 이미지 -->
@@ -174,13 +174,13 @@
 <div id="logout_div">
     <div id="logout_div_cover">
         <div class="top_down_menu" onmouseover="logout_link_color(this,$('.top_down_a_tag')[0])" onmouseout="logout_link_uncolor(this,$('.top_down_a_tag')[0])">
-            <a class="top_down_a_tag" href="#">
+            <a class="top_down_a_tag" href="/admin/callAdminList">
                 관리자페이지
             </a>
         </div>
         
         <div class="top_down_menu" onmouseover="logout_link_color(this,$('.top_down_a_tag')[1])" onmouseout="logout_link_uncolor(this,$('.top_down_a_tag')[1])">
-            <a class="top_down_a_tag" href="#">
+            <a class="top_down_a_tag" href="/member/logout">
                 로그아웃
             </a>
         </div>
@@ -189,7 +189,7 @@
 </c:if>
 
     <div class="logo_area">
-        <a href="#">
+        <a href="/sale/main">
             <div class="rabbit_logo">
                 <img src="/resources/img/rabbit_logo.png" alt="토끼마켓 로고">
             </div>

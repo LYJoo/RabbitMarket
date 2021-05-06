@@ -57,41 +57,46 @@
             <ul class="myPage_nav_bar_hide">
                 
                     <li id="myPage_nav_bar_hide1" onclick="submenuOneTextBold(this, $('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'))">
-                	<a href="#">회원정보</a>
+                		<a href="/myPage/memberInfo">회원정보</a>
                     </li>
-
-                    <li id="myPage_nav_bar_hide2" onclick="submenuOneTextBold(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'))"><a href="#">회원정보 수정</a></li>
-                    <li id="myPage_nav_bar_hide3" onclick="submenuOneTextBold(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide4'))"><a href="#">비밀번호 변경</a></li>
-                    <li id="myPage_nav_bar_hide4" onclick="submenuOneTextBold(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'))"><a href="#">회원탈퇴</a></li>
+                    <li id="myPage_nav_bar_hide2" onclick="submenuOneTextBold(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'))">
+                    	<a href="/myPage/memberInfoUpdateForm">회원정보 수정</a>
+                   	</li>
+                    <li id="myPage_nav_bar_hide3" onclick="submenuOneTextBold(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide4'))">
+                    	<a href="/myPage/memberPwUpdateForm">비밀번호 변경</a>
+                    </li>
+                    <li id="myPage_nav_bar_hide4" onclick="submenuOneTextBold(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'))">
+                    	<a href="/myPage/memberWithdrawForm">회원탈퇴</a>
+                    </li>
             </ul>
         </li>
         <li>
-            <a href="#">
+            <a href="/myPage/keywordList">
                 <span class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">키워드</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/myPage/saleboard">
                 <span  class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">판매내역</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="#"><!-- 구매내역 -->
                 <span  class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">구매내역</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/myPage/wishlist">
                 <span  class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">위시리스트</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/myPage/alarmList">
                 <span class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">알림</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/myPage/blockList">
                 <span class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">차단목록</span>
             </a>
         </li>
@@ -100,13 +105,16 @@
                 <a href="#">신고내역</a>
             </span>
             <ul  class="myPage_nav_bar_hide">
-                    <li id="myPage_nav_bar_hide5" onclick="submenuTwoTextBold(this, $('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))"><a href="#">판매글</a></li>
-                    <li id="myPage_nav_bar_hide6" onclick="submenuTwoTextBold(this, $('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide7'))"><a href="#">댓글</a></li>
-                    <li id="myPage_nav_bar_hide7" onclick="submenuTwoTextBold(this, $('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'))"><a href="#">대댓글</a></li>
+                    <li id="myPage_nav_bar_hide5" onclick="submenuTwoTextBold(this, $('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">
+                    	<a href="/myPage/saleReportList">판매글</a></li>
+                    <li id="myPage_nav_bar_hide6" onclick="submenuTwoTextBold(this, $('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide7'))">
+                    	<a href="/myPage/commentReportList">댓글</a></li>
+                    <li id="myPage_nav_bar_hide7" onclick="submenuTwoTextBold(this, $('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'))">
+                    	<a href="/myPage/cocommentReportList">대댓글</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">
+            <a href="/myPage/questionList">
                 <span class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">1:1문의내역</span>
             </a>
         </li>
