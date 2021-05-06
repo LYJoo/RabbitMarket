@@ -53,16 +53,23 @@ public class MemberService {
 		String loginId = params.get("LoginId");
 		logger.info(loginId+"/"+loginPw);
 		String hash = dao.logpw(loginPw,loginId);
-		 boolean success = en.matches(loginPw, hash);//비교
+		 boolean suc = en.matches(loginPw, hash);//비교
 		
 		 logger.info("입력전 패스워드 :"+loginPw);	
 		 logger.info("db에 패스워드 :"+hash);	
-		 logger.info("입력후 패스워드 :"+success);
-		 
+		 logger.info("입력후 패스워드 :"+suc);
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("login_id", loginId);
 		map.put("pw", hash);
 		logger.info("map"+map);
+		 
+		
+		String mode = params.get("mode");
+		 
+		
+		
+		
 		
 		//일반인 모드로 오면 
 		if(params.get("mode").equals("member")) {
@@ -78,6 +85,7 @@ public class MemberService {
 				page="redirect:/member/memberLogin";
 				msg = "아이디와 패스워드를 확인해 주세요.";
 			}
+			//관리자 모드로 오면
 		}else {
 			if(dao.admin(map) > 0) {
 				logger.info("관리자 모드");
@@ -146,7 +154,7 @@ public class MemberService {
 		page="redirect:/member/memberPwReset";
 		if(resetpw > 0) {
 			msg="비밀번호를 재설정 했습니다. 로그인 페이지로 이동합니다.";
-			page = "member/memberLogin";
+			page = "member/MemberLogin";
 		}
 		rAttr.addFlashAttribute("resetpw_check", msg);
 		mav.setViewName(page);

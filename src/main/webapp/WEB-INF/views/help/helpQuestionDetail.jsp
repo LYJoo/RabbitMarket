@@ -90,7 +90,7 @@
 		<div class="up">
 		<button onclick="location.href = '/help/help_Question_Update?=idx${question_idx}'">수정</button>
 		 &nbsp;
-		<button onclick="location.href = '/help/help_Question_Delete?=idx${question_idx}'">삭제</button>
+		<button id="delete" >삭제</button>
 		</div>	
 		<br/>
 		</td>	
@@ -114,8 +114,6 @@
 		</tr>	
 		</table>
 	
-			
-			
    </div>
    <div id="btn"><br/>
    <button id="btn-list" onclick="location.href = '/help/helpQuestionMain' ">목록</button>
@@ -124,6 +122,12 @@
   
 </body>
 <script>
-
+$(function(){
+	$('#delete').click(function(){
+		if(confirm("삭제 하시겠습니까?")){
+			location.href = "/help/help_Question_Delete?=idx${question_idx}";
+		}
+	});
+});
 </script>
 </html>

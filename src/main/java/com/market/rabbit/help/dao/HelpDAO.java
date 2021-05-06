@@ -48,6 +48,8 @@ public interface HelpDAO {
 	
 	//1대1 문의글 등록
 	int helpwrite(QuestionDTO dto);
+
+	int helpDelete(String question_idx);
 	
 	
 

@@ -107,7 +107,7 @@
   <script type="text/javascript">
   
   //비번 재설정시 오는 경고창
-  	var check = "${resetpw_check}";
+  	var check="${resetpw_check}";
 	if(check != ""){
 	 	alert(check);
 	}

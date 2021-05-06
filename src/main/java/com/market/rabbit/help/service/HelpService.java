@@ -145,6 +145,17 @@ public class HelpService {
 
 
 
+	public int helpDelete(String question_idx) {
+		// TODO Auto-generated method stub
+		return dao.helpDelete(question_idx);
+	}
+
+
+
+
+
+
+
 
 
 
