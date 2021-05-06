@@ -171,6 +171,15 @@ public class SaleController {
 		return service.commentUpdate(comment_idx, comment_content);
 	}
 	
+	//대댓글 수정
+	@RequestMapping(value = "/sale/cocommentUpdate", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> cocommentUpdate(@RequestParam int cocomment_idx, @RequestParam String cocomment_content ,HttpSession session) {
+		logger.info("받아온 수정 파라메터 값"+cocomment_idx+"/"+ cocomment_content);
+		
+		return service.cocommentUpdate(cocomment_idx, cocomment_content);
+	}
+	
+	
 	@RequestMapping(value = "/sale/reportForm", method = RequestMethod.GET)
 	public String reportForm(Model model,@RequestParam int idx, @RequestParam int codeNum, @RequestParam String target,HttpSession session) {
 		String loginId = (String) session.getAttribute("loginId");

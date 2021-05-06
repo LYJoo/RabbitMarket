@@ -16,17 +16,19 @@
 
 table.type04 {
     width: 600px;
-    margin-left: 660px;
+    margin-left: auto;
     border-collapse: collapse;
     border-spacing: 1px;
     text-align: center;
     line-height: 1.5;
     border-top: 0px solid #ccc;
+    display:inline-block;
 }
 table.type04 th {
     font-weight: bold;
     vertical-align: top;
     border-bottom: 2px solid #ccc;
+    text-align: center;
 }
 table.type04 td {
     padding: 10px;
@@ -39,3 +41,24 @@ table.type04 tr #paging{
     border-top: 2px solid #ccc;
     border-bottom: none;
 }
+
+/**/
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: darksalmon;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: darksalmon;
+    border-color: darksalmon;
+}
+/**/

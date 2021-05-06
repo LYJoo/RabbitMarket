@@ -298,6 +298,11 @@
  		UPDATE comments SET isDelete = 1 WHERE comment_idx = #{param}
  	</update>
  	
+ 	<!-- 대댓글 삭제 -->
+ 	<update id="ccDel">
+ 		UPDATE cocomment SET isDelete = 1 WHERE cocomment_idx = #{param}
+ 	</update>
+ 	
  	<select id="chWish" resultType="int">
  		SELECT COUNT(wish_idx) FROM wish WHERE member_id= #{param1} AND product_idx= #{param2}
  	</select>
@@ -401,6 +406,11 @@
  	<!-- 댓글 수정 -->
  	<update id="commentUpdate">
  		UPDATE comments SET comment_content=#{param2} WHERE comment_idx=#{param1}
+ 	</update>
+ 	
+ 	<!-- 대댓글 수정 -->
+ 	<update id="cocommentUpdate">
+ 		UPDATE cocomment SET cocomment_content=#{param2} WHERE cocomment_idx=#{param1}
  	</update>
  	
  </mapper>
