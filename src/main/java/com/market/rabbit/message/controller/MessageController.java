@@ -62,6 +62,7 @@ public class MessageController {
 		return service.writeMsg(session, receiver, msg_content, rAttr);
 	}
 	
+	
 	@RequestMapping(value = "/message/detailMsg", method = RequestMethod.GET)
 	public ModelAndView callDetailMsg(int msg_idx, String msgType) {
 		

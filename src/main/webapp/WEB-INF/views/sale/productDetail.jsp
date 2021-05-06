@@ -291,7 +291,7 @@
             </td>
             <td style="padding-top: 15px;">
                 ${detail.seller_id}
-                <img src="/resources/img/message_orange.png" style="width: 20px; cursor: pointer;"/>
+                <img src="/resources/img/message_orange.png" style="width: 20px; cursor: pointer;"  onclick="getMessageWriteForm(this)" id='${detail.seller_id }'/>
             </td>
             <td rowspan="2"  style="width: 50%;">
                 <p style="margin: 0;">매너지수</p>
@@ -844,5 +844,9 @@
 	
 	function wishMinus(idx){ //위시리스트에 존재하고 삭제되지 않은 상태  / 색칠하트
 		location.href="/sale/wishMinus?idx="+idx;
+	}
+	
+	function getMessageWriteForm(elem) {
+		window.open('../message/replyForm?receiver='+elem.getAttribute('id'), 'message', 'width=600, height=800');
 	}
 </script>
