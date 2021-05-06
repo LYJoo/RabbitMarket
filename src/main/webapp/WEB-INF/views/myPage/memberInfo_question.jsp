@@ -48,6 +48,7 @@
         </div>
     </body>
     <script type="text/javascript">
+    jQuery.noConflict();
 	    var showPage = 1;
 		listCall(showPage);
 		

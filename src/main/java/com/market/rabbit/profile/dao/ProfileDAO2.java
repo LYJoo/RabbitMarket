@@ -52,4 +52,14 @@ public interface ProfileDAO2 {
 
 	int writeKeyword(String loginId, String keyword);
 
+	int countAlarmList(String loginId);
+
+	int countBlockList(String loginId);
+
+	int countSaleReportList(String loginId);
+
+	int countCommentReportList(String loginId);
+
+	int countCocommentReportList(String loginId);
+
 }

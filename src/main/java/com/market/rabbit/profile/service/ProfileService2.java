@@ -204,8 +204,13 @@ public class ProfileService2 {
 		int start = end-(numPerPage-1);
 		String loginId = "hwi";
 		
+		int allCnt = dao.countAlarmList(loginId);
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
 		ArrayList<AlarmDTO> alarmList = dao.callAlarmList(loginId, start, end);
 		
+		map.put("range", range);
+		map.put("currPage", page);
 		map.put("alarmList", alarmList);
 		return map;
 	}
@@ -229,8 +234,13 @@ public class ProfileService2 {
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
 		
+		int allCnt = dao.countBlockList(loginId);
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
 		ArrayList<BlockDTO> blockList = dao.callBlockList(loginId, start, end);
 		map.put("path", "/myProfile/");
+		map.put("range", range);
+		map.put("currPage", page);
 		map.put("blockList", blockList);
 		return map;
 	}
@@ -253,8 +263,13 @@ public class ProfileService2 {
 		int start = end-(numPerPage-1);
 		String loginId = "hwi";
 		
+		int allCnt = dao.countSaleReportList(loginId);
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
 		ArrayList<ReportDTO> saleReportList = dao.callSaleReportList(loginId, start, end);
 		
+		map.put("range", range);
+		map.put("currPage", page);
 		map.put("saleReportList", saleReportList);
 		return map;
 	}
@@ -265,8 +280,13 @@ public class ProfileService2 {
 		int start = end-(numPerPage-1);
 		String loginId = "hwi";
 		
+		int allCnt = dao.countCommentReportList(loginId);
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
 		ArrayList<ReportDTO> commentReportList = dao.callCommentReportList(loginId, start, end);
 		
+		map.put("range", range);
+		map.put("currPage", page);
 		map.put("commentReportList", commentReportList);
 		return map;
 	}
@@ -277,8 +297,13 @@ public class ProfileService2 {
 		int start = end-(numPerPage-1);
 		String loginId = "hwi";
 		
+		int allCnt = dao.countCocommentReportList(loginId);
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
 		ArrayList<ReportDTO> cocommentReportList = dao.callCocommentReportList(loginId, start, end);
 		
+		map.put("range", range);
+		map.put("currPage", page);
 		map.put("cocommentReportList", cocommentReportList);
 		return map;
 	}

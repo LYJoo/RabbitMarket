@@ -172,5 +172,25 @@
 	<insert id="writeKeyword">
 		INSERT INTO keyword (keyword_idx, member_id, keyword) VALUES (seq_keyword.nextval, #{param1}, #{param2})
 	</insert>
+	
+	<select id="countAlarmList" resultType="INTEGER">
+		SELECT count(alarm_idx) FROM alarm WHERE member_id=#{param1}
+	</select>
+	
+	<select id="countBlockList" resultType="INTEGER">
+		SELECT count(block_idx) FROM block WHERE member_id=#{param1}
+	</select>
+	
+	<select id="countSaleReportList" resultType="INTEGER">
+		SELECT count(report_idx) FROM report WHERE REPORTER=#{param1} AND code_num=1001
+	</select>
+	
+	<select id="countCommentReportList" resultType="INTEGER">
+		SELECT count(report_idx) FROM report WHERE REPORTER=#{param1} AND code_num=1002
+	</select>
+	
+	<select id="countCocommentReportList" resultType="INTEGER">
+		SELECT count(report_idx) FROM report WHERE REPORTER=#{param1} AND code_num=1003
+	</select>
  	
  </mapper>
