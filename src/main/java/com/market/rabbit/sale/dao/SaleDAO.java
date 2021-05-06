@@ -124,4 +124,6 @@ public interface SaleDAO {
 
 	int commentUpdate(int comment_idx, String comment_content);
 
+	int cocommentUpdate(int cocomment_idx, String cocomment_content);
+
 }

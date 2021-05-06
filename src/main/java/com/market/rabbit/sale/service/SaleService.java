@@ -446,6 +446,15 @@ public class SaleService {
 		map.put("success", success);
 		return map;
 	}
+	
+	//대댓글 수정
+	public HashMap<String, Object> cocommentUpdate(int cocomment_idx, String cocomment_content) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = dao.cocommentUpdate(cocomment_idx, cocomment_content);
+
+		map.put("success", success);
+		return map;
+	}
 
 	public HashMap<String, Object> report(int idx, int codeNum, String target, String report_reason, String loginId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -657,6 +666,8 @@ public class SaleService {
 		map.put("success", success);
 		return map;
 	}
+
+
 
 
 
