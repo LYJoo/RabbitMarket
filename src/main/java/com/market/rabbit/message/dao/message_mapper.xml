@@ -56,6 +56,20 @@
 	<update id="updateRead">
 		UPDATE message SET READ_BOOLEAN=1 WHERE msg_idx=#{param1}
 	</update>
+	
+	<select id="countReceive" resultType="INTEGER">
+		SELECT count(MSG_IDX) FROM message WHERE MEMBER_ID=#{param1}
+	</select>
+	
+	<select id="countSend" resultType="INTEGER">
+		SELECT count(msg_idx) FROM message WHERE send_id=#{param1}
+	</select>
+	
+	<select id="countBlock" resultType="INTEGER">
+		SELECT count(msg_idx)
+		FROM message 
+		WHERE RECEIVER_DELETE=0 AND member_id=#{param1} AND send_id IN (select target_id from block where member_id=#{param1})
+	</select>
  	
  </mapper>
  

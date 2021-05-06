@@ -22,5 +22,11 @@ public interface MessageDAO {
 
 	void updateRead(int msg_idx);
 
+	int countReceive(String loginId);
+
+	int countSend(String loginId);
+
+	int countBlock(String loginId);
+
 
 }

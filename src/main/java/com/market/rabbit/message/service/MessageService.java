@@ -22,7 +22,7 @@ public class MessageService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired MessageDAO dao;
-	int numPerPage = 10;
+	int numPerPage = 5;
 
 	public HashMap<String, Object> callMsgList(int page) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -30,19 +30,30 @@ public class MessageService {
 		int start = end-(numPerPage-1);
 		String loginId = "hwi";
 		
+		int allCntReceive = dao.countReceive(loginId);
+		int allCntSend = dao.countSend(loginId);
+		int allCntBlock = dao.countBlock(loginId);
+		
+		int rangeReceive = allCntReceive%numPerPage > 0 ? Math.round(allCntReceive/numPerPage)+1 : allCntReceive/numPerPage;
+		int rangeSend = allCntSend%numPerPage > 0 ? Math.round(allCntSend/numPerPage)+1 : allCntSend/numPerPage;
+		int rangeBlock = allCntBlock%numPerPage > 0 ? Math.round(allCntBlock/numPerPage)+1 : allCntBlock/numPerPage;
+		
 		//1. 받은쪽지목록
 		ArrayList<MessageDTO> receiveMsgList = dao.callReceiveMsgList(start, end, loginId);
+		map.put("rangeReceive", rangeReceive);
 		map.put("receiveMsgList", receiveMsgList);
 		
 		//2. 보낸쪽지목록
 		ArrayList<MessageDTO> sendMsgList = dao.callSendMsgList(start, end, loginId);
+		map.put("rangeSend", rangeSend);
 		map.put("sendMsgList", sendMsgList);
 		
 		//3. 차단쪽지목록
 		ArrayList<MessageDTO> blockMsgList = dao.callBlockMsgList(start, end, loginId);
+		map.put("rangeBlock", rangeBlock);
 		map.put("blockMsgList", blockMsgList);
 
-		
+		map.put("currPage", page);
 		return map;
 	}
 

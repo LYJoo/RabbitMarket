@@ -5,8 +5,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Insert title here</title>
-        <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="../resources/css/hwi_css.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- 반응형 디자인을 위한 css/js 라이브러리 -->
+    	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>   
+    	<!-- 페이징 라이브러리(제이쿼리 반드시 필요, 버전도 맞아야 함) -->
+    	<script src="/resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="/resources/css/hwi_css.css">
         <style type="text/css">
 			body{
 	            margin-top: 100px;
@@ -78,6 +83,27 @@
 	        .msg_paging{
 	            text-align: center;
 	        }
+	        
+	        /**/
+			.pagination>li>a, .pagination>li>span {
+			    position: relative;
+			    float: left;
+			    padding: 6px 12px;
+			    margin-left: -1px;
+			    line-height: 1.42857143;
+			    color: darksalmon;
+			    text-decoration: none;
+			    background-color: #fff;
+			    border: 1px solid #ddd;
+			}
+			.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+			    z-index: 3;
+			    color: #fff;
+			    cursor: default;
+			    background-color: darksalmon;
+			    border-color: darksalmon;
+			}
+			/**/
         </style>
     </head>
     <body>
@@ -103,9 +129,18 @@
 	            	<tbody id="receiveList">
 	            	
 	            	</tbody>
+	            	<tr>
+					<td colspan="4" id="paging">
+						<!-- 플러그인 사용 -->
+						<div class="container">
+							<nav aria-label="page navigation" style="text-align:center">
+								<ul class = "pagination" id="receive_pagination"></ul>
+							</nav>
+						</div>
+						<!-- 플러그인 사용 -->
+					</td>
+				</tr>
 	              </table>
-	              <!-- 페이지 -->
-	              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
 	        </div>
 	        <div id="tab-2" class="tab-content">
 	            <table class="type04" style="font-size: 13px">
@@ -120,9 +155,18 @@
 	            	<tbody id="sendList">
 	            		
 	            	</tbody>
+	            	<tr>
+					<td colspan="4" id="paging">
+						<!-- 플러그인 사용 -->
+						<div class="container">
+							<nav aria-label="page navigation" style="text-align:center">
+								<ul class = "pagination" id="send_pagination"></ul>
+							</nav>
+						</div>
+						<!-- 플러그인 사용 -->
+					</td>
+				</tr>
 	              </table>
-	              <!-- 페이지 -->
-	              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
 	        </div>
 	        <div id="tab-3" class="tab-content">
 	            <table class="type04" style="font-size: 13px">
@@ -137,9 +181,18 @@
 	            	<tbody id="blockList">
 	            	
 	            	</tbody>
+	            	<tr>
+					<td colspan="4" id="paging">
+						<!-- 플러그인 사용 -->
+						<div class="container">
+							<nav aria-label="page navigation" style="text-align:center">
+								<ul class = "pagination" id="block_pagination"></ul>
+							</nav>
+						</div>
+						<!-- 플러그인 사용 -->
+					</td>
+				</tr>
 	              </table>
-	              <!-- 페이지 -->
-	              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
 	        </div>
 	        <div>
 	            <button class="msg-btn" onclick="location.href='./writeForm'">글쓰기</button>
@@ -181,6 +234,33 @@
     				printReceiveList(data.receiveMsgList);
     				printSendList(data.sendMsgList);
     				printBlockList(data.blockMsgList);
+    				//플러그인 사용
+	                $("#receive_pagination").twbsPagination({
+	                    startPage:data.currPage,//시작페이지
+	                    totalPages:data.rangeReceive,//생성 가능 최대 페이지
+	                    visiblePages:5,//5개씩 보여 주겠다.(1~5)
+	                    onPageClick:function(evt, page){//각 페이지를 눌렀을 경우
+	                        listCall(page);
+	                    }
+	                });
+    				
+	                $("#send_pagination").twbsPagination({
+	                    startPage:data.currPage,//시작페이지
+	                    totalPages:data.rangeSend,//생성 가능 최대 페이지
+	                    visiblePages:5,//5개씩 보여 주겠다.(1~5)
+	                    onPageClick:function(evt, page){//각 페이지를 눌렀을 경우
+	                        listCall(page);
+	                    }
+	                });
+	                
+	                $("#block_pagination").twbsPagination({
+	                    startPage:data.currPage,//시작페이지
+	                    totalPages:data.rangeBlock,//생성 가능 최대 페이지
+	                    visiblePages:5,//5개씩 보여 주겠다.(1~5)
+	                    onPageClick:function(evt, page){//각 페이지를 눌렀을 경우
+	                        listCall(page);
+	                    }
+	                });
     				
     			},
     			error:function(e){
