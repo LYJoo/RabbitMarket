@@ -17,8 +17,7 @@ public class AdminController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 
-		
-		return "admin";
+		return "redirect:/sale/main";
 	}
 	
 }

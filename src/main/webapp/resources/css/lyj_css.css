@@ -22,6 +22,7 @@
 }
 /*본문전체박스 : 상세, 등록, 수정*/
 #body_content{
+	width: 80%;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
