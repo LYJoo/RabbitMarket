@@ -4,8 +4,13 @@
 <head>
     <meta charset='utf-8'>
     <title>Page Title</title>
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="hwi_css.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- 반응형 디자인을 위한 css/js 라이브러리 -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>   
+    <!-- 페이징 라이브러리(제이쿼리 반드시 필요, 버전도 맞아야 함) -->
+    <script src="/resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/resources/css/hwi_css.css">
     <style>
         body{
             margin-top: 100px;
@@ -48,6 +53,7 @@
 
         .tab-content{
             display: none;
+            width: 650px;
         }
 
         .tab-content.current{
@@ -60,15 +66,18 @@
             text-align: center;
             line-height: 1.5;
             border-top: 1px solid #ccc;
+            text-align: center;
+            
         }
         table.type04 th {
-            width: 150px;
+            width: 100px;
             font-weight: bold;
             vertical-align: top;
             border-bottom: 1px solid #ccc;
+            text-align: center;
         }
         table.type04 td {
-            width: 350px;
+            width: 100px;
             padding: 10px;
             vertical-align: top;
             border-bottom: 1px solid #ccc;
@@ -82,6 +91,24 @@
         #profile{
             margin: auto;
             text-align: center;
+        }
+        .profileList{
+        	width:200px;
+        	height: 100px;
+        	display: inline-block;
+        	border:1px solid #F79646;
+        	margin:5px;
+        	text-align: center;
+        }
+        .profileList td{
+        	text-align: center;
+        }
+        .price{
+        	font-size: 12px;
+        
+        }
+        .subject{
+        	font-weight: 600;
         }
     </style>
 </head>
@@ -119,66 +146,144 @@
 
 
     <div id="msgContainer">
-        <div class="main-logo">
-            <img src="main_logo.png" alt="">
-        </div>
         <ul class="tabs">
             <li class="tab-link current" data-tab="tab-1">판매물품<hr class="tab-hr current"></li>
             <li class="tab-link" data-tab="tab-2">거래후기<hr class="tab-hr"></li>
         </ul>
         <div id="tab-1" class="tab-content current">
-            <table class="type04">
-                <tr>
-                    <td>상품사진</td>
-                    <td>게시글제목</td>
-                    <td>가격</td>
-                </tr>
-                <tr>
-                  <td><p><img src="${salefile.newFileName}" alt="" style="width: 150px; height: 150px;" onclick="#"></p></td>
-                  <td>${mysale.sale_subject}</td>
-                  <td>${mysale.price}</td>
-                </tr>
-              </table>
-              <!-- 페이지 -->
-              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
+        	<table>
+        		<tbody id="profileSaleList">
+	 
+        		</tbody>
+		        <tr>
+					<td colspan="1" id="paging">
+						<!-- 플러그인 사용 -->
+						<div class="container">
+							<nav aria-label="page navigation" style="text-align:left;">
+								<ul class = "pagination" id="sale_pagination"></ul>
+							</nav>
+						</div>
+						<!-- 플러그인 사용 -->
+					</td>
+				</tr>
+        	</table>
         </div>
         <div id="tab-2" class="tab-content">
             <table class="type04">
+	            <thead>
+	                <tr>
+	                    <th>아이디</th>
+	                    <th>후기내용</th>
+	                    <th>작성일</th>
+	                </tr>
+                </thead>
+                <tbody id="profileReviewList">
+	                
+                </tbody>
                 <tr>
-                    <td>게시글제목</td>
-                    <td>아이디</td>
-                    <td>작성일</td>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                  <th scope="row">${sale.sale_subject}</th>
-                  <td>${review.member_id}</td>
-                  <td>${review.reg_date}</td>
-                  <td>${review.review_content}</td>
-                </tr>
-              </table>
-              <!-- 페이지 -->
-              <div class="msg_paging"><span> ◁ 1 2 3 4 5 ▷ </span></div>
+					<td colspan="3" id="paging">
+						<!-- 플러그인 사용 -->
+						<div class="container">
+							<nav aria-label="page navigation" style="text-align:left;">
+								<ul class = "pagination" id="review_pagination"></ul>
+							</nav>
+						</div>
+						<!-- 플러그인 사용 -->
+					</td>
+				</tr>
+			</table>
         </div>
     </div>
 	</div>
 </body>
 <script>
+	jQuery.noConflict();
+	listCall(1)
     $(document).ready(function(){
+		
+		$('ul.tabs li').click(function(){
+			var tab_id = $(this).attr('data-tab');
 	
-	$('ul.tabs li').click(function(){
-		var tab_id = $(this).attr('data-tab');
+			$('ul.tabs li').removeClass('current');
+			$('.tab-content').removeClass('current');
+	        $('.tab-hr').removeClass('current');
+	
+			$(this).addClass('current');
+	
+			$("#"+tab_id).addClass('current');
+	        $(this).find('hr').addClass('current');
+		});
+	
+	});
+    
+    function listCall(reqPage){
+		$.ajax({
+			url:'./profileList/${member.member_id}/'+reqPage,
+			type:'GET',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data.profileSaleList);
+				console.log(data.profileReviewList);
+				printSaleList(data.profileSaleList);
+				printReviewList(data.profileReviewList);
+				//플러그인 사용
+                $("#sale_pagination").twbsPagination({
+                    startPage:data.currPage,//시작페이지
+                    totalPages:data.rangeSale,//생성 가능 최대 페이지
+                    visiblePages:5,//5개씩 보여 주겠다.(1~5)
+                    onPageClick:function(evt, page){//각 페이지를 눌렀을 경우
+                        listCall(page);
+                    }
+                });
+                $("#review_pagination").twbsPagination({
+                    startPage:data.currPage,//시작페이지
+                    totalPages:data.rangeReview,//생성 가능 최대 페이지
+                    visiblePages:5,//5개씩 보여 주겠다.(1~5)
+                    onPageClick:function(evt, page){//각 페이지를 눌렀을 경우
+                        listCall(page);
+                    }
+                });
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}
+    
+    function printSaleList(list){
+		var content="";
 
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
-        $('.tab-hr').removeClass('current');
+		for(var i=0; i<list.length; i++){
+			content += '<table class="profileList">';
+			content += "<tr>";
+			content += '<td rowspan="2"><img alt="" src="/saleImg/'+list[i].saleFileDto.newFileName+'" style="width:60px; height:75px;"></td>';
+			content += '<td class="subject">'+list[i].sale_subject+'</td>';
+			content += "</tr>";
+			content += "<tr>";
+			content += '<td class="price">'+list[i].price+'원</td>';
+			content += "</tr>";
+			content += '</table>';	
+		}
+		$('#profileSaleList').empty();
+		$('#profileSaleList').append(content);
+	}
+    
+    function printReviewList(list){
+		var content="";
+      
+		for(var i=0; i<list.length; i++){
+			content += "<tr>";
+			content += "<td>"+list[i].write_id+"</td>";
+			content += "<td>"+list[i].review_content+"</td>";
+			content += "<td>"+list[i].review_content+"</td>";
+			content += "</tr>";
+		}
+		$('#profileReviewList').empty();
+		$('#profileReviewList').append(content);
+	}
+    
 
-		$(this).addClass('current');
 
-		$("#"+tab_id).addClass('current');
-        $(this).find('hr').addClass('current');
-	})
-
-})
 </script>
 </html>

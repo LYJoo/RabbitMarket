@@ -46,5 +46,13 @@ public interface ProfileDAO1 {
 
 	TradingDTO tradedetail(String loginId);
 
+	ArrayList<SaleDTO> callProfileSaleList(String loginId, int start, int end);
+
+	ArrayList<ReviewDTO> callProfileReviewList(String member_id, int start, int end);
+
+	int countAllSale(String member_id);
+
+	int countAllReview(String member_id);
+
 
 }

@@ -35,25 +35,44 @@
  		SELECT * FROM PROFILEFILE WHERE member_id=#{param1}
  	</select>
  	
- 	<!-- 프로필 -> 후기상품리스트 -->
- 	<select id="sale" resultType="sale">
- 		SELECT sale_subject WHERE sale sale_subject={param1}
- 	</select>
- 	
- 	<!-- 프로필 -> 후기리스트 -->
- 	<select id="review" resultType="review">
- 		SELECT member_id,reg_date,review_content WHERE review member_id={param1}
- 	</select>
+	<!-- 프로필 - 후기리스트 -->
+	<select id="callProfileReviewList" resultType="review">
+		SELECT *
+		FROM (
+		    SELECT review_idx, review_content, reg_date, member_id, write_id, ROW_NUMBER() OVER(ORDER BY reg_date DESC) AS rnum
+		    FROM review
+		    WHERE member_id=#{param1}
+		    )
+		WHERE rnum BETWEEN #{param2} AND #{param3}
+	</select>
  	
  	<!-- 프로필 -> 판매내역리스트 -->
- 	<select id="mysale" resultType="sale">
- 		SELECT sale_subject,price FROM sale WHERE sale_subject=#{param1}
+ 	<select id="callProfileSaleList" resultMap="callProfileSaleListResult">
+ 		SELECT *
+		FROM (
+		    select ROW_NUMBER() OVER(ORDER BY file_idx desc) AS rnum, sale_subject, price, seller_id, product_idx, newfilename, file_idx, rnumFile,code_num,isdelete,isblind
+		    FROM (
+		        SELECT  s.sale_subject, s.price, s.seller_id, s.product_idx, sf.file_idx, RANK() OVER (PARTITION BY sf.product_idx ORDER BY sf.file_idx) rnumFile, sf.newfilename, s.code_num, s.isdelete, s.isblind
+		        FROM sale s, sale_file sf
+		        WHERE s.product_idx = sf.product_idx
+		        )
+		    WHERE rnumFile=1 AND seller_id=#{param1} AND code_num=3001 AND isdelete=0 AND isblind=0
+		    )
+		WHERE rnum between #{param2} and #{param3}
  	</select>
  	
- 	<!-- 프로필 -> 판매내역상품사진 -->
- 	<select id="salefile" resultType="saleFile">
- 		SELECT newFileName FROM sale_file WHERE newFileName=#{newFileName}
- 	</select>
+ 	<resultMap type="sale" id="callProfileSaleListResult">
+	 	<id column="product_idx" property="product_idx"/>
+	 	<result column="seller_id" property="seller_id"/>
+	 	<result column="sale_subject" property="sale_subject"/>
+	 	<result column="price" property="price"/>
+	 	<result column="code_num" property="code_num"/>
+	 	<association property="saleFileDto" javaType="saleFile">
+	 		<result column="newFileName" property="newFileName"/>
+	 		<result column="file_idx" property="file_idx"/>
+	 	</association>
+	</resultMap>
+ 
  	
  	<!-- 판매내역 상품사진 -->
  	<select id="salelistFile" resultType="saleFile">
@@ -76,6 +95,14 @@
  		FROM trading WHERE trade_state=#{param1}
  	</select>
  	
- 	<!-- 거래상세보기 사진 -->
+ 	<!-- 프로필 sale 개수 -->
+ 	<select id="countAllSale" resultType="INTEGER">
+ 		SELECT count(product_idx) FROM sale WHERE seller_id=#{param1}
+ 	</select>
+ 	
+ 	<!-- 프로필 review 개수 -->
+ 	<select id="countAllReview" resultType="INTEGER">
+ 		SELECT count(review_idx) FROM review WHERE member_id=#{param1}
+ 	</select>
  	
  </mapper>

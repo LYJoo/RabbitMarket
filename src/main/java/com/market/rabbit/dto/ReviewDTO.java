@@ -9,7 +9,6 @@ public class ReviewDTO {
 	private String reg_date;//작성일
 	private String write_id;//작성자
 	private String member_id;//회원id:판매자 -fk
-	private int product_idx;//판매글 - fk
 	
 	public int getReview_idx() {
 		return review_idx;
@@ -41,12 +40,7 @@ public class ReviewDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public int getProduct_idx() {
-		return product_idx;
-	}
-	public void setProduct_idx(int product_idx) {
-		this.product_idx = product_idx;
-	}
+
 	
 	
 	

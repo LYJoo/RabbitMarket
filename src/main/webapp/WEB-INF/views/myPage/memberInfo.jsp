@@ -15,7 +15,7 @@
         <div id="main_content">
         	<jsp:include page="../include/myPageNavigation.jsp"></jsp:include> 
             <div id="profile">
-                <a href="">내 프로필 보기</a><br/>
+                <a href="./profile?member_id=${sessionScope.loginId }">내 프로필 보기</a><br/>
                 <a href="" id="message">쪽지</a>
             </div>
             <table id="table-mypage" class="original-tab">

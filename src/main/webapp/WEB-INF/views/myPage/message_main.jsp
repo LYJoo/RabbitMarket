@@ -130,16 +130,16 @@
 	            	
 	            	</tbody>
 	            	<tr>
-					<td colspan="4" id="paging">
-						<!-- 플러그인 사용 -->
-						<div class="container">
-							<nav aria-label="page navigation" style="text-align:center">
-								<ul class = "pagination" id="receive_pagination"></ul>
-							</nav>
-						</div>
-						<!-- 플러그인 사용 -->
-					</td>
-				</tr>
+						<td colspan="4" id="paging">
+							<!-- 플러그인 사용 -->
+							<div class="container">
+								<nav aria-label="page navigation" style="text-align:center">
+									<ul class = "pagination" id="receive_pagination"></ul>
+								</nav>
+							</div>
+							<!-- 플러그인 사용 -->
+						</td>
+					</tr>
 	              </table>
 	        </div>
 	        <div id="tab-2" class="tab-content">

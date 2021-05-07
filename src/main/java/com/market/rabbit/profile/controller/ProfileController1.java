@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.market.rabbit.dto.MemberDTO;
@@ -76,31 +77,20 @@ public class ProfileController1 {
 	
 	//프로필불러오기(프로필사진, id, 주소, 차단여부, 매너지수)
 	@RequestMapping(value = "myPage/profile", method = RequestMethod.GET)
-	public ModelAndView profile(Model model, HttpSession session) {
-//		String id = (String) session.getAttribute("loginId");
-//		logger.info("로그인아이디"+loginId);
-		logger.info("프로필 요청 : "+session);
+	public ModelAndView profile(@RequestParam String member_id, HttpSession session) {
+
+		logger.info("내 프로필 요청");
 		
-		return service.profile(session);
+		return service.profile(session, member_id);
 	}
 	
-	//프로필 - 해당사용자가 판매중인 판매게시글 불러오기
-	@RequestMapping(value = "myPage/saleboard", method = RequestMethod.GET)
-	public ModelAndView mySaleBoard(Model model, HttpSession session) {
-		logger.info("회원의 판매게시글 요청");
+	@RequestMapping(value = "myPage/profileList/{member_id}/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callProfileList(@PathVariable String member_id, @PathVariable int page, HttpSession session) {
 		
-		return service.mySaleBoard(session);
+		logger.info("프로필의 판매목록 {} 페이지 리스트 요청", page);
+		return service.callProfileList(member_id, page, session);
 	}
-	
-	//프로필 - 해당 사용자에 대한 후기 불러오기
-	@RequestMapping(value = "myPage/review", method = RequestMethod.GET)
-	public ModelAndView review(Model model, HttpSession session) {
-		logger.info("후기 요청");
-		
-		return service.review(session);
-	}
-	
-	//프로필 - 차단하기
+
 	
 	//판매내역리스트
 	@RequestMapping(value = "myPage/salelist", method = RequestMethod.GET)

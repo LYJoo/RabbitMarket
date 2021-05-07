@@ -43,7 +43,6 @@ public class ProfileService2 {
 		logger.info("회원정보 서비스 요청");
 		ModelAndView mav = new ModelAndView();
 		String page = "myPage/memberInfo";
-		//String loginId = (String) session.getAttribute("loginId");
 		String loginId = (String) session.getAttribute("loginId");
 		
 		MemberDTO dto = dao.callMemberInfo(loginId);

@@ -28,6 +28,7 @@ public class ProfileService1 {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired ProfileDAO1 dao;
+	int numPerPage = 10;
 
 	public void wishlist(Model model) {
 		logger.info("위시리스트 보이기 처리");
@@ -94,51 +95,46 @@ public class ProfileService1 {
 	}
 
 	@Transactional
-	public ModelAndView profile(HttpSession session) {
+	public ModelAndView profile(HttpSession session, String member_id) {
 		logger.info("회원프로필 요청");
 		ModelAndView mav = new ModelAndView();
 		String page = "myPage/profile";
-		String loginId="hwi";
 		
-		MemberDTO member = dao.profile(loginId);
-		ProfileFileDTO fileList = dao.fileList(loginId);
+		MemberDTO member = dao.profile(member_id);
+		ProfileFileDTO profile = dao.fileList(member_id);
 		
 		mav.addObject("member", member);
-		mav.addObject("fileList", fileList);
+		//mav.addObject("profile", profile);
+		mav.addObject("path", "/myProfile/"+profile.getNewFileName());
 		mav.setViewName(page);
 		return mav;
 	}
 
 	@Transactional
-	public ModelAndView review(HttpSession session) {
-		logger.info("후기 요청");
-		ModelAndView mav = new ModelAndView();
-		String page="myPage/profile";
-		String loginId="hwi";
+	public HashMap<String, Object> callProfileList(String member_id, int page, HttpSession session) {
+		logger.info("프로필에 띄울 판매목록, 후기목록 불러오기");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*3;
+		int start = end-(3-1);
 		
-		SaleDTO sale = dao.sale(loginId);
-		ReviewDTO review = dao.review(loginId);
+		int allCntSale = dao.countAllSale(member_id);
+		int allCntReview = dao.countAllReview(member_id);
+		int rangeSale = allCntSale%3 > 0 ? Math.round(allCntSale/3)+1 : allCntSale/3;
+		int rangeReview = allCntReview%3 > 0 ? Math.round(allCntReview/3)+1 : allCntReview/3;
 		
-		mav.addObject("sale", sale);
-		mav.addObject("review", review);
-		mav.setViewName(page);
-		return mav;
-	}
-
-	@Transactional
-	public ModelAndView mySaleBoard(HttpSession session) {
-		logger.info("판매게시글 요청");
-		ModelAndView mav = new ModelAndView();
-		String page="myPage/profile";
-		String loginId="hwi";
 		
-		SaleDTO mysale = dao.mysale(loginId);
-		SaleFileDTO salefile = dao.salefile(loginId);
+		//판매리스트(+사진)
+		ArrayList<SaleDTO> profileSaleList = dao.callProfileSaleList(member_id, start, end);
+		map.put("profileSaleList", profileSaleList);
+		map.put("rangeSale", rangeSale);
+		//후기리스트
+		ArrayList<ReviewDTO> profileReviewList = dao.callProfileReviewList(member_id, start, end);
+		map.put("profileReviewList", profileReviewList);
+		map.put("rangeReview", rangeReview);
 		
-		mav.addObject("mysale", mysale);
-		mav.addObject("salefile", salefile);
-		mav.setViewName(page);
-		return mav;
+		map.put("currPage", page);
+		
+		return map;
 	}
 
 	@Transactional
