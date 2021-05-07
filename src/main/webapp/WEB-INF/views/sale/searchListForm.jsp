@@ -116,12 +116,10 @@
        <div class="main_list">
 
         <div class="list_start">
-        	<form action="searchList">
-	            <div style="display: inline">
-	                <input type="text" placeholder="검색어를 입력하세요" name="inputData" id="inputData">
-	                <span><i class="fas fa-search" onclick="searchIcon()"  style="cursor:pointer;"></i></span>
-	            </div>        	
-        	</form>
+            <div style="display: inline">
+                <input type="text" placeholder="검색어를 입력하세요">
+                <span><i class="fas fa-search" style="cursor:pointer;"></i></span>
+            </div>
         </div>
 
         <div class="write_area_cover">
@@ -134,9 +132,11 @@
         </div>
 		
 		<div class="location">
+		'${inputData }'에 대한 검색결과입니다.
 		</div>
 		
         <div id="product_list" class="list_start">
+        
         </div>
         
 		<!-- 플러그인 사용 (부트스트랩 사용할때는 지정해둔 이름 써야함)-->
@@ -151,10 +151,6 @@
 </body>
 <script>
 	jQuery.noConflict();
-	
-	function searchIcon() {
-		$('form').submit();
-	}
 
 	var showPage = 1;
 	listCall(showPage);
@@ -169,28 +165,14 @@
 	}
 	
 	function listCall(reqPage){
-		var reqUrl = "/sale/main/"+reqPage;
 		
 		$.ajax({
-			url:reqUrl
+			url:"/sale/searchList/${inputData}"
 			,type: 'GET'
 			,data:{}
 			,success:function(data){
-				showPage = data.currPage;
-				listPrint(data.list);
-				console.log(data.list[0]);
-				$('.location').html(data.location);
-				
-				$('#pagination').twbsPagination({
-					startPage:data.currPage, //들어가는 옵션들 - 시작페이지
-					totalPages:data.range, //생성 가능 최대 페이지 수
-					visiblePages:10,//몇개의 페이지를 보여주겠는가? 1~5까지
-					onPageClick:function(evt,page){ //각 페이지를 눌렀을 경우
-						console.log(evt);
-						console.log(page);
-						listCall(page);
-					}
-				});
+				listPrint(data.searchList);
+				console.log(data.searchList);
 			},
 			error: function(error){
 				console.log(error);
@@ -212,11 +194,8 @@
 			}
 			content += "</div>";
 			content += "<a href='/sale/detail?product_idx="+list[i].product_idx+"'>";
-			if(list[i].saleFileDto.ext == 'mp4'){
-				content += "<img src='/resources/img/noIMG.jpg'/>";
-			}else{
-				content += "<img src='/saleFile/"+list[i].saleFileDto.newFileName+"'/>";
-			}
+			//이미지
+			content += "<img src='/saleFile/"+list[i].saleFileDto.newFileName+"'/>";
 			content += "<p>"+list[i].sale_subject+"</p>";
 			content += "<p>"+list[i].price+"원</p>";
 			content += "<p>"+list[i].reg_date+"</p>";

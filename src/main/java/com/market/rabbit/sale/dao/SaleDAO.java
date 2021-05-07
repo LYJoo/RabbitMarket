@@ -128,4 +128,6 @@ public interface SaleDAO {
 
 	int alarmWaybillNumber(String loginId, String msg);
 
+	ArrayList<SaleDTO> callSearchList(String loginId, String inputData);
+
 }

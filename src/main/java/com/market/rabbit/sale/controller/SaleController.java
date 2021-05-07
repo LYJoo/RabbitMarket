@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.CoCommentDTO;
@@ -80,6 +81,24 @@ public class SaleController {
 		map.put("list",list);
 		return map;
 	}
+	
+	@RequestMapping(value = "/sale/searchList", method = RequestMethod.GET)
+	public ModelAndView searchListForm(@RequestParam String inputData) {
+		ModelAndView mav = new ModelAndView();
+		
+		logger.info("입력받은 데이터 : {}", inputData);
+		
+		mav.addObject("inputData", inputData);
+		mav.setViewName("/sale/searchListForm");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/sale/searchList/{inputData}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> searchList(@PathVariable String inputData) {
+		logger.info("검색어 : {}", inputData);
+		return service.searchList(inputData);
+	}
+	
 	
 	@RequestMapping(value = "/sale/writeForm", method = RequestMethod.GET)
 	public String writeForm(Model model, HttpSession session) {

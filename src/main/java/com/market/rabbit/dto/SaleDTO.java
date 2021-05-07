@@ -26,7 +26,16 @@ public class SaleDTO {
 	private MemberDTO memberDto;
 	private SaleFileDTO saleFileDto;
 	private ProfileFileDTO profileFileDto;
+	private SaleCategoryDTO saleCategoryDTO;
 	
+	
+	
+	public SaleCategoryDTO getSaleCategoryDTO() {
+		return saleCategoryDTO;
+	}
+	public void setSaleCategoryDTO(SaleCategoryDTO saleCategoryDTO) {
+		this.saleCategoryDTO = saleCategoryDTO;
+	}
 	public ProfileFileDTO getProfileFileDto() {
 		return profileFileDto;
 	}

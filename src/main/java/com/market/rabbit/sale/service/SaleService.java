@@ -51,6 +51,8 @@ public class SaleService {
 	static final int DAY = 7;
 	static final int MONTH = 12;
 	
+	int numPerPage = 10;
+	
 	public ArrayList<SaleDTO> callProductList_unmember(int start, int end) {
 		ArrayList<SaleDTO> list = dao.callProductList_unmember(start, end);
 		setReg_date(list);
@@ -671,6 +673,16 @@ public class SaleService {
 			success = 1;
 		}
 		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> searchList(String inputData) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String loginId = "hwi";
+		inputData = "%"+inputData+"%";
+		ArrayList<SaleDTO> searchList = dao.callSearchList(loginId, inputData);
+		
+		map.put("searchList", searchList);
 		return map;
 	}
 

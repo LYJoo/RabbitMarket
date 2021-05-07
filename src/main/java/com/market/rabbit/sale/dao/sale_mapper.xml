@@ -418,7 +418,39 @@
 		INSERT INTO alarm(alarm_idx, alarm_content, member_id, code_num)
 			VALUES (seq_alarm.NEXTVAL, #{param2}, #{param1}, '2008') 
 	</insert>
+	
+	<!-- 검색리스트 -->
+ 	<select id="callSearchList" resultMap="callSearchListResult">
+ 		select * 
+		from (
+		    select s.product_idx, s.seller_id, s.sale_subject, s.sale_content, s.price, s.reg_date, s.pull_up_date, s.pull_up, s.minor, s.negotiation, s.isblind, s.isdelete, s.sale_location, 
+		    s.s_category_idx, s.code_num, s.bhit, s.keyword, c.s_category_name, sf.file_idx, sf.newfilename, sf.orifilename,ROW_NUMBER() OVER(PARTITION BY s.product_idx ORDER BY sf.file_idx) as rnumFile
+		    from sale s, sale_category c, sale_file sf
+		    where s.s_category_idx = c.s_category_idx AND s.product_idx = sf.product_idx
+		    )
+		where code_num=3001 AND seller_id not in (select target_id from block where member_id=#{param1}) AND sale_subject LIKE #{param2} AND rnumFile=1 AND isblind=0 AND isdelete=0
+ 	</select>
  	
+ 	<resultMap type="sale" id="callSearchListResult">
+ 	<id column="product_idx" property="product_idx"/>
+ 	<result column="seller_id" property="seller_id"/>
+ 	<result column="sale_subject" property="sale_subject"/>
+ 	<result column="sale_content" property="sale_content"/>
+ 	<result column="price" property="price"/>
+ 	<result column="reg_date" property="reg_date"/>
+ 	<result column="pull_up_date" property="pull_up_date"/>
+ 	<result column="sale_location" property="sale_location"/>
+ 	<result column="code_num" property="code_num"/>
+ 	<result column="bHit" property="bHit"/>
+ 	<result column="wishCnt" property="wishCnt"/>
+ 	<association property="saleFileDto" javaType="saleFile">
+ 		<result column="newFileName" property="newFileName"/>
+ 		<result column="file_idx" property="file_idx"/>
+ 	</association>
+ 	<association property="saleCategoryDTO" javaType="saleCategory">
+ 		<result column="s_category_name" property="s_category_name"/>
+ 	</association>
+	</resultMap>
  	
  	
  </mapper>
