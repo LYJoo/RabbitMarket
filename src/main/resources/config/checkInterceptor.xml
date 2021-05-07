@@ -8,8 +8,9 @@
 
 <mvc:interceptors>
 		<mvc:interceptor>
-				 <mvc:mapping path="/myPage/*"/> 
-				<bean class="com.market.rabbit.service.LoginInterceptor"></bean>
+				 <mvc:mapping path="/member/*"/> 
+				 <mvc:exclude-mapping path="/member/logout"/>
+				<bean class="com.market.rabbit.service.LoginCheckInterceptor"></bean>
 		
 		</mvc:interceptor>
 	

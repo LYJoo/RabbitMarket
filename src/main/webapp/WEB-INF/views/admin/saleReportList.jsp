@@ -15,7 +15,11 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 </head>
 <body>
-	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+	<span>	
+		<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+	</span>
+	
+	<jsp:include page="../include/adminNavigation.jsp"></jsp:include>
     <div id="list_content">
         <div class="flex_box btn_flex">
             <h2>글신고목록</h2>

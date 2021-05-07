@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter{
+public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -15,9 +15,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		boolean pass = false;//false 가 반환되면 컨트롤러로 접근이 불가능 하다.		
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute("loginId") == null) {
-			System.out.println("로그인 처리가 안되어있음");
-			response.sendRedirect("/member/memberLogin");
+		if(session.getAttribute("loginId") != null) {
+			System.out.println("로그인 되어있음");
+			response.sendRedirect("/sale/main");
 		}else {
 			System.out.println("로그인 처리 되어있음");
 			pass = true;

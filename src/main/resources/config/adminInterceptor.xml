@@ -8,8 +8,8 @@
 
 <mvc:interceptors>
 		<mvc:interceptor>
-				 <mvc:mapping path="/myPage/*"/> 
-				<bean class="com.market.rabbit.service.LoginInterceptor"></bean>
+				 <mvc:mapping path="/admin/*"/> 
+				<bean class="com.market.rabbit.service.AdminInterceptor"></bean>
 		
 		</mvc:interceptor>
 	

@@ -42,6 +42,7 @@ public class HomeController {
 
 		return "member/MemberLogin";
 	}
+	
 	@RequestMapping(value = "/sale/mainPage",  method = RequestMethod.GET)
 	public String mainPage( Model model) {
 		
