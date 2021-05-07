@@ -594,7 +594,8 @@ public class SaleService {
 		map.put("success", success);
 		return map;
 	}
-
+	//거래완료로 변경 시
+	@Transactional
 	public HashMap<String, Object> tradeEnd(int product_idx) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		String msg = "";
@@ -618,7 +619,7 @@ public class SaleService {
 			}else {
 				msg = "운송장 번호를 입력하지 않았습니다. 마이페이지에서 입력해주세요.";
 			}
-		}else {
+		}else {//직거래
 			Date date = null;
 			try {
 				SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");		
@@ -628,12 +629,22 @@ public class SaleService {
 				e.printStackTrace();
 			}
 			
-			check1 = dao.setTradeEnd(trade_idx,date);
-			check2 = dao.setTradeEnd2(product_idx);
+			check1 = dao.setTradeEnd(trade_idx,date);//거래테이블에 거래완료시간 넣고
+			check2 = dao.setTradeEnd2(product_idx);//판매테이블에 거래완료로 변경
 		}
 		
-		if(check1 == 1 && check2 ==1) {
+		if(check1 == 1 && check2 ==1) {//거래완료 다 성공했으면~
 			success = 1;
+			//거래완료 알림 넣기 - 판매자, 구매자 둘다!
+			String seller_id=dao.findSellerThisTrade(trade_idx);//판매자
+			String buyer_id=dao.findBuyerThisTrade(trade_idx);//구매자
+			//다음 내용이 알림으로 가게 될 것 입니다.
+			String sellerTradeEndAlarm ="["+buyer_id+"] 님과 거래를 평가 해 주세요! (거래번호 : "+trade_idx+")";
+			String buyerTradeEndAlarm ="["+seller_id+"] 님과 거래가 평가 해 주세요! (거래번호 : "+trade_idx+")";
+			//보.낸.다. : 코드 2007 거래평가 요청
+			int sellerTradeEndAlarmSuccess = dao.tradeEndAlarm(seller_id, sellerTradeEndAlarm);
+			int buyerTradeEndAlarmSuccess = dao.tradeEndAlarm(buyer_id, buyerTradeEndAlarm);
+			logger.info("거래완료 알림 성공여부 : "+sellerTradeEndAlarmSuccess+"/"+buyerTradeEndAlarmSuccess);
 		}
 		map.put("trade_idx", trade_idx);
 		map.put("success", success);

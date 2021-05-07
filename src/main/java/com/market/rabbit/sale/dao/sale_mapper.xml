@@ -451,6 +451,22 @@
  		<result column="s_category_name" property="s_category_name"/>
  	</association>
 	</resultMap>
+
+ 	<!-- 거래 완료시 알람 받을 판매자 나와 -->
+ 	<select id="findSellerThisTrade" resultType="String">
+ 		SELECT seller_id FROM trading WHERE  trade_idx=#{param1}
+ 	</select>
+ 	<!-- 거래 완료시 알람 받을 구매자 나와 -->
+ 	<select id="findBuyerThisTrade" resultType="String">
+ 		SELECT buyer_id FROM trading WHERE  trade_idx=#{param1}
+ 	</select>
+ 	
+ 	<!-- 거래 완료시 알람을 보냅니다. -->
+ 	<insert id="tradeEndAlarm">
+ 		INSERT INTO alarm(alarm_idx, alarm_content, member_id, code_num)
+			VALUES (seq_alarm.NEXTVAL, #{param2}, #{param1}, '2007') 
+ 	</insert>
+
  	
  	
  </mapper>

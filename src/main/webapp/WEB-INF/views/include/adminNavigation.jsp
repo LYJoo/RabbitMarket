@@ -75,13 +75,10 @@
             </span>
             <ul class="adminPage_nav_bar_hide">
               <li id="adminPage_nav_bar_hide4" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide5'),$('#adminPage_nav_bar_hide6'))">
-              		<a href="#">신고된 글</a>
+              		<a href="/admin/saleReportList">신고된 글</a>
               </li>
               <li id="adminPage_nav_bar_hide5" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide6'))">
-              		<a href="#">신고된 댓글</a>
-              </li>
-              <li id="adminPage_nav_bar_hide6" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide5'))">
-              		<a href="#">신고된 대댓글</a>
+              		<a href="/admin/commentReportList">신고된 댓글</a>
               </li>
             </ul>
         </li>
@@ -121,7 +118,7 @@
         </li>
        
         <li>
-            <a href="/admin/callSaleCategory">
+            <a href="/admin/callAdminList">
                 <span class="adminPage_nav_title" onclick="nav_textBold2(this, $('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide2'),$('#adminPage_nav_bar_hide3'),$('#adminPage_nav_bar_hide4'),$('#adminPage_nav_bar_hide5'),$('#adminPage_nav_bar_hide6'),$('#adminPage_nav_bar_hide7'),$('#adminPage_nav_bar_hide8'),$('#adminPage_nav_bar_hide9'))">관리자관리</span>
             </a>
         </li>

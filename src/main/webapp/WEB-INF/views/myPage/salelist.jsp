@@ -12,7 +12,12 @@
 		<!-- 페이징 라이브러리(제이쿼리 반드시 필요, 버전도 맞아야 함) -->
 		<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 		<style>
-		
+			table,tr,th,td{
+				border: 1px solid black;
+			}
+			table{
+				width: 1200px;
+			}
 		</style>
 	</head>
 	<body>
@@ -23,24 +28,15 @@
    			
    			<table>
    				<tr>
+   					<th>게시번호</th>
    					<th>게시물</th>
    					<th>제목</th>
    					<th colspan="2">판매상태</th>
    					<th>작성일</th>
    				</tr>
-   				<c:if test="${salelistFile.size()>0}">
-				<tr>
-					<td>
-						<ul>
-						<!-- 마지막에 / 가없으면 . 이후 확장자가 생략되어 버린다. -->
-							<c:forEach items="${salelistFile}" var="file">
-								<li><a href="/main/download/${file.oriFileName}/${file.newFileName}/">${file.oriFileName}</a></li>
-							</c:forEach>
-						</ul>
-					</td>
-				</tr>
-				</c:if>
    				<tr>
+   					<td>${salelistlist.product_idx}</td>
+   					<td><p><img src="${path }" alt="" style="width: 150px; height: 150px;"></p></td>
    					<td>${salelistlist.sale_subject}</td>
    					<td>
    						<select id="sale_select" name="sale_select">
@@ -50,23 +46,24 @@
    						</select>
    						${salelistlist.code_num}
    					</td>
-   					<td><a href="location.href='/거래상세보기페이지'">거래상세보기</a></td>
+   					<c:if test="${salelistlist.code_num ne 3001}">
+   						<td><a href="" id=saledetail>거래상세보기</a></td>
+   					</c:if>
    					<td>${salelistlist.reg_date}</td>
    				</tr>
    			</table>
    		</div>
 	</body>
 	<script>
+
+	$('#saledetail').click(function(){
+		window.open('../myPage/salelistdetail', 'salelistdetail', 'width=1000, height=1000');
+	})
 	
 	var showPage = 1;
 	
 	//몇개를 보여줄 것인지 / 몇페이지
 	listCall(showPage);//시작하자마자 이 함수를 호출 (20개씩 1페이지씩 보여줘라)
-	
-	$("#pagePerNum").change(function(){//select box의 값을 변경 할 때 마다 실행
-		$("#pagination").twbsPagination('destroy');//이 구문이 없으면 페이지당 갯수 조정시 페이징 변경이 일어나지 않는다.
-		listCall(showPage);
-	});
 	
 	function listCall(reqPage){
 		//restful service 는 ajax 를 통해 호출하여 사용하는 경우가 많지만

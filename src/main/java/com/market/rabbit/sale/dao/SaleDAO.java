@@ -130,4 +130,11 @@ public interface SaleDAO {
 
 	ArrayList<SaleDTO> callSearchList(String loginId, String inputData);
 
+	String findSellerThisTrade(int trade_idx);
+
+	String findBuyerThisTrade(int trade_idx);
+
+	int tradeEndAlarm(String member_id, String alarm_content);
+
+
 }

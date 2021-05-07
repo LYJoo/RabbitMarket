@@ -9,6 +9,7 @@ import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.ReviewDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.dto.SaleFileDTO;
+import com.market.rabbit.dto.TradingDTO;
 import com.market.rabbit.dto.WishDTO;
 
 public interface ProfileDAO1 {
@@ -40,6 +41,10 @@ public interface ProfileDAO1 {
 	SaleFileDTO salelistFile(String loginId);
 
 	SaleDTO salelistlist(String loginId);
+
+	SaleDTO saledetail(String loginId);
+
+	TradingDTO tradedetail(String loginId);
 
 
 }
