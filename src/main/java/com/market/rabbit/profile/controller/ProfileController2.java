@@ -73,9 +73,9 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/memberPwUpdate", method = RequestMethod.POST)
-	public ModelAndView updateMemberPw(@RequestParam String currPw, @RequestParam String afterPw, RedirectAttributes rAttr) {
+	public ModelAndView updateMemberPw(@RequestParam String currPw, @RequestParam String afterPw, RedirectAttributes rAttr, HttpSession session) {
 		logger.info("마이페이지-비밀번호변경요청");
-		return service.updateMemberPw(currPw, afterPw, rAttr);
+		return service.updateMemberPw(currPw, afterPw, rAttr, session);
 	}
 	
 	@RequestMapping(value = "myPage/memberWithdrawForm", method = RequestMethod.GET)
@@ -97,10 +97,10 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/alarmList/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callMsgList(@PathVariable int page) {
+	public @ResponseBody HashMap<String, Object> callMsgList(@PathVariable int page, HttpSession session) {
 		
 		logger.info("Alarm {} 페이지 리스트 요청", page);
-		return service.callAlarmList(page);
+		return service.callAlarmList(page, session);
 	}
 	
 	@RequestMapping(value = "myPage/delAlarm/{alarm_idx}", method = RequestMethod.GET)
@@ -117,10 +117,10 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/blockList/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callBlockList(@PathVariable int page) {
+	public @ResponseBody HashMap<String, Object> callBlockList(@PathVariable int page, HttpSession session) {
 		
 		logger.info("Block {} 페이지 리스트 요청", page);
-		return service.callBlockList(page);
+		return service.callBlockList(page, session);
 	}
 	
 	@RequestMapping(value = "myPage/delBlock/{block_idx}", method = RequestMethod.GET)
@@ -137,9 +137,9 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/saleReportList/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callSaleReportList(@PathVariable int page) {
+	public @ResponseBody HashMap<String, Object> callSaleReportList(@PathVariable int page, HttpSession session) {
 		logger.info("마이페이지-판매글 신고 리스트 요청");
-		return service.callSaleReportList(page);
+		return service.callSaleReportList(page, session);
 	}
 	
 	@RequestMapping(value = "myPage/commentReportList", method = RequestMethod.GET)
@@ -149,9 +149,9 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/commentReportList/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callCommentReportList(@PathVariable int page) {
+	public @ResponseBody HashMap<String, Object> callCommentReportList(@PathVariable int page, HttpSession session) {
 		logger.info("마이페이지-댓글 신고 리스트 요청");
-		return service.callCommentReportList(page);
+		return service.callCommentReportList(page, session);
 	}
 	
 	@RequestMapping(value = "myPage/cocommentReportList", method = RequestMethod.GET)
@@ -161,9 +161,9 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/cocommentReportList/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callCocommentReportList(@PathVariable int page) {
+	public @ResponseBody HashMap<String, Object> callCocommentReportList(@PathVariable int page, HttpSession session) {
 		logger.info("마이페이지-대댓글 신고 리스트 요청");
-		return service.callCocommentReportList(page);
+		return service.callCocommentReportList(page, session);
 	}
 	
 	@RequestMapping(value = "myPage/questionList", method = RequestMethod.GET)
@@ -173,9 +173,9 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/questionList/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callMemberQuestionList(@PathVariable int page) {
+	public @ResponseBody HashMap<String, Object> callMemberQuestionList(@PathVariable int page, HttpSession session) {
 		logger.info("마이페이지-내 1:1 문의 리스트요청");
-		return service.callQuestionList(page);
+		return service.callQuestionList(page, session);
 	}
 	
 	@RequestMapping(value = "myPage/keywordList", method = RequestMethod.GET)
@@ -185,21 +185,21 @@ public class ProfileController2 {
 	}
 	
 	@RequestMapping(value = "myPage/callKeywords", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callKeywords() {
+	public @ResponseBody HashMap<String, Object> callKeywords(HttpSession session) {
 		logger.info("마이페이지-키워드 요청");
-		return service.callKeywords();
+		return service.callKeywords(session);
 	}
 	
 	@RequestMapping(value = "myPage/delKeyword/{keyword_idx}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> delKeyword(@PathVariable int keyword_idx) {
+	public @ResponseBody HashMap<String, Object> delKeyword(@PathVariable int keyword_idx, HttpSession session) {
 		logger.info("마이페이지-{}번 키워드 삭제 요청", keyword_idx);
-		return service.delKeyword(keyword_idx);
+		return service.delKeyword(keyword_idx, session);
 	}
 	
 	@RequestMapping(value = "myPage/writeKeyword/{keyword}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> writeKeyword(@PathVariable String keyword) {
+	public @ResponseBody HashMap<String, Object> writeKeyword(@PathVariable String keyword, HttpSession session) {
 		logger.info("마이페이지-{} 키워드 등록 요청", keyword);
-		return service.writeKeyword(keyword);
+		return service.writeKeyword(keyword, session);
 	}
 	
 }

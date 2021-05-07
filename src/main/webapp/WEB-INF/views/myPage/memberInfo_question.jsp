@@ -82,7 +82,7 @@
 			
 			for(var i=0; i<list.length; i++){
 				content += "<tr>";
-				content += "<td>"+list[i].question_category+"</td>";
+				content += "<td><a href='/help/helpQuestionDetail/"+list[i].question_idx+"'>"+list[i].question_category+"</a></td>";
 				content += "<td>"+list[i].subject+"</td>"
 				if(list[i].state == 0){
 					content += "<td style='color:red;'>미답변</td>"

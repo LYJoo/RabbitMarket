@@ -44,7 +44,7 @@ public class ProfileService2 {
 		ModelAndView mav = new ModelAndView();
 		String page = "myPage/memberInfo";
 		//String loginId = (String) session.getAttribute("loginId");
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		MemberDTO dto = dao.callMemberInfo(loginId);
 		ProfileFileDTO profileDto = dao.callMemberProfile(loginId);
@@ -64,7 +64,7 @@ public class ProfileService2 {
 		
 		String page = "myPage/memberInfo_updateForm";
 		//String loginId = (String) session.getAttribute("loginId");
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		MemberDTO dto = dao.callMemberInfo(loginId);
 		ProfileFileDTO profileDto = dao.callMemberProfile(loginId);
@@ -166,11 +166,11 @@ public class ProfileService2 {
 	}
 
 	@Transactional
-	public ModelAndView updateMemberPw(String currPw, String afterPw, RedirectAttributes rAttr) {
+	public ModelAndView updateMemberPw(String currPw, String afterPw, RedirectAttributes rAttr, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/myPage/memberPwUpdateForm";
 		String msg = "비밀번호 변경에 실패하였습니다.";
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		if(dao.confirmPw(loginId, currPw) != null) {
 			logger.info("비밀번호가 일치합니다. 비밀번호를 변경합니다.");
 			dao.updatePw(loginId, afterPw);
@@ -186,7 +186,7 @@ public class ProfileService2 {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/myPage/memberInfo";
 		String msg = "회원탈퇴에 실패하였습니다.";
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		if(dao.confirmPw(loginId, currPw) != null) {
 			logger.info("비밀번호가 일치합니다. 회원탈퇴합니다.");
 			dao.delMemberWithdraw(loginId);
@@ -198,11 +198,11 @@ public class ProfileService2 {
 		return mav;
 	}
 
-	public HashMap<String, Object> callAlarmList(int page) {
+	public HashMap<String, Object> callAlarmList(int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		int allCnt = dao.countAlarmList(loginId);
 		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
@@ -227,10 +227,10 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> callBlockList(int page) {
+	public HashMap<String, Object> callBlockList(int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
 		
@@ -257,11 +257,11 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> callSaleReportList(int page) {
+	public HashMap<String, Object> callSaleReportList(int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		int allCnt = dao.countSaleReportList(loginId);
 		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
@@ -274,11 +274,11 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> callCommentReportList(int page) {
+	public HashMap<String, Object> callCommentReportList(int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		int allCnt = dao.countCommentReportList(loginId);
 		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
@@ -291,11 +291,11 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> callCocommentReportList(int page) {
+	public HashMap<String, Object> callCocommentReportList(int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		int allCnt = dao.countCocommentReportList(loginId);
 		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
@@ -308,11 +308,11 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> callQuestionList(int page) {
+	public HashMap<String, Object> callQuestionList(int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		int allCnt = dao.countQuestionList(loginId);	//전체 개수
 		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
@@ -325,9 +325,9 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> callKeywords() {
+	public HashMap<String, Object> callKeywords(HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		ArrayList<KeywordDTO> keywords = dao.callKeywords(loginId);
 		
@@ -335,9 +335,9 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> delKeyword(int keyword_idx) {
+	public HashMap<String, Object> delKeyword(int keyword_idx, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		boolean success = false;
 		
 		if(dao.delKeyword(loginId, keyword_idx) > 0) {
@@ -348,9 +348,9 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> writeKeyword(String keyword) {
+	public HashMap<String, Object> writeKeyword(String keyword, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		boolean success = false;
 		
 		if(dao.writeKeyword(loginId, keyword) > 0) {
