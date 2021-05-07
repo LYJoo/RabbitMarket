@@ -82,8 +82,22 @@
 			
 			for(var i=0; i<list.length; i++){
 				content += "<tr>";
-				content += "<td><a href='/help/helpQuestionDetail/"+list[i].question_idx+"'>"+list[i].question_category+"</a></td>";
-				content += "<td>"+list[i].subject+"</td>"
+				
+				switch (list[i].question_category){
+				case 1:
+					content += "<td>판매글</td>";
+					break;
+				case 2:
+					content += "<td>신고</td>";
+					break;
+				case 3:
+					content += "<td>사기</td>";
+					break;
+				default:
+					content += "<td>기타</td>";
+					break;
+				}
+				content += "<td><a href='/help/helpQuestionDetail/"+list[i].question_idx+"' style='color:black;'>"+list[i].subject+"</a></td>"
 				if(list[i].state == 0){
 					content += "<td style='color:red;'>미답변</td>"
 				}else{
