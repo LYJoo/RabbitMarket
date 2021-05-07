@@ -89,7 +89,7 @@ public class MemberService {
 		}else {
 			if(dao.admin(map) > 0) {
 				logger.info("관리자 모드");
-				page ="sale/mainPage";
+				page ="redirect:/sale/mainPage";
 				
 				session.setAttribute("adminId", params.get("LoginId"));
 			}else {

@@ -79,10 +79,12 @@
 			<td><input type="text" id="subject" name="subject" required></td>
 			<td></td>
 			<td></td>
+			<td></td>
 		</tr>
 		<tr>
 			<th>작성자</th>
 			<td><input type="text" id="member_id" name="member_id" value="${sessionScope.loginId}" readonly="readonly"></td>
+			<td></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -103,12 +105,15 @@
 				<label><input type="radio" name="isPw" value="1" required> 비공개</label>
 			
 			</td>
+				<td><c:if test="${isPw} eq '1'">
+				<input type="text" name="isPass" required="required">
+				</c:if></td>
 		</tr>
 		<tr>
 			
 		</tr>
 		<tr>
-			<td colspan="4">
+			<td colspan="5">
 				<!-- div 에 있는 녀석은 서버로 보낼 수 없다. -->
 				<div id="editable" contenteditable="true"></div>
 				<input id="content" type="hidden" name="content" value=""/>

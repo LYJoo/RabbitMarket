@@ -43,12 +43,6 @@ public class HomeController {
 		return "member/MemberLogin";
 	}
 	
-	@RequestMapping(value = "/sale/mainPage",  method = RequestMethod.GET)
-	public String mainPage( Model model) {
-		
-		return "sale/mainPage";
-	}
-	
 	
 	@RequestMapping(value = "/member/overlay",  method = RequestMethod.POST)
 	public @ResponseBody HashMap<String, Object> overlay( Model model, @RequestParam String id) {
