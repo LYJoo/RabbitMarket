@@ -54,5 +54,17 @@ public interface ProfileDAO1 {
 
 	int countAllReview(String member_id);
 
+	int allCountMySaleList(String member_id);
+
+	ArrayList<SaleDTO> mySaleList(String member_id, int start, int end);
+
+	int findTradeIdxThisProduct(int product_idx);
+
+	SaleDTO findSaleInfoThis(int product_idx);
+
+	TradingDTO findTradeInfoThis(int trade_idx);
+
+	SaleFileDTO findSaleFileFirstThis(int product_idx);
+
 
 }

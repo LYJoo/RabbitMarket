@@ -76,7 +76,7 @@
             </a>
         </li>
         <li>
-            <a href="/myPage/saleboard">
+            <a href="/myPage/salelist">
                 <span  class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">판매내역</span>
             </a>
         </li>

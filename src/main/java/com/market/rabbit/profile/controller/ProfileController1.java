@@ -94,32 +94,25 @@ public class ProfileController1 {
 	
 	//판매내역리스트
 	@RequestMapping(value = "myPage/salelist", method = RequestMethod.GET)
-	public ModelAndView salelist(Model model, HttpSession session) {
-		logger.info("판매내역 요청");
-		
-		return service.salelist(session);
+	public String salelist() {
+		logger.info("판매내역 페이지 요청");
+		return "myPage/salelist";
 	}
 	
-//	@RequestMapping(value = "myPage/salelist", method = RequestMethod.GET)
-//	public void salelist(Model model, HttpSession session) throws Exception {
-//		logger.info("판매내역 요청");
-//		
-//		MemberDTO member = (MemberDTO)session.getAttribute("member");
-//		String loginId = member.getMember_id();
-//		
-//		ArrayList<SaleDTO> salelist = service.salelist(loginId);
-//		
-//		model.addAttribute("salelist", salelist);
-//	}
+	//판매내역리스트 페이징
+	@RequestMapping(value = "/myPage/mysalelist/{pagePerCnt}/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> mySaleList(@PathVariable int pagePerCnt, @PathVariable int page, HttpSession session) {
+		logger.info("관리자 리스트 요청 pagePerCnt: {}, page: {}",pagePerCnt,page);
+		String member_id = (String) session.getAttribute("loginId");
+		return service.mySaleList(page,pagePerCnt, member_id);
+	}
 	
-	//판매내역리스트 페이징처리
 	
 	//거래상세보기
-	@RequestMapping(value = "myPage/salelistdetail", method = RequestMethod.GET)
-	public ModelAndView salelistdetail(HttpSession session) {
+	@RequestMapping(value = "myPage/salelistdetail/{product_idx}", method = RequestMethod.GET)
+	public ModelAndView salelistdetail(@PathVariable int product_idx) {
 		logger.info("거래상세보기 요청");
-		
-		return service.salelistdetail(session);
+		return service.salelistdetail(product_idx);
 	}
 	
 	//운송장번호 입력

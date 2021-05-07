@@ -105,4 +105,62 @@
  		SELECT count(review_idx) FROM review WHERE member_id=#{param1}
  	</select>
  	
+ 	<!-- 판매내역 리스트 : 전체수, 리스트 -->
+ 	<select id="allCountMySaleList" resultType="int">
+ 		SELECT count(product_idx) FROM sale 
+ 			WHERE seller_id=#{param1} AND isdelete=0
+ 	</select>
+ 	<resultMap type="sale" id="callMySaleList">
+	 	<id column="product_idx" property="product_idx"/>
+	 	<result column="seller_id" property="seller_id"/>
+	 	<result column="sale_subject" property="sale_subject"/>
+	 	<result column="code_num" property="code_num"/>
+	 	<result column="reg_date" property="reg_date"/>
+	 	<association property="saleFileDto" javaType="saleFile">
+	 		<result column="newFileName" property="newFileName"/>
+	 		<result column="file_idx" property="file_idx"/>
+	 	</association>
+	</resultMap>
+	<select id="mySaleList" resultMap="callMySaleList">
+		select *
+			from (
+			    select ROW_NUMBER() OVER(ORDER BY product_idx DESC) AS rnum, seller_id, product_idx,sale_subject, code_num,reg_date, file_idx, newfilename, rnumFile
+			    FROM (
+			        SELECT  s.seller_id, s.product_idx, s.sale_subject, s.code_num, s.reg_date, sf.file_idx, sf.newfilename, RANK() OVER (PARTITION BY sf.product_idx ORDER BY sf.file_idx) rnumFile
+			        FROM sale s, sale_file sf
+			        WHERE s.product_idx = sf.product_idx AND s.isdelete=0
+			        )
+			    WHERE rnumFile=1 AND seller_id=#{param1}
+			    )
+			WHERE rnum between #{param2} and #{param3}
+	</select>
+	
+	<!-- 거래 상세보기 -->
+	<!-- 1.해당 판매글idx로 최근 거래 idx 추출 -->
+	<select id="findTradeIdxThisProduct" resultType="int">
+		SELECT trade_idx FROM
+		    (SELECT product_idx, trade_idx, ROW_NUMBER() OVER(ORDER BY trade_idx DESC) AS rnum FROM trading 
+		    WHERE product_idx=#{param1})
+		    WHERE rnum=1
+	</select>
+	<!-- 2.해당 판매글idx로 판매글 정보 추출 -->
+	<select id="findSaleInfoThis" resultType="sale">
+		SELECT  s.seller_id, s.product_idx, s.sale_subject,s.price, s.code_num
+		        FROM sale s
+		        WHERE s.product_idx=#{param1}
+	</select>
+	<!-- 3.판매글 사진 첫번째꺼 가지고 가기 -->
+	<select id="findSaleFileFirstThis" resultType="saleFile">
+		SELECT * FROM
+		    (SELECT  sf.file_idx, sf.newfilename, RANK() OVER (ORDER BY sf.file_idx ASC) rnumFile
+		        FROM sale_file sf
+		        WHERE sf.product_idx=#{param1}
+		    ) WHERE rnumFile=1
+	</select>
+	<!-- 4.해당 거래 idx로 거래 정보 추출 -->
+	<select id="findTradeInfoThis" resultType="trading">
+		SELECT trade_idx, seller_id, buyer_id, trade_type, trade_time, package_company, tracking_Number, trade_state, seller_manner, buyer_manner, trade_start_date, trade_end_date
+    		FROM trading WHERE trade_idx=#{param1}
+	</select>
+ 	
  </mapper>

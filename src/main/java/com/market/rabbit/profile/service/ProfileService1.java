@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.market.rabbit.dto.MemberDTO;
+import com.market.rabbit.dto.NoticeDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.ReviewDTO;
 import com.market.rabbit.dto.SaleDTO;
@@ -136,40 +137,43 @@ public class ProfileService1 {
 		
 		return map;
 	}
-
+	
+	//판매내역 리스트
 	@Transactional
-	public ModelAndView salelist(HttpSession session) {
-		logger.info("판매내역 요청");
-		ModelAndView mav = new ModelAndView();
-		String page = "myPage/salelist";
-		String loginId = "lalala";
-		
-//		ArrayList<SaleFileDTO> salelistFile = dao.salelistFile(loginId);
-//		ArrayList<SaleDTO> salelistlist = dao.salelistlist(loginId);
-		
-		SaleFileDTO salelistFile = dao.salelistFile(loginId);
-		SaleDTO salelistlist = dao.salelistlist(loginId);
-//		logger.info("profile : "+profileDto.getOriFileName());
-		
-		mav.addObject("salelistFile", salelistFile);
-		mav.addObject("salelistlist", salelistlist);
-//		mav.addObject("path", "/sale/"+salelistFile.getNewFileName());
-		mav.setViewName(page);
-		return mav;
+	public HashMap<String, Object> mySaleList(int page, int pagePerCnt, String member_id) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//pagePerCnt 의 기준으로 몇페이지나 만들수 있는가?
+		int allCnt = dao.allCountMySaleList(member_id);//전체 수
+		//게시글 수 : 21개, 페이지당 보여줄 수 : 5 = 최대 생성 가능한 페이지 : 5
+		int range = allCnt%pagePerCnt > 0? Math.round(allCnt/pagePerCnt)+1 : Math.round(allCnt/pagePerCnt);
+		//생성 가능한 페이지 보다 현재페이지가 클 경우... 현재페이지를 생성 가능한 페이지로 맞춰준다.
+		page=page>range? range: page;
+		//시작, 끝
+		int end = page*pagePerCnt;
+		int start = end - pagePerCnt+1;
+		ArrayList<SaleDTO> list = dao.mySaleList(member_id, start,end);
+
+		map.put("list", list);
+		map.put("range", range);
+		map.put("currPage", page);
+		return map;
 	}
+	
 
 	@Transactional
-	public ModelAndView salelistdetail(HttpSession session) {
-		logger.info("거래상세보기 요청");
+	public ModelAndView salelistdetail(int product_idx) {
 		ModelAndView mav = new ModelAndView();
 		String page = "myPage/salelistdetail";
-		String loginId = "lalala";
 		
-		SaleDTO saledetail = dao.saledetail(loginId);
-		TradingDTO tradedetail = dao.tradedetail(loginId);
+		//판매글에 해당하는 가장 최근 거래 idx 가져오기
+		int trade_idx = dao.findTradeIdxThisProduct(product_idx);
+		SaleDTO saleInfo = dao.findSaleInfoThis(product_idx);//판매글정보
+		SaleFileDTO saleFirstPhoto = dao.findSaleFileFirstThis(product_idx);//첫번째 파일
+		TradingDTO tradeInfo = dao.findTradeInfoThis(trade_idx);//거래정보
 		
-		mav.addObject("saledetail", saledetail);
-		mav.addObject("tradedetail", tradedetail);
+		mav.addObject("saleInfo", saleInfo);
+		mav.addObject("saleFile", saleFirstPhoto);
+		mav.addObject("tradeInfo", tradeInfo);
 		mav.setViewName(page);
 		return mav;
 	}
@@ -178,6 +182,8 @@ public class ProfileService1 {
 		
 		return null;
 	}
+
+
 
 
 
