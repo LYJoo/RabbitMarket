@@ -51,10 +51,10 @@ public class ProfileService2 {
 		
 		mav.addObject("dto", dto);
 		//mav.addObject("profileDto", profileDto);
-		if(profileDto.getNewFileName() == null) {
-			mav.addObject("path", "/myProfile/default_profile.png");
-		}else {
+		try {
 			mav.addObject("path", "/myProfile/"+profileDto.getNewFileName());
+		} catch (NullPointerException e) {
+			mav.addObject("path", "/myProfile/default_profile.png");
 		}
 		mav.setViewName(page);
 		return mav;
@@ -375,7 +375,8 @@ public class ProfileService2 {
 		params.put("loginId", loginId);
 		params.put("selectedState", selectedState);
 		int allCnt = dao.countMyBuyList(params);	//전체 개수
-		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		System.out.println(selectedState+" 의 전체 개수 : "+allCnt);
+		int range = (int) (allCnt%numPerPage > 0 ? Math.floor(allCnt/numPerPage)+1 : allCnt/numPerPage);
 		
 		HashMap<String, Object> listParams = new HashMap<String, Object>();
 		listParams.put("loginId", loginId);
@@ -383,7 +384,6 @@ public class ProfileService2 {
 		listParams.put("start", start);
 		listParams.put("end", end);
 		ArrayList<TradingDTO> myBuyList = dao.callMyBuyList(listParams);
-		
 		
 		map.put("range", range);
 		map.put("currPage", page);

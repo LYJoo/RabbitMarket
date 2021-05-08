@@ -43,8 +43,8 @@
         <jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
 
         <div class="our_content_area">
-        	<select id="sale_select_state" name="sale_select" onchange="selectState()">
-                <option value="전체" selected>전체</option>
+        	<select id="selectState" name="sale_select" onchange="selectState()">
+                <option value="전체">전체</option>
                 <option value="거래중">거래중</option>
                 <option value="거래완료">거래완료</option>
                 <option value="거래취소">거래취소</option>
@@ -79,13 +79,12 @@
 	jQuery.noConflict();
 	
 	var showPage = 1;
-    var pagePerNum = 10;//몇개를 보여줄 것인지
 	
-	listCall('전체', showPage);//시작하자마자 이 함수를 호출
+	listCall('전체', 1);//시작하자마자 이 함수를 호출
 	
 	function selectState() {
-		var selectedState = $('#sale_select_state').val();
-		listCall(selectedState, showPage);//시작하자마자 이 함수를 호출
+		var selectedState = $('#selectState option:selected').val();
+		listCall(selectedState, 1);
 	}
 	
 	function listCall(selectedState, reqPage){
@@ -98,13 +97,14 @@
 				console.log(data.myBuyList);
 				showPage = data.currPage;
 				listPrint(data.myBuyList);
+				console.log(data.selectState);
 				//플러그인 사용
 				$("#pagination").twbsPagination({//옵션들이 들어감
 					startPage:data.currPage,//시작페이지
 					totalPages:data.range,//생성 가능 최대 페이지
 					visiblePages:5,//5개씩 보여주겠다 (1~5)
 					onPageClick:function(evt,page){//각 페이지를 눌렀을 경우
-						listCall(page);
+						listCall($('#selectState option:selected').val(), page);
 					}
 				});
 			},
@@ -122,7 +122,7 @@
 			content += "<tr>";
 			content += '<td><p><img src="/saleImg/'+list[i].saleFileDto.newFileName+'" alt="" style="width: 150px; height: 150px;"></p></td>';
 			content += '<td class="rightLine">['+list[i].trade_idx+']'+list[i].saleDto.sale_subject+'</td>';
-			content += '<td><select id="sale_select" name="sale_select" onchange="">';
+			content += '<td><select id="sale_select" name="sale_select" onchange="value3(this.value,${detail.product_idx})">';
 			if(list[i].trade_state == '거래취소'){
 				content += '<option value="거래중">거래중</option><option value="거래완료">거래완료</option><option value="거래취소" selected>거래취소</option>';
 			}else if (list[i].trade_state == '거래중'){
@@ -139,18 +139,13 @@
 		$("#list").append(content);
 	}
 	
-	/*거래상세보기 오픈*/
-	function Opendetail(idx){
-		window.open('/myPage/buylistdetail/'+idx, 'salelistdetail', 'width=1000, height=1000');
-	}
-	
-    function selectChage2(e,idx) {
+	function value3(e,idx) {
     	if(e == '거래취소'){
     		$.ajax({
     			url:'/sale/tradeCancel'
     			,type: 'GET'
     			,data:{"product_idx": idx}
-    			,success:function(data){//seller_id로 바꾸기
+    			,success:function(data){
     				var ok = confirm(data.buyer_id+'님과의 거래를 취소하시겠습니까?');
     				if(ok){
     					window.open('/sale/tradeCancelReason?product_idx='+idx,'tradeCancel','width=550, height=550, top=100, left=500');
@@ -177,11 +172,7 @@
     				if(data.success == 1){
     					var trade_idx = data.trade_idx;
     					alert('거래가 완료되었습니다.');
-    					if(trade_type === "택배"){//거래타입 값 넣어 주세용.
-    						window.open('/percelSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
-    					}else{
-    						window.open('/directSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
-    					}
+    					window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
     					window.location.reload();
     				}
     			},
@@ -191,6 +182,7 @@
     		});
         }
     }
+
 	
 	
 	</script>
