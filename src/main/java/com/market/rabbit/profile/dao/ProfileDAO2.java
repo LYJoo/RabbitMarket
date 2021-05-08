@@ -1,6 +1,7 @@
 package com.market.rabbit.profile.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.market.rabbit.dto.AlarmDTO;
 import com.market.rabbit.dto.BlockDTO;
@@ -63,8 +64,9 @@ public interface ProfileDAO2 {
 
 	int countCocommentReportList(String loginId);
 
-	int countMyBuyList(String loginId);
 
-	ArrayList<TradingDTO> callMyBuyList(String loginId, int start, int end);
+	int countMyBuyList(HashMap<String, String> params);
+
+	ArrayList<TradingDTO> callMyBuyList(HashMap<String, Object> listParams);
 
 }

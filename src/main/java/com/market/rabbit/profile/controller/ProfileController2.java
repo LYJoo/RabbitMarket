@@ -208,11 +208,12 @@ public class ProfileController2 {
 		return "myPage/myBuyList";
 	}
 	
-	@RequestMapping(value = "myPage/myBuyList/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callMyBuyList(@PathVariable int page, HttpSession session) {
+	@RequestMapping(value = "myPage/myBuyList/{selectedState}/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callMyBuyList(@PathVariable String selectedState, @PathVariable int page, HttpSession session) {
+
 		
-		logger.info("내 구매내역 {} 페이지 리스트 요청", page);
-		return service.callMyBuyList(page, session);
+		logger.info("내 구매내역 {}상태 {} 페이지 리스트 요청", selectedState, page);
+		return service.callMyBuyList(selectedState, page, session);
 	}
 	
 }
