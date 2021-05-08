@@ -169,7 +169,7 @@
         }
         else if(e.value == '거래완료'){
         	$.ajax({
-    			url:'/myPage/tradeEnd'
+    			url:'/sale/tradeEnd'
     			,type: 'POST'
     			,data:{"product_idx": product_idx, "trade_idx":trade_idx}
     			,success:function(data){
@@ -180,12 +180,12 @@
     				}
     				if(data.success == 1){
     					var trade_idx = data.trade_idx;
-    					var trade_type = "여기에 거래 타입을 넣어주세요";
+    					var trade_type = trade_type;
     					alert('거래가 완료되었습니다.');
     					if(trade_type == "택배"){
-    						window.open('/percelSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
+    						window.open('/percelSellerEstimation?product_idx='+product_idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
     					}else{
-    						window.open('/directSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    						window.open('/directSellerEstimation?product_idx='+product_idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
     					}
     					window.location.reload();
     				}
