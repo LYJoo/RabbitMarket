@@ -43,10 +43,11 @@
         <jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
 
         <div class="our_content_area">
-        	<select id="sale_select_state" name="sale_select">
-                <option value="전체">전체</option>
+        	<select id="sale_select_state" name="sale_select" onchange="selectState()">
+                <option value="전체" selected>전체</option>
                 <option value="거래중">거래중</option>
                 <option value="거래완료">거래완료</option>
+                <option value="거래취소">거래취소</option>
             </select>
             <table>
                 <thead>
@@ -80,11 +81,16 @@
 	var showPage = 1;
     var pagePerNum = 10;//몇개를 보여줄 것인지
 	
-	listCall(showPage);//시작하자마자 이 함수를 호출
+	listCall('전체', showPage);//시작하자마자 이 함수를 호출
 	
-	function listCall(reqPage){
+	function selectState() {
+		var selectedState = $('#sale_select_state').val();
+		listCall(selectedState, showPage);//시작하자마자 이 함수를 호출
+	}
+	
+	function listCall(selectedState, reqPage){
 		$.ajax({
-			url:'./myBuyList/'+reqPage,
+			url:'./myBuyList/'+selectedState+'/'+reqPage,
 			Type:'GET',
 			data:{},
 			dataType:'JSON',
@@ -116,12 +122,12 @@
 			content += "<tr>";
 			content += '<td><p><img src="/saleImg/'+list[i].saleFileDto.newFileName+'" alt="" style="width: 150px; height: 150px;"></p></td>';
 			content += '<td class="rightLine">['+list[i].trade_idx+']'+list[i].saleDto.sale_subject+'</td>';
-			content += '<td><select id="sale_select" name="sale_select">';
-			if(list[i].trade_state = '거래취소'){
+			content += '<td><select id="sale_select" name="sale_select" onchange="">';
+			if(list[i].trade_state == '거래취소'){
 				content += '<option value="거래중">거래중</option><option value="거래완료">거래완료</option><option value="거래취소" selected>거래취소</option>';
-			}else if (list[i].trade_state = '거래중'){
+			}else if (list[i].trade_state == '거래중'){
 				content += '<option value="거래중" selected>거래중</option><option value="거래완료">거래완료</option><option value="거래취소">거래취소</option>';
-			}else if(list[i].trade_state = '거래완료'){
+			}else if(list[i].trade_state == '거래완료'){
 				content += '<option value="거래중">거래중</option><option value="거래완료" selected>거래완료</option><option value="거래취소">거래취소</option>';
 			}
 			content += '</select></td>';

@@ -362,16 +362,28 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> callMyBuyList(int page, HttpSession session) {
+	public HashMap<String, Object> callMyBuyList(String selectedState, int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int end = page*numPerPage;
 		int start = end-(numPerPage-1);
 		String loginId = (String) session.getAttribute("loginId");
 		
-		int allCnt = dao.countMyBuyList(loginId);	//전체 개수
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("loginId", loginId);
+		params.put("selectedState", selectedState);
+		int allCnt = dao.countMyBuyList(params);	//전체 개수
 		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
 		
-		ArrayList<TradingDTO> myBuyList = dao.callMyBuyList(loginId, start, end);
+		HashMap<String, Object> listParams = new HashMap<String, Object>();
+		listParams.put("loginId", loginId);
+		listParams.put("selectedState", selectedState);
+		listParams.put("start", start);
+		listParams.put("end", end);
+		ArrayList<TradingDTO> myBuyList = dao.callMyBuyList(listParams);
+		
+		for(int i=0; i<myBuyList.size(); i++) {
+			System.out.println(i+"번째 trade_state : "+myBuyList.get(i).getTrade_state());
+		}
 		
 		map.put("range", range);
 		map.put("currPage", page);
