@@ -48,11 +48,14 @@ public class ProfileService2 {
 		
 		MemberDTO dto = dao.callMemberInfo(loginId);
 		ProfileFileDTO profileDto = dao.callMemberProfile(loginId);
-		logger.info("profile : "+profileDto.getOriFileName());
 		
 		mav.addObject("dto", dto);
 		//mav.addObject("profileDto", profileDto);
-		mav.addObject("path", "/myProfile/"+profileDto.getNewFileName());
+		if(profileDto.getNewFileName() == null) {
+			mav.addObject("path", "/myProfile/default_profile.png");
+		}else {
+			mav.addObject("path", "/myProfile/"+profileDto.getNewFileName());
+		}
 		mav.setViewName(page);
 		return mav;
 	}
@@ -381,9 +384,6 @@ public class ProfileService2 {
 		listParams.put("end", end);
 		ArrayList<TradingDTO> myBuyList = dao.callMyBuyList(listParams);
 		
-		for(int i=0; i<myBuyList.size(); i++) {
-			System.out.println(i+"번째 trade_state : "+myBuyList.get(i).getTrade_state());
-		}
 		
 		map.put("range", range);
 		map.put("currPage", page);
