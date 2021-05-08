@@ -90,8 +90,14 @@
         }
         #profile{
             margin: auto;
+            margin-top:30px;
             text-align: center;
         }
+        
+        #profile, #profile th, #profile td{
+        	padding:10px 5px;
+        }
+        
         .profileList{
         	width:200px;
         	height: 100px;
@@ -110,6 +116,19 @@
         .subject{
         	font-weight: 600;
         }
+        button{
+        	text-align: center;
+		    padding: 10px;
+		    margin: 10px;
+		    width: 100px;
+		    height: 50px;
+		    cursor: pointer;
+		    font-size: 17px;
+		    background-color: #F79646;
+		    color: white;
+		    font-weight: 600;
+		    border: none;
+        }
     </style>
 </head>
 <body>
@@ -117,12 +136,21 @@
 
 	<div class="our_content_area">
     <div id="content">
-        <span>내 프로필</span>
-
         <table id="profile">
         <!-- 이부분 사진경로 설정 -->
         	<tr>
-            	<td colspan="2"><p><img src="${path }" alt="" style="width: 150px; height: 150px;"></p></td>
+            	<td colspan="2">
+            		<img src="${path }" alt="" style="width: 150px; height: 150px;">
+	            	<c:set var="loginId" value="${sessionScope.loginId }"></c:set>
+	            	<c:if test="${member.member_id ne loginId}">
+	            		<c:if test="${isBlocking eq false }">
+			            	<button onclick="location.href='./blockMember?member_id=${member.member_id}'">차단하기</button>            				            		
+	            		</c:if>
+	            		<c:if test="${isBlocking eq true }">
+	            			<button onclick="location.href='./unblockMember?member_id=${member.member_id}'">차단해제</button>
+	            		</c:if>
+	            	</c:if>
+            	</td>
             </tr>
             <tr>
             	<th>매너지수</th>
@@ -135,11 +163,6 @@
             <tr>
             	<th>주소</th>
                 <td>${member.address}</td>
-            </tr>
-            <tr>
-            	<td>
-            		<input type="button" value="차단하기"/>
-            	</td>
             </tr>
         </table>
     </div>
@@ -198,6 +221,12 @@
 </body>
 <script>
 	jQuery.noConflict();
+	
+	var msg = '${msg}';
+	if(msg != ""){
+		alert(msg);
+	}
+	
 	listCall(1)
     $(document).ready(function(){
 		

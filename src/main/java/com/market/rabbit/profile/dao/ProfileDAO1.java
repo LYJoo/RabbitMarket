@@ -66,5 +66,12 @@ public interface ProfileDAO1 {
 
 	SaleFileDTO findSaleFileFirstThis(int product_idx);
 
+	int blockMember(String loginId, String member_id);
+	
+	int unblockMember(String loginId, String member_id);
+
+	int confirmMyBlocking(String loginId, String member_id);
+
+
 
 }
