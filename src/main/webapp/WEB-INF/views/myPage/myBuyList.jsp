@@ -97,7 +97,6 @@
 				console.log(data.myBuyList);
 				showPage = data.currPage;
 				listPrint(data.myBuyList);
-				console.log(data.selectState);
 				//플러그인 사용
 				$("#pagination").twbsPagination({//옵션들이 들어감
 					startPage:data.currPage,//시작페이지
@@ -122,7 +121,7 @@
 			content += "<tr>";
 			content += '<td><p><img src="/saleImg/'+list[i].saleFileDto.newFileName+'" alt="" style="width: 150px; height: 150px;"></p></td>';
 			content += '<td class="rightLine">['+list[i].trade_idx+']'+list[i].saleDto.sale_subject+'</td>';
-			content += '<td><select id="sale_select" name="sale_select" onchange="value3(this.value,${detail.product_idx})">';
+			content += '<td><select id="sale_select" name="'+list[i].product_idx+'/'+list[i].trade_idx+'/'+list[i].seller_id+'" onchange="value3(this)">';
 			if(list[i].trade_state == '거래취소'){
 				content += '<option value="거래중">거래중</option><option value="거래완료">거래완료</option><option value="거래취소" selected>거래취소</option>';
 			}else if (list[i].trade_state == '거래중'){
@@ -139,16 +138,19 @@
 		$("#list").append(content);
 	}
 	
-	function value3(e,idx) {
-    	if(e == '거래취소'){
+	function value3(e) {
+		var product_idx = e.getAttribute('name').split('/')[0];
+		var trade_idx = e.getAttribute('name').split('/')[1];
+		var seller_id = e.getAttribute('name').split('/')[2];
+		if(e.value == '거래취소'){
     		$.ajax({
-    			url:'/sale/tradeCancel'
+    			url:'/myPage/buyTradeCancel'
     			,type: 'GET'
-    			,data:{"product_idx": idx}
+    			,data:{"product_idx": product_idx, "trade_idx":trade_idx, "seller_id":seller_id}
     			,success:function(data){
-    				var ok = confirm(data.buyer_id+'님과의 거래를 취소하시겠습니까?');
+    				var ok = confirm(data.seller_id+'님과의 거래를 취소하시겠습니까?');
     				if(ok){
-    					window.open('/sale/tradeCancelReason?product_idx='+idx,'tradeCancel','width=550, height=550, top=100, left=500');
+    					window.open('/myPage/buyTradeCancelReason?product_idx='+product_idx+'&trade_idx='+trade_idx,'tradeCancel','width=550, height=550, top=100, left=500');
     				}else{
     					window.location.reload();
     				}
@@ -160,9 +162,9 @@
         }
         else if(e == '거래완료'){
         	$.ajax({
-    			url:'/sale/tradeEnd'
+    			url:'/myPage/tradeEnd'
     			,type: 'POST'
-    			,data:{"product_idx": idx}
+    			,data:{"product_idx": product_idx, "trade_idx":trade_idx}
     			,success:function(data){
     				var msg = data.msg;
     				if(msg != ""){

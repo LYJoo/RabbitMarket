@@ -257,4 +257,16 @@
 			<result column="newFileName" property="newFileName"/>
 		</association>
 	</resultMap>
+	
+	<update id="setCancelReason">
+ 		UPDATE trading SET cancel_reason=#{param2}, trade_end_date=#{param3}, trade_state='거래취소'  WHERE trade_idx=#{param1}
+ 	</update>
+ 	
+ 	<update id="setCodeNum">
+ 		UPDATE sale SET code_num=3001 WHERE product_idx=#{param}
+ 	</update>
+ 	
+ 	<update id="setTradeEnd">
+ 		UPDATE trading SET trade_state='거래완료' WHERE trade_idx=#{param2}
+ 	</update>
  </mapper>

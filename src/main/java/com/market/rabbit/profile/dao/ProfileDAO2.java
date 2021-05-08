@@ -1,6 +1,7 @@
 package com.market.rabbit.profile.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.market.rabbit.dto.AlarmDTO;
@@ -68,5 +69,11 @@ public interface ProfileDAO2 {
 	int countMyBuyList(HashMap<String, String> params);
 
 	ArrayList<TradingDTO> callMyBuyList(HashMap<String, Object> listParams);
+
+	int setCancelReason(int trade_idx, String cancel_reason, Date date);
+
+	int setCodeNum(int product_idx);
+
+	int setTradeEnd(int product_idx, int trade_idx);
 
 }

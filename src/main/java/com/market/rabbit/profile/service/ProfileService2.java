@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -388,6 +390,38 @@ public class ProfileService2 {
 		map.put("range", range);
 		map.put("currPage", page);
 		map.put("myBuyList", myBuyList);
+		return map;
+	}
+
+	public HashMap<String, Object> saveCancelReason(int product_idx, int trade_idx, String cancel_reason) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		Date date = null;
+		try {
+			SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");		
+			String format_time = format.format (System.currentTimeMillis());
+			date = format.parse(format_time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		int check1 = dao.setCancelReason(trade_idx, cancel_reason, date);
+		int check2 = dao.setCodeNum(product_idx);
+		
+		if(check1==1 && check2==1) {
+			success = 1;
+		}
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> tradeEnd(int product_idx, int trade_idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		if(dao.setTradeEnd(product_idx, trade_idx) > 0) {
+			success = 1;
+		}
+		map.put("success", success);
 		return map;
 	}
 	

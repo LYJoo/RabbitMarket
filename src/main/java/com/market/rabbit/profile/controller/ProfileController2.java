@@ -216,6 +216,37 @@ public class ProfileController2 {
 		return service.callMyBuyList(selectedState, page, session);
 	}
 	
+	@RequestMapping(value = "myPage/buyTradeCancel", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> buyTradeCancel(@RequestParam int product_idx, @RequestParam int trade_idx, @RequestParam String seller_id) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("product_idx", product_idx);
+		map.put("trade_idx", trade_idx);
+		map.put("seller_id", seller_id);
+		return map;
+	}
+	
+	@RequestMapping(value = "myPage/buyTradeCancelReason", method = RequestMethod.GET)
+	public String buyTradeCancelReason(Model model, @RequestParam int product_idx, @RequestParam int trade_idx) {
+		
+		model.addAttribute("product_idx", product_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "myPage/buyTradeCancelReason";
+	}
+	
+	@RequestMapping(value = "myPage/saveCancelReason", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> saveCancelReason(@RequestParam int product_idx, @RequestParam int trade_idx, @RequestParam String cancel_reason) {
+		logger.info("받아온 파라메터 값"+ product_idx + trade_idx + cancel_reason);
+		
+		return service.saveCancelReason(product_idx, trade_idx, cancel_reason);
+	}
+	
+	//거래완료로 변경 요청
+	@RequestMapping(value = "myPage/tradeEnd", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx, @RequestParam int trade_idx) {
+		logger.info("받아온 파라메터 값" + product_idx+trade_idx);
+
+		return service.tradeEnd(product_idx, trade_idx);
+	}
 }
 
 
