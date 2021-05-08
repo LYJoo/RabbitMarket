@@ -202,4 +202,28 @@ public class ProfileController2 {
 		return service.writeKeyword(keyword, session);
 	}
 	
+	@RequestMapping(value = "myPage/myBuyList", method = RequestMethod.GET)
+	public String myBuyListForm(Model model) {
+		logger.info("마이페이지-내 구매내역 페이지 요청");
+		return "myPage/myBuyList";
+	}
+	
+	@RequestMapping(value = "myPage/myBuyList/{page}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> callMyBuyList(@PathVariable int page, HttpSession session) {
+		
+		logger.info("내 구매내역 {} 페이지 리스트 요청", page);
+		return service.callMyBuyList(page, session);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+

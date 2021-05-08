@@ -18,7 +18,23 @@ public class TradingDTO {
 	private String trade_time;
 	private String trade_start_date;
 	private String trade_end_date;
+	private SaleDTO saleDto;
+	private SaleFileDTO saleFileDto;
 	
+	
+	
+	public SaleDTO getSaleDto() {
+		return saleDto;
+	}
+	public void setSaleDto(SaleDTO saleDto) {
+		this.saleDto = saleDto;
+	}
+	public SaleFileDTO getSaleFileDto() {
+		return saleFileDto;
+	}
+	public void setSaleFileDto(SaleFileDTO saleFileDto) {
+		this.saleFileDto = saleFileDto;
+	}
 	public int getTrade_idx() {
 		return trade_idx;
 	}

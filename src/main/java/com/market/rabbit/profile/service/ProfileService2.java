@@ -29,6 +29,7 @@ import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.dto.ReportDTO;
+import com.market.rabbit.dto.TradingDTO;
 import com.market.rabbit.profile.dao.ProfileDAO2;
 
 @Service
@@ -358,6 +359,23 @@ public class ProfileService2 {
 		
 		map.put("success", success);
 		
+		return map;
+	}
+
+	public HashMap<String, Object> callMyBuyList(int page, HttpSession session) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = page*numPerPage;
+		int start = end-(numPerPage-1);
+		String loginId = (String) session.getAttribute("loginId");
+		
+		int allCnt = dao.countMyBuyList(loginId);	//전체 개수
+		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
+		
+		ArrayList<TradingDTO> myBuyList = dao.callMyBuyList(loginId, start, end);
+		
+		map.put("range", range);
+		map.put("currPage", page);
+		map.put("myBuyList", myBuyList);
 		return map;
 	}
 	

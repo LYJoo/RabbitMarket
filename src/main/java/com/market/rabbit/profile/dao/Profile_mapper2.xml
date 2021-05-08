@@ -193,4 +193,45 @@
 		SELECT count(report_idx) FROM report WHERE REPORTER=#{param1} AND code_num=1003
 	</select>
  	
+ 	<select id="countMyBuyList" resultType="INTEGER">
+		SELECT count(trade_idx) FROM trading WHERE buyer_id=#{param1}
+	</select>
+	
+	<select id="callMyBuyList" resultMap="callMyBuyListAfterJoin">
+		SELECT *
+		FROM (
+		    SELECT ROW_NUMBER() OVER(ORDER BY trade_idx desc) AS rnum, trade_idx, product_idx, tracking_number, package_company, seller_id, buyer_id, trade_type, trade_state,cancel_reason, seller_manner,buyer_manner, trade_time, trade_start_date, trade_end_date, file_idx,rnumFile, newfilename, sale_subject
+		    FROM (
+		        SELECT  t.trade_idx, t.product_idx, t.tracking_number, t.package_company, t.seller_id, t.buyer_id, t.trade_type, t.trade_state, t.cancel_reason, t.seller_manner, t.buyer_manner, t.trade_time, t.trade_start_date, t.trade_end_date, sf.file_idx, RANK() OVER (PARTITION BY sf.product_idx ORDER BY sf.file_idx) AS rnumFile, sf.newfilename, s.sale_subject
+		        FROM trading t, sale_file sf, sale s
+		        WHERE t.product_idx = sf.product_idx AND t.product_idx = s.product_idx
+		        )
+		    WHERE rnumFile=1 AND buyer_id=#{param1}
+		    )
+		WHERE rnum between #{param2} and #{param3}
+	</select>
+	
+	<resultMap type="trading" id="callMyBuyListAfterJoin">
+		<id column="trade_idx" property="trade_idx"/>
+		<result column="product_idx" property="product_idx"/>
+		<result column="tracking_number" property="tracking_number"/>
+		<result column="package_company" property="package_company"/>
+		<result column="seller_id" property="seller_id"/>
+		<result column="buyer_id" property="buyer_id"/>
+		<result column="trade_type" property="trade_type"/>
+		<result column="trade_state" property="trade_state"/>
+		<result column="cancel_reason" property="cancel_reason"/>
+		<result column="seller_manner" property="seller_manner"/>
+		<result column="buyer_manner" property="buyer_manner"/>
+		<result column="trade_time" property="trade_time"/>
+		<result column="trade_start_date" property="trade_start_date"/>
+		<result column="trade_end_date" property="trade_end_date"/>
+		<association property="saleDto" javaType="sale">
+			<result column="sale_subject" property="sale_subject"/>
+		</association>
+		<association property="saleFileDto" javaType="saleFile">
+			<result column="file_idx" property="file_idx"/>
+			<result column="newFileName" property="newFileName"/>
+		</association>
+	</resultMap>
  </mapper>

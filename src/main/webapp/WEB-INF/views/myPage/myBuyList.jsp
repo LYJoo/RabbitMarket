@@ -43,33 +43,22 @@
         <jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
 
         <div class="our_content_area">
+        	<select id="sale_select_state" name="sale_select">
+                <option value="전체">전체</option>
+                <option value="거래중">거래중</option>
+                <option value="거래완료">거래완료</option>
+            </select>
             <table>
                 <thead>
                     <tr>
-                        <th colspan="2" class="rightLine">판매글</th>
-                        <th colspan="2" class="rightLine">판매상태</th>
+                        <th colspan="2" class="rightLine">구매글</th>
+                        <th colspan="2" class="rightLine">구매상태</th>
                         <th>작성일</th>
                     </tr>
                 </thead>
                 <tbody id="list">
                     <!-- 불러온 데이터 뿌리는 영역 -->
-                    <tr>
-                        <td><p><img src="" alt="" style="width: 150px; height: 150px;"></p></td>
-                        <td class="rightLine">로드중...</td>
-                        <td>
-                            <select id="sale_select" name="sale_select">
-                                <option value="거래중">거래중</option>
-                                <option value="거래완료">거래완료</option>
-                                <option value="거래취소">거래취소</option>
-                            </select>
-                        </td>
-                        <c:if test="${salelistlist.code_num ne 3001}">
-                            <td class="rightLine">
-                                <a href="" id=saledetail>거래상세보기</a>
-                            </td>
-                        </c:if>
-                        <td>0000-00-00</td>
-                    </tr>
+                    
                 </tbody>
                 <tr>
                     <td id="paging" colspan="5">  
@@ -94,16 +83,15 @@
 	listCall(showPage);//시작하자마자 이 함수를 호출
 	
 	function listCall(reqPage){
-		var reqUrl = './mysalelist/'+pagePerNum+"/"+reqPage;
 		$.ajax({
-			url:reqUrl,
+			url:'./myBuyList/'+reqPage,
 			Type:'GET',
 			data:{},
 			dataType:'JSON',
 			success:function(data){
-				console.log(data);
+				console.log(data.myBuyList);
 				showPage = data.currPage;
-				listPrint(data.list);
+				listPrint(data.myBuyList);
 				//플러그인 사용
 				$("#pagination").twbsPagination({//옵션들이 들어감
 					startPage:data.currPage,//시작페이지
@@ -123,42 +111,22 @@
 	
 	function listPrint(list){
 		var content="";
-		
+
 		for(var i=0;i<list.length;i++){
 			content += "<tr>";
-			content += "<td><img src='/saleFile/"+list[i].newFileName+"'/></td>";
-			content += "<td class='rightLine'"
-									+" style='text-align:left'><a target='_blank' "
-									+" href='/sale/detail?product_idx="+list[i].product_idx+"'>["+list[i].product_idx+"] "+list[i].sale_subject+"</a></td>";
-			if(list[i].code_num === 3001){//판매중
-				content += "<td>";
-				content += 	"<select id='sale_select' name='sale_select' ";
-				content += 	"onchange='selectChage1(this.value,"+list[i].product_idx+")'>";
-				content += 		"<option value='판매중'>판매중</option>";
-				content += 		"<option value='거래중'>거래중</option>";
-				content += 	"</select>";
-				content += "</td>";
-			} else if(list[i].code_num === 3002){//거래중
-				content += "<td>";
-				content += 	"<select id='sale_select' name='sale_select' ";
-				content += 	"onchange='selectChage2(this.value,"+list[i].product_idx+")'>";
-				content += 		"<option value='거래중'>거래중</option>";
-				content += 		"<option value='거래완료'>거래완료</option>";
-				content += 		"<option value='거래취소'>거래취소</option>";
-				content += 	"</select>";
-				content += "</td>";
-			} else if(list[i].code_num === 3003) {//거래완료
-				content += "<td>거래완료</td>";
+			content += '<td><p><img src="/saleImg/'+list[i].saleFileDto.newFileName+'" alt="" style="width: 150px; height: 150px;"></p></td>';
+			content += '<td class="rightLine">['+list[i].trade_idx+']'+list[i].saleDto.sale_subject+'</td>';
+			content += '<td><select id="sale_select" name="sale_select">';
+			if(list[i].trade_state = '거래취소'){
+				content += '<option value="거래중">거래중</option><option value="거래완료">거래완료</option><option value="거래취소" selected>거래취소</option>';
+			}else if (list[i].trade_state = '거래중'){
+				content += '<option value="거래중" selected>거래중</option><option value="거래완료">거래완료</option><option value="거래취소">거래취소</option>';
+			}else if(list[i].trade_state = '거래완료'){
+				content += '<option value="거래중">거래중</option><option value="거래완료" selected>거래완료</option><option value="거래취소">거래취소</option>';
 			}
-			if(list[i].code_num === 3001){//판매중
-				content += "<td class='rightLine'>판매중인상품</td>";
-			} else {//
-				content += "<td class='rightLine'><a href='#' onclick='Opendetail("+list[i].product_idx+")'>거래상세보기</a></td>";
-			}
-			
-			//java 에서 가끔 날짜가 milliseconds 로 나올 경우...
-			var date = new Date(list[i].reg_date)
-			content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
+			content += '</select></td>';
+			content += '<td class="rightLine"><a href="./myBuyDetail?trade_idx='+list[i].trade_idx+'" id=saledetail>거래상세보기</a></td>';
+			content += '<td>'+list[i].trade_start_date+'</td>';
 			content += "</tr>";
 		}
 		$("#list").empty();
@@ -170,13 +138,6 @@
 		window.open('/myPage/salelistdetail/'+idx, 'salelistdetail', 'width=1000, height=1000');
 	}
 	
-	/*거래상태변경*/
-    function selectChage1(e, idx) {
-    	console.log(e);
-        if(e == '거래중'){
-        	window.open('/sale/chTradeStateForm?idx='+idx,'chTradeStateForm','width=550, height=550, top=100, left=500');
-        }
-    }
     function selectChage2(e,idx) {
     	if(e == '거래취소'){
     		$.ajax({

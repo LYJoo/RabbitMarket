@@ -9,6 +9,7 @@ import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.dto.ReportDTO;
+import com.market.rabbit.dto.TradingDTO;
 
 public interface ProfileDAO2 {
 
@@ -61,5 +62,9 @@ public interface ProfileDAO2 {
 	int countCommentReportList(String loginId);
 
 	int countCocommentReportList(String loginId);
+
+	int countMyBuyList(String loginId);
+
+	ArrayList<TradingDTO> callMyBuyList(String loginId, int start, int end);
 
 }
