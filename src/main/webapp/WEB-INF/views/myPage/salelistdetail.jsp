@@ -62,11 +62,11 @@
                         	<th>운송장번호</th>
                         	<td>
 	                        	<!-- 운송장번호가 없을경우 -->
-	                        	<c:if test="${tradeInfo.tracking_Number eq null}">
+	                        	<c:if test="${tradeInfo.package_company eq null}">
 	                        		<a href="#" onclick="openTrackingNum();">운송장번호를 입력해주세요.</a>
 	                        	</c:if>
 	                        	<!-- 운송장번호가 있을경우 -->
-	                        	<c:if test="${tradeInfo.tracking_Number ne null}">
+	                        	<c:if test="${tradeInfo.package_company ne null}">
 	                        		[${tradeInfo.package_company}]
 	                        		${tradeInfo.tracking_Number}
 	                        	</c:if>

@@ -182,6 +182,7 @@ public class ProfileService1 {
 		SaleDTO saleInfo = dao.findSaleInfoThis(product_idx);//판매글정보
 		SaleFileDTO saleFirstPhoto = dao.findSaleFileFirstThis(product_idx);//첫번째 파일
 		TradingDTO tradeInfo = dao.findTradeInfoThis(trade_idx);//거래정보
+		logger.info("운송장번호 여부: "+tradeInfo.getTracking_number());
 		
 		mav.addObject("saleInfo", saleInfo);
 		mav.addObject("saleFile", saleFirstPhoto);
@@ -200,6 +201,7 @@ public class ProfileService1 {
 		SaleDTO saleInfo = dao.findSaleInfoThis(product_idx);//판매글정보
 		SaleFileDTO saleFirstPhoto = dao.findSaleFileFirstThis(product_idx);//첫번째 파일
 		TradingDTO tradeInfo = dao.findTradeInfoThis(trade_idx);//거래정보
+		logger.info("운송장번호 여부: "+tradeInfo.getTracking_number());
 		
 		mav.addObject("saleInfo", saleInfo);
 		mav.addObject("saleFile", saleFirstPhoto);
