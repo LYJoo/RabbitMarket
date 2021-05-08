@@ -138,6 +138,11 @@
 		$("#list").append(content);
 	}
 	
+	/*거래상세보기 오픈*/
+	function Opendetail(idx){
+		window.open('/myPage/buylistdetail/'+idx, 'buylistdetail', 'width=1000, height=1000');
+	}
+	
 	function value3(e) {
 		var product_idx = e.getAttribute('name').split('/')[0];
 		var trade_idx = e.getAttribute('name').split('/')[1];
@@ -173,8 +178,13 @@
     				}
     				if(data.success == 1){
     					var trade_idx = data.trade_idx;
+    					var trade_type = "여기에 거래 타입을 넣어주세요";
     					alert('거래가 완료되었습니다.');
-    					window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					if(trade_type == "택배"){
+    						window.open('/percelSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
+    					}else{
+    						window.open('/directSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					}
     					window.location.reload();
     				}
     			},
