@@ -150,6 +150,7 @@
     function openReviewWriteForm(){
     	var trade_idx = "${trade_idx}";
     	window.open('/openReviewWriteForm?trade_idx='+trade_idx,'reviewWriteForm','width=550, height=700, top=100, left=500');
+    	window.location.reload();
     }
     
     
