@@ -179,5 +179,41 @@
 	<select id="confirmMyBlocking" resultType="INTEGER">
 		SELECT count(block_idx) FROM block WHERE member_id=#{param1} AND target_id=#{param2}
 	</select>
+	
+	
+	<!-- 매너질문 가져오기 -->
+ 	<select id="getMannerQuestion" resultType="mannerQuestion">
+ 		SELECT * FROM mannerQuestion WHERE trade_type=#{param1} AND target=#{param2} ORDER BY look_order ASC
+ 	</select>
+ 	
+ 	<!-- 판매자 매너평가 -->
+ 	<update id="setTrading">
+ 		UPDATE trading SET buyer_manner=1 WHERE trade_idx=#{param}
+ 	</update>
+ 		<!-- 판매자 아이디추출 -->
+ 	<select id="getMannerSellerId" resultType="String">
+ 		SELECT seller_id FROM trading WHERE trade_idx=#{param}
+ 	</select>
+ 		<!-- 평가 -->
+	 <update id="setMemberManner">
+ 		UPDATE member SET manner_score=manner_score+#{param2}, manner_cnt=manner_cnt+1 WHERE member_id = #{param1}
+ 	</update>
+ 	<select id="setMemberMannerCnt" resultType="int">
+ 		SELECT manner_cnt FROM member WHERE member_id=#{param}
+ 	</select>
+ 	<select id="getmannerScore" resultType="int">
+ 		SELECT manner_score FROM member WHERE member_id=#{param}
+ 	</select>
+ 	<update id="setMannerPercent">
+ 		UPDATE member SET manner_percent = #{param2} WHERE member_id = #{param1}
+ 	</update>
+ 	
+ 		<!-- 구매자 아이디 추출 -->
+ 	<select id="getMannerBuyerId" resultType="String">
+ 		SELECT buyer_id FROM trading WHERE trade_idx=#{param}
+ 	</select>
+ 	
+ 	
+ 	
  	
  </mapper>

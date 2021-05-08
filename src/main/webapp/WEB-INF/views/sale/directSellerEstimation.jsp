@@ -97,18 +97,16 @@
         <span>해당되는 항목을 클릭해주세요.</span>
 
         <div class="estimation_question">
-            <div style="color: #F79646;" onclick="check(this)">친절하고 매너가 좋았어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">응답이 빨랐어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">시간 약속을 잘 지켰어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">상품상태가 설명한 것과 같았어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">상품 설명이 자세해요.</div>
+        	<c:forEach items="${dto}" var="question">
+        		<div style="color: #F79646;" onclick="check(this)">${question.manner_content}</div>
+        	</c:forEach>
         </div>
         
-        
         <div class="estimation_save">
-            <div class="estimation_save_btn">
+            <div class="estimation_save_btn" onclick="saveEstimation()">
             저장
             </div>
+        </div> 
         </div> 
     </div>
 </body>
@@ -127,5 +125,34 @@
             elem.style.background='white';
         }
     }
+    
+    function saveEstimation(){
+    	console.log(point);
+    	var trade_idx = "${trade_idx}";
+    	$.ajax({
+			url:'/saveSellerEstimation'//
+			,type: 'GET'
+			,data:{"trade_idx": trade_idx
+				,"point":point}
+			,success:function(data){
+				if(data.success==1){
+					alert('판매자 평가가 완료되었습니다.');
+					openReviewWriteForm();
+					self.close();
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+    }
+    
+    function openReviewWriteForm(){
+    	var trade_idx = "${trade_idx}";
+    	window.open('/openReviewWriteForm?trade_idx='+trade_idx,'reviewWriteForm','width=550, height=700, top=100, left=500');
+    	window.location.reload();
+    }
+    
+    
 </script>
 </html></html>

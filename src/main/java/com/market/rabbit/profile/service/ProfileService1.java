@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.NoticeDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
@@ -162,6 +163,10 @@ public class ProfileService1 {
 		//시작, 끝
 		int end = page*pagePerCnt;
 		int start = end - pagePerCnt+1;
+		if(allCnt ==0) {
+			end=0;
+			start=0;
+		}
 		ArrayList<SaleDTO> list = dao.mySaleList(member_id, code_num, start,end);
 
 		map.put("list", list);
@@ -181,6 +186,7 @@ public class ProfileService1 {
 		SaleDTO saleInfo = dao.findSaleInfoThis(product_idx);//판매글정보
 		SaleFileDTO saleFirstPhoto = dao.findSaleFileFirstThis(product_idx);//첫번째 파일
 		TradingDTO tradeInfo = dao.findTradeInfoThis(trade_idx);//거래정보
+		logger.info("운송장번호 여부: "+tradeInfo.getTracking_number());
 		
 		mav.addObject("saleInfo", saleInfo);
 		mav.addObject("saleFile", saleFirstPhoto);
@@ -188,6 +194,27 @@ public class ProfileService1 {
 		mav.setViewName(page);
 		return mav;
 	}
+	
+	@Transactional
+	public ModelAndView buylistdetail(int product_idx) {
+		ModelAndView mav = new ModelAndView();
+		String page = "myPage/buyListDetail";
+		
+		//판매글에 해당하는 가장 최근 거래 idx 가져오기
+		int trade_idx = dao.findTradeIdxThisProduct(product_idx);
+		SaleDTO saleInfo = dao.findSaleInfoThis(product_idx);//판매글정보
+		SaleFileDTO saleFirstPhoto = dao.findSaleFileFirstThis(product_idx);//첫번째 파일
+		TradingDTO tradeInfo = dao.findTradeInfoThis(trade_idx);//거래정보
+		logger.info("운송장번호 여부: "+tradeInfo.getTracking_number());
+		
+		mav.addObject("saleInfo", saleInfo);
+		mav.addObject("saleFile", saleFirstPhoto);
+		mav.addObject("tradeInfo", tradeInfo);
+		mav.setViewName(page);
+		return mav;
+	}
+	
+	
 
 	public ModelAndView tracking_number(HttpSession session) {
 		
@@ -219,6 +246,52 @@ public class ProfileService1 {
 		}
 		rAttr.addFlashAttribute("msg", msg);
 		mav.setViewName(page);
+		return mav;
+	}
+
+	public ArrayList<MannerQuestionDTO> getMannerQuestion(String target, String trade_type) {
+		return dao.getMannerQuestion(target, trade_type);
+	}
+
+	public HashMap<String, Object> saveSellerEstimation(int trade_idx, int point) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int check1 = 0;
+		int check2 = 0;
+		int success = 0;
+		//거래 테이블 셋팅
+		check1 = dao.setTrading(trade_idx);
+		
+		//해당 거래한 판매자 멤버테이블 셋팅
+		String seller_id = dao.getMannerSellerId(trade_idx);
+		check2 = dao.setMemberManner(seller_id, point);
+		
+		//5회 이상의 거래면 매너 퍼센트 셋팅해놓기
+		int manner_cnt = dao.setMemberMannerCnt(seller_id);
+		if(manner_cnt>=5) {
+			int mannerScore = dao.getmannerScore(seller_id);
+			System.out.println("매너 점수"+mannerScore);
+			System.out.println("매너 횟수 "+manner_cnt);
+			double mannerPercent = ((double)mannerScore/((double)manner_cnt*5))*100;//5->count
+			System.out.println("매너 퍼센트 "+mannerPercent);
+			dao.setMannerPercent(seller_id, mannerPercent);
+		}
+		
+		if(check1 == 1 && check2 == 1) {
+			success = 1;
+		}
+		map.put("success", success);
+		return map;
+	}
+	
+	//후기창띄우기
+	public ModelAndView openReviewWriteForm(int trade_idx) {
+		ModelAndView mav = new ModelAndView();
+		String seller_id = dao.getMannerSellerId(trade_idx);
+		String buyer_id = dao.getMannerBuyerId(trade_idx);
+		
+		mav.addObject("seller_id", seller_id);
+		mav.addObject("buyer_id", buyer_id);
+		mav.setViewName("sale/reviewWriteForm");
 		return mav;
 	}
 

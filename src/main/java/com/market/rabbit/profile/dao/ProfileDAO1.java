@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.ReviewDTO;
@@ -71,6 +72,22 @@ public interface ProfileDAO1 {
 	int unblockMember(String loginId, String member_id);
 
 	int confirmMyBlocking(String loginId, String member_id);
+
+	ArrayList<MannerQuestionDTO> getMannerQuestion(String target, String trade_type);
+
+	int setTrading(int trade_idx);
+
+	String getMannerSellerId(int trade_idx);
+
+	int setMemberManner(String seller_id, int point);
+
+	int setMemberMannerCnt(String seller_id);
+
+	int getmannerScore(String seller_id);
+
+	void setMannerPercent(String seller_id, double mannerPercent);
+
+	String getMannerBuyerId(int trade_idx);
 
 
 
