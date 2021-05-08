@@ -92,7 +92,9 @@
 	                        	<td rowspan="2"><a href="" onclick="openMannerQ();">평가하기</a></td>
 	                       </c:if>
 	                       <c:if test="${tradeInfo.trade_state eq '거래중'}">
-	                        	<td rowspan="2">거래후 평가가능</td>
+	                        	<td rowspan="2">거래후 평가가능
+	                        		<a href="" onclick="tradeEnd();"> 거래완료하기</a>
+	                        	</td>
 	                       </c:if>
                         </c:if>
                         
@@ -114,6 +116,31 @@
 		/*운송장번호 오픈*/
 		function Opendetail(idx){
 			window.open('/myPage/tracking_number/', 'tracking_number', 'width=1000, height=1000');
+		}
+		/*거래 완료하기*/
+		function tradeEnd(){
+			var idx =${saleInfo.product_idx};
+        	$.ajax({
+    			url:'/sale/tradeEnd'
+    			,type: 'POST'
+    			,data:{"product_idx": idx}
+    			,success:function(data){
+    				var msg = data.msg;
+    				if(msg != ""){
+    					alert(msg);
+    					window.location.reload();
+    				}
+    				if(data.success == 1){
+    					var trade_idx = data.trade_idx;
+    					alert('거래가 완료되었습니다.');
+    					window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					window.location.reload();
+    				}
+    			},
+    			error: function(error){
+    				console.log(error);
+    			}
+    		});
 		}
 		/*매너질문 오픈*/
 		function openMannerQ(idx){

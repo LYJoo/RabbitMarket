@@ -164,11 +164,11 @@ public class ProfileController1 {
 		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
 		String trade_type = "택배";
 		String target = "구매자";
-		dto = service.getMannerQuestion(target, trade_type);
+		dto = service.getMannerQuestion(trade_type, target);
 		model.addAttribute("dto", dto);
 		model.addAttribute("product_idx", product_idx);
 		model.addAttribute("trade_idx", trade_idx);
-		return "/sale/percelBuyerEstimation";
+		return "sale/parcelBuyerEstimation";
 	}
 	//판매자 평가 - 택배
 	@RequestMapping(value = "/percelSellerEstimation", method = RequestMethod.GET)
@@ -176,11 +176,11 @@ public class ProfileController1 {
 		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
 		String trade_type = "택배";
 		String target = "판매자";
-		dto = service.getMannerQuestion(target, trade_type);
+		dto = service.getMannerQuestion(trade_type, target);
 		model.addAttribute("dto", dto);
 		model.addAttribute("product_idx", product_idx);
 		model.addAttribute("trade_idx", trade_idx);
-		return "/sale/percelSellerEstimation";
+		return "sale/parcelSellerEstimation";
 	}
 	//판매자 평가 - 직거래
 	@RequestMapping(value = "/directSellerEstimation", method = RequestMethod.GET)
@@ -188,11 +188,11 @@ public class ProfileController1 {
 		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
 		String trade_type = "택배";
 		String target = "판매자";
-		dto = service.getMannerQuestion(target, trade_type);
+		dto = service.getMannerQuestion(trade_type, target);
 		model.addAttribute("dto", dto);
 		model.addAttribute("product_idx", product_idx);
 		model.addAttribute("trade_idx", trade_idx);
-		return "/sale/percelSellerEstimation";
+		return "sale/directSellerEstimation";
 	}
 	//판매자 평가 저장
 	@RequestMapping(value = "/saveSellerEstimation", method = RequestMethod.GET)

@@ -163,6 +163,10 @@ public class ProfileService1 {
 		//시작, 끝
 		int end = page*pagePerCnt;
 		int start = end - pagePerCnt+1;
+		if(allCnt ==0) {
+			end=0;
+			start=0;
+		}
 		ArrayList<SaleDTO> list = dao.mySaleList(member_id, code_num, start,end);
 
 		map.put("list", list);

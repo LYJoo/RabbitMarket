@@ -89,10 +89,15 @@
                         </c:if>
                         <c:if test="${!tradeInfo.buyer_manner}">
 	                       <c:if test="${tradeInfo.trade_state eq '거래완료'}">
-	                        	<td rowspan="2"><a href="" onclick="openMannerQ();">평가하기</a></td>
+	                        	<td rowspan="2"><a href="#" onclick="openMannerQ();">평가하기</a></td>
 	                       </c:if>
 	                       <c:if test="${tradeInfo.trade_state eq '거래중'}">
-	                        	<td rowspan="2">거래후 평가가능</td>
+	                        	<td rowspan="2">거래후 평가가능
+	                        		<a href="#" onclick="tradeEnd();"> 거래완료하기</a>
+	                        	</td>
+	                       </c:if>
+	                       <c:if test="${tradeInfo.trade_state eq '거래취소'}">
+	                        	<td rowspan="2">취소된 거래입니다</td>
 	                       </c:if>
                         </c:if>
                         
@@ -111,9 +116,40 @@
 	        </div>
     </body>
     <script>
+	/*거래 완료하기*/
+	function tradeEnd(){
+		var idx =${saleInfo.product_idx};
+    	$.ajax({
+			url:'/sale/tradeEnd'
+			,type: 'POST'
+			,data:{"product_idx": idx}
+			,success:function(data){
+				var msg = data.msg;
+				if(msg != ""){
+					alert(msg);
+					window.location.reload();
+				}
+				if(data.success == 1){
+					var trade_idx = data.trade_idx;
+					var trade_type = "${tradeInfo.trade_type}";
+					alert('거래가 완료되었습니다.');
+					if(trade_type == "택배"){
+						window.open('/percelSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
+					}else{
+						window.open('/directSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+					}
+					window.location.reload();
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	}
+    
 	/*매너질문 오픈*/
 	function openMannerQ(idx){
-		var trade_type = ${tradeInfo.trade_type};
+		var trade_type = '${tradeInfo.trade_type}';
 		var idx = ${saleInfo.product_idx};
 		var trade_idx = ${tradeInfo.trade_idx};
 		if(trade_type === "택배"){
