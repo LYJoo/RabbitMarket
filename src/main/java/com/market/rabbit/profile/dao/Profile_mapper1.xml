@@ -162,5 +162,20 @@
 		SELECT trade_idx, seller_id, buyer_id, trade_type, trade_time, package_company, tracking_Number, trade_state, seller_manner, buyer_manner, trade_start_date, trade_end_date
     		FROM trading WHERE trade_idx=#{param1}
 	</select>
+	
+	<!-- 회원차단하기 -->
+	<insert id="blockMember">
+		INSERT INTO block (block_idx, target_id, member_id) values (seq_block.nextval, #{param2}, #{param1})
+	</insert>
+	
+	<!-- 회원차단해제하기 -->
+	<delete id="unblockMember">
+		DELETE FROM block WHERE member_id=#{param1} AND target_id=#{param2}
+	</delete>
+	
+	<!-- 차단유저인지 확인하기 -->
+	<select id="confirmMyBlocking" resultType="INTEGER">
+		SELECT count(block_idx) FROM block WHERE member_id=#{param1} AND target_id=#{param2}
+	</select>
  	
  </mapper>

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.NoticeDTO;
@@ -100,10 +101,20 @@ public class ProfileService1 {
 		logger.info("회원프로필 요청");
 		ModelAndView mav = new ModelAndView();
 		String page = "myPage/profile";
+		String loginId = (String) session.getAttribute("loginId");
+		
+		Boolean isBlocking = false;	//디폴트는 차단 안함 
+		if(!loginId.equals(member_id)) {	//내 프로필이 아니라면
+			//내가 이 member_id를 차단했는지의 여부를 판단
+			if(dao.confirmMyBlocking(loginId, member_id) > 0) {	//내 차단함에 해당 사용자가 있으면
+				isBlocking = true;
+			}
+		}
 		
 		MemberDTO member = dao.profile(member_id);
 		ProfileFileDTO profile = dao.fileList(member_id);
 		
+		mav.addObject("isBlocking", isBlocking);
 		mav.addObject("member", member);
 		//mav.addObject("profile", profile);
 		mav.addObject("path", "/myProfile/"+profile.getNewFileName());
@@ -181,6 +192,34 @@ public class ProfileService1 {
 	public ModelAndView tracking_number(HttpSession session) {
 		
 		return null;
+	}
+
+	public ModelAndView blockMember(String member_id, HttpSession session, RedirectAttributes rAttr) {
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/myPage/profile?member_id="+member_id;
+		String msg = "해당 멤버 차단에 실패하였습니다.";
+		String loginId = (String) session.getAttribute("loginId");
+		
+		if(dao.blockMember(loginId, member_id) > 0) {
+			msg = "해당 멤버 차단에 성공하였습니다.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		mav.setViewName(page);
+		return mav;
+	}
+
+	public ModelAndView unblockMember(String member_id, HttpSession session, RedirectAttributes rAttr) {
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/myPage/profile?member_id="+member_id;
+		String msg = "해당 멤버 차단해제에 실패하였습니다.";
+		String loginId = (String) session.getAttribute("loginId");
+		
+		if(dao.unblockMember(loginId, member_id) > 0) {
+			msg = "해당 멤버 차단해제에 성공하였습니다.";
+		}
+		rAttr.addFlashAttribute("msg", msg);
+		mav.setViewName(page);
+		return mav;
 	}
 
 

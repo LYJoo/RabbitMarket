@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.SaleDTO;
@@ -79,10 +80,25 @@ public class ProfileController1 {
 	@RequestMapping(value = "myPage/profile", method = RequestMethod.GET)
 	public ModelAndView profile(@RequestParam String member_id, HttpSession session) {
 
-		logger.info("내 프로필 요청");
+		logger.info("{} 프로필 요청",member_id);
 		
 		return service.profile(session, member_id);
 	}
+	//사용자 차단하기
+	@RequestMapping(value = "myPage/blockMember", method = RequestMethod.GET)
+	public ModelAndView blockMember(@RequestParam String member_id, HttpSession session, RedirectAttributes rAttr) {
+		logger.info("{} 멤버 차단 요청", member_id);
+		
+		return service.blockMember(member_id, session, rAttr);
+	}
+	
+	//사용자 차단해제하기
+		@RequestMapping(value = "myPage/unblockMember", method = RequestMethod.GET)
+		public ModelAndView unblockMember(@RequestParam String member_id, HttpSession session, RedirectAttributes rAttr) {
+			logger.info("{} 멤버 차단 해제 요청", member_id);
+			
+			return service.unblockMember(member_id, session, rAttr);
+		}
 	
 	@RequestMapping(value = "myPage/profileList/{member_id}/{page}", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> callProfileList(@PathVariable String member_id, @PathVariable int page, HttpSession session) {
