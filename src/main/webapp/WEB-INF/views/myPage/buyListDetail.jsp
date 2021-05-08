@@ -34,7 +34,7 @@
 	        <div>
 	        	<table>
 	        		<tr>
-                        <th rowspan="4"><p><img src="/saleFile/${saleFile.newFileName}" alt="" style="width: 150px; height: 150px;"></p></th>
+                        <th rowspan="4"><p><img src="/saleFile/${saleFile.newFileName}" alt="" style="width: 150px; height: 150px;overflow: hidden;object-fit: cover;"></p></th>
 	        			<th>제목</th>
 	        			<td>${saleInfo.sale_subject}</td>
 	        			<th>거래상태</th>
@@ -63,7 +63,7 @@
                         	<td>
 	                        	<!-- 운송장번호가 없을경우 -->
 	                        	<c:if test="${tradeInfo.tracking_Number eq null}">
-	                        		<a href="#" onclick="openTrackingNum();">운송장번호를 입력해주세요.</a>
+	                        		아직 운송장번호가 없습니다.
 	                        	</c:if>
 	                        	<!-- 운송장번호가 있을경우 -->
 	                        	<c:if test="${tradeInfo.tracking_Number ne null}">
@@ -84,10 +84,10 @@
                         <th>거래시작일</th>
                         <td>${tradeInfo.trade_start_date}</td>
                         <th rowspan="2">거래평가여부</th>
-                        <c:if test="${tradeInfo.seller_manner}">
+                        <c:if test="${tradeInfo.buyer_manner}">
 	                        <td rowspan="2">Y</td>                        	
                         </c:if>
-                        <c:if test="${!tradeInfo.seller_manner}">
+                        <c:if test="${!tradeInfo.buyer_manner}">
 	                       <c:if test="${tradeInfo.trade_state eq '거래완료'}">
 	                        	<td rowspan="2"><a href="" onclick="openMannerQ();">평가하기</a></td>
 	                       </c:if>
@@ -111,21 +111,17 @@
 	        </div>
     </body>
     <script>
-		/*운송장번호 오픈*/
-		function Opendetail(idx){
-			window.open('/myPage/tracking_number/', 'tracking_number', 'width=1000, height=1000');
+	/*매너질문 오픈*/
+	function openMannerQ(idx){
+		var trade_type = ${tradeInfo.trade_type};
+		var idx = ${saleInfo.product_idx};
+		var trade_idx = ${tradeInfo.trade_idx};
+		if(trade_type === "택배"){
+			window.open('/percelSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
+		}else{
+			window.open('/directSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
 		}
-		/*매너질문 오픈*/
-		function openMannerQ(idx){
-			var trade_type = ${tradeInfo.trade_type};
-			var idx = ${saleInfo.product_idx};
-			var trade_idx = ${tradeInfo.trade_idx};
-			if(trade_type === "택배"){
-				window.open('/percelBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
-			}else{
-				window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
-			}
-				window.location.reload();
-		}
+			window.location.reload();
+	}
     </script>
 </html>

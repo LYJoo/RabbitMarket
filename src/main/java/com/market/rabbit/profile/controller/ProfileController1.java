@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.market.rabbit.dto.MannerQuestionDTO;
 import com.market.rabbit.dto.MemberDTO;
 import com.market.rabbit.dto.SaleDTO;
 import com.market.rabbit.profile.service.ProfileService1;
@@ -141,6 +142,12 @@ public class ProfileController1 {
 		return service.salelistdetail(product_idx);
 	}
 	
+	@RequestMapping(value = "myPage/buylistdetail/{product_idx}", method = RequestMethod.GET)
+	public ModelAndView buylistdetail(@PathVariable int product_idx) {
+		logger.info("거래상세보기 요청");
+		return service.buylistdetail(product_idx);
+	}
+	
 	//운송장번호 입력
 	@RequestMapping(value = "myPage/tracking_number", method = RequestMethod.POST)
 	public ModelAndView tracking_number(HttpSession session) {
@@ -148,4 +155,58 @@ public class ProfileController1 {
 		
 		return service.tracking_number(session);
 	}
+	
+	/*매너질문 페이지 요청*/
+	//구매자 평가 - 직거래 : sale에 있음.
+	//구매자 평가 - 택배
+	@RequestMapping(value = "/percelBuyerEstimation", method = RequestMethod.GET)
+	public String directBuyerEstimation(Model model, @RequestParam int product_idx, @RequestParam int trade_idx) {
+		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
+		String trade_type = "택배";
+		String target = "구매자";
+		dto = service.getMannerQuestion(target, trade_type);
+		model.addAttribute("dto", dto);
+		model.addAttribute("product_idx", product_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "/sale/percelBuyerEstimation";
+	}
+	//판매자 평가 - 택배
+	@RequestMapping(value = "/percelSellerEstimation", method = RequestMethod.GET)
+	public String percelSellerEstimation(Model model, @RequestParam int product_idx, @RequestParam int trade_idx) {
+		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
+		String trade_type = "택배";
+		String target = "판매자";
+		dto = service.getMannerQuestion(target, trade_type);
+		model.addAttribute("dto", dto);
+		model.addAttribute("product_idx", product_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "/sale/percelSellerEstimation";
+	}
+	//판매자 평가 - 직거래
+	@RequestMapping(value = "/directSellerEstimation", method = RequestMethod.GET)
+	public String directSellerEstimation(Model model, @RequestParam int product_idx, @RequestParam int trade_idx) {
+		ArrayList<MannerQuestionDTO> dto = new ArrayList<MannerQuestionDTO>();
+		String trade_type = "택배";
+		String target = "판매자";
+		dto = service.getMannerQuestion(target, trade_type);
+		model.addAttribute("dto", dto);
+		model.addAttribute("product_idx", product_idx);
+		model.addAttribute("trade_idx", trade_idx);
+		return "/sale/percelSellerEstimation";
+	}
+	//판매자 평가 저장
+	@RequestMapping(value = "/saveSellerEstimation", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> saveDirectBuyerEstimation(@RequestParam int trade_idx, @RequestParam int point) {
+		logger.info("받아온 파라메터 값"+ trade_idx + point);
+		return service.saveSellerEstimation(trade_idx, point);
+	}
+	
+	//거래 후기창 띄우기
+	@RequestMapping(value = "/openReviewWriteForm", method = RequestMethod.GET)
+	public  ModelAndView openReviewWriteForm(@RequestParam int trade_idx) {
+		logger.info("받아온 파라메터 값"+ trade_idx);
+		return service.openReviewWriteForm(trade_idx);
+	}
+	
+	
 }

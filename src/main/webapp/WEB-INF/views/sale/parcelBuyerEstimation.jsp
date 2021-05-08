@@ -97,16 +97,13 @@
         <span>해당되는 항목을 클릭해주세요.</span>
 
         <div class="estimation_question">
-            <div style="color: #F79646;" onclick="check(this)">친절하고 매너가 좋았어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">응답이 빨랐어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">거래완료를 빨리 해줬어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">네고를 강요하지 않았어요.</div>
-            <div style="color: #F79646;" onclick="check(this)">판매글을 꼼꼼히 읽은 뒤 문의했어요.</div>
+        	<c:forEach items="${dto}" var="question">
+        		<div style="color: #F79646;" onclick="check(this)">${question.manner_content}</div>
+        	</c:forEach>
         </div>
         
-        
         <div class="estimation_save">
-            <div class="estimation_save_btn">
+            <div class="estimation_save_btn" onclick="saveEstimation()">
             저장
             </div>
         </div> 
@@ -126,6 +123,27 @@
             elem.style.color='#F79646';
             elem.style.background='white';
         }
+    }
+    
+    function saveEstimation(){
+    	console.log(point);
+    	var trade_idx = "${trade_idx}";
+    	$.ajax({
+			url:'/sale/saveDirectBuyerEstimation'//
+			,type: 'GET'
+			,data:{"trade_idx": trade_idx
+				,"point":point}
+			,success:function(data){
+				if(data.success==1){
+					alert('구매자 평가가 완료되었습니다.');
+					self.close();
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+    	
     }
 </script>
 </html>
