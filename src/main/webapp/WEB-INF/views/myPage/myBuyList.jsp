@@ -150,7 +150,7 @@
     			url:'/sale/tradeCancel'
     			,type: 'GET'
     			,data:{"product_idx": idx}
-    			,success:function(data){
+    			,success:function(data){//seller_id로 바꾸기
     				var ok = confirm(data.buyer_id+'님과의 거래를 취소하시겠습니까?');
     				if(ok){
     					window.open('/sale/tradeCancelReason?product_idx='+idx,'tradeCancel','width=550, height=550, top=100, left=500');
@@ -177,7 +177,11 @@
     				if(data.success == 1){
     					var trade_idx = data.trade_idx;
     					alert('거래가 완료되었습니다.');
-    					window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					if(trade_type === "택배"){//거래타입 값 넣어 주세용.
+    						window.open('/percelSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
+    					}else{
+    						window.open('/directSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					}
     					window.location.reload();
     				}
     			},
