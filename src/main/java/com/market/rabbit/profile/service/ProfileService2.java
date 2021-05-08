@@ -415,13 +415,14 @@ public class ProfileService2 {
 		return map;
 	}
 
-	public HashMap<String, Object> tradeEnd(int product_idx, int trade_idx) {
+	public HashMap<String, Object> tradeEnd(int product_idx, int trade_idx, String trade_type) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int success = 0;
 		if(dao.setTradeEnd(product_idx, trade_idx) > 0) {
 			success = 1;
 		}
 		map.put("success", success);
+		map.put("trade_type", trade_type);
 		return map;
 	}
 	

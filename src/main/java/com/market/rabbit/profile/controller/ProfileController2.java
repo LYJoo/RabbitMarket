@@ -242,10 +242,10 @@ public class ProfileController2 {
 	
 	//거래완료로 변경 요청
 	@RequestMapping(value = "myPage/tradeEnd", method = RequestMethod.POST)
-	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx, @RequestParam int trade_idx) {
-		logger.info("받아온 파라메터 값" + product_idx+trade_idx);
+	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx, @RequestParam int trade_idx, @RequestParam String trade_type) {
+		logger.info("받아온 파라메터 값" + product_idx+trade_idx+trade_type);
 
-		return service.tradeEnd(product_idx, trade_idx);
+		return service.tradeEnd(product_idx, trade_idx, trade_type);
 	}
 }
 
