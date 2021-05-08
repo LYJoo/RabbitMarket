@@ -169,14 +169,13 @@
         }
         else if(e.value == '거래완료'){
         	$.ajax({
-    			url:'/myPage/tradeEnd'
+    			url:'/sale/tradeEnd'
     			,type: 'POST'
     			,data:{"product_idx": product_idx, "trade_idx":trade_idx, "trade_type":trade_type}
     			,success:function(data){
     				if(data.success == 1){
     					var trade_idx = data.trade_idx;
-    					var trade_type = data.trade_type;
-    					console.log(trade_type)
+    					var trade_type = trade_type;
     					alert('거래가 완료되었습니다.');
     					if(trade_type == "택배"){
     						window.open('/percelSellerEstimation?product_idx='+product_idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
