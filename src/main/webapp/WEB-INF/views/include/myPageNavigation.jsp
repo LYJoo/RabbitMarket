@@ -81,7 +81,7 @@
             </a>
         </li>
         <li>
-            <a href="#"><!-- 구매내역 -->
+            <a href="/myPage/myBuyList"><!-- 구매내역 -->
                 <span  class="myPage_nav_title" onclick="nav_textBold2(this, $('#myPage_nav_bar_hide1'),$('#myPage_nav_bar_hide2'),$('#myPage_nav_bar_hide3'),$('#myPage_nav_bar_hide4'),$('#myPage_nav_bar_hide5'),$('#myPage_nav_bar_hide6'),$('#myPage_nav_bar_hide7'))">구매내역</span>
             </a>
         </li>
