@@ -59,7 +59,7 @@
         <div class="review_title">거래 후기 작성</div>
     </div>
     
-	    <p> ${buyer_id} 님이 ${selller_id} 님에게 </p>	
+	    <p> ${buyer_id} 님이 ${seller_id} 님에게 </p>	
 
     <div class="review_new_window">
         <textarea placeholder="후기 내용 (100자 이하)"></textarea>
