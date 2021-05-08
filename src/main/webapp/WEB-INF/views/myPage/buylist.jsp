@@ -41,14 +41,8 @@
 	<body>
 		<jsp:include page="../include/topNavigation.jsp"></jsp:include>
         <jsp:include page="../include/myPageNavigation.jsp"></jsp:include>
-	
+
         <div class="our_content_area">
-            <select id="sale_select_state" name="sale_select">
-                <option value="전체">전체</option>
-                <option value="판매중">판매중</option>
-                <option value="거래중">거래중</option>
-                <option value="거래완료">거래완료</option>
-            </select>
             <table>
                 <thead>
                     <tr>
@@ -96,18 +90,11 @@
 	
 	var showPage = 1;
     var pagePerNum = 10;//몇개를 보여줄 것인지
-    
-	$('#sale_select_state').change(function(){//페이지당 보여줄 게시물:select 가 바뀌면
-		console.log($(this).val());
-		$("#pagination").twbsPagination('destroy');//이 구문이 없으면 페이지당 갯수 조정시 페이징 변경이 일어나지 않는다.
-		listCall(showPage);
-	});
-    
 	
 	listCall(showPage);//시작하자마자 이 함수를 호출
 	
 	function listCall(reqPage){
-		var reqUrl = './mysalelist/'+pagePerNum+"/"+reqPage+"/"+$('#sale_select_state').val();
+		var reqUrl = './mysalelist/'+pagePerNum+"/"+reqPage;
 		$.ajax({
 			url:reqUrl,
 			Type:'GET',
@@ -139,8 +126,7 @@
 		
 		for(var i=0;i<list.length;i++){
 			content += "<tr>";
-			content += "<td><img src='/saleFile/"+list[i].saleFileDto.newFileName+"' "
-						 		+" style='width:100px;height:100px;overflow: hidden;object-fit: cover;'/></td>";
+			content += "<td><img src='/saleFile/"+list[i].newFileName+"'/></td>";
 			content += "<td class='rightLine'"
 									+" style='text-align:left'><a target='_blank' "
 									+" href='/sale/detail?product_idx="+list[i].product_idx+"'>["+list[i].product_idx+"] "+list[i].sale_subject+"</a></td>";

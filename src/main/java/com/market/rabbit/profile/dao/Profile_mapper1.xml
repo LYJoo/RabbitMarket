@@ -109,6 +109,7 @@
  	<select id="allCountMySaleList" resultType="int">
  		SELECT count(product_idx) FROM sale 
  			WHERE seller_id=#{param1} AND isdelete=0
+			      <if test='!param2.equals("")'>AND code_num IN(#{param2})</if>	
  	</select>
  	<resultMap type="sale" id="callMySaleList">
 	 	<id column="product_idx" property="product_idx"/>
@@ -128,11 +129,12 @@
 			    FROM (
 			        SELECT  s.seller_id, s.product_idx, s.sale_subject, s.code_num, s.reg_date, sf.file_idx, sf.newfilename, RANK() OVER (PARTITION BY sf.product_idx ORDER BY sf.file_idx) rnumFile
 			        FROM sale s, sale_file sf
-			        WHERE s.product_idx = sf.product_idx AND s.isdelete=0
+			        WHERE s.product_idx = sf.product_idx AND s.isdelete=0 
+			        	<if test='!param2.equals("")'>AND code_num IN(#{param2})</if>	
 			        )
 			    WHERE rnumFile=1 AND seller_id=#{param1}
 			    )
-			WHERE rnum between #{param2} and #{param3}
+			WHERE rnum between #{param3} and #{param4}
 	</select>
 	
 	<!-- 거래 상세보기 -->

@@ -140,10 +140,10 @@ public class ProfileService1 {
 	
 	//판매내역 리스트
 	@Transactional
-	public HashMap<String, Object> mySaleList(int page, int pagePerCnt, String member_id) {
+	public HashMap<String, Object> mySaleList(int page, int pagePerCnt, String member_id, String code_num) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//pagePerCnt 의 기준으로 몇페이지나 만들수 있는가?
-		int allCnt = dao.allCountMySaleList(member_id);//전체 수
+		int allCnt = dao.allCountMySaleList(member_id, code_num);//전체 수
 		//게시글 수 : 21개, 페이지당 보여줄 수 : 5 = 최대 생성 가능한 페이지 : 5
 		int range = allCnt%pagePerCnt > 0? Math.round(allCnt/pagePerCnt)+1 : Math.round(allCnt/pagePerCnt);
 		//생성 가능한 페이지 보다 현재페이지가 클 경우... 현재페이지를 생성 가능한 페이지로 맞춰준다.
@@ -151,7 +151,7 @@ public class ProfileService1 {
 		//시작, 끝
 		int end = page*pagePerCnt;
 		int start = end - pagePerCnt+1;
-		ArrayList<SaleDTO> list = dao.mySaleList(member_id, start,end);
+		ArrayList<SaleDTO> list = dao.mySaleList(member_id, code_num, start,end);
 
 		map.put("list", list);
 		map.put("range", range);

@@ -100,11 +100,21 @@ public class ProfileController1 {
 	}
 	
 	//판매내역리스트 페이징
-	@RequestMapping(value = "/myPage/mysalelist/{pagePerCnt}/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> mySaleList(@PathVariable int pagePerCnt, @PathVariable int page, HttpSession session) {
+	@RequestMapping(value = "/myPage/mysalelist/{pagePerCnt}/{page}/{code_num_str}", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> mySaleList(@PathVariable int pagePerCnt, @PathVariable int page, @PathVariable String code_num_str, HttpSession session) {
 		logger.info("관리자 리스트 요청 pagePerCnt: {}, page: {}",pagePerCnt,page);
+		String code_num = "";
+		if(code_num_str.equals("전체")) {
+			code_num = "";
+		} else if(code_num_str.equals("판매중")) {
+			code_num = "3001";
+		} else if(code_num_str.equals("거래중")) {
+			code_num = "3002";
+		} else if(code_num_str.equals("거래완료")) {
+			code_num = "3003";
+		}
 		String member_id = (String) session.getAttribute("loginId");
-		return service.mySaleList(page,pagePerCnt, member_id);
+		return service.mySaleList(page,pagePerCnt, member_id, code_num);
 	}
 	
 	
