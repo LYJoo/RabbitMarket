@@ -121,7 +121,7 @@
 			content += "<tr>";
 			content += '<td><p><img src="/saleImg/'+list[i].saleFileDto.newFileName+'" alt="" style="width: 150px; height: 150px;"></p></td>';
 			content += '<td class="rightLine">['+list[i].trade_idx+']'+list[i].saleDto.sale_subject+'</td>';
-			content += '<td><select id="sale_select" name="'+list[i].product_idx+'/'+list[i].trade_idx+'/'+list[i].seller_id+'" onchange="value3(this)">';
+			content += '<td><select id="sale_select" name="'+list[i].product_idx+'/'+list[i].trade_idx+'/'+list[i].seller_id+'/'+list[i].trade_type+'" onchange="value3(this)">';
 			if(list[i].trade_state == '거래취소'){
 				content += '<option value="거래중">거래중</option><option value="거래완료">거래완료</option><option value="거래취소" selected>거래취소</option>';
 			}else if (list[i].trade_state == '거래중'){
@@ -142,6 +142,8 @@
 		var product_idx = e.getAttribute('name').split('/')[0];
 		var trade_idx = e.getAttribute('name').split('/')[1];
 		var seller_id = e.getAttribute('name').split('/')[2];
+		var trade_type = e.getAttribute('name').split('/')[3];
+		console.log("trade_type"+trade_type);
 		if(e.value == '거래취소'){
     		$.ajax({
     			url:'/myPage/buyTradeCancel'
@@ -160,7 +162,7 @@
     			}
     		});
         }
-        else if(e == '거래완료'){
+        else if(e.value == '거래완료'){
         	$.ajax({
     			url:'/myPage/tradeEnd'
     			,type: 'POST'
@@ -174,7 +176,11 @@
     				if(data.success == 1){
     					var trade_idx = data.trade_idx;
     					alert('거래가 완료되었습니다.');
-    					window.open('/sale/directBuyerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					if(trade_type == "택배"){
+    						window.open('/percelSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'percelBuyerEstimation','width=550, height=700, top=100, left=500');				
+    					}else{
+    						window.open('/directSellerEstimation?product_idx='+idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
+    					}
     					window.location.reload();
     				}
     			},
