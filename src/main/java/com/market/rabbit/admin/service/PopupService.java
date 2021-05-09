@@ -47,16 +47,26 @@ public class PopupService {
 	
 	// 등록
 	public int writePopup(PopupDTO dto) {
-		return dao.writePopup(dto);
+		if(dto.getIslook().equals("1")) {//노출여부가 true라면
+			if(dao.countFindNowPopup()>0) {
+				int nowPopup_idx = dao.findNowPopup();//현재 노출되고 있는 팝업창
+				int chage = dao.chageNowPopup(nowPopup_idx);//해당 팝업창의 노출을 false로
+				logger.info("현재 노출 팝업 / 변경여부 : " + nowPopup_idx + "/" + chage);
+			}
+		}				
+		int success = dao.writePopup(dto);
+		return success;
 	}
 	
 	// 수정
 	@Transactional
 	public int updatePopup(PopupDTO dto) {
 		if(dto.getIslook().equals("1")) {//노출여부가 true라면
-			int nowPopup_idx = dao.findNowPopup();//현재 노출되고 있는 팝업창
-			int chage = dao.chageNowPopup(nowPopup_idx);//해당 팝업창의 노출을 false로
-			logger.info("현재 노출 팝업 / 변경여부 : " + nowPopup_idx + "/" + chage);
+			if(dao.countFindNowPopup()>0) {
+				int nowPopup_idx = dao.findNowPopup();//현재 노출되고 있는 팝업창
+				int chage = dao.chageNowPopup(nowPopup_idx);//해당 팝업창의 노출을 false로
+				logger.info("현재 노출 팝업 / 변경여부 : " + nowPopup_idx + "/" + chage);
+			}
 		}		
 		int success = dao.updatePopup(dto);
 		return success;

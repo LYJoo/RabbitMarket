@@ -23,6 +23,8 @@ public interface PopupDAO {
 
 	int delPopup(int popup_idx);
 
+	int countFindNowPopup();
+
 
 
 }
