@@ -49,55 +49,64 @@ public class MemberService {
 
 	public ModelAndView login(HashMap<String, String> params, RedirectAttributes rAttr, HttpSession session) {
 		logger.info("로그인 서비스 요청");
+		String mode = params.get("mode");
 		String loginPw = params.get("LoginPw");
 		String loginId = params.get("LoginId");
 		logger.info(loginId+"/"+loginPw);
-		String hash = dao.logpw(loginPw,loginId);
-		 boolean suc = en.matches(loginPw, hash);//비교
 		
-		 logger.info("입력전 패스워드 :"+loginPw);	
-		 logger.info("db에 패스워드 :"+hash);	
-		 logger.info("입력후 패스워드 :"+suc);
+		//일반인 모드로 온다면
+		
+		if(params.get("mode").equals("member")) {
+			logger.info("일반인 모드");
+		
+		String hash = dao.logpw(loginPw,loginId); //이게 member로 가고 있음
+		boolean suc = en.matches(loginPw, hash);//비교
+		
+		logger.info("입력전 패스워드 :"+loginPw);	
+		logger.info("db에 패스워드 :"+hash);	
+		logger.info("입력후 패스워드 :"+suc);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("login_id", loginId);
 		map.put("pw", hash);
+		//suc이 참이면 map에 로그인 정보들을 넣고 아니면 말아라
+		 if(suc && dao.login(map) > 0 ) {
 		logger.info("map"+map);
-		 
-		
-		String mode = params.get("mode");
-		 
-		
-		
-		
-		
-		//일반인 모드로 오면 
-		if(params.get("mode").equals("member")) {
-			logger.info("일반인 모드");
-			
-			//id를 비교해서
-			if(dao.login(map) > 0 ) {
-				page="sale/mainPage";
-				
-				session.setAttribute("loginId", params.get("LoginId"));
-				logger.info("로그인 성공");
-			}else {
+		page="sale/mainPage";
+		session.setAttribute("loginId", params.get("LoginId"));
+		logger.info("로그인 성공");
+		}else {
 				page="redirect:/member/memberLogin";
 				msg = "아이디와 패스워드를 확인해 주세요.";
 			}
-			//관리자 모드로 오면
+			
+		 //그게 아니라 관리자 모드로 온다면
 		}else {
-			if(dao.admin(map) > 0) {
-				logger.info("관리자 모드");
-				page ="redirect:/sale/mainPage";
+				logger.info("관리자 모드 돌입");
+				String hash2 = dao.logadminpw(loginPw,loginId); //이게 member로 가고 있음
+				boolean suc2 = en.matches(loginPw, hash2);//비교
+				
+				logger.info("입력전 패스워드 :"+loginPw);	
+				logger.info("db에 패스워드 :"+hash2);	
+				logger.info("입력후 패스워드 :"+suc2);
+				
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("login_id", loginId);
+				map.put("pw", hash2);
+				//비밀번호 비교 후 참이라면
+				 if(suc2 && dao.admin(map) > 0) {
+					logger.info("map"+map); //관리자 아이디와 비번을 map에 넣고
+						 //mapper로 이동시켜 비교
+					logger.info("관리자 모드");
+					page ="sale/mainPage";
 				
 				session.setAttribute("adminId", params.get("LoginId"));
 			}else {
 				page="redirect:/member/memberLogin";
 				msg = "관리자 아이디와 패스워드를 다시 확인해주세요";
 			}
-		}
 		
+				 }		 
 		rAttr.addFlashAttribute("login_msg", msg);		
 		mav.setViewName(page);	
 		return mav;

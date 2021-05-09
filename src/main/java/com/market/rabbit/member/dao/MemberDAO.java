@@ -27,6 +27,8 @@ public interface MemberDAO {
 
 	String logpw(@Param("pw")String loginPw, @Param("id")String loginId);
 
+	String logadminpw(@Param("pw")String loginPw,  @Param("admin_id")String loginId);
+
 	
 
 	

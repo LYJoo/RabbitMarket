@@ -100,14 +100,14 @@
 			</td>
 			<th>공개여부</th>
 			<td>
-				<label><input type="radio" name="isPw" value="0" required checked> 공개</label>
+				<label><input type="radio" id="isPw" name="isPw" value="0" required checked> 공개</label>
 				 &nbsp; &nbsp;
-				<label><input type="radio" name="isPw" value="1" required> 비공개</label>
+				<label><input type="radio"  id="isPw" name="isPw" value="1" required> 비공개</label>
 			
 			</td>
-				<td><c:if test="${isPw} eq '1'">
-				<input type="text" name="isPass" required="required">
-				</c:if></td>
+				<td id="check">
+					
+				</td>
 		</tr>
 		<tr>
 			
@@ -145,18 +145,19 @@ $("#btn2").click(function(){
 	$("form").submit();
 });
 	function btn_clear(){
-		
 		 if (confirm("작성한 내용은 모두 지워집니다. 정말 취소 하시겠습니까?") == true){    //확인
 			location.href="javascript:history.back()";
 
 		 }else{   //취소
 			 return ;
-
 		 }
-	
-		
 	};
-
+	
+	var mode = $('input[name="isPw"]:checked').val();
+	console.log(mode);
+	if(mode != "0"){
+		#
+	}
 
 </script>
 </html>

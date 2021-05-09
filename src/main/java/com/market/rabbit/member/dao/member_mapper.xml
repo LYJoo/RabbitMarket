@@ -28,13 +28,18 @@
 	</select>	
 	
 	<!--관리자 로그인 시도 -->
-	<select id="admin" parameterType="member" resultType="Integer">
+	<select id="admin" parameterType="admin" resultType="Integer">
 		SELECT COUNT(*) FROM admin WHERE admin_id=#{login_id}  AND admin_pw=#{pw}	
 	</select>
 	
 	<!--비밀번호 암호화, DB에 비밀번호 가져오기 -->
 	<select id="logpw" parameterType="member" resultType="String">
 		SELECT pw FROM member WHERE member_id=#{id}
+	</select>
+	
+	<!--비밀번호 암호화, DB에 비밀번호 가져오기 -->
+	<select id="logadminpw" parameterType="admin" resultType="String">
+		SELECT admin_pw FROM admin WHERE admin_id=#{admin_id}
 	</select>
 	
 	<!--아이디 찾기 -->
