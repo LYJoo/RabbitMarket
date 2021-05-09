@@ -40,6 +40,15 @@
       height: 50px;
      
     }
+	#btn-list2{
+      color: white;
+      font-size: 20px;
+      background-color: #ff8e32;
+      width: 180px;
+      border-style: none;
+      height: 50px;
+     
+    }
 	div#btn{
 		text-align: center;
 		margin-top : 20px;
@@ -117,6 +126,8 @@
    </div>
    <div id="btn"><br/>
    <button id="btn-list" onclick="location.href = '/help/helpQuestionMain' ">목록</button>
+    &nbsp; &nbsp; &nbsp; 
+   <button id="btn-list2" onclick="location.href = '/myPage/questionList' ">내 1:1 문의 내역</button>
    </div>
    </div>
   

@@ -72,7 +72,7 @@ public class MemberService {
 		//suc이 참이면 map에 로그인 정보들을 넣고 아니면 말아라
 		 if(suc && dao.login(map) > 0 ) {
 		logger.info("map"+map);
-		page="sale/mainPage";
+		page="redirect:/sale/main";
 		session.setAttribute("loginId", params.get("LoginId"));
 		logger.info("로그인 성공");
 		}else {
@@ -98,7 +98,7 @@ public class MemberService {
 					logger.info("map"+map); //관리자 아이디와 비번을 map에 넣고
 						 //mapper로 이동시켜 비교
 					logger.info("관리자 모드");
-					page ="sale/mainPage";
+					page ="redirect:/sale/main";
 				
 				session.setAttribute("adminId", params.get("LoginId"));
 			}else {

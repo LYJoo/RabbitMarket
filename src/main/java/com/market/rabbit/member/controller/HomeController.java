@@ -96,7 +96,7 @@ public class HomeController {
     @RequestMapping(value="/member/logout")
     public String logout(HttpSession session) {
     	session.invalidate(); //세션 전부 날림
-        return "redirect:/member/memberLogin"; // 로그아웃 후 로그인화면으로 이동
+        return "redirect:/sale/main"; // 로그아웃 후 로그인화면으로 이동
     }
     
     //아이디 찾기

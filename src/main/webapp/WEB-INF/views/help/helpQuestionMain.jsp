@@ -58,7 +58,9 @@
      <br/><br/>
         <div class="flex_box btn_flex">
             <h2>1:1문의하기</h2>
+         <c:if test="${sessionScope.loginId ne null}">
         <button onclick="location.href='./help_QAnswer'" >문의글 작성</button>
+        </c:if>
         </div>
         <table id="list_table">
             <thead>
