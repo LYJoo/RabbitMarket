@@ -132,7 +132,7 @@
 	</insert>
 	
 	 <!-- 1대1 문의글 삭제 -->
- 	<delete id="helpDelete">
+ 	<delete id="helpDelete" parameterType="int">
  		DELETE FROM question WHERE question_idx=#{question_idx}
  	</delete>
 	

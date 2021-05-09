@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.market.rabbit.dto.FrequentlyQuestionDTO;
 import com.market.rabbit.dto.NoticeDTO;
@@ -17,8 +19,9 @@ import com.market.rabbit.help.dao.HelpDAO;
 public class HelpService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	ModelAndView mav = new ModelAndView();
 	@Autowired HelpDAO dao;
+	
 	
 	/* 공지 사항 */
 	//공지사항 리스트
@@ -145,8 +148,8 @@ public class HelpService {
 
 
 
-	public int helpDelete(String question_idx) {
-		// TODO Auto-generated method stub
+	public int helpDelete(int question_idx, RedirectAttributes rttr) {
+		
 		return dao.helpDelete(question_idx);
 	}
 

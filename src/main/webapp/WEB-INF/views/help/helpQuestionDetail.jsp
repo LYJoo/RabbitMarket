@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
 <title>Insert title here</title>
+
 <style>
 	table{
 		border-top: 2px solid black;
@@ -94,13 +95,15 @@
 			</div>
 			</td>
 		
-		
+
 		<td>
+		 <c:if test="${sessionScope.loginId == dto.member_id && msg ne '답변완료'}">
 		<div class="up">
 		<button onclick="location.href = '/help/help_Question_Update?=idx${question_idx}'">수정</button>
 		 &nbsp;
-		<button id="delete" >삭제</button>
+		<button id="delete">삭제</button>
 		</div>	
+		</c:if>
 		<br/>
 		</td>	
 		</tr>
@@ -133,10 +136,15 @@
   
 </body>
 <script>
+	//문의글 삭제 성공시 오는 msg
+	var check="${removeOK}";
+		if(check != ""){
+		 	alert(check);
+		}
 $(function(){
 	$('#delete').click(function(){
 		if(confirm("삭제 하시겠습니까?")){
-			location.href = "/help/help_Question_Delete?=idx${question_idx}";
+			location.href = "./help_Question_Delete/${question_idx}";
 		}
 	});
 });

@@ -44,7 +44,7 @@
 		width:100px;
 	}
 	
-	#editable{
+	#content{
 		width: 95%;
 		height: 300px;
 		border: 1px solid gray;
@@ -113,17 +113,14 @@
 			
 		</tr>
 		<tr>
-			<td colspan="5">
-				<!-- div 에 있는 녀석은 서버로 보낼 수 없다. -->
-				<div id="editable" contenteditable="true"></div>
-				<input id="content" type="hidden" name="content" value=""/>
-			</td>
+			<td colspan="5" id="editable">
+			<textarea id="content" cols="100" rows="20"  name="content"></textarea></td>
 		</tr>
 		
 	
    </table>
    <div id="btn"><br/>
-   <input id="btn2"type="button" value="등록"/>
+   <input type="submit" id="btn2"value="등록">
    </form>
     &nbsp; &nbsp; &nbsp; 
    <button id="btn2" onclick="btn_clear()">취소</button>
@@ -139,11 +136,7 @@ if(check != ""){
  	alert(check);
 }
 
-$("#btn2").click(function(){
-	//editable 에 있는 내용을 content  의  value 에 넣기
-	$("#content").val($("#editable").html());
-	$("form").submit();
-});
+
 	function btn_clear(){
 		 if (confirm("작성한 내용은 모두 지워집니다. 정말 취소 하시겠습니까?") == true){    //확인
 			location.href="javascript:history.back()";
@@ -156,7 +149,7 @@ $("#btn2").click(function(){
 	var mode = $('input[name="isPw"]:checked').val();
 	console.log(mode);
 	if(mode != "0"){
-		#
+		
 	}
 
 </script>

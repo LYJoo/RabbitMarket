@@ -55,7 +55,7 @@ public class HelpController {
 	}
 	@RequestMapping(value = "/help/help_Question_Update", method = RequestMethod.GET)
 	public String help_Question_Update(Model model) {
-		logger.info("1대1 문의글 등록 요청");
+		logger.info("1대1 문의글 수정 요청");
 		return "help/help_Question_Update";
 	}
 
@@ -91,12 +91,17 @@ public class HelpController {
 		}
 		
 		//1대1 문의 삭제
-		@RequestMapping(value = "/help/help_Question_Delete", method = RequestMethod.GET)
-		public String remove(@RequestParam String question_idx, RedirectAttributes rttr) throws Exception{
-			logger.info("삭제 idx : "+question_idx);
-			int suc = service.helpDelete(question_idx);
-			rttr.addFlashAttribute("result","removeOK");
-			return "redirect:/help/helpQuestionDetail/{question_idx}";
+		@RequestMapping(value = "/help/helpQuestionDetail/help_Question_Delete/{question_idx}", method = RequestMethod.GET)
+		public String helpDelete(@PathVariable int question_idx, RedirectAttributes rttr) throws Exception{
+			int suc = service.helpDelete(question_idx, rttr);
+			logger.info("삭제 idx : "+question_idx+"/"+suc);
+			
+			String msg = "삭제에 실패했습니다. 잠시 후 다시 시도해주세요";
+			if(suc > 0) {
+				msg ="삭제 했습니다.";
+			}
+			rttr.addFlashAttribute("removeOK",msg);
+			return "redirect:/help/helpQuestionMain";
 		}
 		
 		//1대1 문의글쓰기
