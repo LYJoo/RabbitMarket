@@ -73,10 +73,10 @@ public class HomeController {
 		
 
 		String msg = "회원 가입에 실패했습니다. 잠시 후 다시 시도해주세요";
-		String page = "redirect:/member/memberLogin";
+		String page = "redirect:/member/MemberLogin";
 		if(service.join(dto) > 0) {
 			msg = "회원 가입 성공";
-			page = "member/memberLogin";
+			page = "member/MemberLogin";
 		}
 		
 		model.addAttribute("regist_msg", msg);
