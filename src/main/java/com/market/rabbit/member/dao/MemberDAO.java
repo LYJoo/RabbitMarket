@@ -29,6 +29,8 @@ public interface MemberDAO {
 
 	String logadminpw(@Param("pw")String loginPw,  @Param("admin_id")String loginId);
 
+	String withd(HashMap<String, String> params);
+
 	
 
 	

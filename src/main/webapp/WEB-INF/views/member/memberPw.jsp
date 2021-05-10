@@ -83,7 +83,7 @@
         
 		<div class="card-body">
       <form action="findPw" class="form-signin" method="POST">
-        <input type="text" name="member_id" id="member_id" class="form-control" placeholder="아이디" required autofocus><br>
+        <input type="text" name="member_id" id="member_id" class="form-control" placeholder="아이디" required><br>
         <input type="text" name="name" id="name" class="form-control" placeholder="이름" required><BR>
         <input type="email" name="email" id="email" class="form-control" placeholder="이메일" required><br>
         <p class="checks" id="checks">${findpw_checkf}</p><br/>
