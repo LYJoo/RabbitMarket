@@ -47,6 +47,11 @@
 		SELECT member_id FROM member WHERE email=#{email} AND name=#{name}
 	</select>
 	
+	<!--비밀번호 찾기 전 탈퇴회원 여부 -->
+	<select id="withd" parameterType="member" resultType="String">
+		SELECT withdraw FROM member WHERE email=#{email} 
+	</select>
+	
 	<!--비밀번호 찾기 -->
 	<select id="findPw" parameterType="member" resultType="Integer">
 		SELECT count(pw) FROM member WHERE member_id=#{member_id} AND name=#{name} AND email=#{email} 

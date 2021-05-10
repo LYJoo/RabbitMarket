@@ -133,17 +133,29 @@ public class MemberService {
 	public ModelAndView findPw(HttpSession session,HashMap<String, String> params, RedirectAttributes rAttr) {
 		
 		int findpw = dao.findPw(params);
+		String withd = dao.withd(params);
+		logger.info(withd);
 		
-			msg ="일치하는 회원정보가 없습니다.";
-			page="redirect:/member/memberPw";
-		if(findpw > 0) {
-			page = "member/memberPwReset";
-			String msg2 ="비밀번호를 재설정해주세요";
-			mav.addObject("findpw_checkt", msg2);
-		}
 		
-		logger.info( params.get("member_id"));
-		session.setAttribute("findid", params.get("member_id"));
+		if(withd.equals("0")) {
+			
+			if(findpw > 0) {
+				page = "member/memberPwReset";
+				String msg2 ="비밀번호를 재설정해주세요";
+				mav.addObject("findpw_checkt", msg2);
+				logger.info( params.get("member_id"));
+				session.setAttribute("findid", params.get("member_id"));
+			}else {
+				msg ="일치하는 회원정보가 없습니다.";
+				page="redirect:/member/memberPw";}
+				
+			}else{
+				msg ="탈퇴한 회원 입니다";
+				page="redirect:/member/memberPw";
+			}
+		
+		
+		
 		rAttr.addFlashAttribute("findpw_checkf", msg);
 		mav.setViewName(page);
 		return mav;
