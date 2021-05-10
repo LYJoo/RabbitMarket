@@ -44,7 +44,7 @@
 		width:100px;
 	}
 	
-	#editable{
+	#content{
 		width: 95%;
 		height: 300px;
 		border: 1px solid gray;
@@ -71,7 +71,7 @@
 
    <div class="our_content_area">
    <div class="flex_box">
-  <form action="helpwrite" method="post">
+  <form action="helpUdate" method="post">
    <table>
     
 		<tr>
@@ -79,10 +79,12 @@
 			<td><input type="text" id="subject" name="subject" required></td>
 			<td></td>
 			<td></td>
+			<td></td>
 		</tr>
 		<tr>
 			<th>작성자</th>
 			<td><input type="text" id="member_id" name="member_id" value="${sessionScope.loginId}" readonly="readonly"></td>
+			<td></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -98,27 +100,27 @@
 			</td>
 			<th>공개여부</th>
 			<td>
-				<label><input type="radio" name="ispw" value="0" required> 공개</label>
+				<label><input type="radio" id="isPw" name="isPw" value="0" required checked> 공개</label>
 				 &nbsp; &nbsp;
-				<label><input type="radio" name="ispw" value="1" required> 비공개</label>
+				<label><input type="radio"  id="isPw" name="isPw" value="1" required> 비공개</label>
 			
 			</td>
+				<td id="check">
+					
+				</td>
 		</tr>
 		<tr>
 			
 		</tr>
 		<tr>
-			<td colspan="4">
-				<!-- div 에 있는 녀석은 서버로 보낼 수 없다. -->
-				<div id="editable" contenteditable="true"></div>
-				<input id="content" type="hidden" name="content" value=""/>
-			</td>
+			<td colspan="5" id="editable">
+			<textarea id="content" cols="100" rows="20"  name="content"></textarea></td>
 		</tr>
 		
 	
    </table>
    <div id="btn"><br/>
-   <input id="btn2"type="button" value="등록"/>
+   <input type="submit" id="btn2"value="등록">
    </form>
     &nbsp; &nbsp; &nbsp; 
    <button id="btn2" onclick="btn_clear()">취소</button>
@@ -127,24 +129,28 @@
   
 </body>
 <script>
-$("#btn2").click(function(){
-	//editable 에 있는 내용을 content  의  value 에 넣기
-	$("#content").val($("#editable").html());
-	$("form").submit();
-});
+
+//글 등록시 오는 경고창
+	var check = "${help_write_msg}";
+if(check != ""){
+ 	alert(check);
+}
+
+
 	function btn_clear(){
-		
 		 if (confirm("작성한 내용은 모두 지워집니다. 정말 취소 하시겠습니까?") == true){    //확인
 			location.href="javascript:history.back()";
 
 		 }else{   //취소
 			 return ;
-
 		 }
-	
-		
 	};
-
+	
+	var mode = $('input[name="isPw"]:checked').val();
+	console.log(mode);
+	if(mode != "0"){
+		
+	}
 
 </script>
 </html>
