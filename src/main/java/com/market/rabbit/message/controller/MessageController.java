@@ -33,10 +33,10 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value = "/message/list/{page}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> callMsgList(@PathVariable int page) {
+	public @ResponseBody HashMap<String, Object> callMsgList(@PathVariable int page, HttpSession session) {
 		
 		logger.info("Message {} 페이지 리스트 요청", page);
-		return service.callMsgList(page);
+		return service.callMsgList(page,session);
 	}
 	
 	//그냥 바로 쪽지 보낼때

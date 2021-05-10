@@ -687,10 +687,10 @@ public class SaleService {
 		return map;
 	}
 
-	public HashMap<String, Object> searchList(String inputData) {
+	public HashMap<String, Object> searchList(String inputData, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		String loginId = "hwi";
 		inputData = "%"+inputData+"%";
+		String loginId = (String) session.getAttribute("loginId");
 		ArrayList<SaleDTO> searchList = dao.callSearchList(loginId, inputData);
 		
 		map.put("searchList", searchList);

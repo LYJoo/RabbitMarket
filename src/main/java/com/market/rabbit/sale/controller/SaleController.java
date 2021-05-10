@@ -94,9 +94,9 @@ public class SaleController {
 	}
 	
 	@RequestMapping(value = "/sale/searchList/{inputData}", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> searchList(@PathVariable String inputData) {
+	public @ResponseBody HashMap<String, Object> searchList(@PathVariable String inputData, HttpSession session) {
 		logger.info("검색어 : {}", inputData);
-		return service.searchList(inputData);
+		return service.searchList(inputData, session);
 	}
 	
 	
@@ -104,7 +104,6 @@ public class SaleController {
 	public String writeForm(Model model, HttpSession session) {
 		logger.info("게시글 작성폼 요청");
 		//해야할것!! 로그인한 사람인지 확인하기
-		session.setAttribute("loginId", "lalala");
 		
 		HashMap<String, String> fileList = new HashMap<String, String>();
 		session.setAttribute("fileList", fileList);

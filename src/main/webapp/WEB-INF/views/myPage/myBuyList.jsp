@@ -123,7 +123,7 @@
 			content += '<td class="rightLine">['+list[i].trade_idx+']'+list[i].saleDto.sale_subject+'</td>';
 			content += '<td><select id="sale_select" name="'+list[i].product_idx+'/'+list[i].trade_idx+'/'+list[i].seller_id+'/'+list[i].trade_type+'" onchange="value3(this)">';
 			if(list[i].trade_state == '거래취소'){
-				content += '<option value="거래중">거래중</option><option value="거래완료">거래완료</option><option value="거래취소" selected>거래취소</option>';
+				content += '<option value="거래취소" selected>거래취소</option>';
 			}else if (list[i].trade_state == '거래중'){
 				content += '<option value="거래중" selected>거래중</option><option value="거래완료">거래완료</option><option value="거래취소">거래취소</option>';
 			}else if(list[i].trade_state == '거래완료'){
@@ -149,6 +149,7 @@
 		var seller_id = e.getAttribute('name').split('/')[2];
 		var trade_type = e.getAttribute('name').split('/')[3];
 		console.log("trade_type"+trade_type);
+		
 		if(e.value == '거래취소'){
     		$.ajax({
     			url:'/myPage/buyTradeCancel'
@@ -168,10 +169,11 @@
     		});
         }
         else if(e.value == '거래완료'){
+        	console.log('gg');
         	$.ajax({
     			url:'/sale/tradeEnd'
     			,type: 'POST'
-    			,data:{"product_idx": product_idx, "trade_idx":trade_idx, "trade_type":trade_type}
+    			,data:{"product_idx": product_idx}
     			,success:function(data){
     				if(data.success == 1){
     					var trade_idx = data.trade_idx;

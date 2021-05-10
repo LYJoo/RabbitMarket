@@ -30,7 +30,6 @@ public class PopupMgtController {
 	@RequestMapping(value = "/admin/callPopupList", method = RequestMethod.GET)
 	public String callPopupList(HttpSession session) {
 		logger.info("팝업 관리 리스트 페이지 요청");
-		session.setAttribute("adminId", "admin");//로그인체크 시 지울 부분
 		return "admin/popupList";
 	}
 	

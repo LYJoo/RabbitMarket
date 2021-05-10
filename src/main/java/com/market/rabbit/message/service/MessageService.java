@@ -24,11 +24,11 @@ public class MessageService {
 	@Autowired MessageDAO dao;
 	int numPerPage = 5;
 
-	public HashMap<String, Object> callMsgList(int page) {
+	public HashMap<String, Object> callMsgList(int page, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int end = numPerPage*page;
 		int start = end-(numPerPage-1);
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
 		
 		int allCntReceive = dao.countReceive(loginId);
 		int allCntSend = dao.countSend(loginId);
@@ -61,8 +61,8 @@ public class MessageService {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/message/writeForm";
 		String msg = "쪽지 전송에 실패하였습니다.";
-		//String loginId = (String) session.getAttribute("loginId");
-		String loginId = "hwi";
+		String loginId = (String) session.getAttribute("loginId");
+		
 		
 		if(dao.writeMsg(loginId, receiver, msg_content) > 0) {
 			page = "redirect:/message/mainPage";
