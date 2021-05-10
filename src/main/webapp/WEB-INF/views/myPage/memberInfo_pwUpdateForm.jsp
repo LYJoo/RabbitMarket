@@ -51,5 +51,21 @@
     	if(msg != ""){
     		alert(msg);
     	}
+    	
+    	$('#afterPw').on('keyup keydown', function(){
+    		ckPw();
+    	});
+    	$('#confirmPw').on('keyup keydown', function(){
+    		ckPw();
+    	});
+    	 function ckPw(){
+     		var afterPw = $('#afterPw').val();
+     		var confirmPw = $('#confirmPw').val();
+     		if(afterPw != confirmPw){
+     			$('#confirmMsg').html("비밀번호가 일치하지 않습니다.");
+     		} else {
+     			$('#confirmMsg').html("비밀번호가 일치합니다.");
+     		}
+     	}
     </script>
 </html>

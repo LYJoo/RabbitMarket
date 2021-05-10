@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,12 +33,14 @@ import com.market.rabbit.dto.ProfileFileDTO;
 import com.market.rabbit.dto.QuestionDTO;
 import com.market.rabbit.dto.ReportDTO;
 import com.market.rabbit.dto.TradingDTO;
+import com.market.rabbit.member.dao.MemberDAO;
 import com.market.rabbit.profile.dao.ProfileDAO2;
 
 @Service
 public class ProfileService2 {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ProfileDAO2 dao;
+	@Autowired MemberDAO memDao;
 	@Value("#{config['Globals.root']}") String root;
 	int numPerPage = 10;
 
@@ -173,13 +176,20 @@ public class ProfileService2 {
 	@Transactional
 	public ModelAndView updateMemberPw(String currPw, String afterPw, RedirectAttributes rAttr, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
 		String page = "redirect:/myPage/memberPwUpdateForm";
 		String msg = "비밀번호 변경에 실패하였습니다.";
 		String loginId = (String) session.getAttribute("loginId");
-		if(dao.confirmPw(loginId, currPw) != null) {
-			logger.info("비밀번호가 일치합니다. 비밀번호를 변경합니다.");
-			dao.updatePw(loginId, afterPw);
-			msg = "비밀번호 변경에 성공하였습니다.";
+		
+		//현재의 암호화된 비밀번호
+		String hash = dao.getPw(loginId);
+		//currPw와 비교
+		if(en.matches(currPw, hash)) {
+			System.out.println("비밀번호 변경이 가능합니다.");
+			dao.updatePw(loginId, en.encode(afterPw));
+			msg="비밀번호 변경에 성공하였습니다.";
+		}else {
+			msg = "비밀번호 변경에 실패하였습니다. 비밀번호를 확인해주세요.";
 		}
 		
 		rAttr.addFlashAttribute("msg", msg);
@@ -189,10 +199,11 @@ public class ProfileService2 {
 
 	public ModelAndView delMemberWithdraw(HttpSession session, String currPw, RedirectAttributes rAttr) {
 		ModelAndView mav = new ModelAndView();
+		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
 		String page = "redirect:/myPage/memberInfo";
 		String msg = "회원탈퇴에 실패하였습니다.";
 		String loginId = (String) session.getAttribute("loginId");
-		if(dao.confirmPw(loginId, currPw) != null) {
+		if(en.matches(currPw, dao.getPw(loginId))) {
 			logger.info("비밀번호가 일치합니다. 회원탈퇴합니다.");
 			dao.delMemberWithdraw(loginId);
 			page="redirect:/sale/main";

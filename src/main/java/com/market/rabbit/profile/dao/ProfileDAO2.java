@@ -25,7 +25,7 @@ public interface ProfileDAO2 {
 
 	String callOriFileName(String member_id);
 
-	String confirmPw(String loginId, String currPw);
+	String getPw(String loginId);
 
 	void updatePw(String loginId, String afterPw);
 

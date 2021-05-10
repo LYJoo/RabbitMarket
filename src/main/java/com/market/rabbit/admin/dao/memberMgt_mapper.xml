@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+ >
+ 
+ <!-- 누가 이 XML을 사용할까?(mybatis) / 누구와 연결을? (해당 DAO) -->
+ <mapper namespace="com.market.rabbit.admin.dao.MemberMgtDAO">
+ 	
+ 	<!-- 리스트 : 전체수 / 페이징리스트-->
+	<select id="allCountMember" resultType="int">
+		SELECT COUNT(*) AS cnt FROM member
+	</select>
+	
+	<select id="allCountBlack" resultType="int">
+		SELECT COUNT(*) AS cnt FROM blackList
+	</select>
+	
+	<select id="allCountWithdraw" resultType="int">
+		SELECT COUNT(*) AS cnt FROM member WHERE withdraw='1'
+	</select>
+	
+	<select id="memberList" resultType="member">
+		SELECT member_id, pw, name, phone, email, birth_date, address, reg_date, report_cnt, black_cnt, blind_cnt, black_blind_cnt, location, manner_cnt, isBlack, withdraw, manner_score, rnum 
+		    FROM (SELECT member_id, pw, name, phone, email, birth_date, address, reg_date, report_cnt, black_cnt, blind_cnt, black_blind_cnt, location, manner_cnt, isBlack, withdraw, manner_score, ROW_NUMBER() 
+		     	OVER(ORDER BY reg_date DESC) AS rnum FROM member)
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="blackList" resultType="blackList">
+		SELECT black_idx, black_reason, unblack_reason, admin_id, member_id, unblack_date, reg_date, rnum 
+		    FROM (SELECT black_idx, black_reason, unblack_reason, admin_id, member_id, unblack_date, reg_date, ROW_NUMBER() 
+		    	OVER(ORDER BY black_idx DESC) AS rnum FROM blackList)
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="withdrawList" resultType="member">
+		SELECT member_id, pw, name, phone, email, birth_date, address, reg_date, report_cnt, black_cnt, blind_cnt, black_blind_cnt, location, manner_cnt, isBlack, withdraw, manner_score, rnum 
+		    FROM (SELECT member_id, pw, name, phone, email, birth_date, address, reg_date, report_cnt, black_cnt, blind_cnt, black_blind_cnt, location, manner_cnt, isBlack, withdraw, manner_score, ROW_NUMBER() 
+		    	OVER(ORDER BY reg_date ASC) AS rnum FROM member WHERE withdraw='1')
+		WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="callMember" resultType="member">
+		SELECT * FROM member WHERE member_id=#{param1}
+	</select>
+	
+	<select id="callAdmin" resultType="admin">
+		SELECT * FROM admin WHERE admin_id=#{param1}
+	</select>
+ 	
+ </mapper>
