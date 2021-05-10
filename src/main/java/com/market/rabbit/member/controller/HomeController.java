@@ -123,7 +123,7 @@ public class HomeController {
 	@RequestMapping(value = "/member/memberRegist", method = RequestMethod.GET)
 	public String MemberRegist( Model model) {
 		
-		return "member/memberRegist";
+		return "member/memberSignUp";
 	}
 	
 	@RequestMapping(value = "/member/memberId", method = RequestMethod.GET)

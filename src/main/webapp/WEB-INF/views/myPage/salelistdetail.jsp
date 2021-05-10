@@ -68,7 +68,7 @@
 	                        	<!-- 운송장번호가 있을경우 -->
 	                        	<c:if test="${tradeInfo.package_company ne null}">
 	                        		[${tradeInfo.package_company}]
-	                        		${tradeInfo.tracking_Number}
+	                        		${tradeInfo.tracking_number}
 	                        	</c:if>
                         	</td>
                         </c:if>

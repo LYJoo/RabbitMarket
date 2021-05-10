@@ -479,11 +479,11 @@
                 ${list.member_id} ${list.reg_date}
             </td>
             <td rowspan="2" class="comment_update_btn">
-	        	<c:if test="${detail.seller_id eq sessionScope.loginId}">
+	        	<c:if test="${list.member_id eq sessionScope.loginId}">
 	        		<a style="cursor: pointer;" onclick="cUpdateForm(${list.comment_idx})">수정</a> |
 	        		<a style="cursor: pointer;" onclick="cDel(${list.comment_idx},${detail.product_idx})">삭제</a>
 	        	</c:if>
-	        	<c:if test="${detail.seller_id ne sessionScope.loginId && sessionScope.loginId ne null}">
+	        	<c:if test="${list.member_id ne sessionScope.loginId && sessionScope.loginId ne null}">
 	        		 <a style="cursor: pointer;"  onclick="report(${list.comment_idx},1002,'${list.member_id}')">신고</a>
 	        	</c:if>
             </td>

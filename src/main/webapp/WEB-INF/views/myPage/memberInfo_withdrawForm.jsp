@@ -21,7 +21,7 @@
 		                </tr>
 		                <tr>
 		                    <th>아이디</th>
-		                    <td>test1-로그인세션</td>
+		                    <td>${sessionScope.loginId }</td>
 		                </tr>
 		                <tr>
 		                    <th>비밀번호</th>
