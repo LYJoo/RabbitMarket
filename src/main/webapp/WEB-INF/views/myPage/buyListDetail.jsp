@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Insert title here</title>
         <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="../resources/css/hwi_css.css">
+        <link rel="stylesheet" type="text/css" href="/resources/css/hwi_css.css">
         <style type="text/css">
 			body{
 	            margin: 50px 10px;
@@ -46,11 +46,11 @@
 	        		</tr>
                     <tr>
                         <th>판매자</th>
-                        <td><a href="판매자프로필" id="">${tradeInfo.seller_id}</a></td>
+                        <td><a href="" id="sellerProfileA">${tradeInfo.seller_id}</a></td>
                     </tr>
                     <tr>
                         <th>구매자</th>
-                        <td><a href="구매자프로필" id="">${tradeInfo.buyer_id}</a></td>
+                        <td><a href="" id="buyerProfileA">${tradeInfo.buyer_id}</a></td>
                     </tr>
 	        	</table>
 	        	<table>
@@ -159,5 +159,17 @@
 		}
 			window.location.reload();
 	}
+	
+	$('#sellerProfileA').click(function(){
+		var me = '${tradeInfo.seller_id}';
+		window.open('/myPage/profile?member_id='+me, 'message', 'width=1200, height=800');
+	});
+	$('#buyerProfileA').click(function(){
+		var me = '${tradeInfo.buyer_id}';
+		window.open('/myPage/profile?member_id='+me, 'message', 'width=1200, height=800');
+	});
+	
+	
+	
     </script>
 </html>

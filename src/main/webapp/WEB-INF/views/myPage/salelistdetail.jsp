@@ -46,11 +46,11 @@
 	        		</tr>
                     <tr>
                         <th>판매자</th>
-                        <td><a href="판매자프로필" id="">${tradeInfo.seller_id}</a></td>
+                        <td><a href="" id="sellerProfileA">${tradeInfo.seller_id}</a></td>
                     </tr>
                     <tr>
                         <th>구매자</th>
-                        <td><a href="구매자프로필" id="">${tradeInfo.buyer_id}</a></td>
+                        <td><a href="" id="buyerProfileA">${tradeInfo.buyer_id}</a></td>
                     </tr>
 	        	</table>
 	        	<table>
@@ -156,5 +156,14 @@
 			}
 				window.location.reload();
 		}
+		
+		$('#sellerProfileA').click(function(){
+			var me = '${tradeInfo.seller_id}';
+			window.open('/myPage/profile?member_id='+me, 'message', 'width=1200, height=800');
+		});
+		$('#buyerProfileA').click(function(){
+			var me = '${tradeInfo.buyer_id}';
+			window.open('/myPage/profile?member_id='+me, 'message', 'width=1200, height=800');
+		});
     </script>
 </html>
