@@ -127,7 +127,7 @@
 			}else if (list[i].trade_state == '거래중'){
 				content += '<option value="거래중" selected>거래중</option><option value="거래완료">거래완료</option><option value="거래취소">거래취소</option>';
 			}else if(list[i].trade_state == '거래완료'){
-				content += '<option value="거래중">거래중</option><option value="거래완료" selected>거래완료</option><option value="거래취소">거래취소</option>';
+				content += '<option value="거래완료" selected>거래완료</option>';
 			}
 			content += '</select></td>';
 			content += "<td class='rightLine'><a href='#' onclick='Opendetail("+list[i].product_idx+")'>거래상세보기</a></td>";
