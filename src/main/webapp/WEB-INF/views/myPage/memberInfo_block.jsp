@@ -55,8 +55,7 @@
 				dataType:'JSON',
 				success:function(data){
 					console.log(data.blockList);
-					console.log(data.path);
-					printBlockList(data.blockList, data.path);
+					printBlockList(data.blockList);
 					//플러그인 사용
 	                $("#pagination").twbsPagination({
 	                    startPage:data.currPage,//시작페이지
@@ -75,11 +74,14 @@
 		
 		function printBlockList(list, path){
 			var content="";
-			
 	
 			for(var i=0; i<list.length; i++){
 				content += "<tr>";
-				content += "<td class='td-block-img'><p><img src='"+path+list[i].profilefileDto.newFileName+"' class='block-img'/></p></td>"
+				if(list[i].profilefileDto == null){
+					content += "<td class='td-block-img'><p><img src='/myProfile/default_profile.png' class='block-img'/></p></td>"
+				}else{
+					content += "<td class='td-block-img'><p><img src='/myProfile/"+list[i].profilefileDto.newFileName+"' class='block-img'/></p></td>"
+				}
 				content += "<td class='td-block-id'>"+list[i].target_id+"</td>"
 				content += "<td><a onclick='delBlock("+list[i].block_idx+")' class='a-del' style='color:white;'>차단해제</a></td>";
 				content += "</tr>";

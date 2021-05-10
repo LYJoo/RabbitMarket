@@ -258,7 +258,6 @@ public class ProfileService2 {
 		int range = allCnt%numPerPage > 0 ? Math.round(allCnt/numPerPage)+1 : allCnt/numPerPage;
 		
 		ArrayList<BlockDTO> blockList = dao.callBlockList(loginId, start, end);
-		map.put("path", "/myProfile/");
 		map.put("range", range);
 		map.put("currPage", page);
 		map.put("blockList", blockList);
