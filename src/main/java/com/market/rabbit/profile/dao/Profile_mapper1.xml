@@ -213,7 +213,10 @@
  		SELECT buyer_id FROM trading WHERE trade_idx=#{param}
  	</select>
  	
- 	
+ 	<!-- 운송장번호입력 -->
+ 	<update id="registTrackingNum">
+ 		UPDATE trading SET package_company=#{param2}, tracking_number=#{param3} WHERE trade_idx=#{param1}
+ 	</update>
  	
  	
  </mapper>

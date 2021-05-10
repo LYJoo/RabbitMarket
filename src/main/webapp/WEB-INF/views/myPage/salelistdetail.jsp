@@ -114,8 +114,10 @@
     </body>
     <script>
 		/*운송장번호 오픈*/
-		function Opendetail(idx){
-			window.open('/myPage/tracking_number/', 'tracking_number', 'width=1000, height=1000');
+		function openTrackingNum(idx){
+			var trade_idx = ${tradeInfo.trade_idx};
+			window.open('/openTrackingNumber?trade_idx='+trade_idx, 'tracking_number', 'width=600, height=350');
+	    	window.location.reload();
 		}
 		/*거래 완료하기*/
 		function tradeEnd(){

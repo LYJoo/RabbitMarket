@@ -89,6 +89,8 @@ public interface ProfileDAO1 {
 
 	String getMannerBuyerId(int trade_idx);
 
+	int registTrackingNum(int trade_idx, String package_company, String tracking_number);
+
 
 
 }

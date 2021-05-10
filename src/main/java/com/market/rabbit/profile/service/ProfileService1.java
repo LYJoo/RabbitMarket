@@ -294,6 +294,14 @@ public class ProfileService1 {
 		mav.setViewName("sale/reviewWriteForm");
 		return mav;
 	}
+	
+	//운송장 번호 입력
+	public HashMap<String, Object> registTrackingNum(int trade_idx, String package_company, String tracking_number) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = dao.registTrackingNum(trade_idx, package_company, tracking_number);
+		map.put("success", success);
+		return map;
+	}
 
 
 
