@@ -146,7 +146,7 @@
 		}
 		/*매너질문 오픈*/
 		function openMannerQ(idx){
-			var trade_type = ${tradeInfo.trade_type};
+			var trade_type = '${tradeInfo.trade_type}';
 			var idx = ${saleInfo.product_idx};
 			var trade_idx = ${tradeInfo.trade_idx};
 			if(trade_type === "택배"){
