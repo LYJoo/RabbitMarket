@@ -24,12 +24,12 @@
 	
 	<!--일반회원 로그인 시도 -->
 	<select id="login" parameterType="member" resultType="Integer">
-		SELECT COUNT(*) FROM member WHERE member_id = #{login_id} AND pw = #{pw}	
+		SELECT COUNT(*) FROM member WHERE member_id = #{login_id} AND pw = #{pw} AND isblack=0 AND withdraw=0	
 	</select>	
 	
 	<!--관리자 로그인 시도 -->
 	<select id="admin" parameterType="admin" resultType="Integer">
-		SELECT COUNT(*) FROM admin WHERE admin_id=#{login_id}  AND admin_pw=#{pw}	
+		SELECT COUNT(*) FROM admin WHERE admin_id=#{login_id}  AND admin_pw=#{pw} AND ACTIVATION = 1
 	</select>
 	
 	<!--비밀번호 암호화, DB에 비밀번호 가져오기 -->
