@@ -155,11 +155,6 @@ public class HelpService {
 
 
 
-	public int helpUdate(int question_idx, RedirectAttributes rttr) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 
 
 

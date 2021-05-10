@@ -99,7 +99,6 @@
 		<td>
 		 <c:if test="${sessionScope.loginId == dto.member_id && msg ne '답변완료'}">
 		<div class="up">
-		<button onclick="location.href = '/help/help_Question_Update?=idx${question_idx}'">수정</button>
 		 &nbsp;
 		<button id="delete">삭제</button>
 		</div>	

@@ -81,29 +81,7 @@ public class HelpController {
 			return mav;
 		}
 		
-		//1대1 문의 수정페이지 이동
-		@RequestMapping(value = "/help/help_Question_Update/${question_idx}", method = RequestMethod.GET)
-		public String help_Question_Update(Model model,@PathVariable int question_idx) {
-			logger.info("1대1문의 수정 요청"+question_idx);
-			QuestionDTO dto = service.detailQ(question_idx);
-			logger.info(dto.getSubject());
-			model.addAttribute("dto", dto);
-			return "help/help_Question_Update";
-		}
-		
-		//1대1 문의 글 수정 요청
-		@RequestMapping(value = "/help/helpQuestionDetail/help_Question_Update/{question_idx}", method = RequestMethod.GET)
-		public String helpUdate(@PathVariable int question_idx, RedirectAttributes rttr) throws Exception{
-			int suc = service.helpUdate(question_idx, rttr);
-			logger.info("수정할 idx : "+question_idx+"/"+suc);
-			
-			String msg = "수정에 실패했습니다. 잠시 후 다시 시도해주세요";
-			if(suc > 0) {
-				msg ="수정 했습니다.";
-			}
-			rttr.addFlashAttribute("removeOK",msg);
-			return "redirect://help/help_Question_Update/${question_idx}";
-		}
+	
 		
 		//1대1 문의 삭제
 		@RequestMapping(value = "/help/helpQuestionDetail/help_Question_Delete/{question_idx}", method = RequestMethod.GET)
