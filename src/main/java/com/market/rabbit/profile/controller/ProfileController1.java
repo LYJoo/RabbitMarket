@@ -208,5 +208,22 @@ public class ProfileController1 {
 		return service.openReviewWriteForm(trade_idx);
 	}
 	
+	//운송장번호입력창 띄우기
+	@RequestMapping(value = "/openTrackingNumber", method = RequestMethod.GET)
+	public  ModelAndView openTrackingNumber(@RequestParam int trade_idx) {
+		ModelAndView mav = new ModelAndView();
+		logger.info("받아온 파라메터 값"+ trade_idx);
+		mav.addObject("trade_idx", trade_idx);
+		mav.setViewName("myPage/tracking_number");
+		return mav;
+	}
+	
+	//운송장번호입력
+	@RequestMapping(value = "/myPage/registTrackingNum", method = RequestMethod.GET)
+	public  @ResponseBody HashMap<String, Object> registTrackingNum(@RequestParam int trade_idx, @RequestParam String package_company, @RequestParam String tracking_number) {
+		logger.info("받아온 파라메터 값"+ trade_idx+"/"+package_company+"/"+tracking_number);
+		return service.registTrackingNum(trade_idx, package_company, tracking_number);
+	}
+	
 	
 }
