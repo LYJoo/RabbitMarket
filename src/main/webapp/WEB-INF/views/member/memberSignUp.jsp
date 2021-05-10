@@ -219,10 +219,10 @@
 			   		return false;
 			   		
 				}else if(!idJ.test($(this).val())){
-					$(this).focus(); 
-			   		return false;
 					$('#idch').text('5~20자의 영문 소문자, 숫자만 사용가능합니다')
 					$('#idch').css('color', 'red') 
+					$(this).focus(); 
+			   		return false;
 			   		
 				}else if($(this).val().indexOf("admin") != -1){
 					$('#idch').text('admin이 포함된 아이디는 사용할 수 없습니다.')
