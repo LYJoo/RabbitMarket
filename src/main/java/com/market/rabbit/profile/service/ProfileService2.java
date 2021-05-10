@@ -425,6 +425,17 @@ public class ProfileService2 {
 		map.put("trade_type", trade_type);
 		return map;
 	}
+
+	public HashMap<String, Object> writeReview(String member_id, String write_id, String review_content) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		if(dao.writeReview(member_id, write_id, review_content) > 0) {
+			success = 1;
+		}
+		
+		map.put("success", success);
+		return map;
+	}
 	
 
 	

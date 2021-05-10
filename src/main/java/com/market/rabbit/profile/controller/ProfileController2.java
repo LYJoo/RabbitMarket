@@ -247,6 +247,15 @@ public class ProfileController2 {
 
 		return service.tradeEnd(product_idx, trade_idx, trade_type);
 	}
+	
+	//거래 후기저장
+	@RequestMapping(value = "/reviewWrite", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> writeReview(@RequestParam String member_id, @RequestParam String write_id, @RequestParam String review_content) {
+		logger.info("받아온 파라메터 값" + member_id);
+		logger.info("받아온 파라메터 값" + write_id);
+		logger.info("받아온 파라메터 값" + review_content);
+		return service.writeReview(member_id, write_id, review_content);
+	}
 }
 
 
