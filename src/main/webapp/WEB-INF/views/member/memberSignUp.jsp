@@ -215,19 +215,19 @@
 			      
 			   		$('#idch').text('*필수 정보입니다.');
 			   	  	$('#idch').css('color', 'red');
-			   	 	$(this).focus(); 
+			   	 	/* $(this).focus(); */ 
 			   		return false;
 			   		
 				}else if(!idJ.test($(this).val())){
 					$('#idch').text('5~20자의 영문 소문자, 숫자만 사용가능합니다')
 					$('#idch').css('color', 'red') 
-					$(this).focus(); 
+					/* $(this).focus(); */ 
 			   		return false;
 			   		
 				}else if($(this).val().indexOf("admin") != -1){
 					$('#idch').text('admin이 포함된 아이디는 사용할 수 없습니다.')
 					$('#idch').css('color', 'red') 
-					$(this).focus(); 
+					/* $(this).focus(); */ 
 					return false;
 		       }else{
 			         idc = true;
@@ -243,13 +243,13 @@
 			    	 
 			    	 $('#pw2ch').text('*필수 정보입니다.');
 				   	 $('#pw2ch').css('color', 'red');
-				   	 $(this).focus(); 
+				   	 /* $(this).focus(); */ 
 					 return false;
 					 
 				    }else if(!pwJ.test($(this).val())){
 					$('#pw2ch').text('6~20자의 영문 소문자, 숫자만 사용가능합니다')
 					$('#pw2ch').css('color', 'red') 
-					$(this).focus(); 
+					/* $(this).focus(); */ 
 					return false;
 			       }else{
 				         pwc2 = true;
@@ -303,7 +303,7 @@
 				   
 				   $('#emch').text('*필수 정보입니다.');
 				   $('#emch').css('color', 'red');
-					$(this).focus(); 
+					/* $(this).focus(); */ 
 					return false;
 			   }else{
 			       emailc = true;
