@@ -25,12 +25,12 @@
 		                </tr>
 		                <tr>
 		                    <th>비밀번호</th>
-		                    <td><input type="password" name="currPw" id=""></td>
+		                    <td><input type="password" name="currPw" id="currPw"></td>
 		                </tr>
 		                <tr>
 		                    <th>비밀번호 확인</th>
 		                    <td>
-		                        <input type="password" id=""><br>
+		                        <input type="password" id="confirmPw"><br>
 		                        <span id="confirmMsg">비밀번호가 일치하지 않습니다.</span>
 		                    </td>
 		                </tr>
@@ -55,5 +55,21 @@
 		if(msg != ""){
 			alert(msg);
 		}
+		
+    	$('#currPw').on('keyup keydown', function(){
+    		ckPw();
+    	});
+    	$('#confirmPw').on('keyup keydown', function(){
+    		ckPw();
+    	});
+    	 function ckPw(){
+     		var currPw = $('#currPw').val();
+     		var confirmPw = $('#confirmPw').val();
+     		if(currPw != confirmPw){
+     			$('#confirmMsg').html("비밀번호가 일치하지 않습니다.");
+     		} else {
+     			$('#confirmMsg').html("비밀번호가 일치합니다.");
+     		}
+     	}
     </script>
 </html>
