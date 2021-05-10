@@ -76,4 +76,6 @@ public interface ProfileDAO2 {
 
 	int setTradeEnd(int product_idx, int trade_idx);
 
+	int writeReview(String member_id, String write_id, String review_content);
+
 }

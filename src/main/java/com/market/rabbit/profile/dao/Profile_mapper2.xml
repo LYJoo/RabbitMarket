@@ -269,4 +269,8 @@
  	<update id="setTradeEnd">
  		UPDATE trading SET trade_state='거래완료' WHERE trade_idx=#{param2}
  	</update>
+ 	
+ 	<insert id="writeReview">
+ 		INSERT INTO review (review_idx, review_content, member_id, write_id) VALUES (seq_review.nextval, #{param3}, #{param1}, #{param2})
+ 	</insert>
  </mapper>
