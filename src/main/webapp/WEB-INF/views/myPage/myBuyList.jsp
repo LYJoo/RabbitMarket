@@ -119,7 +119,7 @@
 
 		for(var i=0;i<list.length;i++){
 			content += "<tr>";
-			content += '<td><p><img src="/saleImg/'+list[i].saleFileDto.newFileName+'" alt="" style="width: 150px; height: 150px;"></p></td>';
+			content += '<td><p><img src="/saleFile/'+list[i].saleFileDto.newFileName+'" alt="" style="width: 150px; height: 150px;"></p></td>';
 			content += '<td class="rightLine">['+list[i].trade_idx+']'+list[i].saleDto.sale_subject+'</td>';
 			content += '<td><select id="sale_select" name="'+list[i].product_idx+'/'+list[i].trade_idx+'/'+list[i].seller_id+'/'+list[i].trade_type+'" onchange="value3(this)">';
 			if(list[i].trade_state == '거래취소'){
