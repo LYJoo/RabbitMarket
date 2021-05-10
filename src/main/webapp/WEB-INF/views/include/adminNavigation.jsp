@@ -56,15 +56,15 @@
             </span>
             <ul class="adminPage_nav_bar_hide">
               <li id="adminPage_nav_bar_hide1" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide2'),$('#adminPage_nav_bar_hide3'))">
-               	<a href="#">일반회원</a>
+               	<a href="callMemberList">일반회원</a>
                </li>
 
               <li id="adminPage_nav_bar_hide2" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide3'))">
-               <a href="#">블랙리스트</a>
+               <a href="callBlackList">블랙리스트</a>
                </li>
                
               <li id="adminPage_nav_bar_hide3" onclick="submenuTextBold(this, $('#adminPage_nav_bar_hide1'),$('#adminPage_nav_bar_hide2'))">
-               <a href="#">탈퇴회원</a>
+               <a href="callWithdrawList">탈퇴회원</a>
                </li>
             </ul>
         </li>
