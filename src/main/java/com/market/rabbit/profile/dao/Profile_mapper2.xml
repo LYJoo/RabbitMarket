@@ -29,8 +29,8 @@
 		SELECT newFileName FROM profilefile WHERE member_id=#{param1}
 	</select>
 	
-	<select id="confirmPw" resultType="String">
-		SELECT member_id FROM member WHERE member_id=#{param1} AND pw=#{param2}
+	<select id="getPw" resultType="String">
+		SELECT pw FROM member WHERE member_id=#{param1}
 	</select>
 	
 	<update id="updatePw">
