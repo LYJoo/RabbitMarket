@@ -286,7 +286,7 @@
 		for(var i=0; i<list.length; i++){
 			content += '<table class="profileList">';
 			content += "<tr>";
-			content += '<td rowspan="2"><img alt="" src="/saleImg/'+list[i].saleFileDto.newFileName+'" style="width:60px; height:75px;"></td>';
+			content += '<td rowspan="2"><img alt="" src="/saleFile/'+list[i].saleFileDto.newFileName+'" style="width:60px; height:75px;"></td>';
 			content += '<td class="subject">'+list[i].sale_subject+'</td>';
 			content += "</tr>";
 			content += "<tr>";

@@ -66,7 +66,7 @@ public class ReportMgtService {
 		
 		mav.addObject("product", product);
 		mav.addObject("report", report);
-		mav.addObject("path", "/saleImg/"+product_file.getNewFileName());
+		mav.addObject("path", "/saleFile/"+product_file.getNewFileName());
 		mav.setViewName(page);
 		return mav;
 	}
