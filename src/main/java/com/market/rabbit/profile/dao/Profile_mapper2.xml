@@ -56,13 +56,12 @@
 	</delete>
 	
 	<select id="callBlockList" resultMap="callBlockListAfterJoin">
-		SELECT *
-		FROM (
-		    SELECT b.block_idx, b.target_id, b.member_id, p.newfilename, ROW_NUMBER() OVER(ORDER BY b.block_idx) AS rnum
-		    FROM block b, profilefile p
-		    WHERE b.member_id = p.member_id AND b.member_id=#{param1}
-		    )
-		WHERE rnum BETWEEN #{param2} AND #{param3}
+		SELECT block_idx, target_id, member_id
+		FROM ( 
+		    SELECT b.block_idx, b.target_id, b.member_id, ROW_NUMBER() OVER(ORDER BY b.block_idx) AS rnum 
+		    FROM block b, member m
+		    WHERE b.member_id = m.member_id AND m.member_id=#{param1}
+		) WHERE rnum BETWEEN #{param2} AND #{param3}
 	</select>
 	
 	<resultMap type="block" id="callBlockListAfterJoin">

@@ -125,7 +125,7 @@
         <input type="button" id="emoverlay" onclick="emoverlay()" value="중복 체크"/><br/>
         <p id="emch" class="check"> </p><br/>
         <p class="text">전화번호</p>
-        <input type="text" name="phone" id="phone" class="form-control" placeholder="010-000-000형식"><br><br>
+        <input type="text" name="phone" id="phone" class="form-control" placeholder="010-0000-0000형식"><br><br>
        <p id="phonech" class="check"> </p><br/>
         <button type="button" id="btn-Yes" class="btn btn-lg btn-primary btn-block"  onclick="regist()">회원가입</button>
         <br>

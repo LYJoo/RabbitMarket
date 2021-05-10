@@ -9,7 +9,7 @@
  
  	<!-- 위시리스트 -->
 	<select id="wishlist" resultType="wish">
- 		SELECT wish_idx,member_id,product_idx FROM WISH ORDER BY wish_idx DESC
+ 		SELECT wish_idx,member_id,product_idx FROM WISH WHERE isdelete=0 ORDER BY wish_idx DESC
  	</select>
  	
 <!--  	<select id="sale" resultType="sale">
@@ -139,7 +139,7 @@
 	
 	<!-- 거래 상세보기 -->
 	<!-- 1.해당 판매글idx로 최근 거래 idx 추출 -->
-	<select id="findTradeIdxThisProduct" resultType="int">
+	<select id="findTradeIdxThisProduct" resultType="INTEGER">
 		SELECT trade_idx FROM
 		    (SELECT product_idx, trade_idx, ROW_NUMBER() OVER(ORDER BY trade_idx DESC) AS rnum FROM trading 
 		    WHERE product_idx=#{param1})

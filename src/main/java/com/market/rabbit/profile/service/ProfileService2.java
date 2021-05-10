@@ -76,11 +76,15 @@ public class ProfileService2 {
 		
 		MemberDTO dto = dao.callMemberInfo(loginId);
 		ProfileFileDTO profileDto = dao.callMemberProfile(loginId);
-		profileName.put("oriFileName", profileDto.getOriFileName());
-		profileName.put("newFileName", profileDto.getNewFileName());
+		try {
+			profileName.put("oriFileName", profileDto.getOriFileName());
+			profileName.put("newFileName", profileDto.getNewFileName());
+			mav.addObject("path", "/myProfile/"+profileDto.getNewFileName());
+		} catch (NullPointerException e) {
+			mav.addObject("path", "/myProfile/default_profile.png");
+		}
 		
 		mav.addObject("dto", dto);
-		mav.addObject("path", "/myProfile/" + profileDto.getNewFileName());
 		mav.addObject("profileName1", profileName);
 		mav.setViewName(page);
 

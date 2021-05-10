@@ -8,8 +8,8 @@
  <mapper namespace="com.market.rabbit.member.dao.MemberDAO">
  	<!--회원가입 -->
 	<insert id="join" parameterType="member">
-		INSERT INTO member(member_id,pw,name,birth_date,address,email,phone,withdraw)
-		VALUES(#{member_id},#{pw},#{name},#{birth_date},#{address},#{email},#{phone},'0')	
+		INSERT INTO member(member_id,pw,name,birth_date,address,email,phone,withdraw, location)
+		VALUES(#{member_id},#{pw},#{name},#{birth_date},#{address},#{email},#{phone},'0', #{address})	
 	</insert>
 	
 	<!--아이디 중복 검사 -->

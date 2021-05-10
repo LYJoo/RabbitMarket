@@ -115,10 +115,15 @@ public class ProfileService1 {
 		MemberDTO member = dao.profile(member_id);
 		ProfileFileDTO profile = dao.fileList(member_id);
 		
+		try {
+			mav.addObject("path", "/myProfile/"+profile.getNewFileName());
+		} catch (NullPointerException e) {
+			mav.addObject("path", "/myProfile/default_profile.png");
+		}
+		
 		mav.addObject("isBlocking", isBlocking);
 		mav.addObject("member", member);
 		//mav.addObject("profile", profile);
-		mav.addObject("path", "/myProfile/"+profile.getNewFileName());
 		mav.setViewName(page);
 		return mav;
 	}
