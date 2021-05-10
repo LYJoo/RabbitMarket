@@ -91,10 +91,12 @@ textarea {
 			success : function(data) {
 				if (data.success == 1) {
 					alert('판매자 후기가 등록되었습니다.');
+					window.location.reload();
 					self.close();
 				}else{
 					alert('다시 시도해주세요.');
 				}
+				window.location.reload();
 			},
 			error : function(error) {
 				console.log(error);
