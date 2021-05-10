@@ -123,7 +123,7 @@
 <div id="login_bar">
     <span id="login_bar_list">
         <a href="/help/noticeMain"><img style="margin-right: 30px" src="/resources/img/callcenter.png" alt="고객센터"></a>
-        <a href="/message/mainPage"><img style="margin-right: 30px" src="/resources/img/message.png" alt="쪽지"></a> 
+        <a href="" id="message" ><img style="margin-right: 30px" src="/resources/img/message.png" alt="쪽지"></a> 
         <a href="/myPage/alarmList"><img style="margin-right: 30px" src="/resources/img/bell.png" alt="알림"></a>
         
         <div class="profile_circle_box" onclick="logout_link_visibility()">
@@ -219,6 +219,10 @@ jQuery.noConflict();
         elem.style.background = "rgb(241, 234, 234)";
         elem2.style.color = "black";
     }
+    
+    $('#message').click(function(){
+		window.open('/message/mainPage', 'message', 'width=600, height=800');
+	})
 
 </script>
 </html>

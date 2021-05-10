@@ -50,9 +50,9 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                        	<button class="btn-info">회원정보수정</button>
-                			<button class="btn-info">비밀번호변경</button>
-                			<button class="btn-info">회원탈퇴</button>
+                        	<button class="btn-info" onclick="location.href='/myPage/memberInfoUpdateForm'">회원정보수정</button>
+                			<button class="btn-info" onclick="location.href='/myPage/memberPwUpdateForm'">비밀번호변경</button>
+                			<button class="btn-info" onclick="location.href='/myPage/memberWithdrawForm'">회원탈퇴</button>
                         </td>
                     </tr>
                 </table>
