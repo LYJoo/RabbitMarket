@@ -77,6 +77,7 @@ public class HomeController {
 		if(service.join(dto) > 0) {
 			msg = "회원 가입 성공";
 			page = "member/MemberLogin";
+			dao.insertDefaultProfile(dto.getMember_id());
 		}
 		
 		model.addAttribute("regist_msg", msg);

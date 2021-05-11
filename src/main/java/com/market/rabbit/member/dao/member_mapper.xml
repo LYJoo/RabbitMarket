@@ -12,6 +12,10 @@
 		VALUES(#{member_id},#{pw},#{name},#{birth_date},#{address},#{email},#{phone},'0', #{address})	
 	</insert>
 	
+	<insert id="insertDefaultProfile">
+		INSERT INTO profilefile VALUES (seq_profilefile.nextval, 'dafault_profile.png', 'default_profile.png', #{param1})
+	</insert>
+	
 	<!--아이디 중복 검사 -->
 	<select id="overlay" parameterType="String" resultType="Integer">
 	        SELECT COUNT(*) FROM member WHERE member_id=#{member_id} OR(member_id=#{member_id} AND withdraw='1')

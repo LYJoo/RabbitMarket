@@ -31,6 +31,8 @@ public interface MemberDAO {
 
 	String withd(HashMap<String, String> params);
 
+	void insertDefaultProfile(String member_id);
+
 	
 
 	
