@@ -23,7 +23,7 @@
             <h2>중간관리자관리</h2>
             <span>변경</span>
         </div>
-        <form action="/admin/updateAdmin" method="POST">
+        <form action="/admin/updateAdmin" method="POST" onsubmit="return check()">
             <table id="admin_table">
                 <tr>
                     <th>ID</th>
@@ -87,7 +87,7 @@
             alert("아이디에 admin을 포함해주세요!");
             Id.focus();
             return false;
-        } else if(Id.val().length <= 5){//아이디 6자 이상
+        } else if(Id.val().length <= 4){//아이디 6자 이상
             alert("아이디를 6 자 이상 입력해주세요!");
             Id.focus();
             return false;

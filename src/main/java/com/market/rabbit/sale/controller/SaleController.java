@@ -392,10 +392,10 @@ public class SaleController {
 	
 	//거래완료로 변경 요청
 	@RequestMapping(value = "/sale/tradeEnd", method = RequestMethod.POST)
-	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx) {
+	public @ResponseBody HashMap<String, Object> tradeEnd(@RequestParam int product_idx,  HttpSession session) {
 		logger.info("받아온 파라메터 값"+ product_idx);
 		
-		return service.tradeEnd(product_idx);
+		return service.tradeEnd(product_idx, session);
 	}
 	
 	@RequestMapping(value = "/sale/directBuyerEstimation", method = RequestMethod.GET)
