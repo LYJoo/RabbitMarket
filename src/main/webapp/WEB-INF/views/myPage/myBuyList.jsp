@@ -169,7 +169,7 @@
     		});
         }
         else if(e.value == '거래완료'){
-        	console.log('gg');
+        	console.log('gg : '+product_idx);
         	$.ajax({
     			url:'/sale/tradeEnd'
     			,type: 'POST'
@@ -184,7 +184,7 @@
     					}else{
     						window.open('/directSellerEstimation?product_idx='+product_idx+'&trade_idx='+trade_idx,'directBuyerEstimation','width=550, height=700, top=100, left=500');
     					}
-    					//window.location.reload();
+    					window.location.reload();
     				}
     			},
     			error: function(error){
