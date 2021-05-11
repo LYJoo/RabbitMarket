@@ -596,7 +596,7 @@ public class SaleService {
 	}
 	//거래완료로 변경 시
 	@Transactional
-	public HashMap<String, Object> tradeEnd(int product_idx) {
+	public HashMap<String, Object> tradeEnd(int product_idx, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		String msg = "";
 		int success = 0;
@@ -615,7 +615,23 @@ public class SaleService {
 		if(trade_type.equals("택배")) {
 			tracking_number = dao.getTracking_Number(trade_idx);
 			if(tracking_number != 0) {
+				String seller_id=dao.findSellerThisTrade(trade_idx);//판매자
 				msg = "택배거래는 구매자 측에서만 거래 완료를 누를 수 있습니다.";
+
+				String buyer_id=dao.findBuyerThisTrade(trade_idx);//구매자
+				String loginId = (String) session.getAttribute("loginId");
+				if(loginId.equals(buyer_id)) {
+					Date date = null;
+					try {
+						SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");		
+						String format_time = format.format (System.currentTimeMillis());
+						date = format.parse(format_time);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					check1 = dao.setTradeEnd(trade_idx,date);//거래테이블에 거래완료시간 넣고
+					check2 = dao.setTradeEnd2(product_idx);//판매테이블에 거래완료로 변경
+				}
 			}else {
 				msg = "운송장 번호를 입력하지 않았습니다. 마이페이지에서 입력해주세요.";
 			}
