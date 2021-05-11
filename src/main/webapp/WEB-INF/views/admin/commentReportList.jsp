@@ -14,8 +14,14 @@
     <!-- lyj_style -->
     <link rel="stylesheet" type="text/css" href="/resources/css/lyj_css.css">
 </head>
-<body>
-	<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+<body>	
+	<div id="top_navi_contain_box">
+		<jsp:include page="../include/topNavigation.jsp"></jsp:include>
+	</div>
+	<div id="side_bar_contain_box">
+	<div style="display: contents;">
+		<jsp:include page="../include/adminNavigation.jsp"></jsp:include>
+	</div>
     <div id="list_content">
         <div class="flex_box btn_flex">
             <h2>글신고목록</h2>
@@ -49,6 +55,7 @@
 				</td>
 			</tr>
         </table>
+    </div>
     </div>
 </body>
 <script>
